@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Skills Academy — Twinflow 11 Pointed</title>
+  <style>
+    :root{
+      --ink:#1a2230;
+      --ink-2:#273244;
+      --paper:#fbf8f3;
+      --white:#fffefd;
+      --mist:#eae6df;
+      --line:#d9d5ce;
+      --slate:#5b6b7a;
+      --coral:#e8654a;
+      --sage:#315d5a;
+    }
+    *{box-sizing:border-box}
+    html{background:var(--ink)}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:"Segoe UI",Arial,sans-serif;line-height:1.5}
+    img{display:block;max-width:100%}
+    a{color:inherit}
+    .wrap{width:min(1180px,calc(100% - 48px));margin:0 auto}
+    .eyebrow{margin:0 0 13px;font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+    .hero{padding:36px 0 70px;background:var(--ink);color:var(--paper)}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{font-size:15px;font-weight:800}
+    .status{padding:8px 12px;border:1px solid rgba(251,248,243,.2);border-radius:999px;color:#cbd1d8;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:70px;align-items:center;padding-top:76px}
+    h1{margin:0;font-size:clamp(58px,7vw,98px);font-weight:680;line-height:.91;letter-spacing:-.06em}
+    .lead{max-width:620px;margin:28px 0 0;color:#c6cdd6;font-size:18px}
+    .hero-card{min-height:500px;display:grid;place-items:center;padding:50px;border-radius:36px;background:var(--paper)}
+    .hero-card img{width:min(370px,86%)}
+    section{padding:88px 0}
+    .section-head{display:grid;grid-template-columns:.86fr 1.14fr;gap:68px;align-items:start;margin-bottom:38px}
+    h2{margin:0;font-size:clamp(38px,5vw,64px);font-weight:670;line-height:.98;letter-spacing:-.05em}
+    .intro{margin:4px 0 0;color:var(--slate);font-size:17px}
+    .comparison{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{overflow:hidden;border:1px solid var(--line);border-radius:25px;background:var(--white)}
+    .card-top{padding:22px 22px 0}
+    .number{font-size:10px;font-weight:850;letter-spacing:.15em;text-transform:uppercase;color:var(--slate)}
+    .stage{min-height:330px;display:grid;place-items:center;padding:28px}
+    .stage img{width:220px}
+    .card-copy{padding:24px;border-top:1px solid var(--line)}
+    .card-copy h3{margin:0 0 8px;font-size:25px;letter-spacing:-.035em}
+    .card-copy p{margin:0;color:var(--slate);font-size:14px}
+    .card.final{border-color:var(--ink);box-shadow:0 20px 48px rgba(26,34,48,.1)}
+    .card.final .card-top{display:flex;justify-content:space-between;align-items:center}
+    .tag{padding:7px 10px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:9px;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+    .change{background:var(--mist)}
+    .logos{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .logo-box{padding:24px;border:1px solid var(--line);border-radius:24px;background:var(--white)}
+    .logo-box h3{margin:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+    .logo-box img{width:100%;height:190px;object-fit:contain}
+    .delta{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+    .delta-box{padding:28px;border-radius:22px;background:var(--white);border:1px solid var(--line)}
+    .delta-box strong{display:block;margin-bottom:15px;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+    .delta-box ul{margin:0;padding-left:19px;color:var(--slate)}
+    .delta-box li+li{margin-top:8px}
+    .delta-box.changed{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+    .delta-box.changed ul{color:#c6cdd6}
+    .system-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:22px}
+    .scale-card,.dark-card{padding:34px;border:1px solid var(--line);border-radius:26px;background:var(--white)}
+    .scale-card h3,.dark-card h3{margin:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+    .micro{display:flex;align-items:flex-end;justify-content:center;gap:38px;min-height:230px}
+    .micro div{display:grid;justify-items:center;gap:12px}
+    .micro span{color:var(--slate);font-size:10px;font-weight:800}
+    .dark-card{display:flex;flex-direction:column;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+    .dark-card .dark-stage{flex:1;display:grid;place-items:center;min-height:230px}
+    .dark-card img{width:190px;filter:brightness(0) invert(1)}
+    .note{margin:0;color:#bfc7d0;font-size:13px}
+    .decision{padding:80px 0;background:var(--ink);color:var(--paper)}
+    .decision-grid{display:grid;grid-template-columns:1fr .9fr;gap:70px;align-items:center}
+    .decision h2{font-size:clamp(46px,6vw,80px)}
+    .decision p{max-width:660px;margin:23px 0 0;color:#c6cdd6;font-size:17px}
+    .score{padding:28px;border:1px solid rgba(251,248,243,.16);border-radius:24px;background:rgba(251,248,243,.04)}
+    .score-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 0;border-bottom:1px solid rgba(251,248,243,.12)}
+    .score-row:last-child{border-bottom:0}
+    .score-row span{color:#aeb8c4}.score-row b{text-align:right}
+    .downloads{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+    .downloads a{padding:10px 14px;border:1px solid rgba(251,248,243,.24);border-radius:999px;text-decoration:none;font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+    footer{padding:36px 0;border-top:1px solid var(--line);color:var(--slate);font-size:11px}
+    footer .wrap{display:flex;justify-content:space-between;gap:20px}
+    @media(max-width:900px){
+      .wrap{width:min(100% - 28px,720px)}
+      .hero-grid,.section-head,.system-grid,.decision-grid{grid-template-columns:1fr}
+      .comparison{grid-template-columns:1fr}.hero-grid{gap:36px}.hero-card{min-height:390px}
+      .logos,.delta{grid-template-columns:1fr}.stage{min-height:280px}
+    }
+    @media(max-width:560px){
+      .wrap{width:min(100% - 22px,520px)}
+      .status{display:none}.hero{padding-top:27px}.hero-grid{padding-top:52px}.hero-card{min-height:320px;padding:30px}
+      section{padding:64px 0}.section-head{gap:20px}.micro{gap:22px}.scale-card,.dark-card{padding:24px}
+      .logo-box img{height:150px}footer .wrap{display:block}footer span{display:block}footer span+span{margin-top:7px}
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="top">
+        <div class="brand">Skills Academy</div>
+        <div class="status">Twinflow 11 · korekta ogonów</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Precyzyjny refinement</p>
+          <h1>11 zostaje.<br>Ogony nabierają charakteru.</h1>
+          <p class="lead">Bryła wybranego Twinflow 11 pozostaje bazą. Zmienione zostały wyłącznie dwa centralne terminale: oba koi kończą się teraz czystym, integralnym szpicem inspirowanym najlepszym detalem z wariantu 17.</p>
+        </div>
+        <div class="hero-card">
+          <img src="skills-academy-twinflow-11-pointed-symbol.svg" alt="Skills Academy Twinflow 11 z ostrymi ogonami koi">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Porównanie</p>
+          <h2>Jedna dobra obserwacja. Jedna kontrolowana zmiana.</h2>
+        </div>
+        <p class="intro">Nie projektowaliśmy nowego znaku od zera. Zachowaliśmy to, co działało w 11, wyizolowaliśmy mocny detal z 17 i przenieśliśmy go symetrycznie na obie koi. Szpice są częścią korpusów — nie nakładką ani dekoracją.</p>
+      </div>
+      <div class="comparison">
+        <article class="card">
+          <div class="card-top"><span class="number">11 / punkt wyjścia</span></div>
+          <div class="stage"><img src="skills-academy-koi-11-symbol.svg" alt="Oryginalny symbol Twinflow 11"></div>
+          <div class="card-copy"><h3>Mocna bryła</h3><p>Najlepsza masa i najbardziej naturalne „S”, lecz oba ogony kończyły się płasko.</p></div>
+        </article>
+        <article class="card">
+          <div class="card-top"><span class="number">17 / źródło detalu</span></div>
+          <div class="stage"><img src="skills-academy-twinflow-17-symbol.svg" alt="Symbol Koi Relay 17"></div>
+          <div class="card-copy"><h3>Właściwa iskra</h3><p>Jedna końcówka sugerowała ostrzejszy, bardziej intencjonalny ogon. Reszty konstrukcji nie przenosimy.</p></div>
+        </article>
+        <article class="card final">
+          <div class="card-top"><span class="number">11 Pointed / wynik</span><span class="tag">Rekomendacja</span></div>
+          <div class="stage"><img src="skills-academy-twinflow-11-pointed-symbol.svg" alt="Finalny symbol Twinflow 11 Pointed"></div>
+          <div class="card-copy"><h3>Dwa ostre ogony</h3><p>Ta sama sylweta 11, ale duet zyskuje kierunek, napięcie i łatwiejszy do zapamiętania centralny gest.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="change">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Logo pełne</p>
+          <h2>Zmiana jest mała. Efekt — wyraźny.</h2>
+        </div>
+        <p class="intro">W logotypie symbol nadal zastępuje pierwszą literę nazwy. Szpic nie konkuruje z napisem i nie przesuwa optycznie całego znaku.</p>
+      </div>
+      <div class="logos">
+        <div class="logo-box"><h3>Przed / Twinflow 11</h3><img src="skills-academy-koi-11-twinflow.svg" alt="Logo Skills Academy Twinflow 11"></div>
+        <div class="logo-box"><h3>Po / Twinflow 11 Pointed</h3><img src="skills-academy-twinflow-11-pointed.svg" alt="Logo Skills Academy Twinflow 11 Pointed"></div>
+      </div>
+      <div class="delta">
+        <div class="delta-box">
+          <strong>Pozostaje bez zmian</strong>
+          <ul>
+            <li>masa oraz proporcje litery „S”;</li>
+            <li>głowy, oczy i rytm obu koi;</li>
+            <li>kolorystyka, wordmark i układ „Skills Academy”.</li>
+          </ul>
+        </div>
+        <div class="delta-box changed">
+          <strong>Zmieniono tylko</strong>
+          <ul>
+            <li>płaskie cięcia w centrum;</li>
+            <li>oba terminale zwężone do kontrolowanego szpica;</li>
+            <li>odstęp między końcówkami, aby duet nie skleił się w grot.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">System responsywny</p>
+          <h2>Charakter w dużym znaku. Stabilność w faviconie.</h2>
+        </div>
+        <p class="intro">Wersja symbolu zachowuje oczy. Favicon usuwa oczy, dzięki czemu przy 16–24 px zostaje czysta, odporna geometrycznie litera „S”. Ogony nadal wpływają na rytm środka, ale nie są jedynym nośnikiem rozpoznawalności.</p>
+      </div>
+      <div class="system-grid">
+        <div class="scale-card">
+          <h3>Test skali</h3>
+          <div class="micro">
+            <div><img src="skills-academy-twinflow-11-pointed-favicon.svg" width="16" height="16" alt=""><span>16 px</span></div>
+            <div><img src="skills-academy-twinflow-11-pointed-favicon.svg" width="24" height="24" alt=""><span>24 px</span></div>
+            <div><img src="skills-academy-twinflow-11-pointed-symbol.svg" width="32" height="32" alt=""><span>32 px</span></div>
+            <div><img src="skills-academy-twinflow-11-pointed-symbol.svg" width="64" height="64" alt=""><span>64 px</span></div>
+            <div><img src="skills-academy-twinflow-11-pointed-symbol.svg" width="112" height="112" alt=""><span>112 px</span></div>
+          </div>
+        </div>
+        <div class="dark-card">
+          <h3>Wariant odwrócony</h3>
+          <div class="dark-stage"><img src="skills-academy-twinflow-11-pointed-symbol.svg" alt="Odwrócony symbol Twinflow 11 Pointed"></div>
+          <p class="note">Znak pozostaje jednobarwny. Nie potrzebuje gradientu, obrysu ani dodatkowej ramki.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="decision">
+    <div class="wrap decision-grid">
+      <div>
+        <p class="eyebrow">Werdykt projektowy</p>
+        <h2>To jest właściwa ewolucja 11.</h2>
+        <p>Wariant Pointed naprawia dokładnie brak wskazany w 11, bez rozmywania jego przewagi. Ostre ogony są zapamiętywalnym „momentem odkrycia”, lecz znak nadal najpierw działa jako mocne „S” i pierwsza litera słowa „Skills”.</p>
+        <div class="downloads">
+          <a href="skills-academy-twinflow-11-pointed.svg" download>Logo SVG</a>
+          <a href="skills-academy-twinflow-11-pointed-symbol.svg" download>Symbol SVG</a>
+          <a href="skills-academy-twinflow-11-pointed-favicon.svg" download>Favicon SVG</a>
+        </div>
+      </div>
+      <div class="score">
+        <div class="score-row"><span>Rozpoznanie „S”</span><b>bardzo mocne</b></div>
+        <div class="score-row"><span>Odczyt dwóch koi</span><b>czytelniejszy</b></div>
+        <div class="score-row"><span>Charakter premium</span><b>zachowany</b></div>
+        <div class="score-row"><span>16–24 px</span><b>stabilne</b></div>
+        <div class="score-row"><span>Ryzyko „grotu”</span><b>kontrolowane</b></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>Skills Academy · Twinflow 11 Pointed</span>
+      <span>Logo, symbol i favicon · SVG wektorowe</span>
+    </div>
+  </footer>
+</body>
+</html>
