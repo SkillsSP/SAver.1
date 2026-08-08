@@ -1,0 +1,43 @@
+---
+import { url, telefonHref, telefonTekst } from "../lib/site.js";
+
+interface Props {
+  tytul: string;
+  tresc: string;
+  przycisk?: string;
+  senior?: boolean;
+}
+
+const {
+  tytul,
+  tresc,
+  przycisk = "Umów zajęcia próbne",
+  senior = false,
+} = Astro.props;
+const tel = telefonHref();
+---
+
+{/*
+  Sekcja zamykająca. Koral pojawia się tu raz — na przycisku — więc wzrok idzie
+  dokładnie tam, gdzie ma pójść.
+*/}
+<section class={senior ? "sekcja sekcja--slate" : "sekcja sekcja--tint"}>
+  <div class="szerokosc">
+    <div class="siatka--wiodaca">
+      <div class="stos stos--ciasny">
+        <h2 class={senior ? "tytul-2 tytul--medrzec" : "tytul-2"}>{tytul}</h2>
+      </div>
+      <div class="stos">
+        <p class="wiodacy">{tresc}</p>
+        <div class="przyciski">
+          <a class="przycisk przycisk--akcja" href={url("/kontakt")}>{przycisk}</a>
+          {tel && (
+            <span class="telefon-obok">
+              albo zadzwońcie: <a href={tel}>{telefonTekst()}</a>
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

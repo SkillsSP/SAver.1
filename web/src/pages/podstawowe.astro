@@ -1,0 +1,183 @@
+---
+import Baza from "../layouts/Baza.astro";
+import OdeslanieDoGrup from "../components/OdeslanieDoGrup.astro";
+import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import ZapisCta from "../components/ZapisCta.astro";
+import { url, wielkoscGrupy } from "../lib/site.js";
+
+const przebieg = [
+  {
+    tytul: "Rozgrzewka",
+    opis: "Ruch i krótka wymiana zdań. Angielski włącza się, zanim ktokolwiek usiądzie.",
+  },
+  {
+    tytul: "Misja",
+    opis: "Zadanie z jasnym celem i ograniczeniem czasu. Dzieci pracują w drużynach.",
+  },
+  {
+    tytul: "Pokaz",
+    opis: "Każda drużyna pokazuje wynik reszcie grupy. Krótko, po angielsku.",
+  },
+  {
+    tytul: "Domknięcie",
+    opis: "Co zadziałało, co nie. Prowadzący zapisuje obserwacje do raportu dla rodzica.",
+  },
+];
+---
+
+<Baza
+  aktywna="program"
+  tytul="Zajęcia podstawowe — Useful Skills i Life Skills"
+  opis="Dwa filary jednego spotkania: angielski w działaniu i kompetencje życiowe. Baza każdego karnetu w Skills Academy w Szczecinie, grupy do ośmiu osób."
+>
+  <section class="naglowek-strony">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Program</span>
+        <h1 class="tytul-1">Zajęcia podstawowe</h1>
+        <p class="hero__zdanie">
+          Dwa filary, jedno spotkanie. Dziecko używa angielskiego, żeby coś zrobić
+          — a przy okazji ćwiczy współpracę, wystąpienia i myślenie krytyczne.
+          Fakultety i Exams dokładacie osobno.
+        </p>
+        <ul class="naglowek-strony__meta">
+          <li>Wiek 5–15 lat</li>
+          <li>Grupa do {wielkoscGrupy} osób</li>
+          <li>Obie ścieżki obowiązkowe</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* DWA FILARY */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka siatka--2">
+        <article class="karta karta--luzna">
+          <span class="plakietka plakietka--kobalt">Filar I</span>
+          <h2 class="tytul-3">Useful Skills</h2>
+          <p class="tekst-drugi tekst-maly">
+            Angielski w działaniu. Dziecko nie tłumaczy zdań — negocjuje, pyta,
+            wyjaśnia i rozwiązuje zadanie, bo inaczej misja się nie uda.
+          </p>
+          <ul class="lista-znaczona">
+            <li>Słownictwo wychodzi z sytuacji, nie z listy</li>
+            <li>Mówienie od pierwszego spotkania, także z błędami</li>
+            <li>Czytanie i pisanie jako narzędzie, nie jako sprawdzian</li>
+          </ul>
+        </article>
+
+        <article class="karta karta--luzna">
+          <span class="plakietka plakietka--kobalt">Filar II</span>
+          <h2 class="tytul-3">Life Skills</h2>
+          <p class="tekst-drugi tekst-maly">
+            Kompetencje, których szkoła nie zdąży nauczyć. Ćwiczone na tym samym
+            materiale, w tej samej grupie, bez osobnej lekcji „o wartościach”.
+          </p>
+          <ul class="lista-znaczona">
+            <li>Praca w drużynie i dzielenie się rolą</li>
+            <li>Wystąpienie przed grupą — krótkie, konkretne</li>
+            <li>Ocena źródeł i odróżnianie faktu od opinii</li>
+          </ul>
+        </article>
+      </div>
+
+      <p class="tekst-maly tekst-drugi" style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">
+        Exams — przygotowanie do egzaminu ósmoklasisty i matury — stoi
+        <strong>poza</strong> zajęciami podstawowymi. To osobna oferta,
+        kupowana obok, na tych samych zasadach dla uczestnika zajęć i dla kogoś
+        z zewnątrz. <a class="link-w-zdaniu" href={url("/exams")}>Zobaczcie Exams</a>.
+      </p>
+    </div>
+  </section>
+
+  {/* PRZEBIEG SPOTKANIA */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Rytm</span>
+          <h2 class="tytul-1">Jak wygląda jedno spotkanie</h2>
+          <p class="tekst-drugi tekst-maly">
+            Ta sama struktura na każdych zajęciach. Dziecko wie, czego się
+            spodziewać, więc energia idzie w zadanie, nie w orientowanie się
+            w sytuacji.
+          </p>
+        </div>
+        <ol class="kroki">
+          {przebieg.map((krok) => (
+            <li class="kroki__krok">
+              <span class="kroki__tresc">
+                <strong>{krok.tytul}</strong>
+                <p>{krok.opis}</p>
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {/* CZEGO NIE MA / CO DOSTAJE RODZIC */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka siatka--2">
+        <div class="stos">
+          <h2 class="tytul-3">Czego u nas nie ma</h2>
+          <ul class="lista-znaczona lista-przeczaca">
+            <li>Kartkówek ze słówek i ocen w skali 1–6</li>
+            <li>Prac domowych na każde spotkanie</li>
+            <li>Podręcznika, przez który przechodzimy strona po stronie</li>
+            <li>Grup, w których jedno dziecko mówi, a dziesięcioro słucha</li>
+          </ul>
+        </div>
+        <div class="stos">
+          <h2 class="tytul-3">Co dostaje rodzic</h2>
+          <ul class="lista-znaczona lista-odhaczona">
+            <li>Raport o postępach dziecka</li>
+            <li>Konsultację z prowadzącym na życzenie</li>
+            <li>Informację o nieobecności tego samego dnia</li>
+            <li>Zaproszenie na pokaz otwarty</li>
+          </ul>
+          <DoUzupelnienia czego="Częstotliwość">
+            Ustalcie, jak często wychodzi raport o postępach i jak często
+            odbywa się pokaz otwarty — i wpiszcie to wprost do dwóch punktów
+            powyżej. „Raport o postępach” bez częstotliwości brzmi jak obietnica,
+            „raport co sześć tygodni” brzmi jak zobowiązanie.
+          </DoUzupelnienia>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* KTO PROWADZI */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Zespół</span>
+        <h2 class="tytul-1">Kto prowadzi zajęcia</h2>
+        <p class="wiodacy">
+          Każda osoba pracująca z dziećmi przechodzi weryfikację opisaną
+          w <a class="link-w-zdaniu" href={url("/bezpieczenstwo")}>standardach ochrony małoletnich</a>.
+        </p>
+      </div>
+      <DoUzupelnienia czego="Sylwetki prowadzących">
+        Startujecie bez opinii i zdjęć z zajęć, więc jedynym dostępnym dowodem
+        jesteście Wy. Dla każdej osoby prowadzącej: imię i nazwisko, rola,
+        kwalifikacje i dwa–trzy zdania o podejściu do pracy z dziećmi. Zdjęcia
+        własne, nie stockowe.
+      </DoUzupelnienia>
+    </div>
+  </section>
+
+  <section class="sekcja">
+    <div class="szerokosc">
+      <OdeslanieDoGrup />
+    </div>
+  </section>
+
+  <ZapisCta
+    tytul="Przyjdźcie na jedną misję i zobaczcie, jak dziecko reaguje"
+    tresc="Zajęcia próbne są bezpłatne i niczego nie przesądzają. Stawki znajdziecie w cenniku."
+  />
+</Baza>

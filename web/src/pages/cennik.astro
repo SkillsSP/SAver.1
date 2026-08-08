@@ -1,0 +1,249 @@
+---
+import Baza from "../layouts/Baza.astro";
+import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import ZapisCta from "../components/ZapisCta.astro";
+import { url, wielkoscGrupy } from "../lib/site.js";
+
+/* Dwa sposoby rozliczenia na jednej stronie — karnet na zajęcia podstawowe
+   i pojedyncze spotkanie w Exams — muszą być wyraźnie rozdzielone. */
+const pozycjeKarnet = [
+  {
+    nazwa: "Zajęcia podstawowe",
+    opis: "Useful Skills + Life Skills — baza każdego karnetu",
+  },
+  {
+    nazwa: "Fakultet",
+    opis: "Music, Art, Acting albo Motion Skills — dopłata do karnetu",
+  },
+  {
+    nazwa: "Zajęcia indywidualne",
+    opis: "Spotkanie 1:1 z prowadzącym",
+  },
+];
+
+const pozycjeExams = [
+  { nazwa: "Egzamin ósmoklasisty — angielski", opis: `Grupa do ${wielkoscGrupy} osób albo 1:1` },
+  { nazwa: "Egzamin ósmoklasisty — matematyka", opis: `Grupa do ${wielkoscGrupy} osób albo 1:1`, unikat: true },
+  { nazwa: "Matura — angielski", opis: "Poziom podstawowy i rozszerzony" },
+  { nazwa: "Matura — matematyka", opis: "Poziom podstawowy", unikat: true },
+];
+
+const pytania = [
+  {
+    pytanie: "Co, jeśli dziecko zachoruje?",
+    odpowiedz:
+      "Nieobecność zgłoszoną z wyprzedzeniem odrabiamy w innej grupie tego samego poziomu. Przy dłuższej chorobie karnet można zawiesić — opłacone spotkania nie przepadają.",
+  },
+  {
+    pytanie: "Czy mogę zrezygnować w trakcie semestru?",
+    odpowiedz:
+      "Karnet można zawiesić w obu modelach. Opłacone spotkania nie przepadają: karnet obejmuje z góry określoną liczbę zajęć, więc wykorzystacie je w kolejnych terminach. Wpłaconych pieniędzy nie zwracamy — zawieszamy karnet zamiast go rozliczać.",
+  },
+  {
+    pytanie: "Czy trzeba brać całość?",
+    odpowiedz:
+      "Nie. Zajęcia podstawowe są bazą karnetu, ale Exams kupuje się osobno i można wziąć sam egzamin, bez zajęć podstawowych — na tych samych zasadach co uczestnik zajęć.",
+  },
+  {
+    pytanie: "Jak wygląda płatność?",
+    odpowiedz:
+      "Przelewem na konto centrum. Fakturę wystawiamy na życzenie, także na firmę.",
+  },
+];
+---
+
+<Baza
+  aktywna="cennik"
+  tytul="Cennik"
+  opis="Jedna cena, bez dopisków drobnym drukiem. Karnet na zajęcia podstawowe i fakultety, przygotowanie egzaminacyjne rozliczane osobno. Skills Academy Szczecin."
+>
+  <section class="naglowek-strony">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Cennik</span>
+        <h1 class="tytul-1">Jedna cena, bez dopisków drobnym drukiem</h1>
+        <p class="hero__zdanie">
+          Materiały, raporty dla rodzica i konsultacje są wliczone w karnet. Nie
+          pobieramy wpisowego ani opłaty za spotkanie odwołane w terminie.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekcja">
+    <div class="szerokosc">
+      <DoUzupelnienia czego="Kwoty">
+        Cała ta strona czeka na jedną decyzję: stawki. Do wpisania — cena
+        miesięczna i semestralna karnetu, dopłata za fakultet, stawka za
+        spotkanie 1:1 oraz cztery stawki egzaminacyjne. Zanim je ustalicie,
+        warto rozstrzygnąć trzy rzeczy z dokumentu struktury: czy Exams
+        rozliczacie za pojedyncze spotkanie czy cyklem przedmaturalnym, czy
+        uczestnik zajęć podstawowych dostaje zniżkę na Exams, i czy matura
+        z angielskiego na dwóch poziomach to dwie osobne oferty.
+      </DoUzupelnienia>
+    </div>
+  </section>
+
+  {/* DWA MODELE KARNETU */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Karnet</span>
+        <h2 class="tytul-1">Wybierzcie sposób rozliczenia</h2>
+        <p class="wiodacy">
+          Zakres zajęć jest identyczny. Różni się tylko długość zobowiązania
+          i cena za spotkanie.
+        </p>
+      </div>
+
+      <div class="siatka siatka--2">
+        <article class="cena">
+          <h3 class="tytul-3">Model miesięczny</h3>
+          <p class="cena__kwota">
+            — zł <small>/ miesiąc</small>
+          </p>
+          <p class="tekst-maly tekst-drugi">
+            Płatność co miesiąc, rezygnacja z miesięcznym wyprzedzeniem. Dobry
+            wybór, gdy dopiero sprawdzacie, czy formuła pasuje dziecku.
+          </p>
+        </article>
+
+        <article class="cena cena--wyrozniona">
+          <span class="plakietka plakietka--koral" style="justify-self: start;">Taniej za spotkanie</span>
+          <h3 class="tytul-3">Model semestralny</h3>
+          <p class="cena__kwota">
+            — zł <small>/ semestr</small>
+          </p>
+          <p class="tekst-maly tekst-drugi">
+            Płatność jednorazowa lub w ratach. Dziecko ma zagwarantowane miejsce
+            w grupie do końca semestru, a Wy niższą cenę za spotkanie.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {/* POZYCJE — KARNET */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Zajęcia w karnecie</span>
+        <h2 class="tytul-1">Zajęcia podstawowe, fakultety i 1:1</h2>
+        <p class="wiodacy">
+          Zajęcia podstawowe są bazą każdego karnetu. Fakultety dokładacie
+          osobno, w dowolnej konfiguracji — każdy kolejny obniża cenę jednostkową
+          spotkania.
+        </p>
+      </div>
+
+      <ul>
+        {pozycjeKarnet.map((p) => (
+          <li class="pozycja-cennika">
+            <span class="pozycja-cennika__nazwa">
+              <strong>{p.nazwa}</strong>
+              <span>{p.opis}</span>
+            </span>
+            <span class="pozycja-cennika__kwota">— zł</span>
+          </li>
+        ))}
+        <li class="pozycja-cennika">
+          <span class="pozycja-cennika__nazwa">
+            <strong>Zajęcia próbne</strong>
+            <span>Jedno pełne spotkanie w grupie, bez zobowiązań</span>
+          </span>
+          <span class="pozycja-cennika__kwota" style="color: var(--kobalt-600);">bezpłatne</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  {/* POZYCJE — EXAMS, rozliczane inaczej */}
+  <section class="sekcja sekcja--slate">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul nadtytul--slate">Exams — inny sposób rozliczenia</span>
+        <h2 class="tytul-1">Przygotowanie egzaminacyjne</h2>
+        <p class="wiodacy">
+          Exams nie wchodzi w karnet. Rozliczamy je osobno i można wziąć sam
+          egzamin, bez zajęć podstawowych — na tych samych zasadach dla
+          uczestnika zajęć i dla kogoś z zewnątrz.
+        </p>
+      </div>
+
+      <ul>
+        {pozycjeExams.map((p) => (
+          <li class="pozycja-cennika">
+            <span class="pozycja-cennika__nazwa">
+              <strong>
+                {p.nazwa}
+                {p.unikat && <span class="plakietka unikat">Unikat</span>}
+              </strong>
+              <span>{p.opis}</span>
+            </span>
+            <span class="pozycja-cennika__kwota">— zł</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* CO ZAWIERA CENA */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="siatka siatka--2">
+        <div class="stos">
+          <h2 class="tytul-3">W cenie karnetu</h2>
+          <ul class="lista-znaczona lista-odhaczona">
+            <li>Wszystkie materiały i karty pracy</li>
+            <li>Raport o postępach dziecka</li>
+            <li>Konsultacja z prowadzącym na życzenie rodzica</li>
+            <li>Odrobienie zajęć odwołanych z wyprzedzeniem</li>
+            <li>Udział w wydarzeniach otwartych centrum</li>
+          </ul>
+        </div>
+        <div class="stos">
+          <h2 class="tytul-3">Zawieszenie karnetu</h2>
+          <p class="tekst-maly tekst-drugi">
+            Karnet to określona liczba spotkań, a nie abonament na czas. Jeśli coś
+            stanie na przeszkodzie — choroba, wyjazd, trudniejszy okres w szkole —
+            zajęcia czekają.
+          </p>
+          <ul class="lista-znaczona">
+            <li>Zawiesić można oba karnety: miesięczny i semestralny</li>
+            <li>Niewykorzystane spotkania przechodzą na kolejne terminy</li>
+            <li>Wpłaconych pieniędzy nie zwracamy — zawieszamy karnet</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* PYTANIA */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Płatności</span>
+          <h2 class="tytul-1">Pytania, które wracają</h2>
+          <p class="tekst-drugi tekst-maly">
+            Każde z nich i tak padnie w pierwszej rozmowie — lepiej, żeby
+            odpowiedź była tutaj.
+          </p>
+        </div>
+        <div class="pytania">
+          {pytania.map((p) => (
+            <details>
+              <summary>{p.pytanie}</summary>
+              <p class="pytania__odpowiedz">{p.odpowiedz}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ZapisCta
+    tytul="Zanim zapłacicie za cokolwiek, przyjdźcie na jedną misję"
+    tresc="Bezpłatne zajęcia próbne, bez zobowiązań. Dziecko bierze udział na normalnych zasadach, Wy patrzycie z boku. Potem rozmawiamy."
+  />
+</Baza>

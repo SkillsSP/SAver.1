@@ -1,0 +1,19 @@
+---
+import { url } from "../lib/site.js";
+---
+
+{/*
+  Pasek zamykający sekcję ofertową. Powtarzany na dole każdej strony Programu
+  i na obu stronach Exams — zawsze ta sama treść i to samo miejsce, więc
+  rodzic uczy się, gdzie tego szukać. Treść odnośnika mówi, dokąd prowadzi,
+  także wyrwana z kontekstu (czytnik ekranu podaje listę samych linków).
+*/}
+<div class="odeslanie">
+  <p class="odeslanie__tekst">
+    <strong>Kids, Teens Junior, Teens Senior</strong>
+    Sprawdźcie, jak dobieramy grupy wiekowe i dlaczego akurat tak.
+  </p>
+  <a class="przycisk przycisk--obrys" href={url("/metoda#grupy")}>
+    Zobacz podział na grupy wiekowe
+  </a>
+</div>

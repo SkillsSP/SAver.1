@@ -1,0 +1,257 @@
+---
+import Baza from "../layouts/Baza.astro";
+import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import { url, wielkoscGrupy, telefonHref, telefonTekst } from "../lib/site.js";
+
+const tel = telefonHref();
+
+const odbior = [
+  {
+    tytul: "Wejście",
+    opis: "Rodzic przekazuje dziecko prowadzącemu przy sali. Obecność zapisujemy na liście.",
+  },
+  {
+    tytul: "Odbiór",
+    opis: "Osoba nieznana prowadzącemu okazuje dokument. Bez upoważnienia dziecka nie wydajemy i dzwonimy do rodzica.",
+  },
+  {
+    tytul: "Samodzielne wyjście",
+    opis: "Możliwe tylko na pisemną zgodę rodzica, od wieku ustalonego w regulaminie.",
+  },
+  {
+    tytul: "Spóźniony odbiór",
+    opis: "Dziecko czeka pod opieką pracownika. Kontaktujemy się kolejno z osobami z listy.",
+  },
+];
+
+const zgloszenie = [
+  {
+    tytul: "Przyjęcie zgłoszenia tego samego dnia",
+    opis: "Zgłoszenie przyjmuje osoba odpowiedzialna za standardy. W razie jej nieobecności zastępuje ją wyznaczony zastępca.",
+  },
+  {
+    tytul: "Zabezpieczenie dziecka",
+    opis: "Jeśli podejrzenie dotyczy osoby z centrum, odsuwamy ją od kontaktu z dziećmi na czas wyjaśniania. Nie czekamy na rozstrzygnięcie.",
+  },
+  {
+    tytul: "Powiadomienie rodzica i służb",
+    opis: "Informujemy rodzica lub opiekuna prawnego, a gdy podejrzenie dotyczy przestępstwa — odpowiednie służby.",
+  },
+  {
+    tytul: "Dokumentacja i wnioski",
+    opis: "Spisujemy przebieg sprawy i wracamy do standardów, żeby sprawdzić, co wymaga zmiany.",
+  },
+];
+---
+
+<Baza
+  aktywna="o-nas"
+  tytul="Standardy Ochrony Małoletnich"
+  opis="Standardy Ochrony Małoletnich obowiązujące w Skills Academy w Szczecinie: weryfikacja osób pracujących z dziećmi, zasady bezpiecznego kontaktu, wizerunek, procedura zgłoszeń."
+>
+  <section class="naglowek-strony">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Bezpieczeństwo</span>
+        <h1 class="tytul-1">Standardy Ochrony Małoletnich</h1>
+        <p class="hero__zdanie">
+          Publikujemy nasze standardy w całości, bo rodzic ma prawo wiedzieć, kto
+          pracuje z jego dzieckiem, na jakich zasadach i co się stanie, jeśli coś
+          pójdzie nie tak. Ten dokument obowiązuje każdą osobę w centrum —
+          prowadzących, biuro, osoby współpracujące.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekcja">
+    <div class="szerokosc">
+      <DoUzupelnienia czego="Przegląd prawny">
+        Ustawa wymaga opublikowania dwóch wersji standardów jednocześnie: pełnej
+        i skróconej, napisanej językiem zrozumiałym dla dziecka. Obie są poniżej.
+        Przed publikacją serwisu treść musi przejść przegląd prawny, a Wy musicie
+        uzupełnić: numer i datę wersji dokumentu, datę następnego przeglądu,
+        imię, nazwisko i funkcję osoby odpowiedzialnej za standardy wraz
+        z zastępcą, wiek samodzielnego wyjścia, liczbę dni na usunięcie
+        materiałów po wycofaniu zgody wizerunkowej oraz częstotliwość przeglądu
+        apteczek.
+      </DoUzupelnienia>
+    </div>
+  </section>
+
+  {/* WERSJA DLA RODZICA */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Wersja pełna</span>
+        <h2 class="tytul-1">Dla rodzica i opiekuna</h2>
+      </div>
+
+      <div class="stos stos--luzny">
+        <div class="siatka--wiodaca">
+          <h3 class="tytul-3">Kto może pracować z dziećmi</h3>
+          <div class="stos stos--ciasny">
+            <p class="tekst-drugi">
+              Każdą osobę przed dopuszczeniem do zajęć sprawdzamy w Rejestrze
+              Sprawców Przestępstw na Tle Seksualnym. Bez tego nikt nie wchodzi
+              do sali — dotyczy to również osób zastępujących i praktykantów.
+            </p>
+            <ul class="lista-znaczona lista-odhaczona">
+              <li>Zaświadczenie o niekaralności z Krajowego Rejestru Karnego</li>
+              <li>Oświadczenie o państwach zamieszkania z ostatnich 20 lat</li>
+              <li>Potwierdzone kwalifikacje do pracy z dziećmi</li>
+              <li>Podpisane zobowiązanie do przestrzegania tych standardów</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="siatka--wiodaca">
+          <h3 class="tytul-3">Zasady bezpiecznego kontaktu</h3>
+          <div class="stos stos--ciasny">
+            <p class="tekst-drugi">
+              Dorosły nigdy nie zostaje z dzieckiem sam za zamkniętymi drzwiami.
+              Zajęcia indywidualne prowadzimy w salach z przeszkleniem albo przy
+              otwartych drzwiach.
+            </p>
+            <ul class="lista-znaczona">
+              <li>Bez kontaktu prywatnego prowadzącego z dzieckiem — komunikacja idzie przez rodzica i kanały centrum</li>
+              <li>Bez przewożenia dzieci prywatnym samochodem</li>
+              <li>Zakaz kar fizycznych, krzyku, wyśmiewania i komentarzy o wyglądzie</li>
+              <li>Dziecko ma prawo odmówić kontaktu fizycznego, także pomocy przy ubieraniu</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="siatka--wiodaca">
+          <h3 class="tytul-3">Przyprowadzanie i odbiór dziecka</h3>
+          <div class="stos stos--ciasny">
+            <p class="tekst-drugi">
+              Dziecko wydajemy wyłącznie osobom wskazanym na piśmie przez rodzica
+              lub opiekuna prawnego. Listę osób upoważnionych rodzic wypełnia przy
+              zapisie i może ją zmienić w każdej chwili.
+            </p>
+            <ol class="kroki">
+              {odbior.map((krok) => (
+                <li class="kroki__krok">
+                  <span class="kroki__tresc">
+                    <strong>{krok.tytul}</strong>
+                    <p>{krok.opis}</p>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+
+        <div class="siatka--wiodaca">
+          <h3 class="tytul-3">Wizerunek dziecka</h3>
+          <div class="stos stos--ciasny">
+            <p class="tekst-drugi">
+              Bez pisemnej zgody rodzica nie publikujemy żadnego zdjęcia ani
+              nagrania. Zgodę można wycofać w każdej chwili, bez podawania powodu
+              — usuwamy wtedy materiał z naszych kanałów.
+            </p>
+            <ul class="lista-znaczona">
+              <li>Nigdy nie podpisujemy zdjęć imieniem i nazwiskiem dziecka</li>
+              <li>Nie oznaczamy lokalizacji przy zdjęciach z dziećmi</li>
+              <li>Zdjęcia robi wyłącznie osoba wyznaczona, sprzętem centrum</li>
+              <li>Odmowa zgody nie wpływa na udział dziecka w zajęciach</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="siatka--wiodaca">
+          <h3 class="tytul-3">Sala, grupa, zdrowie</h3>
+          <div class="stos stos--ciasny">
+            <p class="tekst-drugi">
+              Grupy liczą do {wielkoscGrupy} osób, żeby prowadzący widział każde
+              dziecko. Informacje o alergiach i chorobach przewlekłych zbieramy
+              przy zapisie i przekazujemy tylko osobom prowadzącym zajęcia.
+            </p>
+            <ul class="lista-znaczona">
+              <li>Apteczka w każdej sali, z regularnym przeglądem</li>
+              <li>Osoba z aktualnym kursem pierwszej pomocy na każdej zmianie</li>
+              <li>Przy urazie dzwonimy do rodzica natychmiast, przed spisaniem notatki</li>
+              <li>Dziecko z gorączką lub objawami infekcji nie zostaje na zajęciach</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="siatka--wiodaca">
+          <h3 class="tytul-3">Co się dzieje, kiedy ktoś zgłosi krzywdzenie</h3>
+          <div class="stos stos--ciasny">
+            <p class="tekst-drugi">
+              Zgłoszenie może złożyć każdy — dziecko, rodzic, pracownik, osoba
+              postronna. Nie oceniamy, czy podejrzenie jest wystarczająco poważne.
+              Każde uruchamia tę samą procedurę.
+            </p>
+            <ol class="kroki">
+              {zgloszenie.map((krok) => (
+                <li class="kroki__krok">
+                  <span class="kroki__tresc">
+                    <strong>{krok.tytul}</strong>
+                    <p>{krok.opis}</p>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* WERSJA DLA DZIECKA — wymagana ustawą, osobnym językiem */}
+  <section class="sekcja sekcja--tint">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Wersja skrócona</span>
+        <h2 class="tytul-1">Dla dziecka</h2>
+        <p class="wiodacy">
+          To ta sama treść, napisana tak, żeby dało się ją przeczytać razem
+          z dzieckiem.
+        </p>
+      </div>
+
+      <div class="siatka siatka--2">
+        <article class="karta karta--luzna">
+          <h3 class="tytul-3">Masz prawo czuć się bezpiecznie</h3>
+          <ul class="lista-znaczona">
+            <li>Nikt dorosły nie może Cię uderzyć, wyśmiewać ani krzyczeć na Ciebie.</li>
+            <li>Nie musisz się przytulać ani dotykać, jeśli nie chcesz. Możesz powiedzieć „nie”.</li>
+            <li>Nikt dorosły z centrum nie będzie pisał do Ciebie prywatnie.</li>
+            <li>Twoje zdjęcie pojawi się gdzieś tylko wtedy, gdy rodzic się zgodzi.</li>
+          </ul>
+        </article>
+
+        <article class="karta karta--luzna">
+          <h3 class="tytul-3">Powiedz komuś, jeśli coś jest nie tak</h3>
+          <ul class="lista-znaczona">
+            <li>Jeśli ktoś zachowa się wobec Ciebie źle — powiedz o tym dorosłemu, któremu ufasz.</li>
+            <li>Możesz powiedzieć rodzicowi, prowadzącemu albo komuś w biurze.</li>
+            <li>Nigdy nie będziesz miał_a przez to kłopotów. To nie jest skarżenie.</li>
+            <li>Zajmiemy się tym tego samego dnia.</li>
+          </ul>
+          {tel && (
+            <p class="tekst-maly">
+              Twój rodzic może też zadzwonić: <a class="link-w-zdaniu" href={tel}>{telefonTekst()}</a>
+            </p>
+          )}
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="odeslanie">
+        <p class="odeslanie__tekst">
+          <strong>Macie pytanie albo zgłoszenie?</strong>
+          Odbieramy każde zgłoszenie tego samego dnia roboczego — niezależnie od
+          tego, jak drobne wydaje się na pierwszy rzut oka.
+        </p>
+        <a class="przycisk przycisk--obrys" href={url("/kontakt")}>Skontaktujcie się z nami</a>
+      </div>
+    </div>
+  </section>
+</Baza>

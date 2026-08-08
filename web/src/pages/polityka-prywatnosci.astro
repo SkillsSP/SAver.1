@@ -1,0 +1,69 @@
+---
+import StronaPrawna from "../components/StronaPrawna.astro";
+
+const sekcje = [
+  {
+    tytul: "1. Kto jest administratorem danych",
+    tresc:
+      "Administratorem danych zbieranych w tym serwisie jest podmiot prowadzący centrum Skills Academy w Szczecinie.",
+    doUstalenia:
+      "Pełna nazwa podmiotu, forma prawna, adres siedziby, NIP, REGON, adres e-mail i telefon kontaktowy. Jeśli powołaliście inspektora ochrony danych — jego dane kontaktowe.",
+  },
+  {
+    tytul: "2. Jakie dane zbieramy",
+    tresc:
+      "W formularzu zapisu zbieramy imię dziecka, jego wiek, numer telefonu rodzica i opcjonalnie adres e-mail. Serwis zbiera też podstawowe dane techniczne wizyty.",
+    doUstalenia:
+      "Pełna lista danych z formularza po ostatecznym ustaleniu pól oraz zakres danych zbieranych przez narzędzia analityczne, jeśli zdecydujecie się je wdrożyć.",
+  },
+  {
+    tytul: "3. W jakim celu i na jakiej podstawie",
+    tresc:
+      "Dane z formularza służą wyłącznie kontaktowi w sprawie zajęć próbnych i zapisu dziecka.",
+    doUstalenia:
+      "Do potwierdzenia przez prawnika: podstawy prawne dla każdego celu — zgoda, wykonanie umowy, obowiązek prawny, prawnie uzasadniony interes.",
+  },
+  {
+    tytul: "4. Jak długo przechowujemy dane",
+    tresc:
+      "Dane osób, które nie zdecydowały się na zapis, usuwamy po zakończeniu kontaktu. Dane uczestników przechowujemy przez okres wymagany przepisami.",
+    doUstalenia:
+      "Konkretne okresy przechowywania dla każdej kategorii danych — zgłoszenia bez zapisu, dane uczestników, dokumentacja księgowa, zgody wizerunkowe.",
+  },
+  {
+    tytul: "5. Komu przekazujemy dane",
+    tresc:
+      "Danych nie sprzedajemy i nie udostępniamy w celach marketingowych podmiotom trzecim.",
+    doUstalenia:
+      "Lista podmiotów przetwarzających — hosting, poczta, system do zapisów, biuro rachunkowe. Każdy wymaga umowy powierzenia przetwarzania danych.",
+  },
+  {
+    tytul: "6. Wasze prawa",
+    tresc:
+      "Macie prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz sprzeciwu. Zgodę można wycofać w każdej chwili, bez wpływu na zgodność z prawem wcześniejszego przetwarzania.",
+    doUstalenia:
+      "Sposób realizacji wniosków i termin odpowiedzi. Dodać informację o prawie skargi do Prezesa Urzędu Ochrony Danych Osobowych.",
+  },
+  {
+    tytul: "7. Pliki cookies",
+    tresc:
+      "Serwis używa plików cookies w zakresie niezbędnym do jego działania. Nie korzystamy dziś z analityki ani z pikseli reklamowych, więc serwis nie wyświetla banera zgody.",
+    doUstalenia:
+      "Po decyzji o narzędziach: lista cookies, ich cel i czas życia. Jeśli pojawi się analityka lub piksel reklamowy, potrzebny będzie baner zgody.",
+  },
+  {
+    tytul: "8. Dane dzieci",
+    tresc:
+      "Dane dziecka podaje rodzic lub opiekun prawny. Dziecko nie zapisuje się samodzielnie.",
+    doUstalenia:
+      "Do potwierdzenia przez prawnika: zapis o zgodzie opiekuna oraz powiązanie z zasadami wizerunku opisanymi na stronie Bezpieczeństwo.",
+  },
+];
+---
+
+<StronaPrawna
+  tytul="Polityka prywatności"
+  opis="Jakie dane zbiera serwis Skills Academy, w jakim celu, jak długo je przechowujemy i jakie prawa przysługują osobom, których dane dotyczą."
+  wstep="Opisujemy tu, jakie dane zbieramy przez ten serwis, po co i na jak długo. Dokument jest w wersji roboczej — przed publikacją musi go potwierdzić prawnik."
+  sekcje={sekcje}
+/>

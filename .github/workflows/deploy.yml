@@ -1,0 +1,62 @@
+name: Wdrożenie strony na GitHub Pages
+
+# Buduje serwis Astro z katalogu web/ i publikuje go na GitHub Pages.
+# Uruchamia się przy każdym wypchnięciu na gałąź main oraz ręcznie z zakładki
+# Actions. Żeby zadziałało, w ustawieniach repozytorium (Settings → Pages)
+# źródłem musi być „GitHub Actions", a nie „Deploy from a branch".
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Jedno wdrożenie naraz; nie przerywamy wdrożenia, które już trwa.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  budowanie:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pobranie kodu
+        uses: actions/checkout@v4
+
+      - name: Instalacja Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Instalacja zależności
+        run: npm ci
+        working-directory: web
+
+      - name: Budowanie serwisu
+        run: npm run build
+        working-directory: web
+
+      - name: Konfiguracja Pages
+        uses: actions/configure-pages@v5
+
+      - name: Przekazanie zbudowanych plików
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+
+  wdrozenie:
+    needs: budowanie
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.wdroz.outputs.page_url }}
+    steps:
+      - name: Publikacja na GitHub Pages
+        id: wdroz
+        uses: actions/deploy-pages@v4

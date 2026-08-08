@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/colors.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/typography.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/effects.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/styles.css">
+<script src="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/_ds_bundle.js"></script>
+<style>
+  body { margin: 0; background: #FBF8F3; }
+  a { color: #1E5FCC; text-decoration: none; }
+  a:hover { color: #E8654A; }
+  *, *::before, *::after { box-sizing: border-box; }
+  a:focus-visible, button:focus-visible { outline: 2px solid #1E5FCC; outline-offset: 2px; }
+</style>
+</helmet>
+
+<div style="background:#FBF8F3;color:#1A2230;font-family:Lexend,system-ui,sans-serif;min-height:100vh">
+
+  <dc-import name="Nawigacja" hint-size="100%,68px"></dc-import>
+
+  <section style="background:#1E5FCC;border-radius:0 0 24px 24px">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(38px,5.5vw,66px) 24px clamp(34px,5vw,56px)">
+      <div style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72);font-weight:600;margin-bottom:16px">Formalności</div>
+      <h1 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(30px,4.4vw,48px);line-height:1.1;letter-spacing:-.01em;color:#fff;margin:0;max-width:20ch;text-wrap:balance">Regulamin zajęć</h1>
+      <p style="font-size:clamp(15.5px,1.5vw,18px);line-height:1.65;color:rgba(255,255,255,.86);margin:20px 0 0;max-width:62ch;text-wrap:pretty">Zasady zapisu, płatności, odwoływania i zawieszania karnetu. Ceny znajdziecie w <a href="Cennik.dc.html" style="color:#fff;border-bottom:1px solid rgba(255,255,255,.45)">cenniku</a>, zasady bezpieczeństwa w <a href="Bezpieczeństwo.dc.html" style="color:#fff;border-bottom:1px solid rgba(255,255,255,.45)">standardach ochrony małoletnich</a>.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px 34px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.22)">
+        <div style="font-size:14px;color:rgba(255,255,255,.82)">Wersja <span style="border-bottom:1px dashed rgba(255,255,255,.6)">[numer]</span></div>
+        <div style="font-size:14px;color:rgba(255,255,255,.82)">Obowiązuje od <span style="border-bottom:1px dashed rgba(255,255,255,.6)">[data]</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:860px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px 0">
+    <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;gap:30px">
+      <sc-for list="{{ sections }}" as="s" hint-placeholder-count="9">
+        <div>
+          <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(18px,2vw,21px);margin:0 0 10px;letter-spacing:-.005em">{{ s.title }}</h2>
+          <p style="font-size:15px;line-height:1.75;color:#1A2230;margin:0 0 12px;text-wrap:pretty">{{ s.lead }}</p>
+          <div style="border:1px dashed rgba(232,101,74,.5);border-radius:10px;padding:16px 18px;font-size:14px;line-height:1.7;color:#5B6B7A">{{ s.todo }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:860px;margin:0 auto;padding:clamp(26px,3.4vw,38px) 24px clamp(20px,3vw,32px)">
+    <div style="border:1px dashed rgba(232,101,74,.5);border-radius:12px;padding:18px 20px;font-size:13.5px;line-height:1.7;color:#5B6B7A">
+      <strong style="color:#1A2230">Do potwierdzenia przez prawnika.</strong> Regulamin jest umową z konsumentem — zapisy o płatnościach, rezygnacji i braku zwrotów muszą przejść weryfikację pod kątem klauzul niedozwolonych. Szczególnej uwagi wymaga zasada „karnet można zawiesić, ale pieniędzy nie zwracamy" oraz prawo odstąpienia od umowy zawartej na odległość.
+    </div>
+  </section>
+
+  <dc-import name="Stopka" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      sections: [
+        { title: '1. Kto prowadzi zajęcia',
+          lead: 'Zajęcia prowadzi centrum kompetencji Skills Academy w Szczecinie.',
+          todo: 'Do uzupełnienia: pełna nazwa podmiotu, adres, NIP, REGON, dane kontaktowe, forma prawna działalności.' },
+        { title: '2. Zapis na zajęcia',
+          lead: 'Zapis następuje po zajęciach próbnych, na podstawie formularza i potwierdzenia ze strony centrum. Dziecko zapisuje rodzic lub opiekun prawny.',
+          todo: 'Do uzupełnienia: moment zawarcia umowy, wymagane dokumenty, lista osób upoważnionych do odbioru, informacje o zdrowiu dziecka.' },
+        { title: '3. Karnet i płatności',
+          lead: 'Karnet obejmuje określoną z góry liczbę spotkań w modelu miesięcznym albo semestralnym. Płatność następuje przelewem na konto centrum.',
+          todo: 'Do uzupełnienia: kwoty (patrz cennik), termin płatności, numer konta, zasady wystawiania faktur, konsekwencje opóźnienia.' },
+        { title: '4. Zawieszenie karnetu i rezygnacja',
+          lead: 'Karnet można zawiesić w obu modelach. Opłacone spotkania nie przepadają i mogą zostać wykorzystane w kolejnych terminach. Wpłaconych środków nie zwracamy.',
+          todo: 'Do uzupełnienia: sposób i wyprzedzenie zgłoszenia zawieszenia, okres ważności niewykorzystanych zajęć, tryb rezygnacji. Do weryfikacji prawnej: relacja tego zapisu do prawa odstąpienia od umowy zawartej na odległość (14 dni).' },
+        { title: '5. Nieobecności i odrabianie',
+          lead: 'Nieobecność zgłoszoną z wyprzedzeniem można odrobić w innej grupie tego samego poziomu.',
+          todo: 'Do uzupełnienia: minimalne wyprzedzenie zgłoszenia, limit odrabianych zajęć, zasady przy dłuższej chorobie i przy zajęciach indywidualnych.' },
+        { title: '6. Odwołanie zajęć przez centrum',
+          lead: 'Jeśli zajęcia nie odbędą się z naszej winy, wyznaczamy termin zastępczy.',
+          todo: 'Do uzupełnienia: tryb informowania rodziców, termin odrobienia, zasady przy odwołaniu z przyczyn niezależnych oraz minimalna liczebność grupy, poniżej której grupa nie rusza.' },
+        { title: '7. Obowiązki uczestnika i rodzica',
+          lead: 'Uczestnik przestrzega zasad bezpieczeństwa i zasad współpracy w grupie. Rodzic zapewnia punktualne przyprowadzenie i odbiór dziecka.',
+          todo: 'Do uzupełnienia: zasady zachowania, tryb postępowania przy powtarzającym się naruszaniu zasad, odpowiedzialność za rzeczy pozostawione w centrum.' },
+        { title: '8. Wizerunek i dane osobowe',
+          lead: 'Publikacja zdjęć wymaga odrębnej, pisemnej zgody rodzica, którą można wycofać w każdej chwili.',
+          todo: 'Odesłanie do klauzuli informacyjnej i polityki prywatności. Do potwierdzenia: wzór zgody wizerunkowej i termin usunięcia materiałów po wycofaniu zgody.' },
+        { title: '9. Reklamacje i zmiany regulaminu',
+          lead: 'Uwagi i reklamacje przyjmujemy pisemnie, na adres e-mail centrum.',
+          todo: 'Do uzupełnienia: termin rozpatrzenia reklamacji, tryb informowania o zmianach regulaminu i okres, po którym zmiany wchodzą w życie.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

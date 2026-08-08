@@ -1,0 +1,190 @@
+---
+import Baza from "../../layouts/Baza.astro";
+import DoUzupelnienia from "../../components/DoUzupelnienia.astro";
+import ZapisCta from "../../components/ZapisCta.astro";
+import { url } from "../../lib/site.js";
+
+const schemat = [
+  {
+    tytul: "Arkusz na wejściu",
+    opis: "Pełny arkusz CKE w warunkach zbliżonych do egzaminacyjnych. Punkt odniesienia dla wszystkiego, co dalej.",
+  },
+  {
+    tytul: "Plan do daty egzaminu",
+    opis: "Rozpisany wstecz od terminu CKE, z priorytetem dla zadań, które dają najwięcej punktów.",
+  },
+  {
+    tytul: "Próby kontrolne",
+    opis: "Z wynikiem punktowym i porównaniem do poprzedniego podejścia.",
+  },
+  {
+    tytul: "Raport",
+    opis: "Liczby, nie wrażenia: aktualny wynik, tempo poprawy, obszary do nadrobienia.",
+  },
+];
+---
+
+{/*
+  Rejestr Teens Senior: slate, wyłącznie Lexend, bez Fredoki, bez słów „misja”
+  i „przygoda”. Konkret — progi punktowe, arkusze CKE, poziomy. Odbiorcą jest
+  uczeń, często pełnoletni, dlatego wezwanie brzmi „Zapisz się na konsultację”,
+  a nie „Zapisz dziecko”. Atrybut `senior` przełącza rejestr w całym układzie.
+*/}
+<Baza
+  aktywna="exams"
+  senior={true}
+  tytul="Matura z angielskiego i matematyki"
+  opis="Przygotowanie do matury z angielskiego (podstawowy i rozszerzony) oraz z matematyki (podstawowy). Arkusze CKE, progi punktowe, harmonogram do maja. Szczecin."
+>
+  <section class="naglowek-strony naglowek-strony--senior">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Teens Senior · 16–19 lat</span>
+        <h1 class="tytul-1 tytul--medrzec">Konkretny plan na maturę</h1>
+        <p class="hero__zdanie">
+          Angielski na poziomie podstawowym i rozszerzonym, matematyka na
+          poziomie podstawowym. Ta ścieżka ma inny rejestr niż reszta centrum:
+          plan, arkusze, progi punktowe.
+        </p>
+        <div class="przyciski" style="margin-top: var(--space-2);">
+          <a class="przycisk przycisk--duch" href="#angielski">Angielski</a>
+          <a class="przycisk przycisk--duch" href="#matematyka">
+            Matematyka <span class="plakietka unikat">Unikat</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ANGIELSKI — dwa poziomy */}
+  <section class="sekcja" id="angielski">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul nadtytul--slate">Przedmiot</span>
+        <h2 class="tytul-1 tytul--medrzec">Angielski</h2>
+      </div>
+
+      <div class="siatka siatka--2">
+        <article class="karta karta--luzna karta--slate">
+          <span class="plakietka plakietka--slate">Poziom podstawowy</span>
+          <h3 class="tytul-3 tytul--medrzec">Obowiązkowy dla każdego</h3>
+          <p class="tekst-drugi tekst-maly">
+            Cel: pewne przekroczenie progu 30%. Nacisk na rozumienie tekstu
+            i wypowiedź pisemną — tam najczęściej gubią się punkty łatwe do
+            odzyskania.
+          </p>
+          <ul class="lista-znaczona">
+            <li>Praca na arkuszach CKE z ostatnich lat</li>
+            <li>Słownictwo tematyczne z podstawy programowej</li>
+            <li>Zarządzanie czasem podczas egzaminu</li>
+          </ul>
+        </article>
+
+        <article class="karta karta--luzna karta--slate">
+          <span class="plakietka plakietka--slate">Poziom rozszerzony</span>
+          <h3 class="tytul-3 tytul--medrzec">Dla wysokiego wyniku w rekrutacji</h3>
+          <p class="tekst-drugi tekst-maly">
+            Dla osób, które potrzebują wysokiego wyniku do rekrutacji. Praca na
+            trudniejszych tekstach, wypracowaniu i precyzji językowej.
+          </p>
+          <ul class="lista-znaczona">
+            <li>Wypracowanie — struktura, argumentacja, ocena</li>
+            <li>Rozumienie ze słuchu na poziomie rozszerzonym</li>
+            <li>Zaawansowane struktury gramatyczne</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {/* MATEMATYKA */}
+  <section class="sekcja sekcja--slate" id="matematyka">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul nadtytul--slate">Przedmiot</span>
+          <h2 class="tytul-1 tytul--medrzec">
+            Matematyka <span class="plakietka unikat">Unikat</span>
+          </h2>
+          <p class="plakietka plakietka--slate" style="justify-self: start;">
+            Poziom podstawowy
+          </p>
+        </div>
+        <div class="stos">
+          <p class="wiodacy">
+            Poziom podstawowy, czyli ten obowiązkowy. Zaczynamy od diagnozy,
+            która pokazuje, ile realnie brakuje do progu — i ile spotkań potrzeba,
+            żeby go przekroczyć.
+          </p>
+          <p class="tekst-maly tekst-drugi">
+            Rozszerzonej matematyki nie prowadzimy. Wolimy to powiedzieć wprost
+            niż przyjąć ucznia, któremu nie zdołalibyśmy pomóc na tym poziomie.
+          </p>
+          <DoUzupelnienia czego="Prowadząca matematykę">
+            Imię, nazwisko, wykształcenie i doświadczenie egzaminacyjne
+            założycielki prowadzącej matematykę, z odesłaniem do „O nas”.
+            To jedyne miejsce w Szczecinie, gdzie przygotowanie do matury
+            z angielskiego i z matematyki prowadzi ten sam zespół — ale bez
+            nazwiska jest to tylko zdanie w reklamie.
+          </DoUzupelnienia>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* SCHEMAT */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul nadtytul--slate">Schemat</span>
+          <h2 class="tytul-1 tytul--medrzec">Jak pracujemy</h2>
+          <p class="tekst-drugi tekst-maly">
+            Ten sam schemat dla obu przedmiotów i obu poziomów. W każdym momencie
+            wiadomo, gdzie jesteś względem celu.
+          </p>
+        </div>
+        <ol class="kroki">
+          {schemat.map((krok) => (
+            <li class="kroki__krok">
+              <span class="kroki__tresc">
+                <strong>{krok.tytul}</strong>
+                <p>{krok.opis}</p>
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {/* WYNIKI */}
+  <section class="sekcja sekcja--slate">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul nadtytul--slate">Wyniki</span>
+          <h2 class="tytul-1 tytul--medrzec">Publikujemy je po pierwszym roczniku</h2>
+        </div>
+        <div class="stos">
+          <p class="wiodacy">
+            Nie podajemy średnich, dopóki nie mamy ich z czego policzyć. Kiedy
+            pierwszy rocznik zda maturę, w tym miejscu pojawi się średni wynik,
+            poprawa względem arkusza wejściowego i liczba uczniów.
+          </p>
+          <p class="tekst-maly tekst-drugi">
+            Do tego czasu jedyne, co możemy pokazać, to sposób pracy i osoby,
+            które ją prowadzą. <a class="link-w-zdaniu" href={url("/o-nas")}>Poznajcie zespół</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ZapisCta
+    senior={true}
+    tytul="Zacznijcie od arkusza, nie od deklaracji"
+    tresc="Konsultacja z arkuszem diagnostycznym pokazuje, ile punktów realnie brakuje i ile spotkań potrzeba do celu. Stawki znajdziecie w cenniku."
+    przycisk="Zapisz się na konsultację"
+  />
+</Baza>

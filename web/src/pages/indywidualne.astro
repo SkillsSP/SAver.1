@@ -1,0 +1,189 @@
+---
+import Baza from "../layouts/Baza.astro";
+import OdeslanieDoGrup from "../components/OdeslanieDoGrup.astro";
+import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import ZapisCta from "../components/ZapisCta.astro";
+import { url } from "../lib/site.js";
+
+const kiedyMaSens = [
+  {
+    tytul: "Konkretny termin na horyzoncie",
+    opis: "Egzamin ósmoklasisty, matura, egzamin poprawkowy albo rekrutacja do klasy dwujęzycznej. Pracujemy wstecz od daty.",
+  },
+  {
+    tytul: "Wyraźna luka w podstawach",
+    opis: "Dziecko gubi się od dawna i w grupie nie nadrobi, bo grupa idzie dalej. Najpierw diagnoza, potem plan cofnięcia się do miejsca, w którym zgubiło wątek.",
+  },
+  {
+    tytul: "Potrzeba innego tempa",
+    opis: "Dziecko wyraźnie wyprzedza grupę albo potrzebuje spokojniejszych warunków niż sala pełna ludzi.",
+  },
+];
+
+const jakZaczynamy = [
+  {
+    tytul: "Rozmowa z rodzicem",
+    opis: "Czego ma dotyczyć praca, jaki jest termin, co już próbowaliście.",
+  },
+  {
+    tytul: "Diagnoza z dzieckiem",
+    opis: "Jedno spotkanie na sprawdzenie poziomu i sposobu pracy. Kończy się pisemnym podsumowaniem dla rodzica.",
+  },
+  {
+    tytul: "Plan i liczba spotkań",
+    opis: "Mówimy, ile spotkań realnie potrzeba i co się stanie, jeśli będzie ich mniej. Bez otwartych zobowiązań na rok.",
+  },
+  {
+    tytul: "Raporty w trakcie",
+    opis: "Dostajecie krótkie podsumowanie: co się poprawiło, co nadal nie działa, co robimy dalej.",
+  },
+];
+---
+
+<Baza
+  aktywna="program"
+  tytul="Zajęcia indywidualne 1:1"
+  opis="Spotkania jeden na jeden dla dzieci i młodzieży w każdym wieku — od wsparcia w bieżącym materiale po przygotowanie do egzaminu ósmoklasisty i matury. Szczecin."
+>
+  <section class="naglowek-strony">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Program</span>
+        <h1 class="tytul-1">Jeden prowadzący, jedno dziecko, jeden konkretny cel</h1>
+        <p class="hero__zdanie">
+          Spotkania 1:1 dla dzieci i młodzieży w każdym wieku — od wsparcia
+          w bieżącym materiale po przygotowanie do egzaminu ósmoklasisty i matury.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* KIEDY MA SENS — uczciwe „nie zawsze” */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Kiedy</span>
+        <h2 class="tytul-1">Kiedy zajęcia indywidualne mają sens</h2>
+        <p class="wiodacy">
+          Nie zawsze mają. Jeśli dziecku brakuje przede wszystkim odwagi
+          w mówieniu, grupa zadziała lepiej i taniej — powiemy to wprost już po
+          rozmowie.
+        </p>
+      </div>
+      <div class="siatka siatka--3">
+        {kiedyMaSens.map((p) => (
+          <article class="karta">
+            <h3 class="tytul-4">{p.tytul}</h3>
+            <p class="tekst-maly tekst-drugi">{p.opis}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* JAK ZACZYNAMY */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Początek</span>
+          <h2 class="tytul-1">Jak zaczynamy</h2>
+          <p class="tekst-drugi tekst-maly">
+            Nigdy nie zaczynamy od „przerabiania materiału”. Najpierw musimy
+            wiedzieć, gdzie dokładnie jest problem.
+          </p>
+        </div>
+        <ol class="kroki">
+          {jakZaczynamy.map((krok) => (
+            <li class="kroki__krok">
+              <span class="kroki__tresc">
+                <strong>{krok.tytul}</strong>
+                <p>{krok.opis}</p>
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {/* ZAKRES I ORGANIZACJA */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka siatka--2">
+        <div class="stos">
+          <h2 class="tytul-3">Zakres pracy</h2>
+          <ul class="lista-znaczona">
+            <li>Angielski — od podstaw po poziom rozszerzony</li>
+            <li>Matematyka — przygotowanie przedegzaminacyjne</li>
+            <li>
+              <a class="link-w-zdaniu" href={url("/exams/e8")}>Przygotowanie do egzaminu ósmoklasisty</a>
+            </li>
+            <li>
+              <a class="link-w-zdaniu" href={url("/exams/matura")}>Przygotowanie do matury</a>
+            </li>
+          </ul>
+        </div>
+        <div class="stos">
+          <h2 class="tytul-3">Organizacja i odwoływanie</h2>
+          <ul class="lista-znaczona">
+            <li>Stały termin w tygodniu, ustalany na początku</li>
+            <li>
+              Zajęcia odbywają się w sali z przeszkleniem — zasada ze
+              <a class="link-w-zdaniu" href={url("/bezpieczenstwo")}>standardów ochrony małoletnich</a>
+            </li>
+            <li>Odwołanie bez opłaty z wyprzedzeniem ustalonym przy zapisie</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-4); max-width: var(--szerokosc-tekstu);">
+        <DoUzupelnienia czego="Warunki zajęć 1:1">
+          Do wpisania: długość i częstotliwość spotkania, wyprzedzenie przy
+          bezpłatnym odwołaniu, sposób rozliczenia (pakiet czy pojedyncze
+          spotkania), czy rozmowa wstępna jest bezpłatna i ile trwa, oraz
+          zakres klas i poziomów przy matematyce.
+        </DoUzupelnienia>
+      </div>
+    </div>
+  </section>
+
+  {/* SEKCJA MATURALNA — osobny rejestr, wyraźnie oddzielona */}
+  <section class="sekcja sekcja--slate rejestr-senior">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul nadtytul--slate">Teens Senior · 16–19 lat</span>
+          <h2 class="tytul-2 tytul--medrzec">Przygotowanie do matury 1:1</h2>
+        </div>
+        <div class="stos">
+          <p class="wiodacy">
+            Ta sama formuła, inny rejestr: punktem odniesienia jest arkusz CKE
+            i wynik. Zaczynamy od arkusza diagnostycznego, który pokazuje, ile
+            punktów realnie brakuje i ile spotkań potrzeba do celu.
+          </p>
+          <div class="przyciski">
+            <a class="przycisk przycisk--akcja" href={url("/kontakt")}>
+              Zapisz się na konsultację
+            </a>
+            <a class="przycisk przycisk--obrys-slate" href={url("/exams/matura")}>
+              Zobacz pełną ofertę maturalną
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <OdeslanieDoGrup />
+    </div>
+  </section>
+
+  <ZapisCta
+    tytul="Zacznijmy od rozmowy, nie od zapisu"
+    tresc="Powiedzcie, co się dzieje. Jeśli grupa będzie lepszym rozwiązaniem niż zajęcia 1:1, usłyszycie to od nas."
+    przycisk="Umów rozmowę"
+  />
+</Baza>

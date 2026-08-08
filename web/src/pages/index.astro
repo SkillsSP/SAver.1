@@ -1,0 +1,346 @@
+---
+import Baza from "../layouts/Baza.astro";
+import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import {
+  url,
+  grupyWiekowe,
+  zrodla,
+  wielkoscGrupy,
+  telefonHref,
+  telefonTekst,
+  firma,
+} from "../lib/site.js";
+
+const tel = telefonHref();
+
+/* Przebieg jednej misji — Detective Mission rozpisana na kroki. Zamiast
+   czterech kafli z nazwami misji pokazujemy jedną, od środka. */
+const przebiegMisji = [
+  {
+    czas: "00:00",
+    tytul: "Rozgrzewka w ruchu",
+    opis: "Polecenia po angielsku wykonywane ciałem, nie tłumaczone. Metoda TPR.",
+  },
+  {
+    czas: "00:08",
+    tytul: "Wskazówka",
+    opis: "Jedno zdanie po angielsku. Dzieci muszą się dogadać, co znaczy — same.",
+  },
+  {
+    czas: "00:12",
+    tytul: "Śledztwo w drużynach",
+    opis: "Pytania do prowadzącej wyłącznie po angielsku. Tu dzieje się cała nauka.",
+  },
+  {
+    czas: "00:32",
+    tytul: "Rozwiązanie i wnioski",
+    opis: "Każda drużyna tłumaczy swój tok rozumowania. Ćwiczenie argumentacji.",
+  },
+];
+---
+
+<Baza
+  tytul="Angielski dla życia, nie tylko dla szkoły"
+  opis="Centrum kompetencji w Szczecinie dla dzieci i młodzieży od 5 do 19 lat. Zajęcia podstawowe po angielsku, fakultety oraz przygotowanie do egzaminu ósmoklasisty i matury — z angielskiego i z matematyki."
+>
+  {/* ── 1 ── HERO. Hasło, jedno zdanie, dwa przyciski. Bez grafiki wypełniającej. */}
+  <section class="hero">
+    <div class="szerokosc">
+      <div class="hero__tresc">
+        <h1 class="tytul-display">Angielski dla życia,<br />nie tylko dla szkoły.</h1>
+        <p class="hero__zdanie">
+          Centrum kompetencji w Szczecinie dla dzieci i młodzieży od 5 do 19 lat.
+          Dzieci działają po angielsku — pytają, negocjują, rozwiązują problemy.
+          Starsi przygotowują się do egzaminu ósmoklasisty i matury, z angielskiego
+          i z matematyki.
+        </p>
+        <div class="przyciski">
+          <a class="przycisk przycisk--akcja" href={url("/kontakt")}>
+            Umów bezpłatne zajęcia próbne
+          </a>
+          <a class="przycisk przycisk--duch" href="#wiek">Sprawdź ofertę dla wieku dziecka</a>
+          {tel && (
+            <span class="telefon-obok">
+              albo zadzwońcie: <a href={tel}>{telefonTekst()}</a>
+            </span>
+          )}
+        </div>
+        <ul class="hero__fakty">
+          <li class="hero__fakt">{firma.miasto}, zajęcia stacjonarne</li>
+          <li class="hero__fakt">Grupy do {wielkoscGrupy} osób</li>
+          <li class="hero__fakt">Zajęcia podstawowe w całości po angielsku</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 2 ── SELEKTOR WIEKU. Największy element strony, prowadzi wprost do oferty. */}
+  <section class="sekcja" id="wiek">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Zacznijcie stąd</span>
+        <h2 class="tytul-1">Ile lat ma Wasze dziecko?</h2>
+        <p class="wiodacy">
+          Grupy dobieramy wiekiem, nie poziomem — sześciolatek i dziesięciolatek
+          uczą się zupełnie inaczej. Wybierzcie przedział, żeby zobaczyć, co
+          dokładnie dziecko robi na zajęciach.
+        </p>
+      </div>
+
+      <div class="wiek">
+        {grupyWiekowe.map((grupa) => (
+          <a
+            class={grupa.senior ? "wiek__karta wiek__karta--senior" : "wiek__karta"}
+            href={url(grupa.href)}
+          >
+            <span class="wiek__lata">{grupa.lata}</span>
+            <span class="wiek__nazwa">{grupa.nazwa}</span>
+            <span class="wiek__opis">{grupa.opis}</span>
+            <span class="wiek__strzalka">Zobacz ofertę →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ── 3 ── JEDNA MISJA OD ŚRODKA. Szeroka kolumna zamiast siatki kafli. */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="misja">
+        <div class="stos">
+          <span class="nadtytul">Jedna misja od środka</span>
+          <p class="misja__cytat">
+            Dziś jesteś detektywem. Masz jedną wskazówkę po angielsku
+            i dwadzieścia minut.
+          </p>
+          <p class="tekst-drugi">
+            Tak wygląda pojedyncze spotkanie w grupie ośmio- i dziewięciolatków.
+            Nikt nie zapowiada, że będzie „lekcja o czasie przeszłym”. Dziecko
+            dostaje zagadkę i musi ją rozwiązać — a jedynym dostępnym narzędziem
+            jest angielski.
+          </p>
+          <p class="tekst-drugi">
+            Efekt uboczny jest zamierzony: po trzech miesiącach dziecko pyta
+            o rzeczy po angielsku odruchowo, bo tak było szybciej niż po polsku.
+          </p>
+          <p>
+            <a class="link-w-zdaniu" href={url("/podstawowe")}>
+              Zobaczcie, jak zbudowane są zajęcia podstawowe
+            </a>
+          </p>
+        </div>
+
+        <div class="stos stos--ciasny">
+          <h2 class="tytul-3">Przebieg spotkania</h2>
+          <ol class="przebieg">
+            {przebiegMisji.map((krok) => (
+              <li class="przebieg__krok">
+                <span class="przebieg__czas">{krok.czas}</span>
+                <span class="przebieg__tresc">
+                  <strong>{krok.tytul}</strong>
+                  <p>{krok.opis}</p>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 4 ── DOWÓD. Metoda w trzech zdaniach + pasek źródeł. Nie sześć definicji. */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Dlaczego to działa</span>
+          <h2 class="tytul-1">Metoda, nie intuicja</h2>
+        </div>
+        <div class="stos">
+          <p class="wiodacy">
+            Program opiera się na reagowaniu ciałem, nauce przez projekt
+            i doświadczeniu — podejściach, które OECD, UNESCO i EEF wskazują jako
+            skuteczniejsze od nauczania podającego. To nie jest nasza autorska
+            teoria, tylko konsekwentne zastosowanie tego, co jest opisane
+            i sprawdzone.
+          </p>
+          <p class="tekst-drugi">
+            Praktyczny skutek: dziecko nie tłumaczy w głowie z polskiego. Reaguje
+            od razu, bo od pierwszego spotkania angielski jest narzędziem do
+            zrobienia czegoś, a nie przedmiotem do zaliczenia.
+          </p>
+          <p>
+            <a class="link-w-zdaniu" href={url("/metoda")}>
+              Przeczytajcie o metodzie i podziale na grupy wiekowe
+            </a>
+          </p>
+          <ul class="zrodla">
+            {zrodla.map((z) => <li class="zrodla__pozycja">{z}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 5 ── EXAMS. Tu wchodzi wyróżnik: matematyka. */}
+  <section class="sekcja sekcja--grafit">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul nadtytul--na-marce">Exams</span>
+        <h2 class="tytul-1" style="color: var(--bialy);">
+          Przygotowanie do egzaminów — także z matematyki
+        </h2>
+        <p class="wiodacy" style="color: var(--tekst-na-marce-miekki);">
+          Przygotowanie egzaminacyjne prowadzimy z angielskiego i z matematyki.
+          Można je wybrać osobno, niezależnie od zajęć podstawowych — także jeśli
+          dziecko nie chodzi u nas na nic innego.
+        </p>
+      </div>
+
+      <div class="siatka siatka--2">
+        <article class="karta karta--luzna karta--na-grafitcie">
+          <span class="plakietka plakietka--na-marce">13–15 lat</span>
+          <h3 class="tytul-3" style="color: var(--bialy);">Egzamin ósmoklasisty</h3>
+          <p class="tekst-maly" style="color: var(--tekst-na-marce-miekki);">
+            Arkusze CKE, strategie zadań, oswojenie z formatem. Ton rówieśniczy,
+            bez maskotek.
+          </p>
+          <ul class="lista-znaczona" style="margin-top: var(--space-1);">
+            <li style="color: var(--tekst-na-marce-miekki);">Angielski — poziom A2+</li>
+            <li style="color: var(--tekst-na-marce-miekki);">
+              Matematyka <span class="plakietka unikat">Unikat</span>
+            </li>
+          </ul>
+          <a class="przycisk przycisk--duch" href={url("/exams/e8")} style="margin-top: var(--space-2); justify-self: start;">
+            Zobacz przygotowanie do E8
+          </a>
+        </article>
+
+        <article class="karta karta--luzna karta--na-grafitcie">
+          <span class="plakietka plakietka--na-marce">Teens Senior · 16–19 lat</span>
+          <h3 class="tytul-3 tytul--medrzec" style="color: var(--bialy);">
+            Konkretny plan na maturę
+          </h3>
+          <p class="tekst-maly" style="color: var(--tekst-na-marce-miekki);">
+            Praca na arkuszach CKE, progi punktowe, harmonogram do maja. Liczy się
+            wynik, nie doświadczenie.
+          </p>
+          <ul class="lista-znaczona" style="margin-top: var(--space-1);">
+            <li style="color: var(--tekst-na-marce-miekki);">
+              Angielski — podstawowy i rozszerzony
+            </li>
+            <li style="color: var(--tekst-na-marce-miekki);">
+              Matematyka — poziom podstawowy <span class="plakietka unikat">Unikat</span>
+            </li>
+          </ul>
+          <a class="przycisk przycisk--duch" href={url("/exams/matura")} style="margin-top: var(--space-2); justify-self: start;">
+            Zobacz przygotowanie do matury
+          </a>
+        </article>
+      </div>
+
+      <div style="margin-top: var(--space-4); max-width: var(--szerokosc-tekstu);">
+        <DoUzupelnienia czego="Prowadząca matematykę">
+          Najmocniejszym dowodem nie jest plakietka „Unikat”, tylko nazwisko.
+          Wpiszcie tu imię, nazwisko, wykształcenie i doświadczenie egzaminacyjne
+          założycielki prowadzącej matematykę, a potem powtórzcie tę notkę na obu
+          stronach matematyki, z odesłaniem do „O nas”. To zamienia wyróżnik
+          z hasła w konkret.
+        </DoUzupelnienia>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 6 ── KONKRETY I ZAPIS. Praktyka zamiast wartości. */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="siatka--boczna">
+        <div class="stos">
+          <div class="naglowek-sekcji" style="margin-bottom: 0;">
+            <span class="nadtytul">Konkrety</span>
+            <h2 class="tytul-1">Zanim zapytacie</h2>
+          </div>
+
+          <ul class="lista-rozdzielona">
+            <li>
+              <span class="etykieta">Gdzie</span>
+              <span class="wartosc">
+                {firma.ulica
+                  ? `${firma.ulica}, ${firma.miasto}`
+                  : `${firma.miasto} — adres w uzupełnieniu`}
+              </span>
+            </li>
+            <li>
+              <span class="etykieta">Kiedy</span>
+              <span class="wartosc">Popołudniami — dni i godziny w uzupełnieniu</span>
+            </li>
+            <li>
+              <span class="etykieta">Wielkość grupy</span>
+              <span class="wartosc">Do {wielkoscGrupy} osób</span>
+            </li>
+            <li>
+              <span class="etykieta">Nabór</span>
+              <span class="wartosc">Termin startu w uzupełnieniu</span>
+            </li>
+          </ul>
+
+          <DoUzupelnienia czego="Powód, żeby napisać dziś">
+            Bez terminu startu, liczby wolnych miejsc i daty zamknięcia naboru
+            zajęcia próbne są przyjemną możliwością, a nie decyzją do podjęcia
+            w tym tygodniu. Uzupełnijcie trzy pola powyżej w
+            <code>src/lib/site.js</code> oraz datę naboru — to najtańsza zmiana
+            o największym wpływie na liczbę zgłoszeń.
+          </DoUzupelnienia>
+        </div>
+
+        <div class="stos">
+          <article class="karta">
+            <h3 class="tytul-4">Zajęcia podstawowe i fakultety</h3>
+            <p class="tekst-maly tekst-drugi">
+              Karnet na dziesięć miesięcy roku szkolnego. Każdy kolejny fakultet
+              obniża cenę jednostkową spotkania.
+            </p>
+          </article>
+          <article class="karta">
+            <h3 class="tytul-4">Exams i zajęcia indywidualne</h3>
+            <p class="tekst-maly tekst-drugi">
+              Bez karnetu, rozliczenie za pojedyncze spotkanie. Można wziąć sam
+              egzamin, bez zajęć podstawowych.
+            </p>
+          </article>
+          <a class="przycisk przycisk--obrys" href={url("/cennik")}>
+            Zobacz pełny cennik
+          </a>
+          <p class="tekst-drobny">Wszystkie stawki razem z zakresem zajęć, bez gwiazdek.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Wezwanie zamykające */}
+  <section class="sekcja sekcja--tint">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <h2 class="tytul-2">Przyjdźcie zobaczyć jedną misję</h2>
+        </div>
+        <div class="stos">
+          <p class="wiodacy">
+            Bezpłatne zajęcia próbne, bez zobowiązań. Dziecko bierze udział na
+            normalnych zasadach, Wy patrzycie z boku. Potem rozmawiamy.
+          </p>
+          <div class="przyciski">
+            <a class="przycisk przycisk--akcja" href={url("/kontakt")}>
+              Umów zajęcia próbne
+            </a>
+            {tel && (
+              <span class="telefon-obok">
+                albo zadzwońcie: <a href={tel}>{telefonTekst()}</a>
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Baza>

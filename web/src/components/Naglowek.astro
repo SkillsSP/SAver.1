@@ -1,0 +1,346 @@
+---
+import { url, menuProgram, menuExams, telefonHref, telefonTekst } from "../lib/site.js";
+
+interface Props {
+  /** Która pozycja paska jest aktywna: program | exams | cennik | o-nas | kontakt */
+  aktywna?: string;
+  /** Na stronach maturalnych przycisk brzmi inaczej — decyzję podejmuje uczeń. */
+  ctaSenior?: boolean;
+}
+
+const { aktywna = "", ctaSenior = false } = Astro.props;
+const ctaTekst = ctaSenior ? "Zapisz się na konsultację" : "Zapisz dziecko";
+const tel = telefonHref();
+---
+
+<header class="pasek">
+  <div class="szerokosc pasek__rzad">
+    <a class="pasek__marka" href={url("/")}>
+      <img
+        src={url("/logo/skills-academy-logo.svg")}
+        alt="Skills Academy — strona główna"
+        width="149"
+        height="108"
+      />
+    </a>
+
+    <nav class="pasek__menu" aria-label="Menu główne">
+      <div class="rozwiniecie" data-rozwiniecie>
+        <button
+          type="button"
+          class="pasek__pozycja"
+          aria-expanded="false"
+          aria-controls="panel-program"
+          aria-current={aktywna === "program" ? "page" : undefined}
+          data-wyzwalacz
+        >
+          Program
+          <svg class="pasek__strzalka" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+            <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div class="panel" id="panel-program" hidden data-panel>
+          {menuProgram.map((poz) => (
+            <a class="panel__link" href={url(poz.href)}>
+              <strong>{poz.nazwa}</strong>
+              <span>{poz.opis}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="rozwiniecie" data-rozwiniecie>
+        <button
+          type="button"
+          class="pasek__pozycja"
+          aria-expanded="false"
+          aria-controls="panel-exams"
+          aria-current={aktywna === "exams" ? "page" : undefined}
+          data-wyzwalacz
+        >
+          Exams
+          <svg class="pasek__strzalka" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+            <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div class="panel panel--dwie-grupy" id="panel-exams" hidden data-panel>
+          {menuExams.map((grupa) => (
+            <div class="panel__grupa">
+              <a class="panel__etykieta" href={url(grupa.href)}>{grupa.etykieta}</a>
+              {grupa.pozycje.map((poz) => (
+                <a class="panel__link" href={url(poz.href)}>
+                  <strong>
+                    {poz.nazwa}
+                    {poz.unikat && <span class="plakietka unikat">Unikat</span>}
+                  </strong>
+                  {poz.dopisek && <span>{poz.dopisek}</span>}
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <a
+        class="pasek__pozycja"
+        href={url("/cennik")}
+        aria-current={aktywna === "cennik" ? "page" : undefined}>Cennik</a
+      >
+      <a
+        class="pasek__pozycja"
+        href={url("/o-nas")}
+        aria-current={aktywna === "o-nas" ? "page" : undefined}>O nas</a
+      >
+      <a
+        class="pasek__pozycja"
+        href={url("/kontakt")}
+        aria-current={aktywna === "kontakt" ? "page" : undefined}>Kontakt</a
+      >
+    </nav>
+
+    <div class="pasek__akcje">
+      <a class="przycisk przycisk--akcja pasek__cta-desktop" href={url("/kontakt")}>
+        {ctaTekst}
+      </a>
+      <button
+        type="button"
+        class="pasek__hamburger"
+        aria-expanded="false"
+        aria-controls="menu-mobilne"
+        data-otworz-menu
+      >
+        <svg viewBox="0 0 20 14" width="20" height="14" fill="none" aria-hidden="true">
+          <path d="M1 1h18M1 7h18M1 13h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+        Menu
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-mobilne" id="menu-mobilne" hidden data-menu-mobilne>
+  <div class="menu-mobilne__gora">
+    <a class="pasek__marka" href={url("/")}>
+      <img
+        src={url("/logo/skills-academy-logo.svg")}
+        alt="Skills Academy — strona główna"
+        width="149"
+        height="108"
+      />
+    </a>
+    <button type="button" class="pasek__hamburger" data-zamknij-menu>
+      <svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true">
+        <path d="M1 1l14 14M15 1L1 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      </svg>
+      Zamknij
+    </button>
+  </div>
+
+  <nav class="menu-mobilne__tresc" aria-label="Menu główne, wersja mobilna">
+    <div>
+      <button type="button" class="akordeon__wyzwalacz" aria-expanded="false" aria-controls="akordeon-program">
+        Program
+        <svg class="pasek__strzalka" viewBox="0 0 10 6" width="12" height="8" fill="none" aria-hidden="true">
+          <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      <div class="akordeon__tresc" id="akordeon-program" hidden>
+        {menuProgram.map((poz) => <a href={url(poz.href)}>{poz.nazwa}</a>)}
+      </div>
+    </div>
+
+    <div>
+      <button type="button" class="akordeon__wyzwalacz" aria-expanded="false" aria-controls="akordeon-exams">
+        Exams
+        <svg class="pasek__strzalka" viewBox="0 0 10 6" width="12" height="8" fill="none" aria-hidden="true">
+          <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      <div class="akordeon__tresc" id="akordeon-exams" hidden>
+        {menuExams.map((grupa) => (
+          <>
+            <a href={url(grupa.href)}><strong>{grupa.etykieta}</strong></a>
+            {grupa.pozycje.map((poz) => (
+              <a href={url(poz.href)}>
+                {grupa.etykieta === "Matura" ? "Matura" : "E8"} · {poz.nazwa}
+                {poz.unikat && <span class="plakietka unikat">Unikat</span>}
+              </a>
+            ))}
+          </>
+        ))}
+      </div>
+    </div>
+
+    <a class="menu-mobilne__link" href={url("/cennik")}>Cennik</a>
+    <a class="menu-mobilne__link" href={url("/o-nas")}>O nas</a>
+    <a class="menu-mobilne__link" href={url("/kontakt")}>Kontakt</a>
+
+    <div class="stos stos--ciasny" style="margin-top: var(--space-3);">
+      {tel && <a class="przycisk przycisk--akcja przycisk--pelny" href={tel}>Zadzwoń teraz</a>}
+      <a class="przycisk przycisk--obrys przycisk--pelny" href={url("/kontakt")}>{ctaTekst}</a>
+      {!tel && (
+        <p class="tekst-drobny">
+          Numer telefonu uzupełnijcie w <code>src/lib/site.js</code> — pojawi się tu i w pasku akcji.
+        </p>
+      )}
+    </div>
+  </nav>
+</div>
+
+<script>
+  /* ----------------------------------------------------------------------
+     Rozwinięcia na komputerze: jeden panel naraz, otwierany najechaniem z
+     intencją (120 ms na otwarcie, 250 ms na zamknięcie), żeby panel nie
+     gasł przy ukośnym ruchu myszy. Klik idzie na stronę zbiorczą.
+     ---------------------------------------------------------------------- */
+  const OPOZNIENIE_OTWARCIA = 120;
+  const OPOZNIENIE_ZAMKNIECIA = 250;
+
+  const rozwiniecia = Array.from(document.querySelectorAll("[data-rozwiniecie]"));
+
+  function ustaw(rozwiniecie, otwarte) {
+    const wyzwalacz = rozwiniecie.querySelector("[data-wyzwalacz]");
+    const panel = rozwiniecie.querySelector("[data-panel]");
+    if (!wyzwalacz || !panel) return;
+    wyzwalacz.setAttribute("aria-expanded", String(otwarte));
+    panel.hidden = !otwarte;
+  }
+
+  function zamknijWszystkie(oprocz) {
+    rozwiniecia.forEach((r) => {
+      if (r !== oprocz) ustaw(r, false);
+    });
+  }
+
+  rozwiniecia.forEach((rozwiniecie) => {
+    const wyzwalacz = rozwiniecie.querySelector("[data-wyzwalacz]");
+    const panel = rozwiniecie.querySelector("[data-panel]");
+    if (!wyzwalacz || !panel) return;
+
+    let licznik;
+
+    const otworz = () => {
+      clearTimeout(licznik);
+      zamknijWszystkie(rozwiniecie);
+      ustaw(rozwiniecie, true);
+    };
+    const zamknij = () => {
+      clearTimeout(licznik);
+      ustaw(rozwiniecie, false);
+    };
+
+    rozwiniecie.addEventListener("mouseenter", () => {
+      clearTimeout(licznik);
+      licznik = setTimeout(otworz, OPOZNIENIE_OTWARCIA);
+    });
+    rozwiniecie.addEventListener("mouseleave", () => {
+      clearTimeout(licznik);
+      licznik = setTimeout(zamknij, OPOZNIENIE_ZAMKNIECIA);
+    });
+
+    /* Klawiatura i dotyk: pierwsze naciśnięcie otwiera, nie nawiguje. */
+    wyzwalacz.addEventListener("click", (e) => {
+      e.preventDefault();
+      const otwarte = wyzwalacz.getAttribute("aria-expanded") === "true";
+      otwarte ? zamknij() : otworz();
+    });
+
+    /* Strzałki chodzą po pozycjach panelu. */
+    rozwiniecie.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+      const otwarte = wyzwalacz.getAttribute("aria-expanded") === "true";
+      if (!otwarte) {
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          otworz();
+        }
+        return;
+      }
+      const linki = Array.from(panel.querySelectorAll("a"));
+      if (!linki.length) return;
+      e.preventDefault();
+      const teraz = linki.indexOf(document.activeElement);
+      const krok = e.key === "ArrowDown" ? 1 : -1;
+      const nastepny = (teraz + krok + linki.length) % linki.length;
+      linki[teraz === -1 ? 0 : nastepny].focus();
+    });
+  });
+
+  /* Esc zamyka i oddaje fokus wyzwalaczowi. */
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    const otwarte = rozwiniecia.find(
+      (r) => r.querySelector("[data-wyzwalacz]")?.getAttribute("aria-expanded") === "true"
+    );
+    if (otwarte) {
+      ustaw(otwarte, false);
+      otwarte.querySelector("[data-wyzwalacz]")?.focus();
+    }
+    zamknijMenuMobilne();
+  });
+
+  /* Klik poza panelem i przewinięcie strony zamykają. Samo oddalenie
+     kursora bez zwłoki — nigdy. */
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("[data-rozwiniecie]")) zamknijWszystkie(null);
+  });
+  window.addEventListener("scroll", () => zamknijWszystkie(null), { passive: true });
+
+  /* ----------------------------------------------------------------------
+     Menu mobilne: pełny ekran, blokada przewijania tła i pułapka fokusa,
+     żeby czytnik ekranu nie wychodził poza otwarte menu.
+     ---------------------------------------------------------------------- */
+  const menu = document.querySelector("[data-menu-mobilne]");
+  const otworzMenu = document.querySelector("[data-otworz-menu]");
+  const zamknijPrzycisk = document.querySelector("[data-zamknij-menu]");
+  let ostatnioAktywny = null;
+
+  function otworzMenuMobilne() {
+    if (!menu || !otworzMenu) return;
+    ostatnioAktywny = document.activeElement;
+    menu.hidden = false;
+    otworzMenu.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+    menu.querySelector("button, a")?.focus();
+  }
+
+  function zamknijMenuMobilne() {
+    if (!menu || !otworzMenu || menu.hidden) return;
+    menu.hidden = true;
+    otworzMenu.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    (ostatnioAktywny instanceof HTMLElement ? ostatnioAktywny : otworzMenu).focus();
+  }
+
+  otworzMenu?.addEventListener("click", otworzMenuMobilne);
+  zamknijPrzycisk?.addEventListener("click", zamknijMenuMobilne);
+
+  menu?.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab") return;
+    const ogniskowalne = Array.from(
+      menu.querySelectorAll('a[href], button:not([disabled])')
+    ).filter((el) => el.offsetParent !== null);
+    if (!ogniskowalne.length) return;
+    const pierwszy = ogniskowalne[0];
+    const ostatni = ogniskowalne[ogniskowalne.length - 1];
+    if (e.shiftKey && document.activeElement === pierwszy) {
+      e.preventDefault();
+      ostatni.focus();
+    } else if (!e.shiftKey && document.activeElement === ostatni) {
+      e.preventDefault();
+      pierwszy.focus();
+    }
+  });
+
+  /* Akordeony w menu mobilnym — rozwijane w miejscu, bez panelu. */
+  document.querySelectorAll(".akordeon__wyzwalacz").forEach((wyzwalacz) => {
+    wyzwalacz.addEventListener("click", () => {
+      const id = wyzwalacz.getAttribute("aria-controls");
+      const tresc = id ? document.getElementById(id) : null;
+      if (!tresc) return;
+      const otwarte = wyzwalacz.getAttribute("aria-expanded") === "true";
+      wyzwalacz.setAttribute("aria-expanded", String(!otwarte));
+      tresc.hidden = otwarte;
+    });
+  });
+</script>

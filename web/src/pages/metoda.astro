@@ -1,0 +1,141 @@
+---
+import Baza from "../layouts/Baza.astro";
+import ZapisCta from "../components/ZapisCta.astro";
+import { url, grupyWiekowe, zrodla, wielkoscGrupy } from "../lib/site.js";
+
+const metody = [
+  {
+    nazwa: "Reagowanie ciałem (TPR)",
+    opis: "Polecenie po angielsku wykonywane ruchem, nie tłumaczone. Dziecko kojarzy język z działaniem, zanim zdąży pomyśleć o przekładzie.",
+  },
+  {
+    nazwa: "Nauka przez projekt (PBL)",
+    opis: "Zadanie z celem i terminem, rozwiązywane w drużynie. Język jest narzędziem do wykonania zadania, nie tematem zajęć.",
+  },
+  {
+    nazwa: "Uczenie przez doświadczenie",
+    opis: "Najpierw próba, potem wniosek. Dziecko zapamiętuje to, co samo zrobiło i omówiło, a nie to, co usłyszało.",
+  },
+];
+---
+
+<Baza
+  aktywna="o-nas"
+  tytul="Metoda i podział na grupy wiekowe"
+  opis="Jak uczymy w Skills Academy: reagowanie ciałem, nauka przez projekt i doświadczenie. Podział na grupy wiekowe od 5 do 19 lat wraz z uzasadnieniem rozwojowym."
+>
+  <section class="naglowek-strony">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">O nas</span>
+        <h1 class="tytul-1">Metoda</h1>
+        <p class="hero__zdanie">
+          Nie mamy autorskiej teorii. Mamy konsekwentne zastosowanie podejść,
+          które są opisane, sprawdzone i rekomendowane — a do tego jasną zasadę
+          doboru grup.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* JAK UCZYMY */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Jak uczymy</span>
+        <h2 class="tytul-1">Trzy podejścia, jedno spotkanie</h2>
+        <p class="wiodacy">
+          Nie przełączamy się między metodami — one działają jednocześnie, na tym
+          samym zadaniu. Dziecko wykonuje polecenie ciałem, rozwiązuje projekt
+          w drużynie i omawia, co zadziałało.
+        </p>
+      </div>
+
+      <div class="siatka siatka--3">
+        {metody.map((m) => (
+          <article class="karta">
+            <h3 class="tytul-4">{m.nazwa}</h3>
+            <p class="tekst-maly tekst-drugi">{m.opis}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* NA CZYM SIĘ OPIERAMY */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Źródła</span>
+          <h2 class="tytul-1">Na czym się opieramy</h2>
+        </div>
+        <div class="stos">
+          <p class="wiodacy">
+            Kierunek programu opieramy na rekomendacjach organizacji, które badają
+            skuteczność nauczania na dużych próbach — nie na pojedynczych
+            publikacjach ani na modzie. Wskazują one zgodnie, że uczenie przez
+            działanie i projekt daje trwalsze efekty niż nauczanie podające.
+          </p>
+          <p class="tekst-maly tekst-drugi">
+            Praktyczny skutek dla dziecka jest jeden: nie tłumaczy w głowie
+            z polskiego. Reaguje od razu, bo od pierwszego spotkania angielski
+            jest narzędziem do zrobienia czegoś.
+          </p>
+          <ul class="zrodla">
+            {zrodla.map((z) => <li class="zrodla__pozycja">{z}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* PODZIAŁ NA GRUPY — jeden adres dla całego serwisu */}
+  <section class="sekcja" id="grupy">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Grupy</span>
+        <h2 class="tytul-1">Podział na grupy wiekowe</h2>
+        <p class="wiodacy">
+          Grupy dobieramy wiekiem, nie poziomem — pięciolatek i dziesięciolatek
+          uczą się inaczej, niezależnie od tego, ile znają słów. Dziecko trafia
+          do grupy po rozmowie i zajęciach próbnych, nie po samej dacie urodzenia.
+          Grupy liczą do {wielkoscGrupy} osób.
+        </p>
+      </div>
+
+      <div class="stos">
+        {grupyWiekowe.map((g) => (
+          <article class="karta" style="grid-template-columns: minmax(0,1fr); ">
+            <div class="siatka--boczna" style="gap: var(--space-2); align-items: center;">
+              <div class="stos stos--ciasny">
+                <h3 class={g.senior ? "tytul-4 tytul--medrzec" : "tytul-4"}>
+                  {g.lata} lat · {g.nazwa}
+                </h3>
+                <p class="tekst-maly tekst-drugi">{g.notatkaMetoda}</p>
+              </div>
+              <a
+                class={g.senior ? "przycisk przycisk--obrys-slate" : "przycisk przycisk--obrys"}
+                href={url(g.href)}
+                style="justify-self: start;"
+              >
+                Zobacz ofertę dla {g.lata} lat
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="tekst-maly tekst-drugi" style="margin-top: var(--space-4); max-width: var(--szerokosc-tekstu);">
+        Granica 15 lat zamyka model zajęć podstawowych i fakultetów. Od 16. roku
+        życia działa wyłącznie ścieżka maturalna, opisana w
+        <a class="link-w-zdaniu" href={url("/exams/matura")}>Exams</a>.
+      </p>
+    </div>
+  </section>
+
+  <ZapisCta
+    tytul="Najprościej sprawdzić to na miejscu"
+    tresc="Bezpłatne zajęcia próbne pokazują metodę lepiej niż opis. Dziecko bierze udział na normalnych zasadach, Wy patrzycie z boku."
+  />
+</Baza>

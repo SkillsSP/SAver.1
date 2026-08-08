@@ -1,0 +1,83 @@
+---
+import Baza from "../layouts/Baza.astro";
+import OdeslanieDoGrup from "../components/OdeslanieDoGrup.astro";
+import ZapisCta from "../components/ZapisCta.astro";
+import { url, menuProgram, wielkoscGrupy, firma } from "../lib/site.js";
+---
+
+<Baza
+  aktywna="program"
+  tytul="Program — zajęcia podstawowe, fakultety i zajęcia indywidualne"
+  opis="Trzy drogi przez Skills Academy w Szczecinie: obowiązkowe zajęcia podstawowe, fakultet wybierany przez dziecko i spotkania 1:1. Exams stoi obok, jako osobna oferta."
+>
+  <section class="naglowek-strony">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Program</span>
+        <h1 class="tytul-1">Co dokładnie dziecko u nas robi</h1>
+        <p class="hero__zdanie">
+          Zajęcia podstawowe są bazą każdego karnetu. Fakultet dziecko wybiera
+          samo, a zajęcia indywidualne dokładacie wtedy, gdy potrzebny jest jeden
+          konkretny cel. Przygotowanie do egzaminów stoi obok tego modelu.
+        </p>
+        <ul class="naglowek-strony__meta">
+          <li>Wiek 5–19 lat</li>
+          <li>Grupy do {wielkoscGrupy} osób</li>
+          <li>{firma.miasto}, zajęcia stacjonarne</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka siatka--3">
+        {menuProgram.map((poz) => (
+          <a class="karta karta--luzna" href={url(poz.href)}>
+            <h2 class="tytul-3">{poz.nazwa}</h2>
+            <p class="tekst-drugi tekst-maly">{poz.opis}</p>
+            <span class="wiek__strzalka">Zobacz szczegóły →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Poza modelem</span>
+          <h2 class="tytul-1">Exams to osobna oferta</h2>
+        </div>
+        <div class="stos">
+          <p class="wiodacy">
+            Przygotowanie do egzaminu ósmoklasisty i matury nie jest trzecim
+            filarem zajęć podstawowych — kupuje się je obok, na tych samych
+            zasadach dla uczestnika zajęć i dla kogoś z zewnątrz. Prowadzimy je
+            z angielskiego i z matematyki.
+          </p>
+          <div class="przyciski">
+            <a class="przycisk przycisk--obrys" href={url("/exams/e8")}>
+              Egzamin ósmoklasisty
+            </a>
+            <a class="przycisk przycisk--obrys" href={url("/exams/matura")}>
+              Matura
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekcja">
+    <div class="szerokosc">
+      <OdeslanieDoGrup />
+    </div>
+  </section>
+
+  <ZapisCta
+    tytul="Przyjdźcie zobaczyć jedną misję"
+    tresc="Bezpłatne zajęcia próbne, bez zobowiązań. Dziecko bierze udział na normalnych zasadach, Wy patrzycie z boku."
+  />
+</Baza>

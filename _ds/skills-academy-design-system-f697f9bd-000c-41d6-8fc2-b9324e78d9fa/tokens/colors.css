@@ -1,0 +1,41 @@
+:root{
+  /* base hues — from Wariant B visual identity, v1.0 */
+  --kobalt-600:#1E5FCC;
+  --kobalt-700:#14459B;
+  --kobalt-100:#E5EDFB;
+  --coral-500:#E8654A;
+  --coral-100:#FCE7E1;
+  --slate-500:#5B6B7A;
+  --slate-100:#EDEFF2;
+  --cloud-50:#FBF8F3;
+  --graphite-900:#1A2230;
+  --graphite-600:#4C5666;
+  --white:#FFFFFF;
+  --line-rgba:rgba(26,34,48,.13);
+
+  /* semantic aliases */
+  --surface-page:var(--cloud-50);
+  --surface-card:var(--white);
+  --surface-brand:var(--kobalt-600);
+  --surface-brand-deep:var(--kobalt-700);
+  --surface-tint-kobalt:var(--kobalt-100);
+  --surface-tint-coral:var(--coral-100);
+  --surface-tint-slate:var(--slate-100);
+
+  --text-primary:var(--graphite-900);
+  --text-secondary:var(--graphite-600);
+  --text-on-brand:var(--white);
+  --text-on-brand-soft:rgba(255,255,255,.85);
+  --text-link:var(--kobalt-600);
+  --text-link-hover:var(--kobalt-700);
+
+  --brand-primary:var(--kobalt-600);
+  --brand-primary-deep:var(--kobalt-700);
+  --action-primary:var(--coral-500);
+  --action-primary-tint:var(--coral-100);
+  --accent-senior:var(--slate-500);
+  --accent-senior-tint:var(--slate-100);
+
+  --border-default:var(--line-rgba);
+  --focus-ring:var(--kobalt-600);
+}

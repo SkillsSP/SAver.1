@@ -1,0 +1,1619 @@
+/* ==========================================================================
+   SKILLS ACADEMY — ARKUSZ GŁÓWNY
+   Wartości kolorów, radiusów i ról typograficznych pochodzą z systemu
+   projektowego w _ds/skills-academy-design-system/. Skala odstępów została
+   przeliczona na krok 0,5 rem, a typografia na płynne clamp() — reszta
+   systemu (płaskie wypełnienia, brak cieni, włos jako separator) bez zmian.
+   ========================================================================== */
+
+:root {
+  /* ---------- KOLOR — pięć funkcji, każdy kolor robi jedną rzecz ---------- */
+  --kobalt-600: #1e5fcc;
+  --kobalt-700: #14459b;
+  --kobalt-100: #e5edfb;
+  --koral-500: #e8654a;
+  --koral-600: #c94f36;
+  --koral-100: #fce7e1;
+  --slate-500: #5b6b7a;
+  --slate-600: #46545f;
+  --slate-100: #edeff2;
+  --cloud-50: #fbf8f3;
+  --grafit-900: #1a2230;
+  --grafit-600: #4c5666;
+  --bialy: #ffffff;
+
+  /* aliasy semantyczne */
+  --tlo-strony: var(--cloud-50);
+  --tlo-karty: var(--bialy);
+  --tlo-marki: var(--kobalt-600);
+  --tlo-marki-glebokie: var(--kobalt-700);
+  --tlo-tint-kobalt: var(--kobalt-100);
+  --tlo-tint-koral: var(--koral-100);
+  --tlo-tint-slate: var(--slate-100);
+  --tlo-grafit: var(--grafit-900);
+
+  --tekst-glowny: var(--grafit-900);
+  --tekst-drugi: var(--grafit-600);
+  --tekst-na-marce: var(--bialy);
+  --tekst-na-marce-miekki: rgba(255, 255, 255, 0.85);
+
+  --akcja: var(--koral-500);
+  --akcja-hover: var(--koral-600);
+  --akcent-senior: var(--slate-500);
+
+  --linia: rgba(26, 34, 48, 0.13);
+  --linia-na-marce: rgba(255, 255, 255, 0.28);
+  --pierscien-fokus: var(--kobalt-600);
+
+  /* ---------- TYPOGRAFIA — płynne skalowanie rem ---------- */
+  --font-medrzec: "Lexend", ui-sans-serif, system-ui, sans-serif;
+  --font-odkrywca: "Fredoka", ui-sans-serif, system-ui, sans-serif;
+
+  --text-nadtytul: 0.75rem;
+  --text-drobny: 0.8125rem;
+  --text-maly: clamp(0.875rem, 0.85rem + 0.12vw, 0.9375rem);
+  --text-bazowy: clamp(1rem, 0.97rem + 0.14vw, 1.0625rem);
+  --text-wiodacy: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --text-h4: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --text-h3: clamp(1.25rem, 1.13rem + 0.55vw, 1.5rem);
+  --text-h2: clamp(1.5rem, 1.28rem + 1vw, 2.125rem);
+  --text-h1: clamp(1.875rem, 1.5rem + 1.7vw, 3rem);
+  --text-display: clamp(2.125rem, 1.6rem + 2.4vw, 3.75rem);
+
+  --trop-nadtytul: 0.16em;
+  --interlinia-tekst: 1.65;
+  --interlinia-ciasna: 1.14;
+  --interlinia-srednia: 1.35;
+
+  --waga-zwykla: 400;
+  --waga-srednia: 500;
+  --waga-polgruba: 600;
+  --waga-gruba: 700;
+
+  /* ---------- ODSTĘPY — krok 0,5 rem ---------- */
+  --space-05: 0.25rem;
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 2.5rem;
+  --space-6: 3rem;
+  --space-7: 3.5rem;
+  --space-8: 4rem;
+  --space-9: 4.5rem;
+  --space-10: 5rem;
+  --space-12: 6rem;
+  --space-14: 7rem;
+
+  /* rytm sekcji — duży oddech pionowy, zwężany na telefonie */
+  --rytm-sekcji: clamp(var(--space-7), 5vw, var(--space-12));
+
+  /* ---------- PROMIENIE OBRAMOWANIA ---------- */
+  --radius-sm: 0.5625rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-pill: 62.4375rem;
+
+  /* ---------- OBRAMOWANIA — system jest płaski, separuje włos ---------- */
+  --wlos: 1px solid var(--linia);
+  --wlos-na-marce: 1px solid var(--linia-na-marce);
+
+  /* ---------- MIARY ---------- */
+  --szerokosc-strony: 71.25rem;
+  --szerokosc-tekstu: 40rem;
+  --wysokosc-paska: 4.5rem;
+  --cel-dotyku: 2.75rem;
+}
+
+/* ==========================================================================
+   FONTY — hostowane lokalnie, bez zapytań do zewnętrznych serwerów.
+
+   UWAGA PRZY ZMIANIE ADRESU SERWISU: poniższe ścieżki zawierają przedrostek
+   „/SAver.1", bo taka jest wartość `base` w astro.config.mjs (serwis stoi pod
+   adresem projektowym GitHub Pages). Jeśli podłączycie własną domenę i
+   zmienicie `base` na '/', trzeba usunąć ten przedrostek w siedmiu regułach
+   poniżej. To jedyne miejsce w arkuszu, które o `base` wie.
+   ========================================================================== */
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fredoka";
+  src: url("/SAver.1/fonts/Fredoka-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fredoka";
+  src: url("/SAver.1/fonts/Fredoka-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fredoka";
+  src: url("/SAver.1/fonts/Fredoka-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   RESET I PODSTAWY
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* kotwice nie chowają się pod przyklejonym paskiem */
+  scroll-padding-top: calc(var(--wysokosc-paska) + var(--space-2));
+}
+
+body {
+  margin: 0;
+  background: var(--tlo-strony);
+  color: var(--tekst-glowny);
+  font-family: var(--font-medrzec);
+  font-size: var(--text-bazowy);
+  line-height: var(--interlinia-tekst);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--pierscien-fokus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.wizualnie-ukryte {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pomin-do-tresci {
+  position: absolute;
+  left: -100vw;
+  top: 0;
+  z-index: 200;
+  background: var(--tlo-marki);
+  color: var(--tekst-na-marce);
+  padding: var(--space-1) var(--space-3);
+  border-radius: 0 0 var(--radius-md) 0;
+  font-weight: var(--waga-polgruba);
+}
+.pomin-do-tresci:focus {
+  left: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   UKŁAD
+   ========================================================================== */
+.szerokosc {
+  width: 100%;
+  max-width: var(--szerokosc-strony);
+  margin-inline: auto;
+  padding-inline: var(--space-3);
+}
+
+.sekcja {
+  padding-block: var(--rytm-sekcji);
+}
+
+.sekcja--wlos {
+  border-top: var(--wlos);
+}
+
+.sekcja--karta {
+  background: var(--tlo-karty);
+}
+
+.sekcja--tint {
+  background: var(--tlo-tint-kobalt);
+}
+
+.sekcja--slate {
+  background: var(--tlo-tint-slate);
+}
+
+.sekcja--grafit {
+  background: var(--tlo-grafit);
+  color: var(--tekst-na-marce);
+}
+
+.stos {
+  display: grid;
+  gap: var(--space-3);
+}
+.stos--ciasny {
+  gap: var(--space-2);
+}
+.stos--luzny {
+  gap: var(--space-5);
+}
+
+/* ==========================================================================
+   TYPOGRAFIA UŻYTKOWA
+   ========================================================================== */
+.nadtytul {
+  display: block;
+  font-size: var(--text-nadtytul);
+  font-weight: var(--waga-polgruba);
+  letter-spacing: var(--trop-nadtytul);
+  text-transform: uppercase;
+  color: var(--kobalt-700);
+}
+.nadtytul--na-marce {
+  color: var(--tekst-na-marce-miekki);
+}
+.nadtytul--slate {
+  color: var(--slate-600);
+}
+
+.tytul-display {
+  font-family: var(--font-odkrywca);
+  font-size: var(--text-display);
+  font-weight: var(--waga-polgruba);
+  line-height: var(--interlinia-ciasna);
+  letter-spacing: -0.015em;
+}
+
+.tytul-1 {
+  font-family: var(--font-odkrywca);
+  font-size: var(--text-h1);
+  font-weight: var(--waga-polgruba);
+  line-height: var(--interlinia-ciasna);
+  letter-spacing: -0.01em;
+}
+
+.tytul-2 {
+  font-family: var(--font-odkrywca);
+  font-size: var(--text-h2);
+  font-weight: var(--waga-polgruba);
+  line-height: var(--interlinia-srednia);
+}
+
+.tytul-3 {
+  font-family: var(--font-odkrywca);
+  font-size: var(--text-h3);
+  font-weight: var(--waga-polgruba);
+  line-height: var(--interlinia-srednia);
+}
+
+.tytul-4 {
+  font-size: var(--text-h4);
+  font-weight: var(--waga-polgruba);
+  line-height: var(--interlinia-srednia);
+}
+
+/* Rejestr Teens Senior: wyłącznie Lexend, bez Fredoki */
+.rejestr-senior .tytul-display,
+.rejestr-senior .tytul-1,
+.rejestr-senior .tytul-2,
+.rejestr-senior .tytul-3,
+.tytul--medrzec {
+  font-family: var(--font-medrzec);
+  font-weight: var(--waga-gruba);
+  letter-spacing: -0.02em;
+}
+
+.wiodacy {
+  font-size: var(--text-wiodacy);
+  color: var(--tekst-drugi);
+  max-width: var(--szerokosc-tekstu);
+}
+
+.tekst-drugi {
+  color: var(--tekst-drugi);
+}
+
+.tekst-maly {
+  font-size: var(--text-maly);
+}
+
+.tekst-drobny {
+  font-size: var(--text-drobny);
+  color: var(--tekst-drugi);
+}
+
+.proza {
+  max-width: var(--szerokosc-tekstu);
+  display: grid;
+  gap: var(--space-2);
+}
+.proza a:not(.przycisk) {
+  color: var(--kobalt-700);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.proza a:not(.przycisk):hover {
+  color: var(--kobalt-600);
+}
+
+.link-w-zdaniu {
+  color: var(--kobalt-700);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  font-weight: var(--waga-srednia);
+}
+.link-w-zdaniu:hover {
+  color: var(--kobalt-600);
+}
+
+/* ==========================================================================
+   PRZYCISKI — koral tylko na jednym, głównym wezwaniu w polu widzenia
+   ========================================================================== */
+.przycisk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: var(--cel-dotyku);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: var(--text-maly);
+  font-weight: var(--waga-polgruba);
+  line-height: 1.2;
+  text-align: center;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.przycisk--akcja {
+  background: var(--akcja);
+  color: var(--bialy);
+}
+.przycisk--akcja:hover {
+  background: var(--akcja-hover);
+}
+
+.przycisk--obrys {
+  border-color: var(--kobalt-600);
+  color: var(--kobalt-700);
+  background: transparent;
+}
+.przycisk--obrys:hover {
+  background: var(--tlo-tint-kobalt);
+}
+
+.przycisk--obrys-slate {
+  border-color: var(--slate-500);
+  color: var(--slate-600);
+  background: transparent;
+}
+.przycisk--obrys-slate:hover {
+  background: var(--tlo-tint-slate);
+}
+
+.przycisk--duch {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: var(--bialy);
+  background: transparent;
+}
+.przycisk--duch:hover {
+  border-color: var(--bialy);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.przycisk--pelny {
+  width: 100%;
+}
+
+.przyciski {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.telefon-obok {
+  font-size: var(--text-maly);
+  color: var(--tekst-drugi);
+}
+.telefon-obok a {
+  color: var(--kobalt-700);
+  font-weight: var(--waga-polgruba);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.sekcja--grafit .telefon-obok,
+.hero .telefon-obok {
+  color: var(--tekst-na-marce-miekki);
+}
+.sekcja--grafit .telefon-obok a,
+.hero .telefon-obok a {
+  color: var(--bialy);
+}
+
+/* ==========================================================================
+   PLAKIETKI I ZNACZNIKI
+   ========================================================================== */
+.plakietka {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-05);
+  padding: var(--space-05) var(--space-1);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-drobny);
+  font-weight: var(--waga-polgruba);
+  line-height: 1.4;
+}
+.plakietka--kobalt {
+  background: var(--tlo-tint-kobalt);
+  color: var(--kobalt-700);
+}
+.plakietka--koral {
+  background: var(--tlo-tint-koral);
+  color: var(--koral-600);
+}
+.plakietka--slate {
+  background: var(--tlo-tint-slate);
+  color: var(--slate-600);
+}
+.plakietka--na-marce {
+  background: rgba(255, 255, 255, 0.22);
+  color: var(--bialy);
+}
+
+.unikat {
+  background: var(--akcja);
+  color: var(--bialy);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.6875rem;
+  padding: 0.15rem 0.5rem;
+}
+
+/* ==========================================================================
+   KARTY — biała powierzchnia, włos, 14 px, bez cienia
+   ========================================================================== */
+.karta {
+  background: var(--tlo-karty);
+  border: var(--wlos);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  display: grid;
+  gap: var(--space-1);
+  align-content: start;
+}
+
+.karta--luzna {
+  padding: var(--space-4);
+  gap: var(--space-2);
+}
+
+.karta--na-grafitcie {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--linia-na-marce);
+}
+
+.karta--slate {
+  border-color: rgba(91, 107, 122, 0.3);
+}
+
+/* ==========================================================================
+   SIATKI
+   ========================================================================== */
+.siatka {
+  display: grid;
+  gap: var(--space-3);
+}
+.siatka--2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+}
+.siatka--3 {
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+}
+.siatka--4 {
+  grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+}
+
+/* dwie kolumny o różnej wadze — tekst prowadzący + treść */
+.siatka--wiodaca {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 56rem) {
+  .siatka--wiodaca {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+}
+
+.siatka--boczna {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 56rem) {
+  .siatka--boczna {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+}
+
+/* ==========================================================================
+   NAGŁÓWEK SEKCJI
+   ========================================================================== */
+.naglowek-sekcji {
+  display: grid;
+  gap: var(--space-1);
+  max-width: var(--szerokosc-tekstu);
+  margin-bottom: var(--space-5);
+}
+
+/* ==========================================================================
+   PASEK NAWIGACJI
+   ========================================================================== */
+.pasek {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--tlo-strony);
+  border-bottom: var(--wlos);
+}
+
+.pasek__rzad {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: var(--wysokosc-paska);
+  padding-block: var(--space-1);
+}
+
+.pasek__marka {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.pasek__marka img {
+  height: 2.25rem;
+  width: auto;
+}
+
+.pasek__menu {
+  display: none;
+}
+
+.pasek__akcje {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.pasek__hamburger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: var(--cel-dotyku);
+  min-width: var(--cel-dotyku);
+  padding-inline: var(--space-1);
+  background: none;
+  border: var(--wlos);
+  border-radius: var(--radius-md);
+  font-size: var(--text-maly);
+  font-weight: var(--waga-polgruba);
+}
+
+.pasek__cta-desktop {
+  display: none;
+}
+
+@media (min-width: 62rem) {
+  .pasek__menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-05);
+  }
+  .pasek__hamburger {
+    display: none;
+  }
+  .pasek__cta-desktop {
+    display: inline-flex;
+  }
+}
+
+.pasek__pozycja {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-05);
+  padding: var(--space-1) var(--space-2);
+  border: none;
+  background: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-maly);
+  font-weight: var(--waga-srednia);
+  color: var(--tekst-glowny);
+  white-space: nowrap;
+}
+.pasek__pozycja:hover {
+  background: rgba(30, 95, 204, 0.07);
+  color: var(--kobalt-700);
+}
+.pasek__pozycja[aria-current="page"],
+.pasek__pozycja[aria-expanded="true"] {
+  background: rgba(30, 95, 204, 0.08);
+  color: var(--kobalt-700);
+  font-weight: var(--waga-polgruba);
+}
+
+.pasek__strzalka {
+  width: 0.6rem;
+  height: 0.6rem;
+  transition: transform 0.15s ease;
+}
+.pasek__pozycja[aria-expanded="true"] .pasek__strzalka {
+  transform: rotate(180deg);
+}
+
+/* panel rozwinięcia — jeden panel, nie kaskada */
+.rozwiniecie {
+  position: relative;
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  z-index: 110;
+  min-width: 22rem;
+  padding: var(--space-2);
+  background: var(--tlo-karty);
+  border: var(--wlos);
+  border-radius: var(--radius-xl);
+  display: grid;
+  gap: var(--space-1);
+}
+.panel[hidden] {
+  display: none;
+}
+
+.panel--dwie-grupy {
+  min-width: 34rem;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.panel__grupa {
+  display: grid;
+  gap: var(--space-05);
+  align-content: start;
+}
+
+.panel__etykieta {
+  font-size: var(--text-nadtytul);
+  font-weight: var(--waga-polgruba);
+  letter-spacing: var(--trop-nadtytul);
+  text-transform: uppercase;
+  color: var(--tekst-drugi);
+  padding: var(--space-1) var(--space-1) var(--space-05);
+}
+
+.panel__link {
+  display: grid;
+  gap: 0.1rem;
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+}
+.panel__link:hover {
+  background: var(--tlo-tint-kobalt);
+}
+.panel__link strong {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-maly);
+  font-weight: var(--waga-polgruba);
+}
+.panel__link span {
+  font-size: var(--text-drobny);
+  color: var(--tekst-drugi);
+  line-height: 1.45;
+}
+
+/* menu mobilne */
+.menu-mobilne {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: var(--tlo-strony);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow-y: auto;
+}
+.menu-mobilne[hidden] {
+  display: none;
+}
+
+.menu-mobilne__gora {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: var(--wysokosc-paska);
+  padding: var(--space-1) var(--space-3);
+  border-bottom: var(--wlos);
+}
+
+.menu-mobilne__tresc {
+  padding: var(--space-2) var(--space-3) var(--space-8);
+  display: grid;
+  gap: var(--space-05);
+  align-content: start;
+}
+
+.menu-mobilne__link {
+  display: block;
+  padding: var(--space-2) var(--space-1);
+  border-bottom: var(--wlos);
+  font-size: var(--text-wiodacy);
+  font-weight: var(--waga-srednia);
+  min-height: var(--cel-dotyku);
+}
+
+.akordeon__wyzwalacz {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-1);
+  background: none;
+  border: none;
+  border-bottom: var(--wlos);
+  font-size: var(--text-wiodacy);
+  font-weight: var(--waga-srednia);
+  text-align: left;
+  min-height: var(--cel-dotyku);
+}
+
+.akordeon__tresc {
+  display: grid;
+  gap: var(--space-05);
+  padding: var(--space-1) 0 var(--space-2) var(--space-2);
+}
+.akordeon__tresc[hidden] {
+  display: none;
+}
+.akordeon__tresc a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  font-size: var(--text-maly);
+  min-height: var(--cel-dotyku);
+}
+
+/* ==========================================================================
+   PASEK AKCJI NA TELEFONIE — połączenie ma pierwszeństwo
+   ========================================================================== */
+.pasek-akcji {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2)
+    calc(var(--space-1) + env(safe-area-inset-bottom, 0px));
+  background: var(--tlo-strony);
+  border-top: var(--wlos);
+}
+
+.pasek-akcji__drugi {
+  justify-self: center;
+  font-size: var(--text-drobny);
+  font-weight: var(--waga-srednia);
+  color: var(--kobalt-700);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  padding: var(--space-05);
+}
+
+@media (min-width: 62rem) {
+  .pasek-akcji {
+    display: none;
+  }
+}
+
+/* miejsce, żeby pasek nie zasłaniał końca strony */
+@media (max-width: 61.99rem) {
+  body {
+    padding-bottom: 6.5rem;
+  }
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero {
+  background: var(--tlo-marki);
+  color: var(--tekst-na-marce);
+  border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+  padding-block: var(--rytm-sekcji);
+}
+
+.hero--senior {
+  background: var(--tlo-grafit);
+}
+
+.hero__tresc {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 48rem;
+}
+
+.hero__zdanie {
+  font-size: var(--text-wiodacy);
+  color: var(--tekst-na-marce-miekki);
+  max-width: 38rem;
+}
+
+.hero__fakty {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  padding-top: var(--space-1);
+}
+
+.hero__fakt {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-maly);
+  color: var(--tekst-na-marce-miekki);
+}
+.hero__fakt::before {
+  content: "";
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: var(--akcja);
+  flex-shrink: 0;
+}
+
+.hero__pigulki {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+/* nagłówek podstrony — węższy wariant hero */
+.naglowek-strony {
+  background: var(--tlo-marki);
+  color: var(--tekst-na-marce);
+  border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+  padding-block: var(--space-6) var(--space-7);
+}
+.naglowek-strony--senior {
+  background: var(--tlo-grafit);
+}
+.naglowek-strony__tresc {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 44rem;
+}
+.naglowek-strony__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  padding-top: var(--space-1);
+  font-size: var(--text-maly);
+  color: var(--tekst-na-marce-miekki);
+}
+
+/* ==========================================================================
+   SELEKTOR WIEKU — największy element strony głównej
+   ========================================================================== */
+.wiek {
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr));
+}
+
+.wiek__karta {
+  display: grid;
+  gap: var(--space-05);
+  align-content: start;
+  padding: var(--space-3);
+  background: var(--tlo-karty);
+  border: var(--wlos);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.wiek__karta:hover {
+  border-color: var(--kobalt-600);
+  background: var(--tlo-tint-kobalt);
+}
+
+.wiek__lata {
+  font-family: var(--font-odkrywca);
+  font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  font-weight: var(--waga-polgruba);
+  line-height: 1.1;
+  color: var(--kobalt-600);
+}
+
+.wiek__karta--senior .wiek__lata {
+  color: var(--slate-500);
+  font-family: var(--font-medrzec);
+  font-weight: var(--waga-gruba);
+}
+.wiek__karta--senior:hover {
+  border-color: var(--slate-500);
+  background: var(--tlo-tint-slate);
+}
+
+.wiek__nazwa {
+  font-weight: var(--waga-polgruba);
+  font-size: var(--text-maly);
+}
+
+.wiek__opis {
+  font-size: var(--text-drobny);
+  color: var(--tekst-drugi);
+  line-height: 1.5;
+}
+
+.wiek__strzalka {
+  margin-top: var(--space-1);
+  font-size: var(--text-drobny);
+  font-weight: var(--waga-polgruba);
+  color: var(--kobalt-700);
+}
+.wiek__karta--senior .wiek__strzalka {
+  color: var(--slate-600);
+}
+
+/* ==========================================================================
+   MISJA OD ŚRODKA — jedna szeroka kolumna, nie siatka kafli
+   ========================================================================== */
+.misja {
+  display: grid;
+  gap: var(--space-5);
+}
+@media (min-width: 56rem) {
+  .misja {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+}
+
+.misja__cytat {
+  font-family: var(--font-odkrywca);
+  font-size: var(--text-h2);
+  font-weight: var(--waga-polgruba);
+  line-height: var(--interlinia-srednia);
+  color: var(--kobalt-700);
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--akcja);
+}
+
+.przebieg {
+  display: grid;
+  gap: 0;
+}
+
+.przebieg__krok {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, 1fr);
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+  border-top: var(--wlos);
+}
+.przebieg__krok:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.przebieg__czas {
+  font-family: var(--font-odkrywca);
+  font-size: var(--text-maly);
+  font-weight: var(--waga-polgruba);
+  color: var(--akcja);
+  padding-top: 0.1rem;
+}
+
+.przebieg__tresc {
+  display: grid;
+  gap: var(--space-05);
+}
+.przebieg__tresc strong {
+  font-size: var(--text-h4);
+  font-weight: var(--waga-polgruba);
+}
+.przebieg__tresc p {
+  font-size: var(--text-maly);
+  color: var(--tekst-drugi);
+}
+
+/* wariant numerowany — kroki procesu */
+.kroki {
+  display: grid;
+  gap: 0;
+  counter-reset: krok;
+}
+
+.kroki__krok {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  gap: var(--space-2);
+  padding-block: var(--space-3);
+  border-top: var(--wlos);
+}
+.kroki__krok:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.kroki__krok::before {
+  counter-increment: krok;
+  content: "0" counter(krok);
+  font-family: var(--font-odkrywca);
+  font-size: var(--text-maly);
+  font-weight: var(--waga-polgruba);
+  color: var(--kobalt-600);
+}
+.rejestr-senior .kroki__krok::before {
+  font-family: var(--font-medrzec);
+  color: var(--slate-500);
+}
+.kroki__tresc {
+  display: grid;
+  gap: var(--space-05);
+}
+.kroki__tresc strong {
+  font-size: var(--text-h4);
+  font-weight: var(--waga-polgruba);
+}
+.kroki__tresc p {
+  font-size: var(--text-maly);
+  color: var(--tekst-drugi);
+}
+
+/* ==========================================================================
+   PASEK ŹRÓDEŁ
+   ========================================================================== */
+.zrodla {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  padding-top: var(--space-3);
+  margin-top: var(--space-3);
+  border-top: var(--wlos);
+}
+.zrodla__pozycja {
+  font-size: var(--text-maly);
+  font-weight: var(--waga-polgruba);
+  letter-spacing: 0.04em;
+  color: var(--tekst-drugi);
+}
+
+/* ==========================================================================
+   LISTY
+   ========================================================================== */
+.lista-znaczona {
+  display: grid;
+  gap: var(--space-1);
+}
+.lista-znaczona li {
+  position: relative;
+  padding-left: var(--space-3);
+  font-size: var(--text-maly);
+  color: var(--tekst-drugi);
+  line-height: 1.55;
+}
+.lista-znaczona li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--kobalt-600);
+}
+.rejestr-senior .lista-znaczona li::before {
+  background: var(--slate-500);
+}
+
+.lista-odhaczona li::before {
+  content: "";
+  left: 0.05rem;
+  top: 0.45em;
+  width: 0.6rem;
+  height: 0.35rem;
+  border: 2px solid var(--kobalt-600);
+  border-top: 0;
+  border-right: 0;
+  border-radius: 0;
+  background: none;
+  transform: rotate(-45deg);
+}
+.rejestr-senior .lista-odhaczona li::before {
+  border-color: var(--slate-500);
+}
+
+.lista-przeczaca li::before {
+  content: "";
+  left: 0;
+  top: 0.72em;
+  width: 0.6rem;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--akcja);
+}
+
+.lista-rozdzielona {
+  display: grid;
+}
+.lista-rozdzielona li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-2);
+  padding-block: var(--space-2);
+  border-top: var(--wlos);
+  font-size: var(--text-maly);
+}
+.lista-rozdzielona li:first-child {
+  border-top: none;
+}
+.lista-rozdzielona dt,
+.lista-rozdzielona .etykieta {
+  color: var(--tekst-drugi);
+}
+.lista-rozdzielona .wartosc {
+  font-weight: var(--waga-polgruba);
+  text-align: right;
+}
+
+/* ==========================================================================
+   CENNIK
+   ========================================================================== */
+.cena {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--tlo-karty);
+  border: var(--wlos);
+  border-radius: var(--radius-xl);
+  align-content: start;
+}
+.cena--wyrozniona {
+  border-color: var(--akcja);
+}
+
+.cena__kwota {
+  font-family: var(--font-odkrywca);
+  font-size: clamp(1.75rem, 1.5rem + 1vw, 2.25rem);
+  font-weight: var(--waga-polgruba);
+  line-height: 1.1;
+}
+.cena__kwota small {
+  font-family: var(--font-medrzec);
+  font-size: var(--text-maly);
+  font-weight: var(--waga-srednia);
+  color: var(--tekst-drugi);
+}
+
+.pozycja-cennika {
+  display: grid;
+  gap: var(--space-1);
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  padding-block: var(--space-3);
+  border-top: var(--wlos);
+}
+.pozycja-cennika:first-child {
+  border-top: none;
+}
+.pozycja-cennika__nazwa {
+  display: grid;
+  gap: var(--space-05);
+}
+.pozycja-cennika__nazwa strong {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  font-size: var(--text-h4);
+  font-weight: var(--waga-polgruba);
+}
+.pozycja-cennika__nazwa span {
+  font-size: var(--text-drobny);
+  color: var(--tekst-drugi);
+}
+.pozycja-cennika__kwota {
+  font-family: var(--font-odkrywca);
+  font-size: var(--text-h3);
+  font-weight: var(--waga-polgruba);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   PYTANIA I ODPOWIEDZI
+   ========================================================================== */
+.pytania {
+  display: grid;
+  border-top: var(--wlos);
+}
+.pytania details {
+  border-bottom: var(--wlos);
+}
+.pytania summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-block: var(--space-3);
+  font-size: var(--text-h4);
+  font-weight: var(--waga-polgruba);
+  cursor: pointer;
+  list-style: none;
+  min-height: var(--cel-dotyku);
+}
+.pytania summary::-webkit-details-marker {
+  display: none;
+}
+.pytania summary::after {
+  content: "+";
+  font-family: var(--font-odkrywca);
+  font-size: var(--text-h3);
+  color: var(--kobalt-600);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.pytania details[open] summary::after {
+  content: "–";
+}
+.pytania__odpowiedz {
+  padding-bottom: var(--space-3);
+  max-width: var(--szerokosc-tekstu);
+  font-size: var(--text-maly);
+  color: var(--tekst-drugi);
+}
+
+/* ==========================================================================
+   PASEK ODESŁANIA DO PODZIAŁU WIEKOWEGO
+   ========================================================================== */
+.odeslanie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--tlo-tint-kobalt);
+  border-radius: var(--radius-xl);
+}
+.odeslanie__tekst {
+  font-size: var(--text-maly);
+  max-width: 34rem;
+}
+.odeslanie__tekst strong {
+  display: block;
+  font-size: var(--text-h4);
+  font-weight: var(--waga-polgruba);
+  margin-bottom: var(--space-05);
+}
+
+/* ==========================================================================
+   MIEJSCE NA ZDJĘCIE — świadomie puste, dopóki nie ma własnych zdjęć
+   ========================================================================== */
+.miejsce-na-zdjecie {
+  display: grid;
+  place-content: center;
+  gap: var(--space-1);
+  text-align: center;
+  padding: var(--space-5) var(--space-3);
+  min-height: 14rem;
+  background: var(--tlo-tint-kobalt);
+  border: 1px dashed rgba(26, 34, 48, 0.22);
+  border-radius: var(--radius-lg);
+  color: var(--tekst-drugi);
+  font-size: var(--text-drobny);
+}
+.miejsce-na-zdjecie strong {
+  font-size: var(--text-maly);
+  font-weight: var(--waga-polgruba);
+  color: var(--tekst-glowny);
+}
+
+/* ==========================================================================
+   FORMULARZ
+   ========================================================================== */
+.formularz {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.pole {
+  display: grid;
+  gap: var(--space-1);
+}
+.pole > label {
+  font-size: var(--text-maly);
+  font-weight: var(--waga-polgruba);
+}
+.pole__wskazowka {
+  font-size: var(--text-drobny);
+  color: var(--tekst-drugi);
+  font-weight: var(--waga-zwykla);
+}
+.pole input,
+.pole select,
+.pole textarea {
+  width: 100%;
+  min-height: var(--cel-dotyku);
+  padding: var(--space-1) var(--space-2);
+  background: var(--tlo-karty);
+  border: 1px solid rgba(26, 34, 48, 0.24);
+  border-radius: var(--radius-md);
+  font-size: var(--text-bazowy);
+}
+.pole input:focus,
+.pole select:focus,
+.pole textarea:focus {
+  border-color: var(--kobalt-600);
+}
+.pole textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.zgoda {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: start;
+}
+.zgoda input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0;
+  accent-color: var(--kobalt-600);
+  flex-shrink: 0;
+}
+.zgoda label {
+  font-size: var(--text-drobny);
+  color: var(--tekst-drugi);
+  line-height: 1.55;
+}
+.zgoda a {
+  color: var(--kobalt-700);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.komunikat-formularza {
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--tlo-tint-koral);
+  color: var(--koral-600);
+  font-size: var(--text-maly);
+  font-weight: var(--waga-srednia);
+}
+.komunikat-formularza a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  font-weight: var(--waga-polgruba);
+}
+
+/* ==========================================================================
+   ZAKŁADKI (wersja dla rodzica / dla dziecka)
+   ========================================================================== */
+.zakladki {
+  display: flex;
+  gap: var(--space-3);
+  border-bottom: var(--wlos);
+  margin-bottom: var(--space-5);
+}
+.zakladki__przycisk {
+  padding: var(--space-2) var(--space-05);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-size: var(--text-maly);
+  font-weight: var(--waga-polgruba);
+  color: var(--slate-500);
+  min-height: var(--cel-dotyku);
+}
+.zakladki__przycisk[aria-selected="true"] {
+  color: var(--kobalt-600);
+  border-bottom-color: var(--kobalt-600);
+}
+
+/* ==========================================================================
+   NOTA REDAKCYJNA — widoczna dla Was, nie dla rodzica na produkcji
+   ========================================================================== */
+.do-uzupelnienia {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--akcja);
+  background: var(--tlo-tint-koral);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: var(--text-drobny);
+  color: var(--grafit-900);
+}
+.do-uzupelnienia strong {
+  font-weight: var(--waga-polgruba);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.6875rem;
+  color: var(--koral-600);
+}
+
+/* ==========================================================================
+   STOPKA — cztery grupy, nie jedna lista
+   ========================================================================== */
+.stopka {
+  background: var(--tlo-grafit);
+  color: rgba(255, 255, 255, 0.72);
+  padding-block: var(--space-8) var(--space-4);
+}
+
+.stopka__siatka {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+  padding-bottom: var(--space-5);
+}
+
+.stopka__marka img {
+  height: 2.5rem;
+  width: auto;
+  margin-bottom: var(--space-2);
+}
+
+.stopka__dane {
+  display: grid;
+  gap: var(--space-05);
+  font-size: var(--text-maly);
+  font-style: normal;
+}
+.stopka__dane a:hover {
+  color: var(--bialy);
+  text-decoration: underline;
+}
+
+.stopka h2 {
+  font-size: var(--text-nadtytul);
+  font-weight: var(--waga-polgruba);
+  letter-spacing: var(--trop-nadtytul);
+  text-transform: uppercase;
+  color: var(--bialy);
+  margin-bottom: var(--space-2);
+}
+
+.stopka__linki {
+  display: grid;
+  gap: var(--space-1);
+  font-size: var(--text-maly);
+}
+.stopka__linki a:hover {
+  color: var(--bialy);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.stopka__dol {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: var(--text-drobny);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ==========================================================================
+   POMOCNICZE
+   ========================================================================== */
+.srodek {
+  text-align: center;
+}
+.bez-marginesu-gora {
+  margin-top: 0;
+}
+.pelna-szerokosc {
+  grid-column: 1 / -1;
+}

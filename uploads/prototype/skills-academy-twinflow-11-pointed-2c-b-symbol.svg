@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Skills Academy">
+  <desc>Sygnet: koi grafit + koi koral.</desc>
+  <defs><mask id="gap"><rect width="64" height="64" fill="#fff"></rect><path d="M25 27L40 31L38 38L23 34Z" fill="#000"></path><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"></path></mask></defs>
+  <path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#1A2230" mask="url(#gap)"></path>
+  <g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#E8654A" mask="url(#gap)"></path></g>
+  <circle cx="47.5" cy="11.5" r="1.35" fill="#FBF8F3"></circle>
+  <circle cx="16.5" cy="52.5" r="1.35" fill="#FBF8F3"></circle>
+</svg>

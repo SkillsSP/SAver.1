@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills Academy — Specyfikacja mastera produkcyjnego</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Fredoka:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kobalt:#1E5FCC; --kobalt-deep:#14459B; --kobalt-tint:#E5EDFB;
+    --coral:#E8654A; --slate:#5B6B7A; --base:#FBF8F3;
+    --graphite:#1A2230; --graphite-soft:#4C5666; --line:rgba(26,34,48,0.14); --white:#FFF;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--base); color:var(--graphite); font-family:'Lexend',sans-serif; line-height:1.6;}
+  .sheet{max-width:900px; margin:0 auto; padding:0 34px 90px;}
+  .top{display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+       border-bottom:2px solid var(--kobalt); padding:40px 0 18px; margin-bottom:10px; flex-wrap:wrap;}
+  .top .meta{text-align:right; font-size:12px; color:var(--graphite-soft);}
+  .doc-title{font-family:'Fredoka',sans-serif; font-weight:600; font-size:29px; margin:20px 0 6px;}
+  .doc-sub{color:var(--graphite-soft); font-size:14.5px; max-width:650px; margin-bottom:6px;}
+
+  h2{font-family:'Fredoka',sans-serif; font-weight:600; font-size:19px; margin:0 0 4px; color:var(--kobalt-deep);}
+  .sec{margin-top:42px; padding-top:22px; border-top:1px solid var(--line);}
+  .sec-lead{color:var(--graphite-soft); font-size:13.5px; margin-bottom:18px; max-width:650px;}
+  .num{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--coral); font-weight:500; letter-spacing:.04em;}
+
+  .status{background:var(--kobalt-tint); border-radius:12px; padding:16px 20px; font-size:13.5px; margin-bottom:8px;}
+  .status b{color:var(--kobalt-deep);}
+
+  table{width:100%; border-collapse:collapse; font-size:13px; margin-top:6px;}
+  th,td{text-align:left; padding:10px 13px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  th{font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--graphite-soft); font-weight:600;}
+  .chip{width:24px; height:24px; border-radius:6px; display:inline-block; vertical-align:middle; border:1px solid var(--line);}
+  .mono{font-family:'JetBrains Mono',monospace; font-weight:500; font-size:12px;}
+
+  .task{background:var(--white); border:1px solid var(--line); border-radius:14px; padding:6px 4px; margin-top:6px;}
+  .titem{display:flex; gap:12px; padding:13px 18px; border-bottom:1px solid var(--line); align-items:flex-start;}
+  .titem:last-child{border-bottom:none;}
+  .box{width:16px; height:16px; border:1.5px solid var(--kobalt); border-radius:4px; flex-shrink:0; margin-top:3px;}
+  .titem .txt{font-size:13.5px;}
+  .titem .txt b{display:block; margin-bottom:2px;}
+  .titem .txt span{color:var(--graphite-soft); font-size:12.5px;}
+
+  .done{background:var(--white); border:1px solid var(--line); border-radius:14px; padding:6px 4px;}
+  .ditem{display:flex; gap:12px; padding:11px 18px; border-bottom:1px solid var(--line); align-items:baseline;}
+  .ditem:last-child{border-bottom:none;}
+  .tick{color:#1E7A4D; font-weight:700; flex-shrink:0;}
+  .ditem .fn{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--kobalt-deep); min-width:240px;}
+  .ditem .fd{font-size:12.5px; color:var(--graphite-soft);}
+
+  .rule{background:var(--white); border:1px solid var(--line); border-left:3px solid var(--coral); border-radius:12px; padding:15px 19px; font-size:13.5px; margin-top:16px;}
+  .rule b{color:var(--coral);}
+  .donts{display:grid; grid-template-columns:repeat(2,1fr); gap:9px; margin-top:8px;}
+  @media(max-width:600px){.donts{grid-template-columns:1fr;}}
+  .dont{font-size:12.5px; color:var(--graphite-soft); padding:9px 14px; background:var(--white); border:1px solid var(--line); border-radius:10px;}
+  .dont::before{content:"\2715"; color:var(--coral); font-weight:700; margin-right:8px;}
+  footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--line); font-size:11.5px; color:var(--graphite-soft);}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <svg width="150" viewBox="0 0 148.7 108" role="img" aria-label="Skills Academy">
+      <defs><mask id="bm"><rect width="64" height="64" fill="#fff"/><path d="M25 27L40 31L38 38L23 34Z" fill="#000"/><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"/></mask></defs>
+      <g transform="translate(7 21.2) scale(.68)">
+        <path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#1A2230" mask="url(#bm)"/>
+        <g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#E8654A" mask="url(#bm)"/></g>
+        <circle cx="47.5" cy="11.5" r="1.35" fill="#FBF8F3"/><circle cx="16.5" cy="52.5" r="1.35" fill="#FBF8F3"/>
+      </g>
+      <text x="47" y="61" fill="#1A2230" font-family="Lexend,Arial,sans-serif" font-size="48" font-weight="550" letter-spacing="-1.7">kills</text>
+      <text x="14.6" y="91" fill="#5B6B7A" font-family="Lexend,Arial,sans-serif" font-size="15" font-weight="500" letter-spacing="4.4">ACADEMY</text>
+    </svg>
+    <div class="meta">Specyfikacja mastera · v2.2<br>Dla studia DTP lub drukarni</div>
+  </div>
+
+  <div class="doc-title">Master produkcyjny znaku</div>
+  <p class="doc-sub">Znak jest zaprojektowany i dostarczony w pakiecie wektorowym w wersji 1.0. Ten dokument nie zleca projektowania. Opisuje wyłącznie czynności potrzebne do przygotowania pliku nadającego się do druku offsetowego i wielkoformatowego.</p>
+
+  <div class="status" style="margin-top:22px;">
+    <b>Status wyjściowy.</b> Sylwety koi są w pełni wektorowe i nie wymagają korekty. Wordmark („Skills" i „ACADEMY") pozostaje żywym tekstem w kroju Lexend. To jedyny element blokujący przekazanie plików do produkcji.
+  </div>
+
+  <!-- 1 CO JEST GOTOWE -->
+  <div class="sec">
+    <div class="num">01 / STAN OBECNY</div>
+    <h2>Pliki dostarczone w pakiecie</h2>
+    <p class="sec-lead">Wszystkie poniższe pliki są gotowe do zastosowań cyfrowych i nie wymagają zmian.</p>
+    <div class="done">
+      <div class="ditem"><span class="tick">✓</span><span class="fn">skills-academy-logo.svg</span><span class="fd">logo pełne poziome, na jasnym tle</span></div>
+      <div class="ditem"><span class="tick">✓</span><span class="fn">skills-academy-logo-rewers.svg</span><span class="fd">na kobalcie i grafitcie</span></div>
+      <div class="ditem"><span class="tick">✓</span><span class="fn">skills-academy-logo-mono-grafit.svg</span><span class="fd">druk jednokolorowy, oczy wybrane na biel podłoża</span></div>
+      <div class="ditem"><span class="tick">✓</span><span class="fn">skills-academy-logo-mono-bialy.svg</span><span class="fd">kontra, czysta sylweta bez oczu</span></div>
+      <div class="ditem"><span class="tick">✓</span><span class="fn">skills-academy-logo-pionowy.svg</span><span class="fd">sygnet nad nazwą, przy ograniczonej szerokości</span></div>
+      <div class="ditem"><span class="tick">✓</span><span class="fn">skills-academy-sygnet.svg / -rewers / -mono</span><span class="fd">sygnet bez nazwy, trzy warianty</span></div>
+      <div class="ditem"><span class="tick">✓</span><span class="fn">favicon.svg / .ico / PNG 16–512</span><span class="fd">komplet ikon, wersje bez oczu poniżej 32 px</span></div>
+      <div class="ditem"><span class="tick">✓</span><span class="fn">awatary 512 px (kwadrat, koło, kobalt)</span><span class="fd">media społecznościowe, Google Business Profile</span></div>
+    </div>
+  </div>
+
+  <!-- 2 DO WYKONANIA -->
+  <div class="sec">
+    <div class="num">02 / ZAKRES ZLECENIA</div>
+    <h2>Czynności do wykonania</h2>
+    <p class="sec-lead">Trzy kroki w podanej kolejności. Każdy kolejny korzysta z wyniku poprzedniego.</p>
+    <div class="task">
+      <div class="titem"><span class="box"></span><span class="txt"><b>1. Zamiana tekstu na krzywe i zapis dwóch masterów</b><span>Wordmark w kroju Lexend (waga 550 dla „kills", waga 500 z odstępem liter 4,4 dla „ACADEMY") zamienić na ścieżki. Zapisać <b>.ai</b> jako master roboczy oraz <b>.svg z obrysami</b> jako master archiwalny. Oba mają zawierać wszystkie warianty logo w osobnych warstwach lub plikach.</span></span></div>
+      <div class="titem"><span class="box"></span><span class="txt"><b>2. Generowanie rastrów z mastera</b><span>Logo pełne w PNG z przezroczystym tłem oraz JPG na bieli, w rozdzielczościach do zastosowań biurowych i prezentacyjnych. Rastry generować wyłącznie z mastera po krzywych, nie z plików roboczych.</span></span></div>
+      <div class="titem"><span class="box"></span><span class="txt"><b>3. Wersja CMYK i proof</b><span>Przygotować wariant CMYK na podstawie wartości z sekcji 03. Wykonać proof i dopasowanie wizualne w profilu drukarni przed pierwszym drukiem nakładowym. Do przekazania drukarni stosować <b>PDF/X-4</b>. Format .eps przygotować wyłącznie na wyraźne żądanie konkretnej drukarni.</span></span></div>
+    </div>
+  </div>
+
+  <!-- 2b DECYZJE -->
+  <div class="sec">
+    <div class="num">02b / DECYZJE FORMATOWE</div>
+    <h2>Dlaczego takie formaty</h2>
+    <table>
+      <tr><th>Element</th><th>Decyzja</th><th>Uzasadnienie</th></tr>
+      <tr><td>Master roboczy</td><td class="mono">.ai</td><td>standard w polskich studiach DTP i drukarniach; każdy podwykonawca otworzy plik i wprowadzi zmiany</td></tr>
+      <tr><td>Master archiwalny</td><td class="mono">.svg z obrysami</td><td>format otwarty, niezależny od licencji na oprogramowanie; zabezpiecza dostęp do znaku również po zmianie studia lub narzędzi</td></tr>
+      <tr><td>Przekazanie do druku</td><td class="mono">PDF/X-4</td><td>obsługuje przezroczystość i osadzone profile kolorystyczne; .eps to format przestarzały, bez obsługi przezroczystości</td></tr>
+      <tr><td>Przestrzeń koloru</td><td class="mono">CMYK</td><td>kolory dodatkowe podnoszą koszt każdego nakładu; przy obecnej skali nieuzasadnione. Wartości Pantone pozostają jako odniesienie na przyszłość</td></tr>
+    </table>
+    <div class="rule"><b>Zasada nadrzędna.</b> Rastry logo pełnego generować wyłącznie z mastera po krzywych. Nigdy z plików roboczych ani z podglądów.</div>
+  </div>
+
+  <!-- 3 KOLORY -->
+  <div class="sec">
+    <div class="num">03 / KOLOR</div>
+    <h2>Wartości docelowe</h2>
+    <p class="sec-lead">Wartości CMYK i Pantone są punktem wyjścia, nie wartościami zatwierdzonymi. Wymagają proofu i wizualnego dopasowania w profilu drukarni.</p>
+    <table>
+      <tr><th>Kolor</th><th>HEX</th><th>CMYK</th><th>Pantone</th><th>Zastosowanie w znaku</th></tr>
+      <tr><td><span class="chip" style="background:#1A2230;"></span></td><td class="mono">#1A2230</td><td class="mono">80/70/50/70</td><td class="mono">532 C</td><td>górne koi, wordmark „Skills"</td></tr>
+      <tr><td><span class="chip" style="background:#E8654A;"></span></td><td class="mono">#E8654A</td><td class="mono">0/72/70/0</td><td class="mono">7416 C</td><td>dolne koi</td></tr>
+      <tr><td><span class="chip" style="background:#5B6B7A;"></span></td><td class="mono">#5B6B7A</td><td class="mono">65/50/40/15</td><td class="mono">—</td><td>wordmark „ACADEMY" w znaku; w materiałach wyłącznie etykieta Teens Senior</td></tr>
+      <tr><td><span class="chip" style="background:#FBF8F3;"></span></td><td class="mono">#FBF8F3</td><td class="mono">2/3/5/0</td><td class="mono">—</td><td>oczy koi, znak w rewersie</td></tr>
+      <tr><td><span class="chip" style="background:#1E5FCC;"></span></td><td class="mono">#1E5FCC</td><td class="mono">85/62/0/0</td><td class="mono">2145 C</td><td>tło rewersu, nie występuje w samym znaku</td></tr>
+    </table>
+    <div class="rule"><b>Uwaga.</b> Kobalt nie występuje w sylwetach znaku. Jest kolorem tła marki i pojawia się wyłącznie jako podłoże dla wersji rewersowej.</div>
+  </div>
+
+  <!-- 4 ZASADY -->
+  <div class="sec">
+    <div class="num">04 / ZASADY UŻYCIA</div>
+    <h2>Parametry i ograniczenia</h2>
+    <table>
+      <tr><th>Parametr</th><th>Wartość</th></tr>
+      <tr><td>Pole ochronne</td><td>wysokość sygnetu z każdej strony znaku</td></tr>
+      <tr><td>Minimalny rozmiar logo pełnego</td><td>90 px na ekranie, 30 mm w druku (szerokość)</td></tr>
+      <tr><td>Minimalny rozmiar sygnetu</td><td>24 px na ekranie, 10 mm w druku</td></tr>
+      <tr><td>Poniżej 32 px</td><td>stosować wariant bez oczu (favicon)</td></tr>
+      <tr><td>Tła o niskim kontraście i zdjęcia</td><td>stosować rewers lub wersję jednokolorową</td></tr>
+    </table>
+    <h2 style="margin-top:26px;">Czego ze znakiem robić nie wolno</h2>
+    <div class="donts">
+      <div class="dont">obracać ani przechylać</div>
+      <div class="dont">odbijać lustrzanie</div>
+      <div class="dont">zmieniać proporcji</div>
+      <div class="dont">zamieniać kolorów koi miejscami</div>
+      <div class="dont">dodawać cienia, obrysu, gradientu</div>
+      <div class="dont">umieszczać na tle o niskim kontraście</div>
+    </div>
+  </div>
+
+  <!-- 5 TYPOGRAFIA -->
+  <div class="sec">
+    <div class="num">05 / TYPOGRAFIA</div>
+    <h2>Kroje w materiałach</h2>
+    <p class="sec-lead">Oba dostępne bezpłatnie w Google Fonts, bez kosztów licencyjnych.</p>
+    <table>
+      <tr><th>Krój</th><th>Rola</th><th>Wagi</th></tr>
+      <tr><td class="mono">Lexend</td><td>wordmark w znaku oraz cały tekst w materiałach</td><td class="mono">400 / 500 / 600 / 700</td></tr>
+      <tr><td class="mono">Fredoka</td><td>wyłącznie nagłówki dla Kids i Teens Junior</td><td class="mono">500 / 600</td></tr>
+    </table>
+    <div class="rule"><b>Obsługa polskich znaków, zweryfikowana.</b> Oba kroje zawierają podzbiór <span class="mono">latin-ext</span>, czyli pełny zestaw znaków ą, ć, ę, ł, ń, ś, ź, ż. Lexend: latin, latin-ext, vietnamese. Fredoka: latin, latin-ext, hebrew.</div>
+
+    <div class="rule"><b>Uwaga przy pobieraniu plików.</b> Istnieje starszy, osobny krój <b>Fredoka One</b>, zawierający zaledwie 10 znaków z zakresu Latin Extended-A, podczas gdy polszczyzna wymaga z tego zakresu szesnastu. Pobranie go zamiast właściwej <b>Fredoki</b> spowoduje brak polskich znaków. Do produkcji używać wyłącznie kroju <b>Fredoka</b> w wariancie zmiennym.</div>
+
+    <div class="rule"><b>Przy samodzielnym hostowaniu.</b> Generatory plików webfont domyślnie pobierają wyłącznie podzbiór <span class="mono">latin</span>, w którym brakuje polskich znaków poza „ó". Podzbiór <span class="mono">latin-ext</span> należy zaznaczyć jawnie.</div>
+  </div>
+
+  <footer>
+    Skills Academy, Szczecin. Specyfikacja mastera produkcyjnego, wersja 2.0. Dokument zastępuje wcześniejszy brief projektowy, którego zakres został zrealizowany. Wartości CMYK i Pantone wymagają potwierdzenia proofem przed drukiem nakładowym.
+  </footer>
+
+</div>
+</body>
+</html>

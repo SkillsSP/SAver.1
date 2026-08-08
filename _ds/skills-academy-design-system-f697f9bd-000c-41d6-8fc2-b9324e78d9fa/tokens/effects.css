@@ -1,0 +1,16 @@
+:root{
+  --radius-sm:9px;
+  --radius-md:10px;
+  --radius-lg:14px;
+  --radius-xl:16px;
+  --radius-2xl:24px;
+  --radius-pill:999px;
+
+  --border-width:1px;
+  --border-hairline:1px solid var(--border-default);
+  --border-dashed:1px dashed var(--border-default);
+
+  /* the system is deliberately flat: borders carry separation, not shadows */
+  --shadow-card:none;
+  --shadow-raised:none;
+}

@@ -1,0 +1,32 @@
+---
+import { url, telefonHref } from "../lib/site.js";
+
+interface Props {
+  /** Na stronach maturalnych decyzję podejmuje uczeń, często pełnoletni. */
+  senior?: boolean;
+}
+
+const { senior = false } = Astro.props;
+const tel = telefonHref();
+const zapisTekst = senior ? "Zapisz się na konsultację" : "Wolę zapisać się online";
+---
+
+{/*
+  Pasek akcji widoczny wyłącznie na telefonie. Połączenie ma pierwszeństwo,
+  bo rodzic sprawdza stronę pobieżnie i chce szybkiej odpowiedzi; zapis
+  zostaje pod spodem, mniejszy — jest wyborem, nie równorzędną opcją.
+  Dopóki numer telefonu nie jest uzupełniony, pasek pokazuje sam zapis
+  zamiast martwego odnośnika `tel:`.
+*/}
+<div class="pasek-akcji">
+  {tel ? (
+    <>
+      <a class="przycisk przycisk--akcja przycisk--pelny" href={tel}>Zadzwoń teraz</a>
+      <a class="pasek-akcji__drugi" href={url("/kontakt")}>{zapisTekst}</a>
+    </>
+  ) : (
+    <a class="przycisk przycisk--akcja przycisk--pelny" href={url("/kontakt")}>
+      {senior ? "Zapisz się na konsultację" : "Umów zajęcia próbne"}
+    </a>
+  )}
+</div>

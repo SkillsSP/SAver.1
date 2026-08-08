@@ -1,0 +1,69 @@
+---
+import StronaPrawna from "../components/StronaPrawna.astro";
+
+const sekcje = [
+  {
+    tytul: "Administrator danych",
+    tresc:
+      "Administratorem danych osobowych rodzica i dziecka jest podmiot prowadzący centrum Skills Academy w Szczecinie.",
+    doUstalenia:
+      "Pełna nazwa, adres, NIP, e-mail i telefon. Jeśli powołano inspektora ochrony danych — jego dane kontaktowe.",
+  },
+  {
+    tytul: "Cele przetwarzania",
+    tresc:
+      "Dane przetwarzamy, żeby skontaktować się w sprawie zajęć próbnych, zapisać dziecko na zajęcia, prowadzić dokumentację uczestnictwa i rozliczyć płatności.",
+    doUstalenia:
+      "Pełna lista celów, w tym kontakt w sprawach bieżących, raporty o postępach oraz — jeśli planujecie — informacje o nowych zajęciach.",
+  },
+  {
+    tytul: "Podstawy prawne",
+    tresc:
+      "Przetwarzanie opiera się na zgodzie, na wykonaniu umowy o świadczenie zajęć oraz na obowiązkach wynikających z przepisów.",
+    doUstalenia:
+      "Do przypisania przez prawnika: konkretny przepis art. 6 ust. 1 RODO do każdego celu. Dane o zdrowiu dziecka (alergie, choroby przewlekłe) to dane szczególnej kategorii — wymagają podstawy z art. 9.",
+  },
+  {
+    tytul: "Zakres danych",
+    tresc:
+      "Zbieramy dane kontaktowe rodzica, imię i wiek dziecka, informacje potrzebne do bezpiecznego prowadzenia zajęć oraz dane rozliczeniowe.",
+    doUstalenia:
+      "Pełna lista pól po ustaleniu formularza zapisu i karty uczestnika, z rozdzieleniem danych obowiązkowych od dobrowolnych.",
+  },
+  {
+    tytul: "Odbiorcy danych",
+    tresc:
+      "Dane mogą być przekazywane podmiotom obsługującym centrum w zakresie niezbędnym do świadczenia usług.",
+    doUstalenia:
+      "Hosting, poczta, system zapisów, biuro rachunkowe, ubezpieczyciel. Z każdym potrzebna umowa powierzenia przetwarzania.",
+  },
+  {
+    tytul: "Okres przechowywania",
+    tresc:
+      "Dane przechowujemy przez czas trwania umowy oraz okres wynikający z przepisów podatkowych i terminów przedawnienia roszczeń.",
+    doUstalenia:
+      "Konkretne okresy dla zgłoszeń bez zapisu, danych uczestników, dokumentacji księgowej i zgód wizerunkowych.",
+  },
+  {
+    tytul: "Prawa osób, których dane dotyczą",
+    tresc:
+      "Przysługuje Wam prawo dostępu do danych, sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia danych oraz sprzeciwu. Zgodę można wycofać w każdej chwili, bez wpływu na zgodność z prawem przetwarzania dokonanego przed jej wycofaniem.",
+    doUstalenia:
+      "Adres, na który kierować wnioski, i termin odpowiedzi. Dopisać prawo skargi do Prezesa Urzędu Ochrony Danych Osobowych.",
+  },
+  {
+    tytul: "Dobrowolność podania danych",
+    tresc:
+      "Podanie danych jest dobrowolne, ale niezbędne do zapisania dziecka na zajęcia. Bez nich nie możemy zawrzeć umowy ani zapewnić bezpieczeństwa dziecku.",
+    doUstalenia:
+      "Rozdzielenie danych obowiązkowych od dobrowolnych oraz zapis o braku zautomatyzowanego podejmowania decyzji i profilowania.",
+  },
+];
+---
+
+<StronaPrawna
+  tytul="Klauzula informacyjna RODO"
+  opis="Informacja o przetwarzaniu danych osobowych rodzica i dziecka w Skills Academy: administrator, cele, podstawy prawne, okres przechowywania i prawa."
+  wstep="Klauzula informacyjna dla rodziców i opiekunów zapisujących dziecko na zajęcia. Dokument jest w wersji roboczej — podstawy prawne musi przypisać prawnik."
+  sekcje={sekcje}
+/>

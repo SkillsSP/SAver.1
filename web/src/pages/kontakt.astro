@@ -1,0 +1,224 @@
+---
+import Baza from "../layouts/Baza.astro";
+import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import {
+  url,
+  firma,
+  telefonHref,
+  telefonTekst,
+  emailTekst,
+  adresTekst,
+  grupyWiekowe,
+} from "../lib/site.js";
+
+const tel = telefonHref();
+const endpoint = firma.formularzEndpoint;
+
+const poWyslaniu = [
+  "Oddzwaniamy w tym samym dniu roboczym i pytamy o kilka rzeczy o dziecku.",
+  "Proponujemy grupę i termin zajęć próbnych.",
+  "Dziecko bierze udział w pełnym spotkaniu, Wy patrzycie z boku. Potem rozmawiamy — bez presji.",
+];
+---
+
+<Baza
+  aktywna="kontakt"
+  tytul="Kontakt i zapisy"
+  opis="Umówcie bezpłatne zajęcia próbne w Skills Academy w Szczecinie. Telefon, e-mail, adres i formularz zgłoszenia."
+>
+  <section class="naglowek-strony">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Kontakt</span>
+        <h1 class="tytul-1">Umówcie bezpłatne zajęcia próbne</h1>
+        <p class="hero__zdanie">
+          Zostawcie kontakt, oddzwonimy tego samego dnia roboczego i wspólnie
+          wybierzemy termin. Zajęcia próbne nie zobowiązują do zapisu.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka--boczna">
+        {/* FORMULARZ — cztery pola, telefon obowiązkowy */}
+        <div class="stos">
+          <div class="naglowek-sekcji" style="margin-bottom: 0;">
+            <h2 class="tytul-2">Formularz zgłoszenia</h2>
+            <p class="tekst-maly tekst-drugi">
+              Cztery pola. Oddzwaniamy — to najszybsza droga do ustalenia terminu.
+            </p>
+          </div>
+
+          <form
+            class="formularz"
+            method="post"
+            action={endpoint ?? undefined}
+            data-endpoint={endpoint ? "tak" : "nie"}
+          >
+            <div class="pole">
+              <label for="dziecko">Imię dziecka</label>
+              <input
+                type="text"
+                id="dziecko"
+                name="imie_dziecka"
+                autocomplete="off"
+                required
+              />
+            </div>
+
+            <div class="pole">
+              <label for="wiek">Wiek dziecka</label>
+              <select id="wiek" name="wiek_dziecka" required>
+                <option value="">Wybierzcie…</option>
+                {grupyWiekowe.map((g) => (
+                  <option value={g.lata}>{g.lata} lat</option>
+                ))}
+              </select>
+            </div>
+
+            <div class="pole">
+              <label for="telefon">
+                Telefon
+                <span class="pole__wskazowka">Oddzwaniamy zwykle tego samego dnia roboczego.</span>
+              </label>
+              <input
+                type="tel"
+                id="telefon"
+                name="telefon"
+                autocomplete="tel"
+                inputmode="tel"
+                required
+              />
+            </div>
+
+            <div class="pole">
+              <label for="email">
+                E-mail
+                <span class="pole__wskazowka">Opcjonalnie — jeśli wolicie kontakt pisemny.</span>
+              </label>
+              <input type="email" id="email" name="email" autocomplete="email" />
+            </div>
+
+            <div class="zgoda">
+              <input type="checkbox" id="zgoda" name="zgoda" required />
+              <label for="zgoda">
+                Wyrażam zgodę na kontakt w sprawie zajęć próbnych i przetwarzanie
+                podanych danych. Szczegóły w
+                <a href={url("/klauzula-rodo")}>klauzuli informacyjnej</a> i
+                <a href={url("/polityka-prywatnosci")}>polityce prywatności</a>.
+              </label>
+            </div>
+
+            {endpoint ? (
+              <button type="submit" class="przycisk przycisk--akcja przycisk--pelny">
+                Wyślij zgłoszenie
+              </button>
+            ) : (
+              <>
+                <button
+                  type="submit"
+                  class="przycisk przycisk--akcja przycisk--pelny"
+                  disabled
+                  aria-describedby="formularz-nieczynny"
+                >
+                  Wyślij zgłoszenie
+                </button>
+                <p class="komunikat-formularza" id="formularz-nieczynny">
+                  Formularz nie jest jeszcze podłączony do skrzynki.
+                  {tel ? (
+                    <> Do czasu wdrożenia prosimy o telefon: <a href={tel}>{telefonTekst()}</a>.</>
+                  ) : (
+                    <> Do czasu wdrożenia i uzupełnienia numeru telefonu nie da się przez niego wysłać zgłoszenia.</>
+                  )}
+                </p>
+              </>
+            )}
+          </form>
+
+          <DoUzupelnienia czego="Podłączenie formularza">
+            W <code>src/lib/site.js</code> pole <code>formularzEndpoint</code>
+            jest puste, więc przycisk jest świadomie wyłączony — lepiej to niż
+            zgłoszenie, które kończy się błędem i znika. Wpiszcie tam adres
+            z Formspree, Netlify Forms albo własnego serwera, a formularz włączy
+            się sam, bez zmian w kodzie strony. Sprawdźcie potem jedno prawdziwe
+            zgłoszenie od początku do końca.
+          </DoUzupelnienia>
+        </div>
+
+        {/* KONTAKT BEZPOŚREDNI */}
+        <div class="stos">
+          <div class="karta karta--luzna">
+            <h2 class="tytul-3">Kontakt bezpośredni</h2>
+            <ul class="lista-rozdzielona">
+              <li>
+                <span class="etykieta">Telefon</span>
+                <span class="wartosc">
+                  {tel ? <a class="link-w-zdaniu" href={tel}>{telefonTekst()}</a> : telefonTekst()}
+                </span>
+              </li>
+              <li>
+                <span class="etykieta">E-mail</span>
+                <span class="wartosc">
+                  {firma.email ? (
+                    <a class="link-w-zdaniu" href={`mailto:${firma.email}`}>{emailTekst()}</a>
+                  ) : (
+                    emailTekst()
+                  )}
+                </span>
+              </li>
+              <li>
+                <span class="etykieta">Adres</span>
+                <span class="wartosc">{adresTekst()}</span>
+              </li>
+              <li>
+                <span class="etykieta">Biuro czynne</span>
+                <span class="wartosc">{firma.godzinyBiura ?? "godziny w uzupełnieniu"}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="miejsce-na-zdjecie">
+            <strong>Mapa dojazdu</strong>
+            Pojawi się tu po ustaleniu adresu lokalu. Bez adresu, telefonu i mapy
+            nie da się też uruchomić wizytówki Google — a to główne źródło ruchu
+            dla centrum w jednym mieście.
+          </div>
+
+          <div class="karta">
+            <h3 class="tytul-4">Bezpieczeństwo dziecka</h3>
+            <p class="tekst-maly tekst-drugi">
+              Zanim zapiszecie dziecko, warto przeczytać, kto u nas pracuje
+              z dziećmi i na jakich zasadach.
+            </p>
+            <a class="link-w-zdaniu" href={url("/bezpieczenstwo")}>
+              Standardy Ochrony Małoletnich
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* CO SIĘ DZIEJE PO WYSŁANIU */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Dalej</span>
+          <h2 class="tytul-1">Co się dzieje po zgłoszeniu</h2>
+        </div>
+        <ol class="kroki">
+          {poWyslaniu.map((tresc) => (
+            <li class="kroki__krok">
+              <span class="kroki__tresc">
+                <p style="font-size: var(--text-bazowy); color: var(--tekst-glowny);">{tresc}</p>
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+</Baza>

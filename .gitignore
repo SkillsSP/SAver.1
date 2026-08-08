@@ -1,0 +1,18 @@
+# Zależności — odtwarzane przez `npm install`, nie trzymamy ich w repozytorium
+node_modules/
+web/node_modules/
+
+# Wynik budowania — generowany przez GitHub Actions przy każdym wdrożeniu
+web/dist/
+web/.astro/
+dist/
+
+# Pliki lokalne i systemowe
+.DS_Store
+Thumbs.db
+.thumbnail
+*.log
+npm-debug.log*
+
+# Ustawienia lokalne Claude Code (mogą zawierać ścieżki z tej maszyny)
+.claude/settings.local.json

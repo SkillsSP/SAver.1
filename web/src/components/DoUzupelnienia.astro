@@ -1,0 +1,22 @@
+---
+interface Props {
+  /** Krótka etykieta, np. „Cennik” albo „Zespół”. */
+  czego?: string;
+}
+
+const { czego = "Do uzupełnienia" } = Astro.props;
+---
+
+{/*
+  Nota redakcyjna. Zastępuje kwadratowe nawiasy rozsiane po treści: zamiast
+  „[kwota]” w zdaniu sprzedażowym rodzic widzi zwykły tekst, a Wy widzicie
+  wyraźnie oznaczony blok z listą tego, co trzeba wpisać.
+
+  PRZED PUBLIKACJĄ: wyszukajcie w projekcie „DoUzupelnienia” — każde wystąpienie
+  to miejsce, które wymaga Waszej decyzji albo danych. Po uzupełnieniu treści
+  usuńcie komponent razem z importem.
+*/}
+<aside class="do-uzupelnienia">
+  <strong>{czego}</strong>
+  <slot />
+</aside>

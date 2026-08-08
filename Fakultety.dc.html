@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/colors.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/typography.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/effects.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/styles.css">
+<script src="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+  body { margin: 0; background: #FBF8F3; }
+  a { color: #1E5FCC; text-decoration: none; }
+  a:hover { color: #E8654A; }
+  *, *::before, *::after { box-sizing: border-box; }
+  [data-cta] { transition: background-color .16s ease, transform .16s ease; }
+  [data-cta]:hover { transform: translateY(-1px); }
+  [data-cta]:active { transform: translateY(0); }
+  @keyframes sa-bar-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes sa-cta-nudge { 0%, 100% { transform: scale(1); } 45% { transform: scale(1.03); } }
+  [data-cta-bar] { animation: sa-bar-in .34s cubic-bezier(.2,.7,.3,1) both; }
+  [data-cta-bar] [data-cta] { animation: sa-cta-nudge .48s ease-in-out .38s 1 both; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-cta], [data-cta-bar], [data-cta-bar] [data-cta] { animation: none; transition: none; }
+    [data-cta]:hover { transform: none; }
+  }
+</style>
+</helmet>
+
+<div style="background:#FBF8F3;color:#1A2230;font-family:Lexend,system-ui,sans-serif;min-height:100vh">
+
+  <dc-import name="Nawigacja" active="program" hint-size="100%,68px"></dc-import>
+
+  <section style="background:#1E5FCC;border-radius:0 0 24px 24px">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(38px,5.5vw,66px) 24px clamp(34px,5vw,56px)">
+      <div style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72);font-weight:600;margin-bottom:16px">Fakultety</div>
+      <h1 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(30px,4.4vw,48px);line-height:1.1;letter-spacing:-.01em;color:#fff;margin:0;max-width:20ch;text-wrap:balance">Jedna dziedzina, którą dziecko wybiera samo</h1>
+      <p style="font-size:clamp(15.5px,1.5vw,18px);line-height:1.65;color:rgba(255,255,255,.86);margin:20px 0 0;max-width:62ch;text-wrap:pretty">Fakultet dokładacie do zajęć podstawowych. Prowadzimy go po angielsku, ale język schodzi tu na drugi plan — liczy się to, co dziecko robi.</p>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px 0">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(20px,2.6vw,30px)">
+      <sc-for list="{{ faculties }}" as="f" hint-placeholder-count="4">
+        <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;overflow:hidden;display:flex;flex-direction:column">
+          <image-slot id="{{ f.slotId }}" shape="rect" placeholder="Zdjęcie z fakultetu" style="width:100%;height:180px"></image-slot>
+          <div style="padding:clamp(20px,2.4vw,28px);display:flex;flex-direction:column;gap:12px">
+          <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:20px;margin:0;letter-spacing:-.005em">{{ f.name }}</h2>
+          <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0">{{ f.lead }}</p>
+          <div style="font-size:13.5px;line-height:1.65;color:#5B6B7A;border-top:1px solid rgba(26,34,48,.13);padding-top:14px">{{ f.detail }}</div>
+          <div style="font-size:13.5px;color:#5B6B7A">Wiek: <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[zakres]</span> · Termin: <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[dzień i godzina]</span></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(30px,4vw,42px) 24px 0">
+    <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(22px,2.8vw,34px)">
+      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(21px,2.4vw,26px);margin:0 0 10px;letter-spacing:-.008em">Jak wybrać fakultet</h2>
+      <p style="font-size:15px;line-height:1.7;color:#5B6B7A;margin:0 0 24px;max-width:70ch;text-wrap:pretty">Dziecko wybiera, nie rodzic. Jeśli po kilku spotkaniach okaże się, że trafiło źle, zmieniamy fakultet bez dopłaty do <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[termin graniczny]</span>.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:22px">
+        <div>
+          <div style="font-family:Fredoka,system-ui,sans-serif;color:#E8654A;font-size:17px;font-weight:600;margin-bottom:8px">01</div>
+          <div style="font-size:15px;font-weight:600;margin-bottom:6px">Spotkanie otwarte</div>
+          <div style="font-size:14px;line-height:1.65;color:#5B6B7A">Na początku semestru dziecko może zajrzeć na każdy fakultet po kolei.</div>
+        </div>
+        <div>
+          <div style="font-family:Fredoka,system-ui,sans-serif;color:#E8654A;font-size:17px;font-weight:600;margin-bottom:8px">02</div>
+          <div style="font-size:15px;font-weight:600;margin-bottom:6px">Wybór</div>
+          <div style="font-size:14px;line-height:1.65;color:#5B6B7A">Jeden fakultet w karnecie. Drugi możliwy za dopłatą, jeśli są miejsca.</div>
+        </div>
+        <div>
+          <div style="font-family:Fredoka,system-ui,sans-serif;color:#E8654A;font-size:17px;font-weight:600;margin-bottom:8px">03</div>
+          <div style="font-size:15px;font-weight:600;margin-bottom:6px">Pokaz na koniec</div>
+          <div style="font-size:14px;line-height:1.65;color:#5B6B7A">Każdy fakultet kończy semestr czymś, co da się pokazać rodzicom.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(30px,4vw,42px) 24px 0">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(20px,2.6vw,30px)">
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(20px,2.4vw,28px)">
+        <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:20px;margin:0 0 12px;letter-spacing:-.005em">Zasady organizacyjne</h2>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:1.6;color:#5B6B7A">
+          <div>Fakultet wymaga zapisu na zajęcia podstawowe</div>
+          <div>Grupa rusza przy minimum <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[liczba]</span> osób</div>
+          <div>Spotkanie trwa <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[czas]</span>, <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[ile razy]</span> w tygodniu</div>
+          <div>Materiały i sprzęt zapewnia centrum</div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(20px,2.4vw,28px)">
+        <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:20px;margin:0 0 12px;letter-spacing:-.005em">Prowadzący fakultetów</h2>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="border:1px dashed rgba(232,101,74,.5);border-radius:12px;padding:16px">
+            <div style="font-size:15px;font-weight:600;margin-bottom:4px"><span style="border-bottom:1px dashed rgba(232,101,74,.7)">[imię i nazwisko]</span></div>
+            <div style="font-size:13.5px;color:#5B6B7A;line-height:1.6"><span style="border-bottom:1px dashed rgba(232,101,74,.7)">[fakultet, doświadczenie]</span></div>
+          </div>
+          <div style="border:1px dashed rgba(232,101,74,.5);border-radius:12px;padding:16px">
+            <div style="font-size:15px;font-weight:600;margin-bottom:4px"><span style="border-bottom:1px dashed rgba(232,101,74,.7)">[imię i nazwisko]</span></div>
+            <div style="font-size:13.5px;color:#5B6B7A;line-height:1.6"><span style="border-bottom:1px dashed rgba(232,101,74,.7)">[fakultet, doświadczenie]</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px clamp(20px,3vw,32px)">
+    <div style="background:#1E5FCC;border-radius:20px;padding:clamp(28px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(24px,4vw,48px);align-items:center">
+      <div>
+        <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(24px,3vw,32px);line-height:1.15;letter-spacing:-.015em;color:#fff;margin:0;text-wrap:balance">Nie wiecie, który fakultet? Niech dziecko sprawdzi wszystkie</h2>
+        <p style="font-size:15px;line-height:1.7;color:rgba(255,255,255,.86);margin:16px 0 0;max-width:52ch;text-wrap:pretty">Spotkania otwarte na początku semestru są bezpłatne także dla osób spoza centrum.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+        <a href="Zapisy.dc.html" data-cta style="font-size:16px;font-weight:600;color:#fff;background:#E8654A;padding:16px 30px;border-radius:10px;min-height:44px;display:inline-flex;align-items:center" style-hover="background:#D4553B;color:#fff">Zapytaj o wolne miejsca</a>
+        <a href="Cennik.dc.html" style="font-size:15px;font-weight:600;color:#fff;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:2px" style-hover="color:#fff;border-color:#fff">zobacz dopłatę w cenniku</a>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Stopka" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      faculties: [
+        { slotId: 'fakultet-music', name: 'Music', lead: 'Rytm, głos i wspólne granie. Dziecko nie uczy się nut na wejściu — najpierw gra, potem rozumie, co zagrało.', detail: 'Zakres i instrumenty: [uzupełnić]' },
+        { slotId: 'fakultet-art', name: 'Art', lead: 'Rysunek, kolaż, praca przestrzenna. Zadanie zawsze ma cel, a nie tylko technikę do przećwiczenia.', detail: 'Techniki i materiały: [uzupełnić]' },
+        { slotId: 'fakultet-acting', name: 'Acting', lead: 'Scena, głos i obecność przed grupą. Najkrótsza droga do tego, żeby dziecko przestało bać się mówić.', detail: 'Formy pracy i pokaz końcowy: [uzupełnić]' },
+        { slotId: 'fakultet-motion', name: 'Motion Skills', lead: 'Ruch, koordynacja i praca zespołowa. Dla dzieci, które nie usiedzą — i dobrze.', detail: 'Rodzaj aktywności i przestrzeń: [uzupełnić]' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

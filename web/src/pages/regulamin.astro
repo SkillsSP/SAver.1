@@ -1,0 +1,75 @@
+---
+import StronaPrawna from "../components/StronaPrawna.astro";
+
+const sekcje = [
+  {
+    tytul: "1. Kto prowadzi zajęcia",
+    tresc: "Zajęcia prowadzi centrum kompetencji Skills Academy w Szczecinie.",
+    doUstalenia:
+      "Pełna nazwa podmiotu, adres, NIP, REGON, dane kontaktowe, forma prawna działalności.",
+  },
+  {
+    tytul: "2. Zapis na zajęcia",
+    tresc:
+      "Zapis następuje po zajęciach próbnych, na podstawie formularza i potwierdzenia ze strony centrum. Dziecko zapisuje rodzic lub opiekun prawny.",
+    doUstalenia:
+      "Moment zawarcia umowy, wymagane dokumenty, lista osób upoważnionych do odbioru, informacje o zdrowiu dziecka.",
+  },
+  {
+    tytul: "3. Karnet i płatności",
+    tresc:
+      "Karnet obejmuje określoną z góry liczbę spotkań w modelu miesięcznym albo semestralnym. Płatność następuje przelewem na konto centrum. Przygotowanie egzaminacyjne (Exams) rozliczane jest osobno, poza karnetem.",
+    doUstalenia:
+      "Kwoty (patrz cennik), termin płatności, numer konta, zasady wystawiania faktur, konsekwencje opóźnienia oraz ostateczny model rozliczenia Exams.",
+  },
+  {
+    tytul: "4. Zawieszenie karnetu i rezygnacja",
+    tresc:
+      "Karnet można zawiesić w obu modelach. Opłacone spotkania nie przepadają i mogą zostać wykorzystane w kolejnych terminach. Wpłaconych środków nie zwracamy.",
+    doUstalenia:
+      "Sposób i wyprzedzenie zgłoszenia zawieszenia, okres ważności niewykorzystanych zajęć, tryb rezygnacji. Do weryfikacji prawnej: relacja tego zapisu do prawa odstąpienia od umowy zawartej na odległość (14 dni).",
+  },
+  {
+    tytul: "5. Nieobecności i odrabianie",
+    tresc:
+      "Nieobecność zgłoszoną z wyprzedzeniem można odrobić w innej grupie tego samego poziomu.",
+    doUstalenia:
+      "Minimalne wyprzedzenie zgłoszenia, limit odrabianych zajęć, zasady przy dłuższej chorobie i przy zajęciach indywidualnych.",
+  },
+  {
+    tytul: "6. Odwołanie zajęć przez centrum",
+    tresc:
+      "Jeśli zajęcia nie odbędą się z naszej winy, wyznaczamy termin zastępczy.",
+    doUstalenia:
+      "Tryb informowania rodziców, termin odrobienia, zasady przy odwołaniu z przyczyn niezależnych oraz minimalna liczebność grupy, poniżej której grupa nie rusza.",
+  },
+  {
+    tytul: "7. Obowiązki uczestnika i rodzica",
+    tresc:
+      "Uczestnik przestrzega zasad bezpieczeństwa i zasad współpracy w grupie. Rodzic zapewnia punktualne przyprowadzenie i odbiór dziecka.",
+    doUstalenia:
+      "Zasady zachowania, tryb postępowania przy powtarzającym się naruszaniu zasad, odpowiedzialność za rzeczy pozostawione w centrum.",
+  },
+  {
+    tytul: "8. Wizerunek i dane osobowe",
+    tresc:
+      "Publikacja zdjęć wymaga odrębnej, pisemnej zgody rodzica, którą można wycofać w każdej chwili. Szczegóły opisujemy w Standardach Ochrony Małoletnich oraz w polityce prywatności.",
+    doUstalenia:
+      "Wzór zgody wizerunkowej i termin usunięcia materiałów po wycofaniu zgody.",
+  },
+  {
+    tytul: "9. Reklamacje i zmiany regulaminu",
+    tresc:
+      "Uwagi i reklamacje przyjmujemy pisemnie, na adres e-mail centrum.",
+    doUstalenia:
+      "Termin rozpatrzenia reklamacji, tryb informowania o zmianach regulaminu i okres, po którym zmiany wchodzą w życie.",
+  },
+];
+---
+
+<StronaPrawna
+  tytul="Regulamin"
+  opis="Zasady uczestnictwa w zajęciach Skills Academy w Szczecinie: zapis, karnet i płatności, zawieszenie, nieobecności, obowiązki uczestnika i rodzica."
+  wstep="Zasady, na jakich prowadzimy zajęcia i na jakich zapisujecie dziecko. Dokument jest w wersji roboczej — przed publikacją musi go potwierdzić prawnik."
+  sekcje={sekcje}
+/>

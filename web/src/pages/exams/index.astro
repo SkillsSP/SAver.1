@@ -1,0 +1,144 @@
+---
+import Baza from "../../layouts/Baza.astro";
+import OdeslanieDoGrup from "../../components/OdeslanieDoGrup.astro";
+import ZapisCta from "../../components/ZapisCta.astro";
+import { url } from "../../lib/site.js";
+
+/* Ten sam schemat pracy dla każdego przedmiotu i poziomu — dlatego opisujemy
+   go raz, na stronie zbiorczej, a strony egzaminacyjne do niego wracają. */
+const schemat = [
+  {
+    tytul: "Arkusz na wejściu",
+    opis: "Pełny arkusz CKE w warunkach zbliżonych do egzaminacyjnych. Punkt odniesienia dla wszystkiego, co dalej.",
+  },
+  {
+    tytul: "Plan do daty egzaminu",
+    opis: "Rozpisany wstecz od terminu CKE, z priorytetem dla zadań, które dają najwięcej punktów.",
+  },
+  {
+    tytul: "Próby kontrolne",
+    opis: "Z wynikiem punktowym i porównaniem do poprzedniego podejścia.",
+  },
+  {
+    tytul: "Raport dla rodzica",
+    opis: "Liczby, nie wrażenia: aktualny wynik, tempo poprawy, obszary do nadrobienia.",
+  },
+];
+---
+
+<Baza
+  aktywna="exams"
+  tytul="Exams — przygotowanie do egzaminu ósmoklasisty i matury"
+  opis="Osobna ścieżka przygotowania egzaminacyjnego z angielskiego i z matematyki. Punktem odniesienia jest arkusz CKE i wynik. Szczecin."
+>
+  <section class="naglowek-strony">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Exams</span>
+        <h1 class="tytul-1">Przygotowanie do egzaminu ósmoklasisty i matury</h1>
+        <p class="hero__zdanie">
+          Osobna ścieżka, prowadzona innym tonem niż zajęcia dla młodszych dzieci.
+          Punktem odniesienia jest arkusz CKE i wynik, a nie ogólny rozwój
+          kompetencji.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Zdanie zdejmujące z rodzica pytanie, czy trzeba brać całość */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <p class="wiodacy" style="font-size: var(--text-h4); max-width: 46rem;">
+        Przygotowanie egzaminacyjne prowadzimy z angielskiego i z matematyki.
+        Można je wybrać osobno, niezależnie od zajęć podstawowych — także jeśli
+        dziecko nie chodzi u nas na nic innego.
+      </p>
+
+      <div class="siatka siatka--2" style="margin-top: var(--space-5);">
+        <a class="karta karta--luzna" href={url("/exams/e8")}>
+          <span class="plakietka plakietka--kobalt">13–15 lat · Teens Junior</span>
+          <h2 class="tytul-3">Egzamin ósmoklasisty</h2>
+          <p class="tekst-drugi tekst-maly">
+            Arkusze CKE, strategie zadań, oswojenie z formatem. Ton rówieśniczy,
+            bez maskotek. Decyzja wspólna z rodzicem.
+          </p>
+          <ul class="lista-znaczona">
+            <li>Angielski — poziom A2+</li>
+            <li>Matematyka <span class="plakietka unikat">Unikat</span></li>
+          </ul>
+          <span class="wiek__strzalka">Zobacz szczegóły →</span>
+        </a>
+
+        <a class="karta karta--luzna karta--slate" href={url("/exams/matura")}>
+          <span class="plakietka plakietka--slate">16–19 lat · Teens Senior</span>
+          <h2 class="tytul-3 tytul--medrzec">Matura</h2>
+          <p class="tekst-drugi tekst-maly">
+            Osobny rejestr: plan, wynik, progi punktowe. Odbiorcą jest uczeń,
+            często pełnoletni.
+          </p>
+          <ul class="lista-znaczona">
+            <li>Angielski — podstawowy i rozszerzony</li>
+            <li>Matematyka — podstawowy <span class="plakietka unikat">Unikat</span></li>
+          </ul>
+          <span class="wiek__strzalka" style="color: var(--slate-600);">Zobacz szczegóły →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* SCHEMAT PRACY */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Schemat</span>
+          <h2 class="tytul-1">Jak pracujemy</h2>
+          <p class="tekst-drugi tekst-maly">
+            Ten sam schemat dla każdego przedmiotu i poziomu. Uczeń i rodzic
+            w każdym momencie wiedzą, gdzie są względem celu.
+          </p>
+        </div>
+        <ol class="kroki">
+          {schemat.map((krok) => (
+            <li class="kroki__krok">
+              <span class="kroki__tresc">
+                <strong>{krok.tytul}</strong>
+                <p>{krok.opis}</p>
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {/* WYNIKI — uczciwe „jeszcze ich nie mamy” */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Wyniki</span>
+          <h2 class="tytul-1">Publikujemy je po pierwszym roczniku</h2>
+        </div>
+        <p class="wiodacy">
+          Do tego czasu nie podajemy średnich, bo nie mielibyśmy ich z czego
+          policzyć. Kiedy pierwszy rocznik zda egzamin, w tym miejscu pojawi się
+          średni wynik, poprawa względem arkusza wejściowego i liczba uczniów.
+          Dopóki tych liczb nie ma, dowodem jest metoda i zespół.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <OdeslanieDoGrup />
+    </div>
+  </section>
+
+  <ZapisCta
+    tytul="Zacznijcie od arkusza, nie od deklaracji"
+    tresc="Konsultacja z arkuszem diagnostycznym pokazuje, ile punktów realnie brakuje i ile spotkań potrzeba do celu."
+    przycisk="Zapisz się na konsultację"
+  />
+</Baza>

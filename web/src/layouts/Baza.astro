@@ -1,0 +1,45 @@
+---
+import Naglowek from "../components/Naglowek.astro";
+import Stopka from "../components/Stopka.astro";
+import PasekAkcji from "../components/PasekAkcji.astro";
+import { firma, url } from "../lib/site.js";
+import "../styles/style.css";
+
+interface Props {
+  tytul: string;
+  opis: string;
+  aktywna?: string;
+  /** Rejestr Teens Senior: slate, wyłącznie Lexend, bez Fredoki. */
+  senior?: boolean;
+}
+
+const { tytul, opis, aktywna = "", senior = false } = Astro.props;
+const pelnyTytul = `${tytul} · ${firma.nazwa} ${firma.miasto}`;
+---
+
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pelnyTytul}</title>
+    <meta name="description" content={opis} />
+    <link rel="icon" href={url("/logo/skills-academy-favicon.svg")} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={url("/logo/skills-academy-favicon-180.png")} />
+    <meta property="og:title" content={pelnyTytul} />
+    <meta property="og:description" content={opis} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:image" content={url("/logo/skills-academy-logo-1200.png")} />
+  </head>
+
+  <body class={senior ? "rejestr-senior" : undefined}>
+    <a class="pomin-do-tresci" href="#tresc">Przejdź do treści</a>
+    <Naglowek aktywna={aktywna} ctaSenior={senior} />
+    <main id="tresc">
+      <slot />
+    </main>
+    <Stopka />
+    <PasekAkcji senior={senior} />
+  </body>
+</html>

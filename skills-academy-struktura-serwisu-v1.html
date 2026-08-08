@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills Academy — Struktura serwisu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Fredoka:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kobalt:#1E5FCC; --kobalt-deep:#14459B; --kobalt-tint:#E5EDFB;
+    --coral:#E8654A; --coral-tint:#FCEFEA; --slate:#5B6B7A; --slate-tint:#EDEFF2;
+    --base:#FBF8F3; --graphite:#1A2230; --graphite-soft:#4C5666;
+    --line:rgba(26,34,48,0.13); --white:#FFF;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--base); color:var(--graphite); font-family:'Lexend',sans-serif; line-height:1.65;}
+  .wrap{max-width:940px; margin:0 auto; padding:0 32px 100px;}
+
+  .band{background:var(--kobalt); color:var(--white); border-radius:0 0 24px 24px; padding:46px 44px 42px; margin-bottom:52px;}
+  .band .kicker{font-size:12px; letter-spacing:.16em; text-transform:uppercase; opacity:.8; font-weight:600; margin-bottom:18px;}
+  .band h1{font-family:'Fredoka',sans-serif; font-weight:600; font-size:26px; margin:18px 0 8px;}
+  .band p{margin:0; font-size:15px; color:rgba(255,255,255,.85); max-width:560px;}
+
+  .eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--kobalt-deep); font-weight:600; margin:0 0 10px;}
+  h2{font-family:'Fredoka',sans-serif; font-weight:600; font-size:23px; margin:0 0 6px;}
+  h3{font-size:16px; font-weight:600; margin:22px 0 6px;}
+  p{margin:0 0 14px;}
+  .lede{color:var(--graphite-soft); font-size:14.5px; max-width:640px; margin-bottom:24px;}
+  section{margin-top:60px; padding-top:32px; border-top:1px solid var(--line);}
+
+  table{width:100%; border-collapse:collapse; font-size:13px; margin-top:8px;}
+  th,td{text-align:left; padding:11px 13px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--graphite-soft); font-weight:600;}
+  .mono{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--kobalt-deep);}
+
+  .principle{background:var(--white); border:1px solid var(--line); border-left:3px solid var(--coral); border-radius:12px; padding:15px 19px; font-size:13.5px; margin-top:16px;}
+  .principle b{color:var(--kobalt-deep);}
+  .flag{background:var(--coral-tint); border-left:3px solid var(--coral); border-radius:12px; padding:15px 19px; font-size:13.5px; margin-top:16px;}
+  .flag b{color:var(--coral);}
+
+  /* sitemap */
+  .map{background:var(--white); border:1px solid var(--line); border-radius:16px; padding:26px; margin-top:8px;}
+  .lvl0{background:var(--kobalt); color:#fff; border-radius:12px; padding:12px 18px; font-weight:600; font-size:15px; text-align:center; margin-bottom:6px;}
+  .split{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:14px;}
+  @media(max-width:720px){.split{grid-template-columns:1fr;}}
+  .col{border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+  .col .head{padding:11px 14px; font-weight:600; font-size:13.5px; color:#fff;}
+  .col.a .head{background:var(--kobalt-deep);}
+  .col.b .head{background:var(--slate);}
+  .col.c .head{background:var(--graphite);}
+  .col .sub{font-size:11px; opacity:.85; font-weight:400; display:block; margin-top:2px;}
+  .col ul{list-style:none; margin:0; padding:8px 0;}
+  .col li{font-size:12.5px; padding:7px 14px; border-bottom:1px solid var(--line); color:var(--graphite);}
+  .col li:last-child{border-bottom:none;}
+  .col li .u{display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--graphite-soft); margin-top:1px;}
+  .foot-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:14px;}
+  .fbox{border:1px dashed var(--line); border-radius:10px; padding:10px 13px; font-size:12px; color:var(--graphite-soft);}
+  .fbox b{display:block; color:var(--graphite); font-size:12.5px; margin-bottom:1px;}
+
+  .page{background:var(--white); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:14px;}
+  .page .ph{display:flex; justify-content:space-between; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:10px;}
+  .page .pt{font-weight:600; font-size:15.5px;}
+  .page .pu{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--kobalt-deep);}
+  .page .goal{font-size:13px; color:var(--graphite-soft); margin-bottom:10px;}
+  .page ol{margin:0; padding-left:20px; font-size:13px;}
+  .page ol li{margin-bottom:5px;}
+  .cta{display:inline-block; background:var(--coral); color:#fff; font-size:11.5px; font-weight:600; padding:4px 11px; border-radius:20px; margin-top:10px;}
+  .cta.sec{background:var(--slate);}
+
+  .stage{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px;}
+  @media(max-width:680px){.stage{grid-template-columns:1fr;}}
+  .sbox{border:1px solid var(--line); border-radius:14px; padding:18px 20px; background:var(--white);}
+  .sbox .st{font-weight:600; font-size:14.5px; margin-bottom:3px;}
+  .sbox .sd{font-size:12px; color:var(--graphite-soft); margin-bottom:10px;}
+  .sbox ul{margin:0; padding-left:18px; font-size:12.5px;}
+  .sbox li{margin-bottom:4px;}
+
+
+  .navbar{display:flex; align-items:center; gap:18px; background:var(--base); border:1px solid var(--line); border-radius:14px; padding:12px 18px; flex-wrap:wrap;}
+  .nb-items{display:flex; gap:20px; flex:1; flex-wrap:wrap;}
+  .nb{font-size:13.5px; font-weight:500; color:var(--graphite); white-space:nowrap;}
+  .nb i{font-style:normal; color:var(--slate); font-size:10px;}
+  .nb.plain{color:var(--graphite);}
+  .nb-cta{background:var(--coral); color:#fff; font-size:13px; font-weight:600; padding:9px 18px; border-radius:10px; white-space:nowrap;}
+  .navnote{font-size:12.5px; color:var(--graphite-soft); margin-top:10px; margin-bottom:4px;}
+  .split4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px;}
+  @media(max-width:820px){.split4{grid-template-columns:1fr 1fr;}}
+  @media(max-width:520px){.split4{grid-template-columns:1fr;}}
+  footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); font-size:12px; color:var(--graphite-soft);}
+</style>
+</head>
+<body>
+
+  <div style="background:#FCEFEA;border-bottom:1px solid rgba(232,101,74,.45);padding:16px 44px;font-family:'Lexend',sans-serif;font-size:13.5px;line-height:1.6;color:#1A2230;">
+    <b style="color:#E8654A;">Dokument nieaktualny — wersja 1.0.</b> Mapa serwisu, pasek nawigacji i etapowanie zostały zastąpione przez „Struktura serwisu” w wersji 3.0.
+    Zmiany: pasek to Program · Exams · Cennik · O nas · Kontakt (pozycja „Grupy” usunięta), Exams rozwija się na dwa poziomy z przedmiotami jako kotwicami,
+    podział wiekowy przeniesiony na stronę Metoda, Exams odłączone od modelu filarowego, dodana matematyka. Aktualne pozostają: cztery zasady (sekcja 01),
+    specyfikacja treści podstron (03), ścieżki użytkownika (04) i warstwa techniczna (06) — z poprawką nazw i adresów wg wersji 3.0.
+  </div>
+
+  <div class="band">
+    <div class="kicker">Strona internetowa · dokument roboczy 1.0</div>
+    <svg width="170" viewBox="0 0 148.7 108" role="img" aria-label="Skills Academy">
+      <defs><mask id="sm"><rect width="64" height="64" fill="#fff"/><path d="M25 27L40 31L38 38L23 34Z" fill="#000"/><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"/></mask></defs>
+      <g transform="translate(7 21.2) scale(.68)">
+        <path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#FBF8F3" mask="url(#sm)"/>
+        <g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#E8654A" mask="url(#sm)"/></g>
+        <circle cx="47.5" cy="11.5" r="1.35" fill="#E8654A"/><circle cx="16.5" cy="52.5" r="1.35" fill="#FBF8F3"/>
+      </g>
+      <text x="47" y="61" fill="#FBF8F3" font-family="Lexend,Arial,sans-serif" font-size="48" font-weight="550" letter-spacing="-1.7">kills</text>
+      <text x="14.6" y="91" fill="rgba(255,255,255,.75)" font-family="Lexend,Arial,sans-serif" font-size="15" font-weight="500" letter-spacing="4.4">ACADEMY</text>
+    </svg>
+    <h1>Struktura serwisu</h1>
+    <p>Architektura informacji, specyfikacja podstron i etapowanie wdrożenia. Dokument poprzedza pisanie treści i projekt graficzny.</p>
+  </div>
+
+  <div class="wrap">
+
+    <!-- 1 ZASADY -->
+    <section style="border-top:none; margin-top:0; padding-top:0;">
+      <p class="eyebrow">01 · Punkt wyjścia</p>
+      <h2>Cztery zasady, z których wynika ta struktura</h2>
+      <p class="lede">Struktura nie jest listą podstron, tylko konsekwencją decyzji podjętych wcześniej. Poniżej te, które ją ukształtowały.</p>
+
+      <h3>1. Dwie różne decyzje zakupowe, nie jedna</h3>
+      <p>Rodzic ośmiolatka i maturzysta kupują co innego, w innym trybie i z innych powodów. Pierwszy szuka wartościowego uzupełnienia popołudnia, drugi konkretnego wyniku egzaminacyjnego. Sklejenie ich w jedną ofertę osłabiłoby obie. Serwis rozdziela je już na poziomie menu.</p>
+
+      <h3>2. Jedna marka, więc wspólny szkielet</h3>
+      <p>Rozdzielenie ścieżek nie oznacza dwóch serwisów. Nagłówek, stopka, dane kontaktowe i strony o firmie są wspólne. Różni się warstwa ofertowa i ton.</p>
+
+      <h3>3. Konwersją jest zajęcia próbne, nie zapis</h3>
+      <p>Nikt nie zapisuje dziecka na roczny karnet po wizycie na stronie. Realnym celem każdej podstrony jest umówienie bezpłatnych zajęć próbnych lub kontakt. Zapis następuje po spotkaniu na żywo.</p>
+
+      <h3>4. Startujemy bez dowodów społecznych</h3>
+      <p>Nie ma jeszcze zdjęć z zajęć, opinii rodziców ani wyników uczniów. To najpoważniejsze ograniczenie przy budowie strony edukacyjnej. Struktura musi je kompensować tym, co już istnieje: udokumentowaną metodą, konkretnym programem i przejrzystością.</p>
+
+      <div class="flag"><b>Konsekwencja czwartej zasady.</b> Serwis na start ma być <b>mały i gęsty</b>, nie duży i pusty. Dwanaście podstron z rozrzedzoną treścią wygląda gorzej niż sześć konkretnych. Rozbudowa następuje wtedy, gdy pojawi się realny materiał, nie wcześniej.</div>
+    </section>
+
+    <!-- 2 MAPA -->
+    <section>
+      <p class="eyebrow">02 · Mapa serwisu</p>
+      <h2>Architektura informacji</h2>
+      <p class="lede">Trzy kolumny to trzy ścieżki ofertowe. Pod nimi warstwa wspólna, obecna w stopce na każdej podstronie.</p>
+
+      <h3 style="margin-top:0;">Pasek nawigacji</h3>
+      <p class="lede" style="margin-bottom:14px;">Płaski pasek na całą szerokość, pięć pozycji plus wyróżniony przycisk. Każda pozycja poza Kontaktem ma własne małe rozwinięcie, nie jedno wspólne mega menu.</p>
+
+      <div class="navbar">
+        <div class="nb-logo">
+          <svg width="88" viewBox="0 0 148.7 108" aria-label="Skills Academy">
+            <defs><mask id="nm"><rect width="64" height="64" fill="#fff"/><path d="M25 27L40 31L38 38L23 34Z" fill="#000"/><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"/></mask></defs>
+            <g transform="translate(7 21.2) scale(.68)">
+              <path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#1A2230" mask="url(#nm)"/>
+              <g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#E8654A" mask="url(#nm)"/></g>
+              <circle cx="47.5" cy="11.5" r="1.35" fill="#FBF8F3"/><circle cx="16.5" cy="52.5" r="1.35" fill="#FBF8F3"/>
+            </g>
+            <text x="47" y="61" fill="#1A2230" font-family="Lexend,Arial,sans-serif" font-size="48" font-weight="550" letter-spacing="-1.7">kills</text>
+            <text x="14.6" y="91" fill="#5B6B7A" font-family="Lexend,Arial,sans-serif" font-size="15" font-weight="500" letter-spacing="4.4">ACADEMY</text>
+          </svg>
+        </div>
+        <div class="nb-items">
+          <span class="nb">Program <i>▾</i></span>
+          <span class="nb">Grupy <i>▾</i></span>
+          <span class="nb">Exams <i>▾</i></span>
+          <span class="nb">O nas <i>▾</i></span>
+          <span class="nb plain">Kontakt</span>
+        </div>
+        <div class="nb-cta">Zapisz dziecko</div>
+      </div>
+      <div class="navnote">Wersja mobilna: ten sam pasek zwija się do menu, a przycisk zmienia się na <b>Zadzwoń</b> z odnośnikiem telefonicznym.</div>
+
+      <h3>Rozwinięcia</h3>
+      <div class="map">
+        <div class="lvl0">Strona główna <span style="font-weight:400;opacity:.8;font-size:12px;">— rozdziela ruch na ścieżki</span></div>
+
+        <div class="split4">
+          <div class="col a">
+            <div class="head">Program <span class="sub">co robimy</span></div>
+            <ul>
+              <li>Zajęcia bazowe i fakultety<span class="u">/program</span></li>
+              <li>Szkoła amerykańska online<span class="u">/program#online</span></li>
+              <li>Cennik<span class="u">/cennik</span></li>
+            </ul>
+          </div>
+
+          <div class="col a">
+            <div class="head">Grupy <span class="sub">dla kogo · wiek</span></div>
+            <ul>
+              <li>Kids · 5–12 lat<span class="u">/grupy#kids</span></li>
+              <li>Teens Junior · 13–15 lat<span class="u">/grupy#teens-junior</span></li>
+              <li>Teens Senior · 16–19 lat<span class="u">/grupy#teens-senior</span></li>
+            </ul>
+          </div>
+
+          <div class="col b">
+            <div class="head">Exams <span class="sub">po co · cel egzaminacyjny</span></div>
+            <ul>
+              <li>Egzamin ósmoklasisty<span class="u">/exams/osmoklasista</span></li>
+              <li>Matura<span class="u">/exams/matura</span></li>
+            </ul>
+          </div>
+
+          <div class="col c">
+            <div class="head">O nas <span class="sub">czy można nam zaufać</span></div>
+            <ul>
+              <li>Zespół i historia<span class="u">/o-nas</span></li>
+              <li>Metoda<span class="u">/metoda</span></li>
+              <li>Bezpieczeństwo<span class="u">/bezpieczenstwo</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="foot-row">
+          <div class="fbox"><b>Kontakt i zapisy</b><span class="mono">/kontakt</span></div>
+          <div class="fbox"><b>Polityka prywatności</b><span class="mono">/prywatnosc</span></div>
+        </div>
+      </div>
+
+      <div class="principle"><b>Dlaczego Exams zamiast Matury działa lepiej.</b> Rodzic nie myśli kategorią „matura" albo „ósmoklasista" osobno, tylko „zbliża się egzamin". Wspólne wejście łapie obie sytuacje, a rozwinięcie kieruje do właściwej. Nazwa po angielsku jest przy tym spójna z nazewnictwem filarów: Useful Skills, Life Skills, Music Skills, Exams.</div>
+
+      <div class="principle"><b>Grupy i Exams to dwa różne pytania o tę samą ofertę.</b> Grupy odpowiadają na „ile ma lat moje dziecko", Exams na „jaki ma cel". Ten sam odbiorca trafia więc do celu dwiema drogami, co jest zaletą, pod warunkiem jednej zasady: <b>każda treść ma jeden adres główny, a pozostałe menu do niego linkują, nie powielają go</b>. Przygotowanie ósmoklasisty opisane jest na <span class="mono">/exams/osmoklasista</span>, a sekcja Teens Junior w Grupach zawiera jedynie odnośnik.</div>
+
+    </section>
+
+    <!-- 3 SPECYFIKACJA -->
+    <section>
+      <p class="eyebrow">03 · Specyfikacja podstron</p>
+      <h2>Cel i zawartość każdej strony</h2>
+      <p class="lede">Kolejność bloków na stronie odpowiada kolejności, w jakiej odbiorca podejmuje decyzję.</p>
+
+      <div class="page">
+        <div class="ph"><span class="pt">Strona główna</span><span class="pu">/</span></div>
+        <div class="goal">Cel: w pięć sekund pokazać, czym to jest, i skierować odbiorcę do właściwej ścieżki.</div>
+        <ol>
+          <li>Hero na kobalcie: hasło „Angielski dla życia, nie tylko dla szkoły" plus jedno zdanie wyjaśniające, że język jest narzędziem, nie przedmiotem</li>
+          <li>Trzy kafle wyboru: „Mam dziecko w wieku…" (Grupy), „Zbliża się egzamin" (Exams), „Szukam zajęć online". To najważniejszy element strony</li>
+          <li>Co nas wyróżnia: cztery filary w skrócie, z naciskiem na Useful Skills i Life Skills, bo tego nie ma konkurencja</li>
+          <li>Blok wiarygodności: metoda oparta na rekomendacjach OECD, UNESCO, EEF, z odsyłaczem do strony Metoda</li>
+          <li>Praktyczne: gdzie jesteśmy, w jakich godzinach, dla jakiego wieku</li>
+          <li>Wezwanie zamykające: bezpłatne zajęcia próbne</li>
+        </ol>
+        <span class="cta">CTA główne: Umów zajęcia próbne</span>
+      </div>
+
+      <div class="page">
+        <div class="ph"><span class="pt">Program</span><span class="pu">/program</span></div>
+        <div class="goal">Cel: wyjaśnić model zajęcia bazowe plus fakultety i pokazać, że to spójny system, nie zbiór zajęć.</div>
+        <ol>
+          <li>Model w jednym akapicie plus grafika: co jest obowiązkowe, co wybieralne</li>
+          <li>Zajęcia bazowe: Useful Skills i Life Skills, z konkretnymi przykładami czynności, nie ogólnikami</li>
+          <li>Fakultety: Music, Art, Acting, Motion Skills</li>
+          <li>Jak dobiera się zakres, czyli logika karnetu</li>
+          <li>Sekcja o szkole amerykańskiej online</li>
+          <li>Odnośnik do Grup, czyli oferty według wieku</li>
+        </ol>
+        <span class="cta">CTA: Zobacz ofertę dla wieku dziecka</span>
+      </div>
+
+      <div class="page">
+        <div class="ph"><span class="pt">Grupy</span><span class="pu">/grupy</span></div>
+        <div class="goal">Cel: pozwolić rodzicowi znaleźć siebie po wieku dziecka. Strona rozdzielcza, krótka, bez powielania treści z Programu.</div>
+        <ol>
+          <li>Trzy sekcje kotwiczone: Kids 5–12, Teens Junior 13–15, Teens Senior 16–19</li>
+          <li>Dla każdej: wiek, co obejmuje, ile spotkań tygodniowo, wielkość grupy</li>
+          <li>Kids w rozbiciu na 5–7, 8–10, 11–12, z krótkim uzasadnieniem rozwojowym</li>
+          <li>Teens Junior z odnośnikiem do <span class="mono">/exams/osmoklasista</span>, bez powtarzania treści</li>
+          <li>Teens Senior z odnośnikiem do <span class="mono">/exams/matura</span>, z zaznaczeniem, że to oferta osobna, poza modelem filarowym</li>
+        </ol>
+        <span class="cta">CTA: Umów zajęcia próbne</span>
+      </div>
+
+      <div class="page">
+        <div class="ph"><span class="pt">Egzamin ósmoklasisty</span><span class="pu">/exams/osmoklasista</span></div>
+        <div class="goal">Cel: przekonać rodzica i nastolatka, że przygotowanie w ramach programu daje więcej niż same korepetycje. Decyzja wspólna, ton bez infantylizmu.</div>
+        <ol>
+          <li>Konkret na wejściu: angielski wybiera 98,6 procent zdających, egzamin jest obowiązkowy</li>
+          <li>Co obejmuje przygotowanie: gramatyka i słownictwo na poziomie CKE, arkusze, strategie, oswajanie z formatem</li>
+          <li>Czym różni się od korepetycji: to filar w ramach programu Teens Junior, więc obok przygotowania idą kompetencje praktyczne i życiowe</li>
+          <li>Jak wygląda tydzień uczestnika</li>
+          <li>Odnośnik do Grup i do Cennika</li>
+        </ol>
+        <span class="cta">CTA: Umów zajęcia próbne</span>
+      </div>
+
+      <div class="page">
+        <div class="ph"><span class="pt">Matura</span><span class="pu">/exams/matura</span></div>
+        <div class="goal">Cel: sprzedać wynik. Odbiorcą jest głównie uczeń, często pełnoletni. Ton rzeczowy, bez metafor przygody, bez zwrotów do rodzica.</div>
+        <ol>
+          <li>Poziom podstawowy i rozszerzony, jasno rozdzielone</li>
+          <li>Format: małe grupy, dwa spotkania tygodniowo, praca na arkuszach CKE</li>
+          <li>Argument cenowy: dlaczego zajęcia grupowe kosztują mniej niż korepetycje jeden na jeden i kiedy to wystarcza</li>
+          <li>Harmonogram roczny z intensyfikacją od stycznia</li>
+          <li>Kadra prowadząca</li>
+        </ol>
+        <span class="cta sec">CTA: Zapisz się na konsultację — nie „Zapisz dziecko"</span>
+      </div>
+
+      <div class="page">
+        <div class="ph"><span class="pt">Szkoła amerykańska online</span><span class="pu">/online</span></div>
+        <div class="goal">Cel: sprzedać format grupowy jako alternatywę dla drogich korepetycji indywidualnych.</div>
+        <ol>
+          <li>Na czym polega: konwersacje z lektorem będącym rodzimym użytkownikiem języka</li>
+          <li>Dla kogo: uczestnicy zajęć stacjonarnych oraz odbiorcy spoza Szczecina</li>
+          <li>Argument cenowy: zajęcia grupowe zamiast korepetycji jeden na jeden</li>
+          <li>Godziny dopasowane do różnicy czasowej</li>
+        </ol>
+        <span class="cta">CTA: Dołącz do grupy online</span>
+      </div>
+
+      <div class="page">
+        <div class="ph"><span class="pt">Metoda</span><span class="pu">/metoda</span></div>
+        <div class="goal">Cel: dostarczyć dowód rodzicowi analitycznemu. To strona, która zastępuje brakujące opinie.</div>
+        <ol>
+          <li>Dlaczego język jako narzędzie działa lepiej niż język jako przedmiot</li>
+          <li>Metody: TPR, nauka przez projekt, storytelling, muzyka, ruch, wyjaśnione bez żargonu</li>
+          <li>Na czym się opieramy: OECD, UNESCO, UNICEF, WHO, EEF, z odnośnikami do źródeł</li>
+          <li>Model sprawdzony międzynarodowo: ponad 700 placówek i 190 tysięcy uczestników w kilku krajach europejskich</li>
+          <li>Jak dobieramy grupy wiekowe i dlaczego akurat tak</li>
+        </ol>
+        <span class="cta">CTA: Zobacz program</span>
+      </div>
+
+      <div class="page">
+        <div class="ph"><span class="pt">O nas</span><span class="pu">/o-nas</span></div>
+        <div class="goal">Cel: zbudować zaufanie przez ludzi. Przy braku opinii to najmocniejszy dostępny dowód.</div>
+        <ol>
+          <li>Dwie osoby prowadzące: kim jesteśmy, wykształcenie, doświadczenie z dziećmi</li>
+          <li>Dlaczego powstała Skills Academy, czyli powód istnienia z założeń marki</li>
+          <li>Zdjęcia założycielek, nie stock</li>
+          <li>Lokal i przestrzeń zajęć</li>
+        </ol>
+        <span class="cta">CTA: Poznaj nas na zajęciach próbnych</span>
+      </div>
+
+      <div class="page">
+        <div class="ph"><span class="pt">Cennik</span><span class="pu">/cennik</span></div>
+        <div class="goal">Cel: pokazać cenę razem z zakresem, nigdy osobno. Cena bez kontekstu wypada źle przy porównaniu z kursem językowym.</div>
+        <ol>
+          <li>Zajęcia bazowe: co obejmują i ile spotkań tygodniowo</li>
+          <li>Fakultety jako dodatek do karnetu, z malejącą ceną jednostkową</li>
+          <li>Matura i oferta online, rozliczane osobno</li>
+          <li>Co zawiera cena: materiały, mała grupa, prowadzenie po angielsku</li>
+          <li>Cykl rozliczeniowy: dziesięć miesięcy roku szkolnego</li>
+        </ol>
+        <span class="cta">CTA: Umów zajęcia próbne</span>
+      </div>
+
+      <div class="page">
+        <div class="ph"><span class="pt">Kontakt i zapisy</span><span class="pu">/kontakt</span></div>
+        <div class="goal">Cel: jak najkrótsza droga do umówienia zajęć próbnych.</div>
+        <ol>
+          <li>Formularz: imię dziecka, wiek, telefon, wybrana ścieżka. Cztery pola, nie więcej</li>
+          <li>Telefon i adres e-mail, klikalne na urządzeniach mobilnych</li>
+          <li>Adres z mapą oraz informacja o dojeździe</li>
+          <li>Godziny, w których odbierany jest telefon</li>
+          <li>Klauzula informacyjna RODO przy formularzu</li>
+        </ol>
+        <span class="cta">CTA: Wyślij zgłoszenie</span>
+      </div>
+
+      <div class="page">
+        <div class="ph"><span class="pt">Bezpieczeństwo</span><span class="pu">/bezpieczenstwo</span></div>
+        <div class="goal">Cel: spełnić obowiązek ustawowy i jednocześnie zbudować zaufanie. To strona wymagana prawnie.</div>
+        <ol>
+          <li>Standardy Ochrony Małoletnich, opublikowane w całości</li>
+          <li>Weryfikacja osób pracujących z dziećmi</li>
+          <li>Zasady dotyczące wizerunku dziecka</li>
+          <li>Bezpieczeństwo w lokalu i podczas zajęć</li>
+        </ol>
+        <span class="cta sec">Bez CTA sprzedażowego</span>
+      </div>
+
+      <div class="page">
+        <div class="ph"><span class="pt">Polityka prywatności</span><span class="pu">/prywatnosc</span></div>
+        <div class="goal">Cel: wymóg formalny RODO. Strona bez ruchu, ale konieczna.</div>
+        <ol>
+          <li>Administrator danych i podstawy przetwarzania</li>
+          <li>Zakres danych zbieranych przez formularz</li>
+          <li>Prawa osoby, której dane dotyczą</li>
+          <li>Pliki cookie</li>
+        </ol>
+        <span class="cta sec">Bez CTA</span>
+      </div>
+    </section>
+
+    <!-- 4 SCIEZKI -->
+    <section>
+      <p class="eyebrow">04 · Ścieżki użytkownika</p>
+      <h2>Trzy realne drogi do konwersji</h2>
+      <p class="lede">Struktura jest poprawna tylko wtedy, gdy te trzy ścieżki działają bez ślepych zaułków.</p>
+      <table>
+        <tr><th>Kto</th><th>Wejście</th><th>Droga</th><th>Konwersja</th></tr>
+        <tr>
+          <td><b>Rodzic ośmiolatka</b><br><span style="color:var(--graphite-soft);font-size:12px;">szuka zajęć dodatkowych</span></td>
+          <td>Google lokalne lub wizytówka Google</td>
+          <td>Strona główna → kafel „Mam dziecko w wieku…" → Grupy, sekcja Kids → Program → Metoda → Cennik</td>
+          <td>zajęcia próbne</td>
+        </tr>
+        <tr>
+          <td><b>Rodzic ósmoklasisty</b><br><span style="color:var(--graphite-soft);font-size:12px;">cel egzaminacyjny</span></td>
+          <td>fraza o egzaminie ósmoklasisty</td>
+          <td>Exams → Egzamin ósmoklasisty → Grupy, sekcja Teens Junior → Cennik → Kontakt</td>
+          <td>zajęcia próbne</td>
+        </tr>
+        <tr>
+          <td><b>Maturzysta</b><br><span style="color:var(--graphite-soft);font-size:12px;">decyduje sam, porównuje ceny</span></td>
+          <td>fraza o korepetycjach maturalnych</td>
+          <td>Exams → Matura → porównanie z korepetycjami indywidualnymi → Kontakt</td>
+          <td>konsultacja</td>
+        </tr>
+      </table>
+      <div class="principle"><b>Wniosek ze ścieżek.</b> Dwie z trzech prowadzą przez Cennik, jedna przez Metodę, a dwie przechodzą przez Grupy. Wszystkie trzy strony muszą być gotowe na start, mimo że żadna nie jest stroną ofertową w wąskim sensie.</div>
+    </section>
+
+    <!-- 5 ETAPY -->
+    <section>
+      <p class="eyebrow">05 · Etapowanie</p>
+      <h2>Co powstaje na start, a co później</h2>
+      <p class="lede">Podział wynika z zasady czwartej: startujemy bez zdjęć i opinii, więc serwis ma być mały i gęsty.</p>
+      <div class="stage">
+        <div class="sbox">
+          <div class="st">Etap 1 — uruchomienie</div>
+          <div class="sd">Jedenaście stron. Rozwinięcia w menu wymagają realnych celów, więc zakres startowy jest większy niż przy jednym menu rozwijanym.</div>
+          <ul>
+            <li>Strona główna</li>
+            <li>Program (zajęcia bazowe, fakultety, sekcja online)</li>
+            <li>Grupy (Kids, Teens Junior, Teens Senior jako sekcje kotwiczone)</li>
+            <li>Exams: Egzamin ósmoklasisty</li>
+            <li>Exams: Matura</li>
+            <li>Metoda</li>
+            <li>O nas</li>
+            <li>Cennik</li>
+            <li>Kontakt i zapisy</li>
+            <li>Bezpieczeństwo oraz Polityka prywatności</li>
+          </ul>
+        </div>
+        <div class="sbox">
+          <div class="st">Etap 2 — po pierwszym semestrze</div>
+          <div class="sd">Rozbudowa wtedy, gdy pojawi się materiał, który ją uzasadnia.</div>
+          <ul>
+            <li>Rozbicie Grup na trzy osobne strony zamiast sekcji kotwiczonych</li>
+            <li>Szkoła amerykańska online jako osobna strona</li>
+            <li>Opinie rodziców i zdjęcia z zajęć</li>
+            <li>Aktualności lub blog, pod pozycjonowanie lokalne</li>
+            <li>Strefa rodzica, jeśli pojawi się potrzeba obsługi zapisów online</li>
+          </ul>
+        </div>
+      </div>
+      <div class="flag"><b>Koszt płaskiego menu.</b> Rozwinięcia muszą prowadzić do realnych miejsc, dlatego zakres startowy urósł z ośmiu stron do jedenastu. Kompromis: Grupy pozostają jedną stroną z trzema sekcjami kotwiczonymi, a szkoła amerykańska sekcją na stronie Program. Obie rozbijają się na osobne adresy w etapie drugim, gdy pojawi się materiał, który je wypełni.</div>
+    </section>
+
+    <!-- 5b CTA -->
+    <section>
+      <p class="eyebrow">05b · Wezwania do działania</p>
+      <h2>Jeden przycisk, trzy warianty treści</h2>
+      <p class="lede">Przycisk w pasku jest stały wizualnie i zawsze koralowy. Zmienia się jego treść, zależnie od urządzenia i kontekstu strony.</p>
+      <table>
+        <tr><th>Kontekst</th><th>Treść przycisku</th><th>Działanie</th></tr>
+        <tr><td>Pasek, wersja desktopowa</td><td><b>Zapisz dziecko</b></td><td>prowadzi do <span class="mono">/kontakt</span>, gdzie pierwszą opcją są bezpłatne zajęcia próbne</td></tr>
+        <tr><td>Pasek, wersja mobilna</td><td><b>Zadzwoń</b></td><td>odnośnik telefoniczny, połączenie jednym dotknięciem</td></tr>
+        <tr><td>Strony Exams: Matura</td><td><b>Zapisz się na konsultację</b></td><td>ta sama docelowa strona, inna treść przycisku</td></tr>
+      </table>
+      <div class="principle"><b>Dlaczego „Zadzwoń" na telefonie jest trafniejsze niż formularz.</b> Rodzic szukający zajęć na telefonie jest zwykle w trybie szybkiej weryfikacji. Połączenie jednym dotknięciem skraca drogę do rozmowy, w której i tak zapada decyzja o zajęciach próbnych. Formularz pozostaje dostępny niżej na stronie Kontakt.</div>
+      <div class="flag"><b>Wyjątek, który trzeba obsłużyć.</b> Na stronie maturalnej treść „Zapisz dziecko" byłaby błędem, ponieważ decyzję podejmuje uczeń, często pełnoletni. Tam przycisk brzmi „Zapisz się na konsultację". Wygląd pozostaje identyczny, więc spójność wizualna nie cierpi.</div>
+    </section>
+
+    <!-- 6 TECHNICZNE -->
+    <section>
+      <p class="eyebrow">06 · Warstwa techniczna</p>
+      <h2>Ustalenia do przekazania wykonawcy</h2>
+      <table>
+        <tr><th>Element</th><th>Ustalenie</th></tr>
+        <tr><td>Adresy stron</td><td>krótkie, po polsku, bez dat i numerów, na przykład <span class="mono">/program/kids</span></td></tr>
+        <tr><td>Podejście do projektu</td><td>mobile first; rodzic szuka zajęć najczęściej na telefonie</td></tr>
+        <tr><td>Wariant kolorystyczny</td><td>wariant B: kobaltowy hero, koral wyłącznie na przycisku akcji</td></tr>
+        <tr><td>Pasek nawigacji</td><td>płaski, pięć pozycji, każda poza Kontaktem z własnym małym rozwinięciem; bez mega menu</td></tr>
+        <tr><td>Powtarzalność CTA</td><td>przycisk widoczny w pasku oraz na końcu każdej podstrony ofertowej; treść wg sekcji 05b</td></tr>
+        <tr><td>Numer telefonu</td><td>zapisany jako odnośnik telefoniczny na wszystkich urządzeniach</td></tr>
+        <tr><td>Wizytówka Google</td><td>te same dane firmy co na stronie: nazwa, adres, telefon w identycznym zapisie</td></tr>
+        <tr><td>Dostępność</td><td>kontrasty zgodne z systemem kolorów; opisy alternatywne zdjęć</td></tr>
+        <tr><td>Zgoda na cookie</td><td>wymagana, jeśli wdrożone zostaną narzędzia analityczne</td></tr>
+      </table>
+      <div class="principle"><b>Uwaga o zdjęciach.</b> Na start realnie dostępne są zdjęcia lokalu i założycielek. Materiał stockowy z uśmiechniętymi dziećmi jest rozpoznawalny i obniża wiarygodność. Lepszym rozwiązaniem jest oszczędna strona oparta na typografii i kolorze, uzupełniona zdjęciami z zajęć po pierwszych tygodniach działalności.</div>
+    </section>
+
+    <footer>
+      Dokument roboczy struktury serwisu, wersja 1.0. Oparty na założeniach marki (powód istnienia, obietnica, grupa docelowa), wytycznych marki (ton, słownik, system kolorów) oraz biznesplanie (Rozdział 9 program, Rozdział 14 cennik, Rozdział 31 wymogi prawne). Kolejny krok: treści dla stron etapu pierwszego.
+    </footer>
+
+  </div>
+</body>
+</html>

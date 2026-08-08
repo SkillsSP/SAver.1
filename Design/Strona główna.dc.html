@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/colors.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/typography.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/effects.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/styles.css">
+<script src="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+  body { margin: 0; background: #FBF8F3; }
+  a { color: #1E5FCC; text-decoration: none; }
+  a:hover { color: #E8654A; }
+  *, *::before, *::after { box-sizing: border-box; }
+  [data-cta] { transition: background-color .16s ease, transform .16s ease; }
+  [data-cta]:hover { transform: translateY(-1px); }
+  [data-cta]:active { transform: translateY(0); }
+  @keyframes sa-bar-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes sa-cta-nudge { 0%, 100% { transform: scale(1); } 45% { transform: scale(1.03); } }
+  [data-cta-bar] { animation: sa-bar-in .34s cubic-bezier(.2,.7,.3,1) both; }
+  [data-cta-bar] [data-cta] { animation: sa-cta-nudge .48s ease-in-out .38s 1 both; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-cta], [data-cta-bar], [data-cta-bar] [data-cta] { animation: none; transition: none; }
+    [data-cta]:hover { transform: none; }
+  }
+</style>
+</helmet>
+
+<div style="background:#FBF8F3;color:#1A2230;font-family:Lexend,system-ui,sans-serif;min-height:100vh">
+
+  <header style="position:sticky;top:0;z-index:50;background:#FBF8F3;border-bottom:1px solid rgba(26,34,48,.13)">
+    <div style="max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px">
+      <a href="#" aria-label="Skills Academy" style="display:flex;align-items:flex-end;gap:0px;color:#1A2230;flex-shrink:0;margin-left:-7px">
+        <img src="logo/skills-academy-sygnet.svg" alt="" aria-hidden="true" style="width:38px;height:38px;display:block;transform:translateY(-0.2px);margin-right:-3.7px">
+        <span style="font-family:Lexend,system-ui,sans-serif;font-size:22px;font-weight:600;letter-spacing:-.015em;line-height:1;white-space:nowrap">kills Academy</span>
+      </a>
+
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <nav style="display:flex;align-items:center;gap:6px">
+          <button type="button" onClick="{{ toggleProgram }}" style="font-family:inherit;font-size:14.5px;font-weight:550;color:#1A2230;background:none;border:none;padding:9px 14px;border-radius:9px;cursor:pointer" style-hover="background:rgba(30,95,204,.08)">Program ▾</button>
+          <button type="button" onClick="{{ toggleExams }}" style="font-family:inherit;font-size:14.5px;font-weight:550;color:#1A2230;background:none;border:none;padding:9px 14px;border-radius:9px;cursor:pointer" style-hover="background:rgba(30,95,204,.08)">Exams ▾</button>
+          <a href="Cennik.dc.html" style="font-size:14.5px;font-weight:550;color:#1A2230;padding:9px 14px;border-radius:9px" style-hover="background:rgba(30,95,204,.08);color:#1E5FCC">Cennik</a>
+          <a href="#o-nas" style="font-size:14.5px;font-weight:550;color:#1A2230;padding:9px 14px;border-radius:9px" style-hover="background:rgba(30,95,204,.08);color:#1E5FCC">O nas</a>
+          <a href="#kontakt" style="font-size:14.5px;font-weight:550;color:#1A2230;padding:9px 14px;border-radius:9px" style-hover="background:rgba(30,95,204,.08);color:#1E5FCC">Kontakt</a>
+          <a href="Zapisy.dc.html" data-cta style="font-size:14.5px;font-weight:600;color:#fff;background:#E8654A;padding:11px 20px;border-radius:10px;margin-left:10px" style-hover="background:#D4553B;color:#fff">Zapisz dziecko</a>
+        </nav>
+      </sc-if>
+
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <button type="button" onClick="{{ toggleMobile }}" aria-label="Menu" style="font-family:inherit;display:flex;align-items:center;gap:8px;background:none;border:1px solid rgba(26,34,48,.2);border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600;color:#1A2230;cursor:pointer;min-height:44px">Menu</button>
+      </sc-if>
+    </div>
+
+    <sc-if value="{{ programOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid rgba(26,34,48,.13);background:#fff">
+        <div style="max-width:1200px;margin:0 auto;padding:26px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px">
+          <div>
+            <a href="Zajęcia indywidualne.dc.html" style="font-size:15px;font-weight:600;color:#1E5FCC">Indywidualne</a>
+            <div style="font-size:13px;color:#5B6B7A;line-height:1.55;margin-top:5px">Zajęcia 1:1 — rozwój, egzamin ósmoklasisty, matura.</div>
+          </div>
+          <div>
+            <a href="Zajęcia podstawowe.dc.html" style="font-size:15px;font-weight:600;color:#1E5FCC">Podstawowe</a>
+            <div style="font-size:13px;color:#5B6B7A;line-height:1.55;margin-top:5px">Useful Skills i Life Skills — baza każdego karnetu.</div>
+          </div>
+          <div>
+            <a href="Fakultety.dc.html" style="font-size:15px;font-weight:600;color:#1E5FCC">Fakultety</a>
+            <div style="font-size:13px;color:#5B6B7A;line-height:1.55;margin-top:5px">Music, Art, Acting, Motion Skills — do wyboru.</div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ examsOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid rgba(26,34,48,.13);background:#fff">
+        <div style="max-width:1200px;margin:0 auto;padding:26px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:36px">
+          <div>
+            <div style="font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#5B6B7A;font-weight:600;padding-bottom:10px;border-bottom:1px solid rgba(26,34,48,.13)">Egzamin ósmoklasisty</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
+              <a href="#e8" style="font-size:15px;font-weight:600;color:#1E5FCC">Angielski</a>
+              <div style="display:flex;align-items:center;gap:8px"><a href="#e8" style="font-size:15px;font-weight:600;color:#1E5FCC">Matematyka</a><span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#E8654A;padding:2px 8px;border-radius:999px">Unikat</span></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#5B6B7A;font-weight:600;padding-bottom:10px;border-bottom:1px solid rgba(26,34,48,.13)">Matura</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
+              <a href="#matura" style="font-size:15px;font-weight:600;color:#1E5FCC">Angielski <span style="font-weight:400;color:#5B6B7A;font-size:13px">— podstawowy i rozszerzony</span></a>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><a href="#matura" style="font-size:15px;font-weight:600;color:#1E5FCC">Matematyka <span style="font-weight:400;color:#5B6B7A;font-size:13px">— podstawowy</span></a><span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#E8654A;padding:2px 8px;border-radius:999px">Unikat</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ mobileOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid rgba(26,34,48,.13);background:#FBF8F3;padding:8px 24px 22px;display:flex;flex-direction:column">
+        <a href="#podstawowe" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">Program</a>
+        <a href="#e8" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">Exams</a>
+        <a href="Cennik.dc.html" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">Cennik</a>
+        <a href="#o-nas" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">O nas</a>
+        <a href="#kontakt" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0">Kontakt</a>
+      </div>
+    </sc-if>
+  </header>
+
+  <section style="background:#1E5FCC;border-radius:0 0 24px 24px">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(44px,7vw,88px) 24px clamp(40px,6vw,72px)">
+      <h1 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(34px,5.4vw,58px);line-height:1.06;letter-spacing:-.01em;color:#fff;margin:0;max-width:15ch;text-wrap:balance">Angielski dla życia, nie tylko dla szkoły.</h1>
+      <p style="font-size:clamp(16px,1.6vw,19px);line-height:1.6;color:rgba(255,255,255,.86);margin:22px 0 0;max-width:56ch;text-wrap:pretty">Centrum kompetencji w Szczecinie dla dzieci i młodzieży od 5 do 19 lat. Dzieci działają po angielsku — pytają, negocjują, rozwiązują problemy. Starsi przygotowują się do egzaminu ósmoklasisty i matury, z angielskiego i z matematyki.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px">
+        <a href="{{ heroCtaHref }}" data-cta style="font-size:16px;font-weight:600;color:#fff;background:#E8654A;padding:15px 28px;border-radius:10px;min-height:44px;display:inline-flex;align-items:center" style-hover="background:#D4553B;color:#fff">Umów bezpłatne zajęcia próbne</a>
+        <a href="#wiek" style="font-size:16px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,.5);padding:15px 26px;border-radius:10px;min-height:44px;display:inline-flex;align-items:center" style-hover="background:rgba(255,255,255,.12);color:#fff">Sprawdź ofertę dla wieku dziecka</a>
+      </div>
+      <div style="margin-top:14px"><a href="tel:000000000" style="font-size:15px;font-weight:600;color:#fff;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:2px" style-hover="color:#fff;border-color:#fff">albo zadzwoń: 000 000 000</a></div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px 34px;margin-top:38px;padding-top:26px;border-top:1px solid rgba(255,255,255,.22)">
+        <div style="font-size:14px;color:rgba(255,255,255,.82)">Szczecin, zajęcia stacjonarne</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.82)">Grupy do ośmiu osób</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.82)">Wszystkie zajęcia po angielsku</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(34px,4.5vw,52px) 24px 0">
+    <div style="border-radius:18px;overflow:hidden;border:1px solid rgba(26,34,48,.13)">
+      <image-slot id="home-hero" shape="rect" fit="cover" placeholder="Główne zdjęcie strony — dzieci w trakcie zajęć, poziome, min. 2400 px" style="width:100%;height:clamp(240px,36vw,440px)"></image-slot>
+    </div>
+  </section>
+
+  <section id="wiek" style="max-width:1200px;margin:0 auto;padding:clamp(52px,7vw,86px) 24px 0">
+    <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);margin:0 0 10px;letter-spacing:-.01em">Ile lat ma Twoje dziecko?</h2>
+    <p style="font-size:16px;color:#5B6B7A;line-height:1.6;margin:0 0 30px;max-width:62ch">Grupy dobieramy wiekiem, nie poziomem — sześciolatek i dziesięciolatek uczą się zupełnie inaczej. Wybierz przedział, żeby zobaczyć, co dokładnie robi dziecko na zajęciach.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px">
+      <a href="#podstawowe" style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:22px 20px;display:block;color:#1A2230;min-height:150px" style-hover="border-color:#1E5FCC;background:#fff;color:#1A2230">
+        <div style="font-family:Fredoka,system-ui,sans-serif;font-size:32px;font-weight:600;color:#1E5FCC;line-height:1">5–7</div>
+        <div style="font-size:15px;font-weight:600;margin-top:10px">Pierwsze kroki</div>
+        <div style="font-size:13px;color:#5B6B7A;line-height:1.5;margin-top:6px">Proste zdania, dużo powtórzeń, ruch i zabawa.</div>
+      </a>
+      <a href="#podstawowe" style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:22px 20px;display:block;color:#1A2230;min-height:150px" style-hover="border-color:#1E5FCC;background:#fff;color:#1A2230">
+        <div style="font-family:Fredoka,system-ui,sans-serif;font-size:32px;font-weight:600;color:#1E5FCC;line-height:1">8–10</div>
+        <div style="font-size:15px;font-weight:600;margin-top:10px">Misje i wyzwania</div>
+        <div style="font-size:13px;color:#5B6B7A;line-height:1.5;margin-top:6px">„Dziś jesteś detektywem” — zadania z celem i czasem.</div>
+      </a>
+      <a href="#podstawowe" style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:22px 20px;display:block;color:#1A2230;min-height:150px" style-hover="border-color:#1E5FCC;background:#fff;color:#1A2230">
+        <div style="font-family:Fredoka,system-ui,sans-serif;font-size:32px;font-weight:600;color:#1E5FCC;line-height:1">11–12</div>
+        <div style="font-size:15px;font-weight:600;margin-top:10px">Ton partnerski</div>
+        <div style="font-size:13px;color:#5B6B7A;line-height:1.5;margin-top:6px">Rozpoznawanie manipulacji, asertywność, pierwsza pomoc.</div>
+      </a>
+      <a href="#e8" style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:22px 20px;display:block;color:#1A2230;min-height:150px" style-hover="border-color:#1E5FCC;background:#fff;color:#1A2230">
+        <div style="font-family:Fredoka,system-ui,sans-serif;font-size:32px;font-weight:600;color:#1E5FCC;line-height:1">13–15</div>
+        <div style="font-size:15px;font-weight:600;margin-top:10px">Ósmoklasista</div>
+        <div style="font-size:13px;color:#5B6B7A;line-height:1.5;margin-top:6px">Zajęcia podstawowe plus przygotowanie do egzaminu.</div>
+      </a>
+      <a href="#matura" style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:22px 20px;display:block;color:#1A2230;min-height:150px" style-hover="border-color:#5B6B7A;background:#fff;color:#1A2230">
+        <div style="font-family:Fredoka,system-ui,sans-serif;font-size:32px;font-weight:600;color:#5B6B7A;line-height:1">16–19</div>
+        <div style="font-size:15px;font-weight:600;margin-top:10px">Matura</div>
+        <div style="font-size:13px;color:#5B6B7A;line-height:1.5;margin-top:6px">Osobna oferta wynikowa. Arkusze CKE, progi punktowe.</div>
+      </a>
+    </div>
+  </section>
+
+  <section id="podstawowe" style="max-width:1200px;margin:0 auto;padding:clamp(52px,7vw,86px) 24px 0">
+    <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(36px,4vw,52px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(32px,5vw,64px);align-items:start">
+      <div>
+        <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:12px">Jedna misja od środka</div>
+        <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);margin:0 0 16px;letter-spacing:-.01em;text-wrap:balance">Dziś jesteś detektywem. Masz jedną wskazówkę po angielsku i dwadzieścia minut.</h2>
+        <p style="font-size:16px;color:#5B6B7A;line-height:1.65;margin:0 0 16px;max-width:52ch;text-wrap:pretty">Tak wygląda pojedyncze spotkanie w grupie ośmio- i dziewięciolatków. Nikt nie zapowiada, że będzie „lekcja o czasie przeszłym”. Dziecko dostaje zagadkę i musi ją rozwiązać — a jedynym dostępnym narzędziem jest angielski.</p>
+        <p style="font-size:16px;color:#5B6B7A;line-height:1.65;margin:0 0 22px;max-width:52ch;text-wrap:pretty">Efekt uboczny jest zamierzony: po trzech miesiącach dziecko pyta o rzeczy po angielsku odruchowo, bo tak było szybciej niż po polsku.</p>
+        <a href="#podstawowe" style="font-size:15.5px;font-weight:600;color:#1E5FCC;border-bottom:1px solid rgba(30,95,204,.4);padding-bottom:2px">Zobacz, jak zbudowane są zajęcia podstawowe</a>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:16px;padding:clamp(22px,3vw,30px)">
+        <div style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:20px">Przebieg spotkania</div>
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:baseline">
+            <span style="font-family:Fredoka,system-ui,sans-serif;font-size:15px;font-weight:600;color:#1E5FCC">00:00</span>
+            <div><div style="font-size:15px;font-weight:600;margin-bottom:3px">Rozgrzewka w ruchu</div><div style="font-size:13.5px;color:#5B6B7A;line-height:1.55">Polecenia po angielsku wykonywane ciałem, nie tłumaczone. Metoda TPR.</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:baseline;padding-top:18px;border-top:1px solid rgba(26,34,48,.13)">
+            <span style="font-family:Fredoka,system-ui,sans-serif;font-size:15px;font-weight:600;color:#1E5FCC">00:08</span>
+            <div><div style="font-size:15px;font-weight:600;margin-bottom:3px">Wskazówka</div><div style="font-size:13.5px;color:#5B6B7A;line-height:1.55">Jedno zdanie po angielsku. Dzieci muszą się dogadać, co znaczy — same.</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:baseline;padding-top:18px;border-top:1px solid rgba(26,34,48,.13)">
+            <span style="font-family:Fredoka,system-ui,sans-serif;font-size:15px;font-weight:600;color:#1E5FCC">00:12</span>
+            <div><div style="font-size:15px;font-weight:600;margin-bottom:3px">Śledztwo w drużynach</div><div style="font-size:13.5px;color:#5B6B7A;line-height:1.55">Pytania do prowadzącej wyłącznie po angielsku. Tu dzieje się cała nauka.</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:baseline;padding-top:18px;border-top:1px solid rgba(26,34,48,.13)">
+            <span style="font-family:Fredoka,system-ui,sans-serif;font-size:15px;font-weight:600;color:#1E5FCC">00:32</span>
+            <div><div style="font-size:15px;font-weight:600;margin-bottom:3px">Rozwiązanie i wnioski</div><div style="font-size:13.5px;color:#5B6B7A;line-height:1.55">Każda drużyna tłumaczy swój tok rozumowania. Ćwiczenie argumentacji.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(52px,7vw,86px) 24px 0">
+    <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(36px,4vw,52px)">
+      <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:12px">Dlaczego to działa</div>
+      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);margin:0 0 18px;letter-spacing:-.01em;max-width:20ch;text-wrap:balance">Metoda, nie intuicja</h2>
+      <p style="font-size:clamp(16px,1.5vw,18px);color:#1A2230;line-height:1.7;margin:0 0 16px;max-width:64ch;text-wrap:pretty">Program opiera się na reagowaniu ciałem, nauce przez projekt i doświadczeniu — podejściach, które OECD, UNESCO i EEF wskazują jako skuteczniejsze od nauczania podającego. To nie jest nasza autorska teoria, tylko konsekwentne zastosowanie tego, co jest opisane i sprawdzone.</p>
+      <p style="font-size:clamp(16px,1.5vw,18px);color:#5B6B7A;line-height:1.7;margin:0 0 26px;max-width:64ch;text-wrap:pretty">Praktyczny skutek: dziecko nie tłumaczy w głowie z polskiego. Reaguje od razu, bo od pierwszego spotkania angielski jest narzędziem do zrobienia czegoś, a nie przedmiotem do zaliczenia.</p>
+      <a href="#o-nas" style="font-size:15.5px;font-weight:600;color:#1E5FCC;border-bottom:1px solid rgba(30,95,204,.4);padding-bottom:2px">Przeczytaj o metodzie i podziale na grupy wiekowe</a>
+      <div style="display:flex;flex-wrap:wrap;gap:12px 30px;margin-top:32px;padding-top:22px;border-top:1px solid rgba(26,34,48,.13)">
+        <span style="font-size:13px;font-weight:600;letter-spacing:.06em;color:#5B6B7A">OECD</span>
+        <span style="font-size:13px;font-weight:600;letter-spacing:.06em;color:#5B6B7A">UNESCO</span>
+        <span style="font-size:13px;font-weight:600;letter-spacing:.06em;color:#5B6B7A">UNICEF</span>
+        <span style="font-size:13px;font-weight:600;letter-spacing:.06em;color:#5B6B7A">WHO</span>
+        <span style="font-size:13px;font-weight:600;letter-spacing:.06em;color:#5B6B7A">EEF</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="e8" style="max-width:1200px;margin:0 auto;padding:clamp(52px,7vw,86px) 24px 0">
+    <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(36px,4vw,52px)">
+      <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:12px">Exams</div>
+      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);margin:0 0 14px;letter-spacing:-.01em;max-width:24ch;text-wrap:balance">Przygotowanie do egzaminów — także z matematyki</h2>
+      <p style="font-size:16px;color:#5B6B7A;line-height:1.65;margin:0 0 30px;max-width:64ch;text-wrap:pretty">Przygotowanie egzaminacyjne prowadzimy z angielskiego i z matematyki. Można je wybrać osobno, niezależnie od zajęć podstawowych — także jeśli dziecko nie chodzi u nas na nic innego.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px">
+        <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:16px;padding:clamp(22px,3vw,28px)">
+          <div style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">13–15 lat</div>
+          <h3 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:22px;margin:0 0 10px">Egzamin ósmoklasisty</h3>
+          <p style="font-size:14.5px;color:#5B6B7A;line-height:1.6;margin:0 0 18px">Arkusze CKE, strategie zadań, oswojenie z formatem. Ton rówieśniczy, bez maskotek.</p>
+          <div style="display:flex;flex-direction:column;gap:11px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-top:1px solid rgba(26,34,48,.13)"><span style="font-size:15px;font-weight:600">Angielski</span><span style="font-size:13px;color:#5B6B7A">poziom A2+</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-top:1px solid rgba(26,34,48,.13);flex-wrap:wrap"><span style="font-size:15px;font-weight:600">Matematyka</span><span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#E8654A;padding:3px 9px;border-radius:999px">Unikat</span></div>
+          </div>
+        </div>
+        <div id="matura" style="background:#fff;border:1px solid rgba(91,107,122,.4);border-radius:16px;padding:clamp(22px,3vw,28px)">
+          <div style="margin-bottom:14px;display:flex"><x-import component-from-global-scope="SkillsAcademyDesignSystem_f697f9.Badge" tone="senior" hint-size="150px,22px">Teens Senior · 16–19 lat</x-import></div>
+          <h3 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:22px;margin:0 0 10px">Konkretny plan na maturę</h3>
+          <p style="font-size:14.5px;color:#5B6B7A;line-height:1.6;margin:0 0 18px">Praca na arkuszach CKE, progi punktowe, harmonogram do maja. Liczy się wynik, nie doświadczenie.</p>
+          <div style="display:flex;flex-direction:column;gap:11px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-top:1px solid rgba(26,34,48,.13);flex-wrap:wrap"><span style="font-size:15px;font-weight:600">Angielski</span><span style="font-size:13px;color:#5B6B7A">podstawowy i rozszerzony</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-top:1px solid rgba(26,34,48,.13);flex-wrap:wrap"><span style="font-size:15px;font-weight:600">Matematyka</span><span style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="font-size:13px;color:#5B6B7A">poziom podstawowy</span><span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#E8654A;padding:3px 9px;border-radius:999px">Unikat</span></span></div>
+          </div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:16px;padding:clamp(20px,3vw,26px);margin-top:18px">
+        <div style="font-size:15px;line-height:1.65;color:#1A2230;max-width:80ch">Matematykę prowadzi <span style="border-bottom:1px dashed rgba(232,101,74,.7);color:#1A2230;font-weight:600">[imię i nazwisko]</span>, jedna z założycielek centrum — <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[wykształcenie i doświadczenie]</span>. To jedyne miejsce w Szczecinie, gdzie przygotowanie do matury z angielskiego i z matematyki prowadzi ten sam zespół, w tym samym budynku, w jednym grafiku.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cennik" style="max-width:1200px;margin:0 auto;padding:clamp(52px,7vw,86px) 24px 0">
+    <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(36px,4vw,52px)">
+      <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:12px">Konkrety</div>
+      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);margin:0 0 28px;letter-spacing:-.01em">Zanim zapytasz</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0;border-top:1px solid rgba(26,34,48,.13);margin:0 -22px">
+        <div style="padding:22px;border-bottom:1px solid rgba(26,34,48,.13)">
+          <div style="font-size:14px;color:#5B6B7A;margin-bottom:6px">Gdzie</div>
+          <div style="font-size:16px;font-weight:600;line-height:1.5">Szczecin, <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[ulica i numer]</span></div>
+        </div>
+        <div style="padding:22px;border-bottom:1px solid rgba(26,34,48,.13)">
+          <div style="font-size:14px;color:#5B6B7A;margin-bottom:6px">Kiedy</div>
+          <div style="font-size:16px;font-weight:600;line-height:1.5">Popołudniami, <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[dni i godziny]</span></div>
+        </div>
+        <div style="padding:22px;border-bottom:1px solid rgba(26,34,48,.13)">
+          <div style="font-size:14px;color:#5B6B7A;margin-bottom:6px">Wielkość grupy</div>
+          <div style="font-size:16px;font-weight:600;line-height:1.5">Do ośmiu osób</div>
+        </div>
+        <div style="padding:22px;border-bottom:1px solid rgba(26,34,48,.13)">
+          <div style="font-size:14px;color:#5B6B7A;margin-bottom:6px">Nabór</div>
+          <div style="font-size:16px;font-weight:600;line-height:1.5"><span style="border-bottom:1px dashed rgba(232,101,74,.7)">[termin startu]</span></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:26px">
+        <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:20px 22px">
+          <div style="font-size:15.5px;font-weight:600;margin-bottom:7px">Zajęcia podstawowe i fakultety</div>
+          <div style="font-size:14px;color:#5B6B7A;line-height:1.6">Karnet na dziesięć miesięcy roku szkolnego. Każdy kolejny fakultet obniża cenę jednostkową spotkania.</div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:20px 22px">
+          <div style="font-size:15.5px;font-weight:600;margin-bottom:7px">Exams i zajęcia indywidualne</div>
+          <div style="font-size:14px;color:#5B6B7A;line-height:1.6">Bez karnetu, rozliczenie za pojedyncze spotkanie. Można wziąć sam egzamin, bez zajęć podstawowych.</div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:20px 22px">
+          <div style="font-size:15.5px;font-weight:600;margin-bottom:7px">Pełny cennik</div>
+          <div style="font-size:14px;color:#5B6B7A;line-height:1.6;margin-bottom:12px">Wszystkie stawki razem z zakresem zajęć, bez gwiazdek.</div>
+          <a href="#cennik" style="font-size:14.5px;font-weight:600;color:#1E5FCC;border-bottom:1px solid rgba(30,95,204,.4);padding-bottom:2px">Zobacz cennik</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(40px,5vw,64px) 24px 0">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:clamp(16px,2vw,22px)">
+      <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(26,34,48,.13)">
+        <image-slot id="home-sala" shape="rect" placeholder="Sala zajęciowa" style="width:100%;height:200px"></image-slot>
+      </div>
+      <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(26,34,48,.13)">
+        <image-slot id="home-praca" shape="rect" placeholder="Dzieci przy zadaniu" style="width:100%;height:200px"></image-slot>
+      </div>
+      <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(26,34,48,.13)">
+        <image-slot id="home-pokaz" shape="rect" placeholder="Pokaz albo wystąpienie" style="width:100%;height:200px"></image-slot>
+      </div>
+      <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(26,34,48,.13)">
+        <image-slot id="home-zespol" shape="rect" placeholder="Prowadzące" style="width:100%;height:200px"></image-slot>
+      </div>
+    </div>
+    <div style="font-size:13px;color:#5B6B7A;line-height:1.55;margin-top:12px">Cztery zdjęcia budujące zaufanie: miejsce, dzieci w działaniu, efekt i ludzie. Kadry poziome, ta sama tonacja.</div>
+  </section>
+
+  <section id="zapisy" style="max-width:1200px;margin:0 auto;padding:clamp(52px,7vw,86px) 24px clamp(60px,7vw,90px)">
+    <div style="background:#1E5FCC;border-radius:20px;padding:clamp(30px,4.5vw,52px);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(24px,4vw,48px);align-items:center">
+      <div>
+        <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);color:#fff;margin:0 0 12px;letter-spacing:-.01em;text-wrap:balance">Przyjdźcie zobaczyć jedną misję</h2>
+        <p style="font-size:16px;color:rgba(255,255,255,.85);line-height:1.6;margin:0;max-width:48ch;text-wrap:pretty">Bezpłatne zajęcia próbne, bez zobowiązań. Dziecko bierze udział na normalnych zasadach, Wy patrzycie z boku. Potem rozmawiamy.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+        <a href="Zapisy.dc.html" data-cta style="font-size:16px;font-weight:600;color:#fff;background:#E8654A;padding:16px 30px;border-radius:10px;min-height:44px;display:inline-flex;align-items:center" style-hover="background:#D4553B;color:#fff">Umów zajęcia próbne</a>
+        <a href="tel:000000000" style="font-size:15px;font-weight:600;color:#fff;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:2px" style-hover="color:#fff;border-color:#fff">albo zadzwoń: 000 000 000</a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="kontakt" style="background:#FBF8F3;border-top:1px solid rgba(26,34,48,.13)">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(40px,5vw,60px) 24px clamp(30px,4vw,44px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(28px,4vw,44px)">
+        <div>
+          <div aria-label="Skills Academy" style="display:flex;align-items:flex-end;gap:0px;margin-bottom:16px;margin-left:-3px">
+            <img src="logo/skills-academy-favicon.svg" alt="" aria-hidden="true" style="width:19px;height:19px;display:block;transform:translateY(-1.1px);margin-right:-1.3px">
+            <span style="font-family:Lexend,system-ui,sans-serif;font-size:18px;font-weight:600;letter-spacing:-.015em;line-height:1;white-space:nowrap">kills Academy</span>
+          </div>
+          <div style="font-size:14px;line-height:1.75;overflow-wrap:anywhere">Szczecin, <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[ulica i numer]</span><br><strong><span style="border-bottom:1px dashed rgba(232,101,74,.7)">[numer telefonu]</span></strong><br><span style="border-bottom:1px dashed rgba(232,101,74,.7)">[adres e-mail]</span></div>
+          <div style="font-size:13px;color:#5B6B7A;line-height:1.55;margin-top:12px">Biuro czynne <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[godziny]</span></div>
+        </div>
+        <div>
+          <div style="font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Oferta</div>
+          <div style="display:flex;flex-direction:column;gap:11px;font-size:14px">
+            <a href="Zajęcia podstawowe.dc.html" style="color:#1E5FCC">Zajęcia podstawowe</a>
+            <a href="Fakultety.dc.html" style="color:#1E5FCC">Fakultety</a>
+            <a href="Zajęcia indywidualne.dc.html" style="color:#1E5FCC">Zajęcia indywidualne</a>
+            <a href="Exams.dc.html" style="color:#1E5FCC">Exams</a>
+            <a href="Cennik.dc.html" style="color:#1E5FCC">Cennik</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">O centrum</div>
+          <div style="display:flex;flex-direction:column;gap:11px;font-size:14px">
+            <a href="#o-nas" style="color:#1E5FCC">O nas</a>
+            <a href="#o-nas" style="color:#1E5FCC">Metoda</a>
+            <a href="#o-nas" style="color:#1E5FCC">Podział na grupy wiekowe</a>
+            <a href="Bezpieczeństwo.dc.html" style="color:#1E5FCC">Bezpieczeństwo</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Formalności</div>
+          <div style="display:flex;flex-direction:column;gap:11px;font-size:14px">
+            <a href="Polityka prywatności.dc.html" style="color:#1E5FCC">Polityka prywatności</a>
+            <a href="Regulamin.dc.html" style="color:#1E5FCC">Regulamin</a>
+            <a href="Klauzula RODO.dc.html" style="color:#1E5FCC">Klauzula RODO</a>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:clamp(28px,4vw,42px);padding-top:20px;border-top:1px solid rgba(26,34,48,.13);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#5B6B7A">
+        <span>© 2026 Skills Academy · NIP <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[numer]</span></span>
+        <span>Szczecin, Polska</span>
+      </div>
+    </div>
+  </footer>
+
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <div data-cta-bar style="position:sticky;bottom:0;z-index:40;background:#FBF8F3;border-top:1px solid rgba(26,34,48,.13);padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:7px">
+      <a href="tel:000000000" data-cta style="font-size:16px;font-weight:600;color:#fff;background:#E8654A;padding:15px 24px;border-radius:10px;width:100%;text-align:center;min-height:48px;display:flex;align-items:center;justify-content:center" style-hover="background:#D4553B;color:#fff">Zadzwoń teraz</a>
+      <a href="Zapisy.dc.html" style="font-size:13.5px;font-weight:600;color:#1E5FCC;padding:4px 8px;min-height:28px">Wolę zapisać się online</a>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, programOpen: false, examsOpen: false, mobileOpen: false };
+
+  componentDidMount() {
+    this._onResize = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('resize', this._onResize);
+    this._onKey = (e) => { if (e.key === 'Escape') this.setState({ programOpen: false, examsOpen: false, mobileOpen: false }); };
+    window.addEventListener('keydown', this._onKey);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('keydown', this._onKey);
+  }
+
+  renderVals() {
+    const mobile = this.state.w < 780;
+    return {
+      heroCtaHref: mobile ? 'tel:000000000' : 'Zapisy.dc.html',
+      isMobile: mobile,
+      isDesktop: !mobile,
+      programOpen: !mobile && this.state.programOpen,
+      examsOpen: !mobile && this.state.examsOpen,
+      mobileOpen: mobile && this.state.mobileOpen,
+      toggleProgram: () => this.setState(s => ({ programOpen: !s.programOpen, examsOpen: false })),
+      toggleExams: () => this.setState(s => ({ examsOpen: !s.examsOpen, programOpen: false })),
+      toggleMobile: () => this.setState(s => ({ mobileOpen: !s.mobileOpen }))
+    };
+  }
+}
+</script>
+</body>
+</html>

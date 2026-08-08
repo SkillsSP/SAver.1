@@ -1,0 +1,76 @@
+---
+import {
+  firma,
+  url,
+  telefonHref,
+  telefonTekst,
+  emailTekst,
+  adresTekst,
+} from "../lib/site.js";
+
+const tel = telefonHref();
+const rok = new Date().getFullYear();
+---
+
+<footer class="stopka">
+  <div class="szerokosc">
+    <div class="stopka__siatka">
+      <div class="stopka__marka">
+        <img
+          src={url("/logo/skills-academy-logo-rewers.svg")}
+          alt="Skills Academy"
+          width="149"
+          height="108"
+        />
+        <address class="stopka__dane">
+          <span>{adresTekst()}</span>
+          {tel ? <a href={tel}>{telefonTekst()}</a> : <span>{telefonTekst()}</span>}
+          {firma.email ? (
+            <a href={`mailto:${firma.email}`}>{emailTekst()}</a>
+          ) : (
+            <span>{emailTekst()}</span>
+          )}
+          <span>Biuro czynne {firma.godzinyBiura ?? "— godziny w uzupełnieniu"}</span>
+        </address>
+      </div>
+
+      <div>
+        <h2>Oferta</h2>
+        <ul class="stopka__linki">
+          <li><a href={url("/podstawowe")}>Zajęcia podstawowe</a></li>
+          <li><a href={url("/fakultety")}>Fakultety</a></li>
+          <li><a href={url("/indywidualne")}>Zajęcia indywidualne</a></li>
+          <li><a href={url("/exams")}>Exams</a></li>
+          <li><a href={url("/cennik")}>Cennik</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2>O centrum</h2>
+        <ul class="stopka__linki">
+          <li><a href={url("/o-nas")}>O nas</a></li>
+          <li><a href={url("/metoda")}>Metoda</a></li>
+          <li><a href={url("/metoda#grupy")}>Podział na grupy wiekowe</a></li>
+          <li><a href={url("/bezpieczenstwo")}>Bezpieczeństwo</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2>Formalności</h2>
+        <ul class="stopka__linki">
+          <li><a href={url("/polityka-prywatnosci")}>Polityka prywatności</a></li>
+          <li><a href={url("/regulamin")}>Regulamin</a></li>
+          <li><a href={url("/klauzula-rodo")}>Klauzula RODO</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stopka__dol">
+      <span>
+        © {rok} {firma.nazwa}
+        {firma.nip ? ` · NIP ${firma.nip}` : " · NIP w uzupełnieniu"}
+      </span>
+      <span>{firma.miasto}, Polska</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,73 @@
+---
+import Baza from "../layouts/Baza.astro";
+import { url } from "../lib/site.js";
+
+interface Sekcja {
+  tytul: string;
+  tresc: string;
+  doUstalenia: string;
+}
+
+interface Props {
+  tytul: string;
+  opis: string;
+  wstep: string;
+  sekcje: Sekcja[];
+}
+
+const { tytul, opis, wstep, sekcje } = Astro.props;
+---
+
+{/*
+  Wspólny układ trzech dokumentów formalnych. Każda sekcja ma treść widoczną dla
+  odwiedzającego oraz notatkę „do ustalenia" — tę drugą trzeba usunąć razem
+  z klasą `.do-uzupelnienia` po przeglądzie prawnym.
+*/}
+<Baza aktywna="" tytul={tytul} opis={opis}>
+  <section class="naglowek-strony">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Formalności</span>
+        <h1 class="tytul-1">{tytul}</h1>
+        <p class="hero__zdanie">{wstep}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="do-uzupelnienia" style="max-width: var(--szerokosc-tekstu); margin-bottom: var(--space-6);">
+        <strong>Wersja robocza — wymaga przeglądu prawnego</strong>
+        <p>
+          Ten dokument jest punktem wyjścia, nie gotowym tekstem do publikacji.
+          Treść poniżej opisuje, jak zamierzacie postępować; prawnik musi
+          potwierdzić podstawy prawne, przypisać przepisy i uzupełnić dane
+          podmiotu. Szczególnej uwagi wymagają dane dzieci — zgoda opiekuna
+          i informacje o zdrowiu to dane szczególnej kategorii.
+        </p>
+      </div>
+
+      <div class="stos stos--luzny">
+        {sekcje.map((s) => (
+          <article class="siatka--wiodaca">
+            <h2 class="tytul-3">{s.tytul}</h2>
+            <div class="stos stos--ciasny">
+              <p class="tekst-drugi">{s.tresc}</p>
+              <aside class="do-uzupelnienia">
+                <strong>Do ustalenia</strong>
+                <p>{s.doUstalenia}</p>
+              </aside>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="tekst-maly tekst-drugi" style="margin-top: var(--space-6); max-width: var(--szerokosc-tekstu);">
+        Pytania dotyczące danych osobowych i zasad uczestnictwa kierujcie przez
+        <a class="link-w-zdaniu" href={url("/kontakt")}>formularz kontaktowy</a>.
+        Zasady bezpieczeństwa dziecka opisujemy osobno w
+        <a class="link-w-zdaniu" href={url("/bezpieczenstwo")}>Standardach Ochrony Małoletnich</a>.
+      </p>
+    </div>
+  </section>
+</Baza>

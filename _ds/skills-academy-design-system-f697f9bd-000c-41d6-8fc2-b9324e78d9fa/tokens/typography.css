@@ -1,0 +1,27 @@
+:root{
+  /* Mędrzec (Sage) — Lexend, carries all body copy and the whole Teens Senior track */
+  --font-sage:'Lexend',sans-serif;
+  /* Odkrywca (Explorer) — Fredoka, headlines/mission names only, never Teens Senior */
+  --font-explorer:'Fredoka',sans-serif;
+
+  --text-eyebrow:12px;
+  --text-caption:12.5px;
+  --text-meta:13px;
+  --text-body-sm:14.5px;
+  --text-body:16px;
+  --text-h3:23px;
+  --text-h2:26px;
+  --text-h1:30px;
+  --text-display:30px;
+
+  --tracking-eyebrow:.16em;
+  --tracking-caption:.1em;
+
+  --leading-body:1.65;
+  --leading-tight:1.15;
+
+  --weight-regular:400;
+  --weight-medium:500;
+  --weight-semibold:600;
+  --weight-bold:700;
+}

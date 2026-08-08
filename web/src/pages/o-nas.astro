@@ -1,0 +1,137 @@
+---
+import Baza from "../layouts/Baza.astro";
+import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import ZapisCta from "../components/ZapisCta.astro";
+import { url, firma, wielkoscGrupy } from "../lib/site.js";
+---
+
+<Baza
+  aktywna="o-nas"
+  tytul="O nas"
+  opis="Kim jesteśmy, dlaczego powstała Skills Academy i jak wygląda miejsce, w którym prowadzimy zajęcia. Centrum kompetencji w Szczecinie."
+>
+  <section class="naglowek-strony">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">O nas</span>
+        <h1 class="tytul-1">Centrum kompetencji, nie szkoła językowa</h1>
+        <p class="hero__zdanie">
+          Zaczynamy bez opinii i bez zdjęć z zajęć, więc jedynym dowodem, jaki
+          możemy Wam dziś dać, jesteśmy my sami: kto prowadzi zajęcia, dlaczego
+          to robi i na czym opiera swoją pracę.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* KIM JESTEŚMY */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Zespół</span>
+        <h2 class="tytul-1">Kim jesteśmy</h2>
+      </div>
+
+      <DoUzupelnienia czego="Sylwetki założycielek">
+        To najważniejsza sekcja w całym serwisie, dopóki nie macie opinii
+        i wyników. Dla każdej osoby: imię i nazwisko, wykształcenie,
+        doświadczenie, jedno zdanie o tym, dlaczego akurat ta praca.
+        Zdjęcia własne — nie stockowe.
+        <br /><br />
+        Osobno i wprost: która z założycielek prowadzi matematykę i jakie ma
+        doświadczenie egzaminacyjne. To jedyna oferta w Szczecinie, gdzie
+        przygotowanie do matury z angielskiego i z matematyki prowadzi ten sam
+        zespół — ale bez nazwiska jest to tylko zdanie w reklamie. Ta sama notka
+        powinna wrócić na obu stronach matematyki.
+      </DoUzupelnienia>
+    </div>
+  </section>
+
+  {/* DLACZEGO POWSTAŁA */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Powód</span>
+          <h2 class="tytul-1">Dlaczego powstała Skills Academy</h2>
+        </div>
+        <div class="stos">
+          <p class="wiodacy">
+            Dzieci po kilku latach kursu językowego często nadal nie potrafią
+            zapytać o drogę. Umieją uzupełnić lukę w zdaniu, ale nie użyć języka,
+            kiedy coś od niego zależy. To nie jest wina dzieci ani nauczycieli —
+            to skutek uczenia języka jako przedmiotu do zaliczenia.
+          </p>
+          <p class="tekst-drugi">
+            Odwracamy kolejność: najpierw zadanie, które trzeba wykonać, potem
+            język jako jedyne dostępne narzędzie. Do tego dokładamy kompetencje,
+            których szkoła nie zdąży nauczyć — pracę w drużynie, wystąpienie przed
+            grupą, ocenę źródeł.
+          </p>
+          <p class="tekst-drugi">
+            Przygotowanie do egzaminów prowadzimy osobno i mówimy o nim innym
+            tonem, bo tam liczy się wynik. Nie udajemy, że matura jest przygodą.
+          </p>
+          <p>
+            <a class="link-w-zdaniu" href={url("/metoda")}>
+              Przeczytajcie o metodzie i podziale na grupy wiekowe
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* LOKAL */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka--boczna">
+        <div class="stos">
+          <div class="naglowek-sekcji" style="margin-bottom: 0;">
+            <span class="nadtytul">Miejsce</span>
+            <h2 class="tytul-1">Lokal i przestrzeń zajęć</h2>
+          </div>
+          <p class="wiodacy">
+            Zajęcia prowadzimy stacjonarnie w {firma.miasto}ie. Sale są
+            przystosowane do pracy w ruchu, a nie do siedzenia w ławkach — bo
+            metoda tego wymaga. Zajęcia indywidualne odbywają się w sali
+            z przeszkleniem, zgodnie ze
+            <a class="link-w-zdaniu" href={url("/bezpieczenstwo")}>standardami ochrony małoletnich</a>.
+          </p>
+          <ul class="lista-znaczona">
+            <li>Grupy do {wielkoscGrupy} osób, żeby prowadzący widział każde dziecko</li>
+            <li>Apteczka w każdej sali</li>
+            <li>Osoba z aktualnym kursem pierwszej pomocy na każdej zmianie</li>
+          </ul>
+        </div>
+
+        <div class="miejsce-na-zdjecie">
+          <strong>Miejsce na zdjęcie sali</strong>
+          Rodzic chce zobaczyć salę, zanim do niej przyjedzie. Jedno poziome
+          zdjęcie własne, w tej samej tonacji co pozostałe.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* BEZPIECZEŃSTWO — wejście z „O nas”, nie tylko ze stopki */}
+  <section class="sekcja sekcja--tint">
+    <div class="szerokosc">
+      <div class="odeslanie" style="background: var(--tlo-karty);">
+        <p class="odeslanie__tekst">
+          <strong>Standardy Ochrony Małoletnich</strong>
+          Publikujemy je w całości — kto może pracować z dziećmi, jak wygląda
+          odbiór dziecka, co się dzieje, kiedy ktoś zgłosi krzywdzenie.
+        </p>
+        <a class="przycisk przycisk--obrys" href={url("/bezpieczenstwo")}>
+          Przeczytaj standardy bezpieczeństwa
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <ZapisCta
+    tytul="Najlepiej poznać nas na zajęciach"
+    tresc="Bezpłatne zajęcia próbne, bez zobowiązań. Dziecko bierze udział na normalnych zasadach, Wy patrzycie z boku. Potem rozmawiamy."
+  />
+</Baza>

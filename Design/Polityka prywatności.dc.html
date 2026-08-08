@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/colors.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/typography.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/effects.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/styles.css">
+<script src="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/_ds_bundle.js"></script>
+<style>
+  body { margin: 0; background: #FBF8F3; }
+  a { color: #1E5FCC; text-decoration: none; }
+  a:hover { color: #E8654A; }
+  *, *::before, *::after { box-sizing: border-box; }
+  a:focus-visible, button:focus-visible { outline: 2px solid #1E5FCC; outline-offset: 2px; }
+</style>
+</helmet>
+
+<div style="background:#FBF8F3;color:#1A2230;font-family:Lexend,system-ui,sans-serif;min-height:100vh">
+
+  <dc-import name="Nawigacja" hint-size="100%,68px"></dc-import>
+
+  <section style="background:#1E5FCC;border-radius:0 0 24px 24px">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(38px,5.5vw,66px) 24px clamp(34px,5vw,56px)">
+      <div style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72);font-weight:600;margin-bottom:16px">Formalności</div>
+      <h1 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(30px,4.4vw,48px);line-height:1.1;letter-spacing:-.01em;color:#fff;margin:0;max-width:20ch;text-wrap:balance">Polityka prywatności</h1>
+      <p style="font-size:clamp(15.5px,1.5vw,18px);line-height:1.65;color:rgba(255,255,255,.86);margin:20px 0 0;max-width:62ch;text-wrap:pretty">Kto przetwarza Wasze dane, w jakim celu i jak długo. Dokument dotyczy serwisu; zasady przetwarzania danych uczestników zajęć opisuje <a href="Klauzula RODO.dc.html" style="color:#fff;border-bottom:1px solid rgba(255,255,255,.45)">klauzula informacyjna</a>.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px 34px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.22)">
+        <div style="font-size:14px;color:rgba(255,255,255,.82)">Wersja <span style="border-bottom:1px dashed rgba(255,255,255,.6)">[numer]</span></div>
+        <div style="font-size:14px;color:rgba(255,255,255,.82)">Obowiązuje od <span style="border-bottom:1px dashed rgba(255,255,255,.6)">[data]</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:860px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px 0">
+    <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;gap:30px">
+      <sc-for list="{{ sections }}" as="s" hint-placeholder-count="8">
+        <div>
+          <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(18px,2vw,21px);margin:0 0 10px;letter-spacing:-.005em">{{ s.title }}</h2>
+          <p style="font-size:15px;line-height:1.75;color:#1A2230;margin:0 0 12px;text-wrap:pretty">{{ s.lead }}</p>
+          <div style="border:1px dashed rgba(232,101,74,.5);border-radius:10px;padding:16px 18px;font-size:14px;line-height:1.7;color:#5B6B7A">{{ s.todo }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:860px;margin:0 auto;padding:clamp(26px,3.4vw,38px) 24px 0">
+    <div style="background:#1E5FCC;border-radius:16px;padding:clamp(22px,2.8vw,32px)">
+      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:20px;margin:0 0 10px;color:#fff;letter-spacing:-.005em">Kontakt w sprawie danych</h2>
+      <p style="font-size:15px;line-height:1.7;color:rgba(255,255,255,.86);margin:0 0 16px;max-width:60ch">Pytania o dane, wnioski o dostęp, sprostowanie lub usunięcie kierujcie na adres poniżej. Odpowiadamy w terminie wynikającym z RODO.</p>
+      <div style="font-size:15px;line-height:1.8;color:#fff;overflow-wrap:anywhere">
+        <div><span style="border-bottom:1px dashed rgba(255,255,255,.6)">[adres e-mail do spraw danych]</span></div>
+        <div><a href="tel:000000000" style="color:#fff;border-bottom:1px solid rgba(255,255,255,.45)">000 000 000</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:860px;margin:0 auto;padding:clamp(26px,3.4vw,38px) 24px clamp(20px,3vw,32px)">
+    <div style="border:1px dashed rgba(232,101,74,.5);border-radius:12px;padding:18px 20px;font-size:13.5px;line-height:1.7;color:#5B6B7A">
+      <strong style="color:#1A2230">Do potwierdzenia przez prawnika.</strong> Ten dokument jest szkieletem opartym na standardowej strukturze polityki prywatności. Przed publikacją wymaga uzupełnienia danych administratora i weryfikacji podstaw prawnych oraz okresów przechowywania.
+    </div>
+  </section>
+
+  <dc-import name="Stopka" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      sections: [
+        { title: '1. Kto jest administratorem danych',
+          lead: 'Administratorem danych zbieranych w tym serwisie jest podmiot prowadzący centrum Skills Academy w Szczecinie.',
+          todo: 'Do uzupełnienia: pełna nazwa podmiotu, forma prawna, adres siedziby, NIP, REGON, adres e-mail i telefon kontaktowy. Jeśli powołaliście inspektora ochrony danych — jego dane kontaktowe.' },
+        { title: '2. Jakie dane zbieramy',
+          lead: 'W formularzu zapisu zbieramy imię dziecka, jego wiek, numer telefonu rodzica i opcjonalnie adres e-mail. Serwis zbiera też podstawowe dane techniczne wizyty.',
+          todo: 'Do uzupełnienia: pełna lista danych z formularza po ostatecznym ustaleniu pól oraz zakres danych zbieranych przez narzędzia analityczne, jeśli zdecydujecie się je wdrożyć.' },
+        { title: '3. W jakim celu i na jakiej podstawie',
+          lead: 'Dane z formularza służą wyłącznie kontaktowi w sprawie zajęć próbnych i zapisu dziecka.',
+          todo: 'Do uzupełnienia i potwierdzenia przez prawnika: podstawy prawne dla każdego celu — zgoda, wykonanie umowy, obowiązek prawny, prawnie uzasadniony interes.' },
+        { title: '4. Jak długo przechowujemy dane',
+          lead: 'Dane osób, które nie zdecydowały się na zapis, usuwamy po zakończeniu kontaktu. Dane uczestników przechowujemy przez okres wymagany przepisami.',
+          todo: 'Do uzupełnienia: konkretne okresy przechowywania dla każdej kategorii danych — zgłoszenia bez zapisu, dane uczestników, dokumentacja księgowa, zgody wizerunkowe.' },
+        { title: '5. Komu przekazujemy dane',
+          lead: 'Danych nie sprzedajemy i nie udostępniamy w celach marketingowych podmiotom trzecim.',
+          todo: 'Do uzupełnienia: lista podmiotów przetwarzających — hosting, poczta, system do zapisów, biuro rachunkowe. Każdy wymaga umowy powierzenia przetwarzania danych.' },
+        { title: '6. Wasze prawa',
+          lead: 'Macie prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz sprzeciwu. Zgodę można wycofać w każdej chwili.',
+          todo: 'Do potwierdzenia: sposób realizacji wniosków i termin odpowiedzi. Dodać informację o prawie skargi do Prezesa Urzędu Ochrony Danych Osobowych.' },
+        { title: '7. Pliki cookies',
+          lead: 'Serwis używa plików cookies w zakresie niezbędnym do jego działania.',
+          todo: 'Do uzupełnienia po decyzji o narzędziach: lista cookies, ich cel i czas życia. Jeśli pojawi się analityka lub piksel reklamowy, potrzebny będzie baner zgody — dziś serwis go nie ma.' },
+        { title: '8. Dane dzieci',
+          lead: 'Dane dziecka podaje rodzic lub opiekun prawny. Dziecko nie zapisuje się samodzielnie.',
+          todo: 'Do potwierdzenia przez prawnika: zapis o zgodzie opiekuna oraz powiązanie z zasadami wizerunku opisanymi na stronie Bezpieczeństwo.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
