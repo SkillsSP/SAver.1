@@ -652,14 +652,26 @@ button {
   padding-block: var(--space-1);
 }
 
-.pasek__marka {
+/* Lockup marki: sygnet zastępuje literę „S", napis jest żywym tekstem.
+   Wymiary i mikrokorekty przepisane z makiet (Nawigacja.dc.html, Stopka.dc.html)
+   — sygnet 38 px + Lexend 600 22 px w pasku, 19 px + 18 px w stopce.
+   Wyrównanie do dolnej krawędzi, bo znak siada na linii pisma napisu. */
+.marka {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-end;
+  gap: 0;
   flex-shrink: 0;
+  color: inherit;
 }
-.pasek__marka img {
-  height: 2.25rem;
-  width: auto;
+.marka img {
+  display: block;
+}
+.marka__napis {
+  font-family: var(--font-medrzec);
+  font-weight: var(--waga-polgruba);
+  letter-spacing: -0.015em;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .pasek__menu {

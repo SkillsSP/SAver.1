@@ -1,4 +1,5 @@
 ---
+import Marka from "./Marka.astro";
 import {
   firma,
   url,
@@ -16,12 +17,7 @@ const rok = new Date().getFullYear();
   <div class="szerokosc">
     <div class="stopka__siatka">
       <div class="stopka__marka">
-        <img
-          src={url("/logo/skills-academy-logo-rewers.svg")}
-          alt="Skills Academy"
-          width="149"
-          height="108"
-        />
+        <Marka sygnet={19} tekst={18} rewers={true} jakoLink={false} />
         <address class="stopka__dane">
           <span>{adresTekst()}</span>
           {tel ? <a href={tel}>{telefonTekst()}</a> : <span>{telefonTekst()}</span>}

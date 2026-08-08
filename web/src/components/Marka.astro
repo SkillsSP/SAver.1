@@ -1,0 +1,56 @@
+---
+import { url, firma } from "../lib/site.js";
+
+interface Props {
+  /** Wysokość sygnetu w px — 38 w pasku, 19 w stopce (wg makiet). */
+  sygnet?: number;
+  /** Wielkość napisu w px — 22 w pasku, 18 w stopce. */
+  tekst?: number;
+  /** Wersja na ciemnym tle: sygnet w kontrze, napis biały. */
+  rewers?: boolean;
+  /** Element opakowujący: odnośnik w pasku, zwykły blok w stopce. */
+  jakoLink?: boolean;
+}
+
+const {
+  sygnet = 38,
+  tekst = 22,
+  rewers = false,
+  jakoLink = true,
+} = Astro.props;
+
+const plik = rewers
+  ? "/logo/skills-academy-sygnet-rewers.svg"
+  : "/logo/skills-academy-sygnet.svg";
+
+/* Sygnet zastępuje literę „S", więc widoczny napis zaczyna się od „kills".
+   Samo „S" zostaje w kodzie, ale schowane wizualnie — dzięki temu czytnik
+   ekranu i wyszukiwarka dostają pełną nazwę „Skills Academy", a nie „kills". */
+const Element = jakoLink ? "a" : "span";
+
+/* Docisk napisu do sygnetu i mikrokorekty pionu przepisane z makiet
+   (margin-right -3.7px i translateY -0.2px przy 38 px). Skalujemy je razem
+   z sygnetem, żeby lockup trzymał proporcje w obu rozmiarach. */
+const skala = sygnet / 38;
+const docisk = (-3.7 * skala).toFixed(2);
+const korektaPionu = (-0.2 * skala).toFixed(2);
+const przesuniecieBloku = (-7 * skala).toFixed(1);
+---
+
+<Element
+  class="marka"
+  href={jakoLink ? url("/") : undefined}
+  style={`margin-left:${przesuniecieBloku}px`}
+>
+  <img
+    src={url(plik)}
+    alt=""
+    aria-hidden="true"
+    width={sygnet}
+    height={sygnet}
+    style={`width:${sygnet}px;height:${sygnet}px;margin-right:${docisk}px;transform:translateY(${korektaPionu}px)`}
+  />
+  <span class="marka__napis" style={`font-size:${tekst}px`}>
+    <span class="wizualnie-ukryte">S</span>kills Academy
+  </span>
+</Element>

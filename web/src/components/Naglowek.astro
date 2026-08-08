@@ -1,5 +1,6 @@
 ---
-import { url, menuProgram, menuExams, telefonHref, telefonTekst } from "../lib/site.js";
+import Marka from "./Marka.astro";
+import { url, menuProgram, menuExams, telefonHref } from "../lib/site.js";
 
 interface Props {
   /** Która pozycja paska jest aktywna: program | exams | cennik | o-nas | kontakt */
@@ -15,14 +16,7 @@ const tel = telefonHref();
 
 <header class="pasek">
   <div class="szerokosc pasek__rzad">
-    <a class="pasek__marka" href={url("/")}>
-      <img
-        src={url("/logo/skills-academy-logo.svg")}
-        alt="Skills Academy — strona główna"
-        width="149"
-        height="108"
-      />
-    </a>
+    <Marka sygnet={38} tekst={22} />
 
     <nav class="pasek__menu" aria-label="Menu główne">
       <div class="rozwiniecie" data-rozwiniecie>
@@ -120,14 +114,7 @@ const tel = telefonHref();
 
 <div class="menu-mobilne" id="menu-mobilne" hidden data-menu-mobilne>
   <div class="menu-mobilne__gora">
-    <a class="pasek__marka" href={url("/")}>
-      <img
-        src={url("/logo/skills-academy-logo.svg")}
-        alt="Skills Academy — strona główna"
-        width="149"
-        height="108"
-      />
-    </a>
+    <Marka sygnet={38} tekst={22} />
     <button type="button" class="pasek__hamburger" data-zamknij-menu>
       <svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true">
         <path d="M1 1l14 14M15 1L1 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
