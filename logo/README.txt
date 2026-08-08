@@ -1,6 +1,6 @@
 SKILLS ACADEMY — PAKIET ZNAKU
 Wariant finalny: dwa koi tworzące literę „S". Górne koi grafitowe, dolne koralowe.
-Wersja pakietu 1.0.
+Wersja pakietu 1.1 — wordmark na krzywych.
 
 ──────────────────────────────────────────────
 1. LOGO PEŁNE (poziome, sygnet w miejscu pierwszej litery)
@@ -73,14 +73,17 @@ WDROŻENIE NA STRONIE
 
 CO ZOSTAJE DO MASTERA PRODUKCYJNEGO
 
-Rastry logo pełnego są już wygenerowane (sekcja 4) — wordmark renderował się
-prawdziwym krojem Lexend, więc nadają się do użytku od zaraz.
+Wordmark („kills" / „Skills" i „ACADEMY") jest zamieniony na krzywe we wszystkich
+pięciu plikach logo — pliki nie wymagają już zainstalowanego kroju Lexend i można
+je przekazać drukarni bez ryzyka podmiany fontu.
 
-W plikach SVG wordmark („kills" i „ACADEMY") pozostaje żywym tekstem Lexend:
-sylwety koi są w pełni wektorowe, litery nie. Przed przekazaniem do drukarni:
-  1. zamienić tekst na krzywe i zapisać master .ai/.eps/.pdf
-     (wymaga programu wektorowego z zainstalowanym krojem Lexend),
-  2. wykonać wersję CMYK/Pantone i zatwierdzić proof.
+Rastry logo pełnego (sekcja 4) renderowały się prawdziwym krojem Lexend, więc
+pozostają aktualne.
 
-Do czasu mastera: do druku używać plików rastrowych 2400 px lub przekazać
-drukarni SVG razem z krojem Lexend (Google Fonts, licencja OFL, bez opłat).
+Do wykonania:
+  1. wersja CMYK/Pantone i zatwierdzenie proofu przed pierwszym drukiem
+     (SVG żyje w RGB — konwersję robi drukarnia albo grafik w Scribusie /
+     Affinity / Illustratorze),
+  2. master .ai/.eps/.pdf, jeśli konkretna drukarnia go zażąda.
+
+Do druku cyfrowego i małych nakładów wystarczą obecne SVG oraz rastry 2400 px.

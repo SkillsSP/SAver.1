@@ -37,7 +37,7 @@ const pytania = [
   {
     pytanie: "Czy mogę zrezygnować w trakcie semestru?",
     odpowiedz:
-      "Karnet można zawiesić w obu modelach. Opłacone spotkania nie przepadają: karnet obejmuje z góry określoną liczbę zajęć, więc wykorzystacie je w kolejnych terminach. Wpłaconych pieniędzy nie zwracamy — zawieszamy karnet zamiast go rozliczać.",
+      "Karnet można zawiesić w obu modelach. Opłacone spotkania nie przepadają: karnet obejmuje z góry określoną liczbę zajęć, więc wykorzystacie je w kolejnych terminach. Wpłaconych pieniędzy nie zwracamy; zawieszamy karnet zamiast go rozliczać.",
   },
   {
     pytanie: "Czy trzeba brać całość?",
@@ -73,7 +73,7 @@ const pytania = [
   <section class="sekcja">
     <div class="szerokosc">
       <DoUzupelnienia czego="Kwoty">
-        Cała ta strona czeka na jedną decyzję: stawki. Do wpisania — cena
+        Cała ta strona czeka na jedną decyzję: stawki. Do wpisania: cena
         miesięczna i semestralna karnetu, dopłata za fakultet, stawka za
         spotkanie 1:1 oraz cztery stawki egzaminacyjne. Zanim je ustalicie,
         warto rozstrzygnąć trzy rzeczy z dokumentu struktury: czy Exams
@@ -100,7 +100,7 @@ const pytania = [
         <article class="cena">
           <h3 class="tytul-3">Model miesięczny</h3>
           <p class="cena__kwota">
-            — zł <small>/ miesiąc</small>
+            kwota <small>/ miesiąc</small>
           </p>
           <p class="tekst-maly tekst-drugi">
             Płatność co miesiąc, rezygnacja z miesięcznym wyprzedzeniem. Dobry
@@ -112,7 +112,7 @@ const pytania = [
           <span class="plakietka plakietka--koral" style="justify-self: start;">Taniej za spotkanie</span>
           <h3 class="tytul-3">Model semestralny</h3>
           <p class="cena__kwota">
-            — zł <small>/ semestr</small>
+            kwota <small>/ semestr</small>
           </p>
           <p class="tekst-maly tekst-drugi">
             Płatność jednorazowa lub w ratach. Dziecko ma zagwarantowane miejsce
@@ -131,7 +131,7 @@ const pytania = [
         <h2 class="tytul-1">Zajęcia podstawowe, fakultety i 1:1</h2>
         <p class="wiodacy">
           Zajęcia podstawowe są bazą każdego karnetu. Fakultety dokładacie
-          osobno, w dowolnej konfiguracji — każdy kolejny obniża cenę jednostkową
+          osobno, w dowolnej konfiguracji. Każdy kolejny obniża cenę jednostkową
           spotkania.
         </p>
       </div>
@@ -143,7 +143,7 @@ const pytania = [
               <strong>{p.nazwa}</strong>
               <span>{p.opis}</span>
             </span>
-            <span class="pozycja-cennika__kwota">— zł</span>
+            <span class="pozycja-cennika__kwota">do ustalenia</span>
           </li>
         ))}
         <li class="pozycja-cennika">
@@ -165,8 +165,8 @@ const pytania = [
         <h2 class="tytul-1">Przygotowanie egzaminacyjne</h2>
         <p class="wiodacy">
           Exams nie wchodzi w karnet. Rozliczamy je osobno i można wziąć sam
-          egzamin, bez zajęć podstawowych — na tych samych zasadach dla
-          uczestnika zajęć i dla kogoś z zewnątrz.
+          egzamin, bez zajęć podstawowych, na tych samych zasadach dla uczestnika
+          zajęć i dla kogoś z zewnątrz.
         </p>
       </div>
 
@@ -180,7 +180,7 @@ const pytania = [
               </strong>
               <span>{p.opis}</span>
             </span>
-            <span class="pozycja-cennika__kwota">— zł</span>
+            <span class="pozycja-cennika__kwota">do ustalenia</span>
           </li>
         ))}
       </ul>
@@ -205,13 +205,13 @@ const pytania = [
           <h2 class="tytul-3">Zawieszenie karnetu</h2>
           <p class="tekst-maly tekst-drugi">
             Karnet to określona liczba spotkań, a nie abonament na czas. Jeśli coś
-            stanie na przeszkodzie — choroba, wyjazd, trudniejszy okres w szkole —
+            stanie na przeszkodzie (choroba, wyjazd, trudniejszy okres w szkole),
             zajęcia czekają.
           </p>
           <ul class="lista-znaczona">
             <li>Zawiesić można oba karnety: miesięczny i semestralny</li>
             <li>Niewykorzystane spotkania przechodzą na kolejne terminy</li>
-            <li>Wpłaconych pieniędzy nie zwracamy — zawieszamy karnet</li>
+            <li>Wpłaconych pieniędzy nie zwracamy; zawieszamy karnet</li>
           </ul>
         </div>
       </div>
@@ -226,8 +226,8 @@ const pytania = [
           <span class="nadtytul">Płatności</span>
           <h2 class="tytul-1">Pytania, które wracają</h2>
           <p class="tekst-drugi tekst-maly">
-            Każde z nich i tak padnie w pierwszej rozmowie — lepiej, żeby
-            odpowiedź była tutaj.
+            Każde z nich i tak padnie w pierwszej rozmowie. Lepiej, żeby odpowiedź
+            była tutaj.
           </p>
         </div>
         <div class="pytania">

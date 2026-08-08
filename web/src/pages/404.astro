@@ -1,0 +1,75 @@
+---
+import Baza from "../layouts/Baza.astro";
+import { url, menuProgram, telefonHref, telefonTekst } from "../lib/site.js";
+
+const tel = telefonHref();
+---
+
+<Baza
+  tytul="Nie ma takiej strony"
+  opis="Pod tym adresem nie ma strony. Poniżej znajdziecie odnośniki do oferty, cennika i kontaktu."
+>
+  <section class="naglowek-strony">
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Błąd 404</span>
+        <h1 class="tytul-1">Pod tym adresem nic nie ma</h1>
+        <p class="hero__zdanie">
+          Strona mogła zmienić adres albo w odnośniku jest literówka. Poniżej są
+          miejsca, do których najczęściej prowadzi ta ścieżka.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka siatka--3">
+        {menuProgram.map((poz) => (
+          <a class="karta karta--luzna" href={url(poz.href)}>
+            <h2 class="tytul-3">{poz.nazwa}</h2>
+            <p class="tekst-drugi tekst-maly">{poz.opis}</p>
+            <span class="wiek__strzalka">Przejdź →</span>
+          </a>
+        ))}
+        <a class="karta karta--luzna" href={url("/exams")}>
+          <h2 class="tytul-3">Exams</h2>
+          <p class="tekst-drugi tekst-maly">
+            Przygotowanie do egzaminu ósmoklasisty i matury, z angielskiego
+            i z matematyki.
+          </p>
+          <span class="wiek__strzalka">Przejdź →</span>
+        </a>
+        <a class="karta karta--luzna" href={url("/cennik")}>
+          <h2 class="tytul-3">Cennik</h2>
+          <p class="tekst-drugi tekst-maly">
+            Stawki razem z zakresem zajęć, bez gwiazdek i dopisków.
+          </p>
+          <span class="wiek__strzalka">Przejdź →</span>
+        </a>
+        <a class="karta karta--luzna" href={url("/kontakt")}>
+          <h2 class="tytul-3">Kontakt</h2>
+          <p class="tekst-drugi tekst-maly">
+            Zapis na bezpłatne zajęcia próbne i dane kontaktowe.
+          </p>
+          <span class="wiek__strzalka">Przejdź →</span>
+        </a>
+      </div>
+
+      <div class="odeslanie" style="margin-top: var(--space-6);">
+        <p class="odeslanie__tekst">
+          <strong>Szukacie czegoś konkretnego?</strong>
+          Napiszcie albo zadzwońcie — podpowiemy, gdzie tego szukać.
+        </p>
+        <div class="przyciski">
+          <a class="przycisk przycisk--akcja" href={url("/kontakt")}>Napiszcie do nas</a>
+          {tel && (
+            <span class="telefon-obok">
+              albo zadzwońcie: <a href={tel}>{telefonTekst()}</a>
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+</Baza>

@@ -13,6 +13,9 @@
   --kobalt-100: #e5edfb;
   --koral-500: #e8654a;
   --koral-600: #c94f36;
+  /* Odcień do korala niosącego drobny tekst na jasnym tle (znaczniki czasu,
+     etykiety not). Jaśniejsze warianty nie dobijają do 4,5:1 na Cloud Dancer. */
+  --koral-700: #c33619;
   --koral-100: #fce7e1;
   --slate-500: #5b6b7a;
   --slate-600: #46545f;
@@ -37,8 +40,23 @@
   --tekst-na-marce: var(--bialy);
   --tekst-na-marce-miekki: rgba(255, 255, 255, 0.85);
 
-  --akcja: var(--koral-500);
-  --akcja-hover: var(--koral-600);
+  /* Koral jako tło przycisku akcji.
+
+     ODSTĘPSTWO OD IDENTYFIKACJI, ŚWIADOME: identyfikacja opisuje koral
+     #E8654A jako kolor CTA i sama zaznacza przy nim „duży tekst / UI ·
+     3,1:1". Biały napis 15 px na tym tle daje kontrast 3,29:1 — to za mało
+     dla zwykłego tekstu wg WCAG AA (wymóg 4,5:1); próg 3:1 dotyczy dopiero
+     liter od ok. 19 px wzwyż. Przyciski w tym serwisie są mniejsze, więc
+     tłem akcji jest ciemniejszy odcień korala #C94F36 (4,51:1 — AA).
+     Różnica jest ledwo widoczna, a napis staje się czytelny dla osób ze
+     słabszym wzrokiem i przy słońcu na ekranie telefonu.
+
+     Żeby wrócić do odcienia z identyfikacji, ustawcie --akcja na
+     var(--koral-500) — wygląd zmieni się wtedy w jednym miejscu, kosztem
+     czytelności napisu. Jaśniejszy koral #E8654A zostaje tam, gdzie nie
+     niesie tekstu: kropki przy faktach i lewa krawędź noty redakcyjnej. */
+  --akcja: var(--koral-600);
+  --akcja-hover: #a83f2a;
   --akcent-senior: var(--slate-500);
 
   --linia: rgba(26, 34, 48, 0.13);
@@ -403,20 +421,6 @@ button {
   color: var(--tekst-drugi);
 }
 
-.proza {
-  max-width: var(--szerokosc-tekstu);
-  display: grid;
-  gap: var(--space-2);
-}
-.proza a:not(.przycisk) {
-  color: var(--kobalt-700);
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-}
-.proza a:not(.przycisk):hover {
-  color: var(--kobalt-600);
-}
-
 .link-w-zdaniu {
   color: var(--kobalt-700);
   text-decoration: underline;
@@ -591,10 +595,6 @@ button {
 .siatka--3 {
   grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
 }
-.siatka--4 {
-  grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
-}
-
 /* dwie kolumny o różnej wadze — tekst prowadzący + treść */
 .siatka--wiodaca {
   display: grid;
@@ -926,10 +926,6 @@ button {
   padding-block: var(--rytm-sekcji);
 }
 
-.hero--senior {
-  background: var(--tlo-grafit);
-}
-
 .hero__tresc {
   display: grid;
   gap: var(--space-3);
@@ -963,12 +959,6 @@ button {
   border-radius: 50%;
   background: var(--akcja);
   flex-shrink: 0;
-}
-
-.hero__pigulki {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
 }
 
 /* nagłówek podstrony — węższy wariant hero */
@@ -1104,7 +1094,7 @@ button {
   font-family: var(--font-odkrywca);
   font-size: var(--text-maly);
   font-weight: var(--waga-polgruba);
-  color: var(--akcja);
+  color: var(--koral-700);
   padding-top: 0.1rem;
 }
 
@@ -1484,7 +1474,7 @@ button {
   padding: var(--space-2);
   border-radius: var(--radius-md);
   background: var(--tlo-tint-koral);
-  color: var(--koral-600);
+  color: var(--koral-700);
   font-size: var(--text-maly);
   font-weight: var(--waga-srednia);
 }
@@ -1493,31 +1483,6 @@ button {
   text-decoration: underline;
   text-underline-offset: 0.15em;
   font-weight: var(--waga-polgruba);
-}
-
-/* ==========================================================================
-   ZAKŁADKI (wersja dla rodzica / dla dziecka)
-   ========================================================================== */
-.zakladki {
-  display: flex;
-  gap: var(--space-3);
-  border-bottom: var(--wlos);
-  margin-bottom: var(--space-5);
-}
-.zakladki__przycisk {
-  padding: var(--space-2) var(--space-05);
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  font-size: var(--text-maly);
-  font-weight: var(--waga-polgruba);
-  color: var(--slate-500);
-  min-height: var(--cel-dotyku);
-}
-.zakladki__przycisk[aria-selected="true"] {
-  color: var(--kobalt-600);
-  border-bottom-color: var(--kobalt-600);
 }
 
 /* ==========================================================================
@@ -1538,7 +1503,7 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-size: 0.6875rem;
-  color: var(--koral-600);
+  color: var(--koral-700);
 }
 
 /* ==========================================================================
@@ -1608,12 +1573,3 @@ button {
 /* ==========================================================================
    POMOCNICZE
    ========================================================================== */
-.srodek {
-  text-align: center;
-}
-.bez-marginesu-gora {
-  margin-top: 0;
-}
-.pelna-szerokosc {
-  grid-column: 1 / -1;
-}

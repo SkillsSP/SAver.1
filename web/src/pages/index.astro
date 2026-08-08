@@ -136,10 +136,10 @@ const przebiegMisji = [
             {przebiegMisji.map((krok) => (
               <li class="przebieg__krok">
                 <span class="przebieg__czas">{krok.czas}</span>
-                <span class="przebieg__tresc">
+                <div class="przebieg__tresc">
                   <strong>{krok.tytul}</strong>
                   <p>{krok.opis}</p>
-                </span>
+                </div>
               </li>
             ))}
           </ol>

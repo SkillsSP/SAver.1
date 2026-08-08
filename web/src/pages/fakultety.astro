@@ -33,7 +33,7 @@ const wybor = [
         <h1 class="tytul-1">Jedna dziedzina, którą dziecko wybiera samo</h1>
         <p class="hero__zdanie">
           Fakultet dokładacie do zajęć podstawowych. Prowadzimy go po angielsku,
-          ale język schodzi tu na drugi plan — liczy się to, co dziecko robi.
+          ale język schodzi tu na drugi plan. Liczy się to, co dziecko robi.
         </p>
       </div>
     </div>
@@ -47,7 +47,7 @@ const wybor = [
           <article class="karta karta--luzna">
             <h2 class="tytul-3">{f.nazwa}</h2>
             <p class="tekst-drugi tekst-maly">{f.wiodace}</p>
-            <p class="tekst-drobny">{f.szczegol} — do ustalenia przed startem naboru.</p>
+            <p class="tekst-drobny">{f.szczegol}: do ustalenia przed startem naboru.</p>
           </article>
         ))}
       </div>
@@ -56,7 +56,7 @@ const wybor = [
         <DoUzupelnienia czego="Zawartość fakultetów">
           Dla każdego z czterech fakultetów dopiszcie zakres, materiały i wiek
           uczestników oraz dzień i godzinę zajęć. Rodzic wybierający fakultet
-          porównuje właśnie te trzy rzeczy — bez nich karty wyglądają jak deklaracja
+          porównuje właśnie te trzy rzeczy. Bez nich karty wyglądają jak deklaracja
           zamiaru, a nie oferta.
         </DoUzupelnienia>
       </div>
@@ -78,10 +78,10 @@ const wybor = [
         <ol class="kroki">
           {wybor.map((krok) => (
             <li class="kroki__krok">
-              <span class="kroki__tresc">
+              <div class="kroki__tresc">
                 <strong>{krok.tytul}</strong>
                 <p>{krok.opis}</p>
-              </span>
+              </div>
             </li>
           ))}
         </ol>
@@ -99,7 +99,7 @@ const wybor = [
             <li>Fakultet wymaga zapisu na zajęcia podstawowe</li>
             <li>Grupa rusza przy ustalonej minimalnej liczbie osób</li>
             <li>Materiały i sprzęt zapewnia centrum</li>
-            <li>Drugi fakultet możliwy za dopłatą — <a class="link-w-zdaniu" href={url("/cennik")}>zobaczcie cennik</a></li>
+            <li>Drugi fakultet możliwy za dopłatą, <a class="link-w-zdaniu" href={url("/cennik")}>zobaczcie cennik</a></li>
           </ul>
         </div>
         <DoUzupelnienia czego="Organizacja">

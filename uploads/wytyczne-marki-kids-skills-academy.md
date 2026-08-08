@@ -1,7 +1,7 @@
 # Wytyczne Marki — Skills Academy
 
 **Dokument uzupełniający do biznesplanu „Centrum Kompetencji Przyszłości dla Dzieci"**
-Wersja 2.0. Sekcja 5 (tożsamość wizualna) uzupełniona o zamknięty system kolorów, typografii i znaku. Nazwa marki potwierdzona, nazewnictwo filarów zsynchronizowane z Rozdziałem 9 biznesplanu.
+Wersja 3.0. Sekcja 5 (tożsamość wizualna) zamknięta: system kolorów, typografii i znaku. Sekcje 0, 1 i 4.2 zaktualizowane po ustaleniach struktury serwisu — Exams odłączone od modelu filarowego, oferta egzaminacyjna rozszerzona o matematykę, hasło Teens Senior skrócone. Struktura serwisu w osobnym dokumencie („Struktura serwisu", wersja 3.0).
 
 ---
 
@@ -15,8 +15,13 @@ Wytyczne marki traktuje się w praktyce brandingowej jako dokument żywy, a nie 
 
 Rozstrzygnięte: nazwa **Skills Academy** (bez „Kids") działa jako jedna marka z dwiema wewnętrznymi ścieżkami:
 
-- **Kids + Teens Junior (5–15 lat)**, pełny model rdzeń + fakultety (Rozdz. 9 biznesplanu), z trzecim filarem rdzenia dla Teens Junior, czyli Exams (przygotowanie do egzaminu ósmoklasisty)
+- **Kids + Teens Junior (5–15 lat)**, pełny model zajęcia podstawowe + fakultety (Rozdz. 9 biznesplanu). Zajęcia podstawowe to **Useful Skills i Life Skills** — dwa filary, nie trzy
 - **Teens Senior (16–19 lat)**, osobna, standalone oferta przygotowania do matury, świadomie poza modelem filarowym, zaprojektowana jako stabilne źródło przychodu od startu, na sprawdzonym rynku korepetycji maturalnych
+- **Exams**, przygotowanie egzaminacyjne (egzamin ósmoklasisty oraz matura), **poza modelem filarowym**, kupowane niezależnie od zajęć podstawowych i dostępne także dla osób spoza centrum
+
+**Zmiana względem wersji 2.0.** Exams z angielskiego było wcześniej opisane jako trzeci filar zajęć podstawowych dla Teens Junior. Odłączenie usuwa sprzeczność, która pojawiała się przy cenniku: ta sama usługa nie może być jednocześnie częścią karnetu i osobno płatną ofertą dla kogoś z zewnątrz. Od tej wersji zajęcia podstawowe to wyłącznie Useful Skills i Life Skills, a Exams jest osobną ofertą na tych samych zasadach dla wszystkich.
+
+**Zakres przedmiotowy Exams.** Przygotowanie prowadzimy z **angielskiego i z matematyki**. To jedyne miejsce w ofercie, w którym marka wychodzi poza angielski — świadomie, bo matematykę prowadzi jedna z założycielek i jest to realny wyróżnik na tle szkół językowych w Szczecinie. Zakresy poziomów: matura z angielskiego podstawowa i rozszerzona, matura z matematyki wyłącznie podstawowa.
 
 To rozwiązanie usuwa napięcie „dzieci vs młodzież" bez kosztu dwóch osobnych marek (Kierunek 2 z poprzedniej wersji), jedna nazwa, jedna wizualna tożsamość bazowa, ale wyraźnie odseparowany ton dla Teens Senior (patrz 4.2).
 
@@ -33,9 +38,11 @@ Zaczerpnięte wprost z biznesplanu (Rozdział 2). To nie są elementy do wymyśl
 | **Wartości** | Rozwój, Samodzielność, Odpowiedzialność, Kreatywność, Współpraca, Bezpieczeństwo |
 | **Pozycjonowanie** | Świadomie NIE szkoła językowa — Centrum Kompetencji Przyszłości dla Dzieci (dotyczy Kids + Teens Junior; Teens Senior pozycjonowany osobno, patrz niżej) |
 | **Hasło główne (Kids + Teens Junior)** | „Angielski dla życia, nie tylko dla szkoły" |
-| **Hasło Teens Senior** | „Konkretny plan na maturę z angielskiego" — celowo inne niż hasło główne, bo Teens Senior *jest* dla szkoły wprost, i udawanie inaczej osłabiłoby wiarygodność tej oferty |
+| **Hasło Teens Senior** | „Konkretny plan na maturę" — celowo inne niż hasło główne, bo Teens Senior *jest* dla szkoły wprost, i udawanie inaczej osłabiłoby wiarygodność tej oferty. Bez nazwy przedmiotu w haśle, odkąd oferta obejmuje angielski i matematykę; przedmiot pojawia się w podtytule strony, nie w haśle |
 
 **Uwaga o sprzeczności, którą to rozwiązuje:** hasło główne świadomie odcina się od „szkolności", dobre dla Kids i Teens Junior, ale wprost sprzeczne z sensem istnienia Teens Senior (który *jest* przygotowaniem do konkretnego egzaminu szkolnego). Zamiast rozciągać jedno hasło na obie oferty, Teens Senior dostaje własne, uczciwe wobec swojego celu, spójne z tym, że ma już osobny rejestr tonalny (sekcja 4.2) i osobną paletę (sekcja 5.1).
+
+**Druga uwaga, po dodaniu matematyki:** pozycjonowanie główne („Centrum Kompetencji Przyszłości dla Dzieci") i hasło główne („Angielski dla życia, nie tylko dla szkoły") opisują Kids + Teens Junior i pozostają bez zmian. Nie wolno ich natomiast rozciągać na całość oferty — od momentu, w którym uczeń może przyjść wyłącznie na matematykę, zdanie „u nas wszystko dzieje się po angielsku" przestaje być prawdziwe. Strona Exams potrzebuje własnego zdania wprost: „Przygotowanie egzaminacyjne prowadzimy z angielskiego i z matematyki. Można je wybrać osobno, niezależnie od zajęć podstawowych."
 
 ---
 
@@ -69,7 +76,7 @@ Drugi, uzupełniający model, wymiary osobowości marki Jennifer Aaker (Aaker, *
 
 | Wymiar | Poziom dla Skills Academy | Uzasadnienie |
 |---|---|---|
-| **Kompetencja** | Wysoki | Rdzeń różnicujący na tle konkurencji (Rozdz. 6) — badania, metodologia, aneks naukowy |
+| **Kompetencja** | Wysoki | Trzon różnicujący na tle konkurencji (Rozdz. 6) — badania, metodologia, aneks naukowy |
 | **Ekscytacja** | Wysoki | Ruch, misje, muzyka — bez tego marka zlewa się z tradycyjną szkołą językową |
 | **Szczerość** | Średnio-wysoki | Autentyczna troska o dziecko, bezpieczeństwo, brak nachalnego marketingu strachu |
 | **Wyrafinowanie** | Średni, świadomie ograniczony | Elegancja tak, elitarność nie — segmenty klientów (Rozdz. 5.3) to rodzice aktywni, nie ekskluzywna nisza |
@@ -94,10 +101,10 @@ Biznesplan definiuje dziś pięć grup w dwóch ścieżkach (Rozdz. 9.2), każda
 | **Kids 1** | 5–7 lat | Faza przejściowa (5 to 7 shift) | Najprostsze zdania, czasowniki w trybie rozkazującym, dużo powtórzeń, ton zabawowy |
 | **Kids 2** | 8–10 lat | Stabilne operacje konkretne | Ton misji/gry — wyzwania, osiągnięcia, „jesteś detektywem" |
 | **Kids 3** | 11–12 lat | Początek myślenia formalnego i dojrzewania | Ton partnerski, mniej infantylny — dziecko traktowane jak współpracownik, nie maskotka |
-| **Teens Junior** | 13–15 lat | Ostatnie lata podstawówki, cel: ósmoklasista | Ton rówieśniczy, bez maskotek; komunikacja może iść już częściowo bezpośrednio do nastolatka, nie tylko przez rodzica |
-| **Teens Senior** | 16–19 lat | Poza modelem filarowym — oferta wynikowa | Rejestr Mędrca niemal wyłącznie — skuteczność, wynik, dowody (arkusze, statystyki zdawalności). Minimalna „przygoda" — to świadome odejście od głosu reszty marki, bo klient kupuje tu rezultat, nie doświadczenie |
+| **Teens Junior** | 13–15 lat | Ostatnie lata podstawówki, cel: ósmoklasista (Exams kupowane osobno, poza zajęciami podstawowymi) | Ton rówieśniczy, bez maskotek; komunikacja może iść już częściowo bezpośrednio do nastolatka, nie tylko przez rodzica |
+| **Teens Senior** | 16–19 lat | Poza modelem filarowym — oferta wynikowa, angielski i matematyka | Rejestr Mędrca niemal wyłącznie — skuteczność, wynik, dowody (arkusze, statystyki zdawalności). Minimalna „przygoda" — to świadome odejście od głosu reszty marki, bo klient kupuje tu rezultat, nie doświadczenie |
 | **Rodzic (Kids + Teens Junior)** | — | Dowód skuteczności, bezpieczeństwo | Rzeczowy, konkretny, z odniesieniem do metody/badań, bez straszenia |
-| **Rodzic i maturzysta (Teens Senior)** | — | Decyzja często wspólna, presja wyniku | Konkretne liczby (progi punktowe, poziomy B1/B2), bez metafor przygody |
+| **Rodzic i maturzysta (Teens Senior)** | — | Decyzja często wspólna, presja wyniku | Konkretne liczby (progi punktowe, poziomy B1/B2), bez metafor przygody. Przy matematyce ten sam rejestr — rejestr wynika z wieku i celu, nie z przedmiotu |
 
 ### 4.3 Słownik marki
 
@@ -112,9 +119,9 @@ Zestaw słów preferowanych i unikanych to standardowy element profesjonalnych w
 | program, zajęcia dodatkowe | przygoda, doświadczenie, projekt |
 | zajęcia fakultatywne, przedmiot dodatkowy | fakultet — wybór wg zainteresowań |
 | pakiet, abonament | karnet |
-| obowiązkowe zajęcia bazowe | Rdzeń (Useful Skills + Life Skills) |
+| obowiązkowe zajęcia bazowe, rdzeń | zajęcia podstawowe (Useful Skills + Life Skills) |
 
-Dwa nowe terminy programowe (Rdzeń, Fakultety. Rozdz. 9 biznesplanu) warto od razu wprowadzać rodzicom razem z uzasadnieniem, nie jako gotowy żargon: „Rdzeń" brzmi dobrze w Mędrcu (struktura, metoda), ale bez wyjaśnienia „co to znaczy w praktyce" zabrzmi urzędowo, zawsze w parze z konkretnym przykładem zajęć.
+Dwa nowe terminy programowe (Zajęcia podstawowe, Fakultety. Rozdz. 9 biznesplanu) warto od razu wprowadzać rodzicom razem z uzasadnieniem, nie jako gotowy żargon: „Zajęcia podstawowe" brzmi rzeczowo i po ludzku (struktura, metoda), ale bez wyjaśnienia „co to znaczy w praktyce" zabrzmi urzędowo, zawsze w parze z konkretnym przykładem zajęć.
 
 **Słownik Teens Senior (osobny rejestr):**
 
@@ -123,6 +130,7 @@ Dwa nowe terminy programowe (Rdzeń, Fakultety. Rozdz. 9 biznesplanu) warto od r
 | „oblejesz maturę bez korepetycji" (strach) | konkretny wynik — punkty, próg zdawalności, poziom B1/B2 |
 | „zabawa", „przygoda", „misja" | plan, strategia, przygotowanie |
 | ogólne „podniesiemy Twój poziom" | konkretne liczby z arkuszy CKE, realne przykłady poprawy wyniku |
+| „kurs maturalny", „korepetycje" | przygotowanie do matury, spotkanie, konsultacja |
 
 To jedyne miejsce w marce, gdzie słowa z lewej kolumny głównego słownika (przygoda, misja, doświadczenie) same stają się słowami do unikania, bo tu działa odwrotna logika tonu niż w Kids i Teens Junior.
 
@@ -177,7 +185,7 @@ Wykluczenie Fredoki z materiałów Teens Senior to jedna decyzja typograficzna, 
 
 ### 5.3 Znak
 
-Znak jest zamknięty i zwektoryzowany. Komplet plików ekranowych i rastrowych znajduje się w katalogu `logo/`, opis w `logo/README.txt`.
+Znak jest zamknięty i zwektoryzowany — także wordmark, zamieniony na krzywe. Komplet plików ekranowych i rastrowych znajduje się w katalogu `logo/`, opis w `logo/README.txt`.
 
 **Konstrukcja.** Dwie ryby koi splecione w literę „S": górna grafitowa (struktura, Mędrzec), dolna koralowa (ruch, Odkrywca). Oba ogony kończą się ostrym szpicem, oczy są jedynym prześwitem w bryle. Nieoczywisty skrót litery „S", świadomie odbiegający od kompasu i żarówki, czyli dwóch najczęstszych skrótów w branży edukacyjnej. Sygnet zastępuje pierwszą literę nazwy, nie stoi obok niej.
 
@@ -192,7 +200,41 @@ Znak jest zamknięty i zwektoryzowany. Komplet plików ekranowych i rastrowych z
 
 **Zakazy użycia:** obracanie, odbicie lustrzane, zmiana proporcji, zamiana kolorów koi (górne zawsze grafitowe), usuwanie lub powiększanie oczu powyżej 32 px, dodawanie cieni, obrysów, gradientów i efektów przestrzennych, umieszczanie na tle o zbyt niskim kontraście.
 
-**Status produkcyjny.** Dostarczone: warianty logo (poziomy, pionowy, sygnet), wersje kolorystyczne (podstawowa, rewers, monochrom), favicony SVG/ICO/PNG, awatary do mediów społecznościowych oraz rastry logo pełnego (PNG 2400 / 1200 / 500, rewers, JPG na bieli). Do wykonania po stronie grafika: master z wordmarkiem zamienionym na krzywe (.ai/.eps/.pdf), wersja CMYK/Pantone z proofem oraz jednostronicowa karta marki. Zakres ten opisuje osobny brief graficzny (v2.0).
+**Lockup jednoliniowy (nawigacja, stopka, sygnatury).** Znak pionowy z „ACADEMY" pod spodem staje się nieczytelny poniżej 90 px szerokości, dlatego w pasku nawigacji i w stopce składamy lockup jednoliniowy: sygnet + wyraz `kills Academy`. Sygnet **zastępuje literę „S"** — nigdy nie stoi obok pełnego słowa „Skills", bo litera zostaje wtedy podwojona.
+
+Zasady składu:
+
+- wordmark krojem **Lexend 600**, `letter-spacing: -.015em`, `line-height: 1`. Fredoka w znaku nie występuje
+- dolna krawędź sygnetu leży **na linii bazowej** wordmarku, nie na dolnej krawędzi jego pudełka tekstowego. Przy `line-height: 1` prawdziwa linia bazowa Lexend leży ok. 0,14 em **wyżej** niż dół pudełka — pominięcie tej różnicy sprawia, że znak wizualnie opada. Wzór: `przesunięcie = (line-height − (ascent + descent)) / 2 + ascent − line-height + margines_dolny_sygnetu`, gdzie margines dolny sygnetu = 4,75/64 wysokości pliku SVG
+- sygnet w pliku SVG ma marginesy wewnętrzne (rysunek zajmuje 54,5 z 64 jednostek), więc wysokość obrazka jest zawsze większa od wysokości samego znaku o 17%
+- **odstęp między znakiem a literą „k"**: 4 px przy wordmarku 22 px (nagłówek), 3 px przy 18 px (stopka) — mierzone od krawędzi rysunku do krawędzi litery, nie od krawędzi pliku. Marginesy wewnętrzne SVG trzeba skompensować ujemnym `margin-right` na obrazku
+- **rozbieżność do rozstrzygnięcia:** w pliku `skills-academy-logo.svg` ten sam odstęp wynosi 0,27 em (ok. 6 px przy 22 px), czyli więcej niż w serwisie. Przy najbliższej korekcie znaku trzeba zdecydować, która wartość jest wiążąca, i wyrównać drugą
+- oczy pokazujemy dopiero, gdy narysowany znak ma co najmniej 32 px; poniżej stosujemy `skills-academy-favicon.svg` (wersja bez oczu)
+- każdy lockup składany z osobnych elementów dostaje `aria-label="Skills Academy"`, żeby czytnik ekranu przeczytał pełną nazwę, a nie „kills Academy"
+
+**Status produkcyjny.** Dostarczone: warianty logo (poziomy, pionowy, sygnet), wersje kolorystyczne (podstawowa, rewers, monochrom), favicony SVG/ICO/PNG, awatary do mediów społecznościowych, rastry logo pełnego (PNG 2400 / 1200 / 500, rewers, JPG na bieli) oraz pliki SVG z wordmarkiem zamienionym na krzywe — nie wymagają zainstalowanego kroju Lexend po stronie odbiorcy. Do wykonania: wersja CMYK/Pantone z zatwierdzonym proofem przed pierwszym drukiem oraz jednostronicowa karta marki. Zakres ten opisuje osobny brief graficzny (v2.0).
+
+### 5.4 Ruch i mikrointerakcje
+
+Marka jest wizualnie płaska i statyczna: brak cieni, gradientów i tekstur. Ruch podlega tej samej dyscyplinie — **jest reakcją na działanie użytkownika, nigdy zabiegiem przyciągającym uwagę**. Animacja w pętli (pulsowanie, migotanie, przesuwające się paski) nie występuje w marce, bo należy do języka wyprzedaży, a nie do kategorii, w której rodzic powierza komuś dziecko. Na materiałach dotyczących bezpieczeństwa jest wykluczona bezwarunkowo.
+
+**Parametry:**
+
+| Element | Zachowanie | Czas | Krzywa |
+|---|---|---|---|
+| Przycisk koralowy (CTA) | ciemniejszy koral `#D4553B` + przesunięcie 1 px w górę | 160 ms | `ease` |
+| Przycisk — wciśnięcie | powrót do pozycji wyjściowej | 160 ms | `ease` |
+| Link nawigacji | zmiana koloru na kobalt, tło `rgba(30,95,204,.08)` | 160 ms | `ease` |
+| Pasek CTA na telefonie — pojawienie | wjazd od dołu, jednorazowo | 340 ms | `cubic-bezier(.2,.7,.3,1)` |
+| Pasek CTA — impuls przycisku | jednorazowe `scale(1.03)` po wjeździe | 480 ms, opóźnienie 380 ms | `ease-in-out` |
+
+**Zasady:**
+
+- Każda animacja odpalana automatycznie działa **raz**. Liczba powtórzeń większa niż jeden wymaga uzasadnienia i wpisania do tego dokumentu.
+- Ruch nigdy nie przenosi treści — nie animujemy pojawiania się tekstu, kart ani sekcji przy przewijaniu. Strona ma być czytelna natychmiast.
+- Zakres przesunięć: maksymalnie 1–2 px przy hoverze, maksymalnie `scale(1.03)` przy impulsie. Większe wartości czytają się jako zabawa i kolidują z rejestrem Mędrca.
+- **Obowiązkowo `prefers-reduced-motion`.** Każdy arkusz z animacją zawiera regułę wyłączającą ruch dla osób, które ograniczyły animacje w systemie. Bez tego materiał jest niezgodny z wytycznymi dostępności.
+- Ścieżka Teens Senior: wyłącznie hover na przyciskach i linkach. Bez wjazdów i impulsów.
 
 ---
 
@@ -206,7 +248,7 @@ Biznesplan (Rozdz. 10.3) definiuje cztery kanały; Google rozbity jest tu na dwa
 | Instagram | Budowanie marki | Równowaga Odkrywca/Mędrzec — estetyka + treść |
 | TikTok | Kids 2–3 i Teens Junior pośrednio i częściowo bezpośrednio | Odkrywca dominuje — energia, ruch, humor; jedyny kanał, gdzie warto mówić wprost do nastolatka z Teens Junior, nie tylko do rodzica |
 | Google (lokalnie) | Wyszukujący rodzice Kids/Teens Junior | Mędrzec, język rzeczowy, słowa kluczowe z pozycjonowania |
-| Google (Teens Senior) | Maturzyści i rodzice szukający korepetycji | Wyłącznie Mędrzec — to kategoria o bardzo wysokiej intencji wyszukiwania („korepetycje matura angielski Szczecin"), gdzie liczy się trafność słów kluczowych i dowód skuteczności, nie budowanie marki |
+| Google (Teens Senior) | Maturzyści i rodzice szukający korepetycji, osobno dla angielskiego i matematyki | Wyłącznie Mędrzec — to kategoria o bardzo wysokiej intencji wyszukiwania („korepetycje matura angielski Szczecin"), gdzie liczy się trafność słów kluczowych i dowód skuteczności, nie budowanie marki |
 
 Zasada: głos marki (archetyp + osobowość) pozostaje identyczny w Kids i Teens Junior, zmienia się tylko proporcja i rejestr, zgodnie z zasadą „stały głos, zmienny ton" z sekcji 4.1. Teens Senior jest świadomym wyjątkiem od tej zasady (patrz 4.2 i sekcja 0). To osobna oferta z własnym, węższym rejestrem.
 
