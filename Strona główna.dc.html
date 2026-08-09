@@ -37,89 +37,17 @@
 
 <div style="background:#FBF8F3;color:#1A2230;font-family:Lexend,system-ui,sans-serif;min-height:100vh">
 
-  <header style="position:sticky;top:0;z-index:50;background:#FBF8F3;border-bottom:1px solid rgba(26,34,48,.13)">
-    <div style="max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px">
-      <a href="#" aria-label="Skills Academy" style="display:flex;align-items:flex-end;gap:0px;color:#1A2230;flex-shrink:0;margin-left:-7px">
-        <img src="logo/skills-academy-sygnet.svg" alt="" aria-hidden="true" style="width:38px;height:38px;display:block;transform:translateY(-0.2px);margin-right:-3.7px">
-        <span style="font-family:Lexend,system-ui,sans-serif;font-size:22px;font-weight:600;letter-spacing:-.015em;line-height:1;white-space:nowrap">kills Academy</span>
-      </a>
-
-      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
-        <nav style="display:flex;align-items:center;gap:6px">
-          <button type="button" onClick="{{ toggleProgram }}" style="font-family:inherit;font-size:14.5px;font-weight:550;color:#1A2230;background:none;border:none;padding:9px 14px;border-radius:9px;cursor:pointer" style-hover="background:rgba(30,95,204,.08)">Program ▾</button>
-          <button type="button" onClick="{{ toggleExams }}" style="font-family:inherit;font-size:14.5px;font-weight:550;color:#1A2230;background:none;border:none;padding:9px 14px;border-radius:9px;cursor:pointer" style-hover="background:rgba(30,95,204,.08)">Exams ▾</button>
-          <a href="Cennik.dc.html" style="font-size:14.5px;font-weight:550;color:#1A2230;padding:9px 14px;border-radius:9px" style-hover="background:rgba(30,95,204,.08);color:#1E5FCC">Cennik</a>
-          <a href="#o-nas" style="font-size:14.5px;font-weight:550;color:#1A2230;padding:9px 14px;border-radius:9px" style-hover="background:rgba(30,95,204,.08);color:#1E5FCC">O nas</a>
-          <a href="#kontakt" style="font-size:14.5px;font-weight:550;color:#1A2230;padding:9px 14px;border-radius:9px" style-hover="background:rgba(30,95,204,.08);color:#1E5FCC">Kontakt</a>
-          <a href="Zapisy.dc.html" data-cta style="font-size:14.5px;font-weight:600;color:#fff;background:#E8654A;padding:11px 20px;border-radius:10px;margin-left:10px" style-hover="background:#D4553B;color:#fff">Zapisz dziecko</a>
-        </nav>
-      </sc-if>
-
-      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
-        <button type="button" onClick="{{ toggleMobile }}" aria-label="Menu" style="font-family:inherit;display:flex;align-items:center;gap:8px;background:none;border:1px solid rgba(26,34,48,.2);border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600;color:#1A2230;cursor:pointer;min-height:44px">Menu</button>
-      </sc-if>
-    </div>
-
-    <sc-if value="{{ programOpen }}" hint-placeholder-val="{{ false }}">
-      <div style="border-top:1px solid rgba(26,34,48,.13);background:#fff">
-        <div style="max-width:1200px;margin:0 auto;padding:26px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px">
-          <div>
-            <a href="Zajęcia indywidualne.dc.html" style="font-size:15px;font-weight:600;color:#1E5FCC">Indywidualne</a>
-            <div style="font-size:13px;color:#5B6B7A;line-height:1.55;margin-top:5px">Zajęcia 1:1 — rozwój, egzamin ósmoklasisty, matura.</div>
-          </div>
-          <div>
-            <a href="Zajęcia podstawowe.dc.html" style="font-size:15px;font-weight:600;color:#1E5FCC">Podstawowe</a>
-            <div style="font-size:13px;color:#5B6B7A;line-height:1.55;margin-top:5px">Useful Skills i Life Skills — baza każdego karnetu.</div>
-          </div>
-          <div>
-            <a href="Fakultety.dc.html" style="font-size:15px;font-weight:600;color:#1E5FCC">Fakultety</a>
-            <div style="font-size:13px;color:#5B6B7A;line-height:1.55;margin-top:5px">Music, Art, Acting, Motion Skills — do wyboru.</div>
-          </div>
-        </div>
-      </div>
-    </sc-if>
-
-    <sc-if value="{{ examsOpen }}" hint-placeholder-val="{{ false }}">
-      <div style="border-top:1px solid rgba(26,34,48,.13);background:#fff">
-        <div style="max-width:1200px;margin:0 auto;padding:26px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:36px">
-          <div>
-            <div style="font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#5B6B7A;font-weight:600;padding-bottom:10px;border-bottom:1px solid rgba(26,34,48,.13)">Egzamin ósmoklasisty</div>
-            <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
-              <a href="#e8" style="font-size:15px;font-weight:600;color:#1E5FCC">Angielski</a>
-              <div style="display:flex;align-items:center;gap:8px"><a href="#e8" style="font-size:15px;font-weight:600;color:#1E5FCC">Matematyka</a><span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#E8654A;padding:2px 8px;border-radius:999px">Unikat</span></div>
-            </div>
-          </div>
-          <div>
-            <div style="font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#5B6B7A;font-weight:600;padding-bottom:10px;border-bottom:1px solid rgba(26,34,48,.13)">Matura</div>
-            <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
-              <a href="#matura" style="font-size:15px;font-weight:600;color:#1E5FCC">Angielski <span style="font-weight:400;color:#5B6B7A;font-size:13px">— podstawowy i rozszerzony</span></a>
-              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><a href="#matura" style="font-size:15px;font-weight:600;color:#1E5FCC">Matematyka <span style="font-weight:400;color:#5B6B7A;font-size:13px">— podstawowy</span></a><span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#E8654A;padding:2px 8px;border-radius:999px">Unikat</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </sc-if>
-
-    <sc-if value="{{ mobileOpen }}" hint-placeholder-val="{{ false }}">
-      <div style="border-top:1px solid rgba(26,34,48,.13);background:#FBF8F3;padding:8px 24px 22px;display:flex;flex-direction:column">
-        <a href="#podstawowe" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">Program</a>
-        <a href="#e8" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">Exams</a>
-        <a href="Cennik.dc.html" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">Cennik</a>
-        <a href="#o-nas" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">O nas</a>
-        <a href="#kontakt" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0">Kontakt</a>
-      </div>
-    </sc-if>
-  </header>
+  <dc-import name="Nawigacja" hint-size="100%,68px"></dc-import>
 
   <section style="background:#1E5FCC;border-radius:0 0 24px 24px">
     <div style="max-width:1200px;margin:0 auto;padding:clamp(44px,7vw,88px) 24px clamp(40px,6vw,72px)">
       <h1 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(34px,5.4vw,58px);line-height:1.06;letter-spacing:-.01em;color:#fff;margin:0;max-width:15ch;text-wrap:balance">Angielski dla życia, nie tylko dla szkoły.</h1>
       <p style="font-size:clamp(16px,1.6vw,19px);line-height:1.6;color:rgba(255,255,255,.86);margin:22px 0 0;max-width:56ch;text-wrap:pretty">Centrum kompetencji w Szczecinie dla dzieci i młodzieży od 5 do 19 lat. Dzieci działają po angielsku — pytają, negocjują, rozwiązują problemy. Starsi przygotowują się do egzaminu ósmoklasisty i matury, z angielskiego i z matematyki.</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px">
-        <a href="{{ heroCtaHref }}" data-cta style="font-size:16px;font-weight:600;color:#fff;background:#E8654A;padding:15px 28px;border-radius:10px;min-height:44px;display:inline-flex;align-items:center" style-hover="background:#D4553B;color:#fff">Umów bezpłatne zajęcia próbne</a>
+        <a href="Zapisy.dc.html" data-cta style="font-size:16px;font-weight:600;color:#fff;background:#E8654A;padding:15px 28px;border-radius:10px;min-height:44px;display:inline-flex;align-items:center" style-hover="background:#D4553B;color:#fff">Umów zajęcia próbne</a>
         <a href="#wiek" style="font-size:16px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,.5);padding:15px 26px;border-radius:10px;min-height:44px;display:inline-flex;align-items:center" style-hover="background:rgba(255,255,255,.12);color:#fff">Sprawdź ofertę dla wieku dziecka</a>
       </div>
-      <div style="margin-top:14px"><a href="tel:000000000" style="font-size:15px;font-weight:600;color:#fff;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:2px" style-hover="color:#fff;border-color:#fff">albo zadzwoń: 000 000 000</a><div style="font-size:13.5px;color:rgba(255,255,255,.72);margin-top:7px">Oddzwaniamy tego samego dnia roboczego przy zgłoszeniach do 15:00</div></div>
+      <div style="margin-top:14px"><a href="tel:000000000" style="font-size:15px;font-weight:600;color:#fff;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:2px" style-hover="color:#fff;border-color:#fff">albo zadzwoń: 000 000 000</a></div>
       <div style="display:flex;flex-wrap:wrap;gap:10px 34px;margin-top:38px;padding-top:26px;border-top:1px solid rgba(255,255,255,.22)">
         <div style="font-size:14px;color:rgba(255,255,255,.82)">Szczecin, zajęcia stacjonarne</div>
         <div style="font-size:14px;color:rgba(255,255,255,.82)">Grupy do ośmiu osób</div>
@@ -136,7 +64,7 @@
 
   <section id="wiek" style="max-width:1200px;margin:0 auto;padding:clamp(52px,7vw,86px) 24px 0">
     <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);margin:0 0 10px;letter-spacing:-.01em">Ile lat ma Twoje dziecko?</h2>
-    <p style="font-size:16px;color:#5B6B7A;line-height:1.6;margin:0 0 30px;max-width:62ch">Grupy dobieramy wiekiem, nie poziomem — sześciolatek i dziesięciolatek uczą się zupełnie inaczej. Wybierz przedział, żeby zobaczyć, co dokładnie robi dziecko na zajęciach.</p>
+    <p style="font-size:16px;color:#5B6B7A;line-height:1.6;margin:0 0 30px;max-width:62ch">Grupy dobieramy wiekiem. Sześciolatek i dziesięciolatek uczą się zupełnie inaczej. Wybierz przedział, żeby zobaczyć, co dokładnie robi dziecko na zajęciach.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px">
       <a href="#podstawowe" style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:22px 20px;display:block;color:#1A2230;min-height:150px" style-hover="border-color:#1E5FCC;background:#fff;color:#1A2230">
         <div style="font-family:Fredoka,system-ui,sans-serif;font-size:32px;font-weight:600;color:#1E5FCC;line-height:1">5–7</div>
@@ -199,7 +127,7 @@
     </div>
   </section>
 
-  <section style="max-width:1200px;margin:0 auto;padding:clamp(52px,7vw,86px) 24px 0">
+  <section id="o-nas" style="max-width:1200px;margin:0 auto;padding:clamp(52px,7vw,86px) 24px 0">
     <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(36px,4vw,52px)">
       <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:12px">Dlaczego to działa</div>
       <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(26px,3.2vw,38px);margin:0 0 18px;letter-spacing:-.01em;max-width:20ch;text-wrap:balance">Metoda, nie intuicja</h2>
@@ -234,7 +162,7 @@
         <div id="matura" style="background:#fff;border:1px solid rgba(91,107,122,.4);border-radius:16px;padding:clamp(22px,3vw,28px)">
           <div style="margin-bottom:14px;display:flex"><x-import component-from-global-scope="SkillsAcademyDesignSystem_f697f9.Badge" tone="senior" hint-size="150px,22px">Teens Senior · 16–19 lat</x-import></div>
           <h3 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:22px;margin:0 0 10px">Konkretny plan na maturę</h3>
-          <p style="font-size:14.5px;color:#5B6B7A;line-height:1.6;margin:0 0 18px">Praca na arkuszach CKE, progi punktowe, harmonogram do maja. Liczy się wynik, nie doświadczenie.</p>
+          <p style="font-size:14.5px;color:#5B6B7A;line-height:1.6;margin:0 0 18px">Praca na arkuszach CKE, progi punktowe, harmonogram do maja. Liczy się wynik.</p>
           <div style="display:flex;flex-direction:column;gap:11px">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-top:1px solid rgba(26,34,48,.13);flex-wrap:wrap"><span style="font-size:15px;font-weight:600">Angielski</span><span style="font-size:13px;color:#5B6B7A">podstawowy i rozszerzony</span></div>
             <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-top:1px solid rgba(26,34,48,.13);flex-wrap:wrap"><span style="font-size:15px;font-weight:600">Matematyka</span><span style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="font-size:13px;color:#5B6B7A">poziom podstawowy</span><span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#E8654A;padding:3px 9px;border-radius:999px">Unikat</span></span></div>
@@ -375,32 +303,22 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, programOpen: false, examsOpen: false, mobileOpen: false };
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280 };
 
   componentDidMount() {
     this._onResize = () => this.setState({ w: window.innerWidth });
     window.addEventListener('resize', this._onResize);
-    this._onKey = (e) => { if (e.key === 'Escape') this.setState({ programOpen: false, examsOpen: false, mobileOpen: false }); };
-    window.addEventListener('keydown', this._onKey);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this._onResize);
-    window.removeEventListener('keydown', this._onKey);
   }
 
   renderVals() {
     const mobile = this.state.w < 780;
     return {
-      heroCtaHref: mobile ? 'tel:000000000' : 'Zapisy.dc.html',
       isMobile: mobile,
-      isDesktop: !mobile,
-      programOpen: !mobile && this.state.programOpen,
-      examsOpen: !mobile && this.state.examsOpen,
-      mobileOpen: mobile && this.state.mobileOpen,
-      toggleProgram: () => this.setState(s => ({ programOpen: !s.programOpen, examsOpen: false })),
-      toggleExams: () => this.setState(s => ({ examsOpen: !s.examsOpen, programOpen: false })),
-      toggleMobile: () => this.setState(s => ({ mobileOpen: !s.mobileOpen }))
+      isDesktop: !mobile
     };
   }
 }

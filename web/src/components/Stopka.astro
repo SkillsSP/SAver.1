@@ -17,17 +17,23 @@ const rok = new Date().getFullYear();
   <div class="szerokosc">
     <div class="stopka__siatka">
       <div class="stopka__marka">
-        <Marka sygnet={19} tekst={18} rewers={true} jakoLink={false} />
+        <Marka wariant="stopka" jakoLink={false} />
         <address class="stopka__dane">
           <span>{adresTekst()}</span>
-          {tel ? <a href={tel}>{telefonTekst()}</a> : <span>{telefonTekst()}</span>}
+          {tel ? (
+            <strong><a href={tel}>{telefonTekst()}</a></strong>
+          ) : (
+            <strong>{telefonTekst()}</strong>
+          )}
           {firma.email ? (
             <a href={`mailto:${firma.email}`}>{emailTekst()}</a>
           ) : (
             <span>{emailTekst()}</span>
           )}
-          <span>Biuro czynne {firma.godzinyBiura ?? "— godziny w uzupełnieniu"}</span>
         </address>
+        <p class="stopka__godziny">
+          Biuro czynne {firma.godzinyBiura ?? "— godziny w uzupełnieniu"}
+        </p>
       </div>
 
       <div>

@@ -126,54 +126,65 @@
 }
 
 /* ==========================================================================
-   FONTY — hostowane lokalnie, bez zapytań do zewnętrznych serwerów.
+   FONTY — odmiany statyczne, hostowane lokalnie, bez zapytań do obcych serwerów.
 
-   UWAGA PRZY ZMIANIE ADRESU SERWISU: poniższe ścieżki zawierają przedrostek
-   „/SAver.1", bo taka jest wartość `base` w astro.config.mjs (serwis stoi pod
-   adresem projektowym GitHub Pages). Jeśli podłączycie własną domenę i
-   zmienicie `base` na '/', trzeba usunąć ten przedrostek w siedmiu regułach
+   Świadomie zostajemy przy siedmiu plikach statycznych zamiast dwóch krojów
+   zmiennych. Kroje zmienne dałyby mniejszy transfer, ale każda waga jest tu
+   osobnym, przetestowanym plikiem — nic nie zależy od interpolacji osi ani od
+   obsługi „truetype-variations" w starszych przeglądarkach.
+
+   UWAGA PRZY ZMIANIE ADRESU SERWISU: ścieżki zawierają przedrostek „/SAver.1",
+   bo taka jest wartość `base` w astro.config.mjs. Po przejściu na własną
+   domenę i zmianie `base` na '/' trzeba usunąć przedrostek w siedmiu regułach
    poniżej. To jedyne miejsce w arkuszu, które o `base` wie.
    ========================================================================== */
 @font-face {
   font-family: "Lexend";
   src: url("/SAver.1/fonts/Lexend-Regular.ttf") format("truetype");
   font-weight: 400;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Lexend";
   src: url("/SAver.1/fonts/Lexend-Medium.ttf") format("truetype");
   font-weight: 500;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Lexend";
   src: url("/SAver.1/fonts/Lexend-SemiBold.ttf") format("truetype");
   font-weight: 600;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Lexend";
   src: url("/SAver.1/fonts/Lexend-Bold.ttf") format("truetype");
   font-weight: 700;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Fredoka";
   src: url("/SAver.1/fonts/Fredoka-Medium.ttf") format("truetype");
   font-weight: 500;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Fredoka";
   src: url("/SAver.1/fonts/Fredoka-SemiBold.ttf") format("truetype");
   font-weight: 600;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Fredoka";
   src: url("/SAver.1/fonts/Fredoka-Bold.ttf") format("truetype");
   font-weight: 700;
+  font-style: normal;
   font-display: swap;
 }
 
@@ -891,28 +902,41 @@ button {
 /* ==========================================================================
    PASEK AKCJI NA TELEFONIE — połączenie ma pierwszeństwo
    ========================================================================== */
+/* Wymiary z makiety Stopka.dc.html: przycisk 16 px, min. 48 px wysokości,
+   pod nim mniejszy odnośnik do zapisu online. */
 .pasek-akcji {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 90;
-  display: grid;
-  gap: var(--space-1);
-  padding: var(--space-1) var(--space-2)
-    calc(var(--space-1) + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4375rem;
+  padding: 0.75rem var(--space-2) calc(0.75rem + env(safe-area-inset-bottom, 0px));
   background: var(--tlo-strony);
   border-top: var(--wlos);
 }
 
+.pasek-akcji .przycisk {
+  font-size: 1rem;
+  min-height: 3rem;
+  padding: 0.9375rem var(--space-3);
+}
+
 .pasek-akcji__drugi {
-  justify-self: center;
-  font-size: var(--text-drobny);
-  font-weight: var(--waga-srednia);
-  color: var(--kobalt-700);
+  font-size: 0.84375rem;
+  font-weight: var(--waga-polgruba);
+  color: var(--kobalt-600);
+  min-height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-05) var(--space-1);
+}
+.pasek-akcji__drugi:hover {
   text-decoration: underline;
   text-underline-offset: 0.15em;
-  padding: var(--space-05);
 }
 
 @media (min-width: 62rem) {
@@ -1518,55 +1542,90 @@ button {
   color: var(--koral-700);
 }
 
+/* Zapis podwyższonego ryzyka — mocniejszy sygnał niż zwykła nota redakcyjna,
+   bo dotyczy klauzul kwestionowanych w umowach z konsumentem. */
+.zapis-ryzyka {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid rgba(201, 79, 54, 0.4);
+  border-left: 3px solid var(--koral-700);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: var(--tlo-karty);
+  font-size: var(--text-drobny);
+  color: var(--tekst-glowny);
+}
+.zapis-ryzyka strong {
+  font-weight: var(--waga-polgruba);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.6875rem;
+  color: var(--koral-700);
+}
+
 /* ==========================================================================
    STOPKA — cztery grupy, nie jedna lista
    ========================================================================== */
+/* Stopka jest jasna — tak jak w makiecie Stopka.dc.html: tło strony,
+   włos u góry zamiast bloku koloru, linki kobaltowe, etykiety kolumn slate.
+   Oddziela ją od treści linia, nie zmiana tła. */
 .stopka {
-  background: var(--tlo-grafit);
-  color: rgba(255, 255, 255, 0.72);
-  padding-block: var(--space-8) var(--space-4);
+  border-top: var(--wlos);
+  padding-block: clamp(2.125rem, 4.5vw, 3.25rem) clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
 .stopka__siatka {
   display: grid;
-  gap: var(--space-5);
-  grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
-  padding-bottom: var(--space-5);
+  gap: clamp(1.625rem, 3.4vw, 2.75rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
 }
 
-.stopka__marka img {
-  height: 2.5rem;
-  width: auto;
+.stopka__marka {
   margin-bottom: var(--space-2);
 }
 
 .stopka__dane {
   display: grid;
   gap: var(--space-05);
-  font-size: var(--text-maly);
+  font-size: 0.875rem;
+  line-height: 1.75;
   font-style: normal;
+  overflow-wrap: anywhere;
+}
+.stopka__dane a {
+  color: var(--kobalt-600);
 }
 .stopka__dane a:hover {
-  color: var(--bialy);
   text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.stopka__godziny {
+  font-size: var(--text-drobny);
+  color: var(--slate-500);
+  line-height: 1.55;
+  margin-top: var(--space-1);
 }
 
 .stopka h2 {
-  font-size: var(--text-nadtytul);
+  font-size: 0.71875rem;
   font-weight: var(--waga-polgruba);
-  letter-spacing: var(--trop-nadtytul);
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--bialy);
+  color: var(--slate-500);
   margin-bottom: var(--space-2);
 }
 
 .stopka__linki {
-  display: grid;
-  gap: var(--space-1);
-  font-size: var(--text-maly);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6875rem;
+  font-size: 0.875rem;
+}
+.stopka__linki a {
+  color: var(--kobalt-600);
 }
 .stopka__linki a:hover {
-  color: var(--bialy);
   text-decoration: underline;
   text-underline-offset: 0.15em;
 }
@@ -1576,10 +1635,11 @@ button {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--space-1) var(--space-3);
+  margin-top: clamp(1.75rem, 4vw, 2.625rem);
   padding-top: var(--space-3);
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-  font-size: var(--text-drobny);
-  color: rgba(255, 255, 255, 0.55);
+  border-top: var(--wlos);
+  font-size: 0.78125rem;
+  color: var(--slate-500);
 }
 
 /* ==========================================================================

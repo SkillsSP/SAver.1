@@ -37,7 +37,7 @@ const pytania = [
   {
     pytanie: "Czy mogę zrezygnować w trakcie semestru?",
     odpowiedz:
-      "Karnet można zawiesić w obu modelach. Opłacone spotkania nie przepadają: karnet obejmuje z góry określoną liczbę zajęć, więc wykorzystacie je w kolejnych terminach. Wpłaconych pieniędzy nie zwracamy; zawieszamy karnet zamiast go rozliczać.",
+      "Karnet można zawiesić w obu modelach. Opłacone spotkania nie przepadają: karnet obejmuje z góry określoną liczbę zajęć, więc wykorzystacie je w kolejnych terminach. Jeśli wolicie zrezygnować całkiem, obowiązuje miesięczny okres wypowiedzenia, a niewykorzystane spotkania rozliczamy proporcjonalnie i zwracamy w ciągu 14 dni.",
   },
   {
     pytanie: "Czy trzeba brać całość?",
@@ -211,8 +211,44 @@ const pytania = [
           <ul class="lista-znaczona">
             <li>Zawiesić można oba karnety: miesięczny i semestralny</li>
             <li>Niewykorzystane spotkania przechodzą na kolejne terminy</li>
-            <li>Wpłaconych pieniędzy nie zwracamy; zawieszamy karnet</li>
+            <li>
+              Przy rezygnacji obowiązuje miesięczny okres wypowiedzenia,
+              a niewykorzystane spotkania rozliczamy proporcjonalnie —
+              <a class="link-w-zdaniu" href={url("/regulamin")}>szczegóły w regulaminie</a>
+            </li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ZNIŻKI */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Zniżki</span>
+          <h2 class="tytul-1">Kiedy płacicie mniej</h2>
+        </div>
+        <div class="stos">
+          <ul class="lista-rozdzielona">
+            <li>
+              <span class="etykieta">Drugie i kolejne dziecko z rodziny</span>
+              <span class="wartosc">do ustalenia</span>
+            </li>
+            <li>
+              <span class="etykieta">Drugi fakultet</span>
+              <span class="wartosc">do ustalenia</span>
+            </li>
+            <li>
+              <span class="etykieta">Płatność za cały semestr z góry</span>
+              <span class="wartosc">do ustalenia</span>
+            </li>
+          </ul>
+          <p class="tekst-maly tekst-drugi">
+            Zniżki nie łączą się ze sobą — przy zbiegu naliczamy tę
+            korzystniejszą dla Was.
+          </p>
         </div>
       </div>
     </div>

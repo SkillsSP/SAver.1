@@ -172,7 +172,7 @@ export const fakultety = [
   {
     nazwa: "Art Skills",
     wiodace:
-      "Rysunek, kolaż, praca przestrzenna. Zadanie zawsze ma cel, a nie tylko technikę do przećwiczenia.",
+      "Rysunek, kolaż, praca przestrzenna. Zadanie zawsze ma cel wykraczający poza samą technikę.",
     szczegol: "Techniki i materiały",
   },
   {

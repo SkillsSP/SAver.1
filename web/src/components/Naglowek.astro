@@ -10,13 +10,13 @@ interface Props {
 }
 
 const { aktywna = "", ctaSenior = false } = Astro.props;
-const ctaTekst = ctaSenior ? "Zapisz się na konsultację" : "Zapisz dziecko";
+const ctaTekst = ctaSenior ? "Zapisz się na konsultację" : "Umów zajęcia próbne";
 const tel = telefonHref();
 ---
 
 <header class="pasek">
   <div class="szerokosc pasek__rzad">
-    <Marka sygnet={38} tekst={22} />
+    <Marka wariant="pasek" />
 
     <nav class="pasek__menu" aria-label="Menu główne">
       <div class="rozwiniecie" data-rozwiniecie>
@@ -93,7 +93,7 @@ const tel = telefonHref();
     </nav>
 
     <div class="pasek__akcje">
-      <a class="przycisk przycisk--akcja pasek__cta-desktop" href={url("/kontakt")}>
+      <a class="przycisk przycisk--obrys pasek__cta-desktop" href={url("/kontakt")}>
         {ctaTekst}
       </a>
       <button
@@ -114,7 +114,7 @@ const tel = telefonHref();
 
 <div class="menu-mobilne" id="menu-mobilne" hidden data-menu-mobilne>
   <div class="menu-mobilne__gora">
-    <Marka sygnet={38} tekst={22} />
+    <Marka wariant="pasek" />
     <button type="button" class="pasek__hamburger" data-zamknij-menu>
       <svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true">
         <path d="M1 1l14 14M15 1L1 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />

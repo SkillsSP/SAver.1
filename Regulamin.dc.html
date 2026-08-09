@@ -46,6 +46,11 @@
         <div>
           <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(18px,2vw,21px);margin:0 0 10px;letter-spacing:-.005em">{{ s.title }}</h2>
           <p style="font-size:15px;line-height:1.75;color:#1A2230;margin:0 0 12px;text-wrap:pretty">{{ s.lead }}</p>
+          <sc-if value="{{ s.risk }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#FBF8F3;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:14px 18px;font-size:13.5px;line-height:1.65;color:#1A2230;margin:0 0 10px">
+              <span style="display:block;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;color:#1A2230;margin-bottom:6px">Zapis podwyższonego ryzyka</span>{{ s.risk }}
+            </div>
+          </sc-if>
           <div style="border:1px dashed rgba(232,101,74,.5);border-radius:10px;padding:16px 18px;font-size:14px;line-height:1.7;color:#5B6B7A">{{ s.todo }}</div>
         </div>
       </sc-for>
@@ -54,7 +59,7 @@
 
   <section style="max-width:860px;margin:0 auto;padding:clamp(26px,3.4vw,38px) 24px clamp(20px,3vw,32px)">
     <div style="border:1px dashed rgba(232,101,74,.5);border-radius:12px;padding:18px 20px;font-size:13.5px;line-height:1.7;color:#5B6B7A">
-      <strong style="color:#1A2230">Do potwierdzenia przez prawnika.</strong> Regulamin jest umową z konsumentem — zapisy o płatnościach, rezygnacji i braku zwrotów muszą przejść weryfikację pod kątem klauzul niedozwolonych. Szczególnej uwagi wymaga zasada „karnet można zawiesić, ale pieniędzy nie zwracamy" oraz prawo odstąpienia od umowy zawartej na odległość.
+      <strong style="color:#1A2230">Do potwierdzenia przez prawnika.</strong> Regulamin jest umową z konsumentem, więc całość wymaga weryfikacji pod kątem klauzul niedozwolonych. Zapisy najbardziej narażone przepisaliśmy na brzmienie odpowiadające standardowi rynkowemu w tej branży i oznaczyliśmy je koralowym paskiem — to miejsca, od których warto zacząć rozmowę z prawnikiem. Terminy podane w tych sekcjach (okres wypowiedzenia, terminy zwrotu i odpowiedzi) to wartości typowe, a nie ustalone przez Was.
     </div>
   </section>
 
@@ -76,24 +81,37 @@ class Component extends DCLogic {
         { title: '3. Karnet i płatności',
           lead: 'Karnet obejmuje określoną z góry liczbę spotkań w modelu miesięcznym albo semestralnym. Płatność następuje przelewem na konto centrum.',
           todo: 'Do uzupełnienia: kwoty (patrz cennik), termin płatności, numer konta, zasady wystawiania faktur, konsekwencje opóźnienia.' },
-        { title: '4. Zawieszenie karnetu i rezygnacja',
-          lead: 'Karnet można zawiesić w obu modelach. Opłacone spotkania nie przepadają i mogą zostać wykorzystane w kolejnych terminach. Wpłaconych środków nie zwracamy.',
-          todo: 'Do uzupełnienia: sposób i wyprzedzenie zgłoszenia zawieszenia, okres ważności niewykorzystanych zajęć, tryb rezygnacji. Do weryfikacji prawnej: relacja tego zapisu do prawa odstąpienia od umowy zawartej na odległość (14 dni).' },
-        { title: '5. Nieobecności i odrabianie',
+        { title: '4. Zawieszenie karnetu',
+          lead: 'Karnet można zawiesić w obu modelach — przy chorobie, wyjeździe lub innej przerwie. Opłacone spotkania nie przepadają: wracają do puli i można je wykorzystać w kolejnych terminach.',
+          todo: 'Do uzupełnienia: sposób i wyprzedzenie zgłoszenia zawieszenia, maksymalny czas zawieszenia oraz okres ważności niewykorzystanych spotkań.' },
+        { title: '5. Rezygnacja i rozliczenie',
+          lead: 'Z zajęć można zrezygnować w każdej chwili, z zachowaniem miesięcznego okresu wypowiedzenia. Spotkania opłacone z góry, a niewykorzystane po upływie wypowiedzenia, rozliczamy proporcjonalnie i zwracamy w terminie 14 dni. Jeżeli rezygnacja wynika z przyczyn po naszej stronie, zwrot obejmuje wszystkie niewykorzystane spotkania, bez okresu wypowiedzenia.',
+          risk: 'Poprzednia wersja mówiła „wpłaconych środków nie zwracamy". Bezwarunkowe wyłączenie zwrotu w umowie z konsumentem to jeden z najczęściej kwestionowanych zapisów w tej branży. Powyższe brzmienie odpowiada rynkowemu standardowi (wypowiedzenie plus rozliczenie proporcjonalne), ale okres wypowiedzenia i termin zwrotu musi zatwierdzić prawnik.',
+          todo: 'Do ustalenia: długość okresu wypowiedzenia (rynkowy standard to jeden miesiąc), forma zgłoszenia rezygnacji oraz sposób rozliczenia rabatu semestralnego, jeśli rodzic rezygnuje przed końcem semestru.' },
+        { title: '6. Odstąpienie od umowy zawartej na odległość',
+          lead: 'Jeżeli umowa została zawarta przez formularz na stronie lub telefonicznie, rodzic może odstąpić od niej w terminie 14 dni od zawarcia, bez podania przyczyny i bez kosztów. Jeżeli na wyraźną prośbę rodzica zajęcia rozpoczną się przed upływem tego terminu, przy odstąpieniu rozliczamy proporcjonalnie spotkania, które już się odbyły.',
+          risk: 'Tej sekcji wcześniej nie było. Przy zapisie przez formularz przepisy o prawie odstąpienia stosują się niezależnie od tego, czy regulamin o nich wspomina — ich pominięcie nie wyłącza uprawnienia, a bywa traktowane jako wprowadzanie konsumenta w błąd.',
+          todo: 'Do uzupełnienia: wzór oświadczenia o odstąpieniu i adres, na który je kierować. Do potwierdzenia przez prawnika: brzmienie zgody na rozpoczęcie zajęć przed upływem 14 dni.' },
+        { title: '7. Nieobecności i odrabianie',
           lead: 'Nieobecność zgłoszoną z wyprzedzeniem można odrobić w innej grupie tego samego poziomu.',
           todo: 'Do uzupełnienia: minimalne wyprzedzenie zgłoszenia, limit odrabianych zajęć, zasady przy dłuższej chorobie i przy zajęciach indywidualnych.' },
-        { title: '6. Odwołanie zajęć przez centrum',
-          lead: 'Jeśli zajęcia nie odbędą się z naszej winy, wyznaczamy termin zastępczy.',
+        { title: '8. Odwołanie zajęć przez centrum',
+          lead: 'Jeśli zajęcia nie odbędą się z przyczyn po naszej stronie, wyznaczamy termin zastępczy. Jeżeli termin zastępczy nie dojdzie do skutku, spotkanie rozliczamy albo zwracamy.',
           todo: 'Do uzupełnienia: tryb informowania rodziców, termin odrobienia, zasady przy odwołaniu z przyczyn niezależnych oraz minimalna liczebność grupy, poniżej której grupa nie rusza.' },
-        { title: '7. Obowiązki uczestnika i rodzica',
+        { title: '9. Obowiązki uczestnika i rodzica',
           lead: 'Uczestnik przestrzega zasad bezpieczeństwa i zasad współpracy w grupie. Rodzic zapewnia punktualne przyprowadzenie i odbiór dziecka.',
-          todo: 'Do uzupełnienia: zasady zachowania, tryb postępowania przy powtarzającym się naruszaniu zasad, odpowiedzialność za rzeczy pozostawione w centrum.' },
-        { title: '8. Wizerunek i dane osobowe',
+          todo: 'Do uzupełnienia: zasady zachowania oraz tryb postępowania przy powtarzającym się naruszaniu zasad — z zapisem, że rozwiązanie umowy przez centrum jest ostatecznością i poprzedza je rozmowa z rodzicem.' },
+        { title: '10. Rzeczy pozostawione w centrum',
+          lead: 'Za rzeczy zgubione lub zniszczone w centrum odpowiadamy na zasadach ogólnych. Prosimy, żeby dzieci nie przynosiły na zajęcia wartościowych przedmiotów, których nie potrzebują — nie zapewniamy dla nich osobnego przechowania.',
+          risk: 'Częsty w tej branży zapis „nie ponosimy odpowiedzialności za rzeczy pozostawione" jest bezwarunkowym wyłączeniem odpowiedzialności wobec konsumenta i bywa kwestionowany. Powyższe brzmienie zachowuje prośbę do rodziców, ale nie wyłącza odpowiedzialności z góry.',
+          todo: 'Do potwierdzenia przez prawnika: czy centrum chce wprowadzić depozyt na wartościowe przedmioty i na jakich zasadach.' },
+        { title: '11. Wizerunek i dane osobowe',
           lead: 'Publikacja zdjęć wymaga odrębnej, pisemnej zgody rodzica, którą można wycofać w każdej chwili.',
           todo: 'Odesłanie do klauzuli informacyjnej i polityki prywatności. Do potwierdzenia: wzór zgody wizerunkowej i termin usunięcia materiałów po wycofaniu zgody.' },
-        { title: '9. Reklamacje i zmiany regulaminu',
-          lead: 'Uwagi i reklamacje przyjmujemy pisemnie, na adres e-mail centrum.',
-          todo: 'Do uzupełnienia: termin rozpatrzenia reklamacji, tryb informowania o zmianach regulaminu i okres, po którym zmiany wchodzą w życie.' }
+        { title: '12. Reklamacje i zmiany regulaminu',
+          lead: 'Uwagi i reklamacje przyjmujemy pisemnie, na adres e-mail centrum, i odpowiadamy na nie w terminie 14 dni. O zmianie regulaminu informujemy z wyprzedzeniem; jeżeli rodzic nie akceptuje zmiany, może rozwiązać umowę bez zachowania okresu wypowiedzenia.',
+          risk: 'Zapis o jednostronnej zmianie regulaminu bez prawa rezygnacji jest typową klauzulą kwestionowaną w umowach z konsumentem. Powyższe brzmienie daje rodzicowi wyjście, co jest rynkowym standardem.',
+          todo: 'Do uzupełnienia: wyprzedzenie, z jakim informujecie o zmianach (najczęściej 14 dni), oraz kanał informowania — e-mail czy ogłoszenie w centrum.' }
       ]
     };
   }

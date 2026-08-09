@@ -1,6 +1,14 @@
 ---
 import StronaPrawna from "../components/StronaPrawna.astro";
 
+/* Struktura i brzmienie przepisane z makiety Regulamin.dc.html (wersja z
+   sierpnia 2026). Względem poprzedniej wersji rozdzielono zawieszenie karnetu
+   od rezygnacji, dopisano prawo odstąpienia od umowy zawartej na odległość
+   oraz odpowiedzialność za rzeczy pozostawione w centrum.
+
+   Pole `ryzyko` oznacza zapisy, które w umowie z konsumentem bywają
+   kwestionowane jako klauzule niedozwolone — wymagają uwagi prawnika
+   w pierwszej kolejności. */
 const sekcje = [
   {
     tytul: "1. Kto prowadzi zajęcia",
@@ -23,53 +31,83 @@ const sekcje = [
       "Kwoty (patrz cennik), termin płatności, numer konta, zasady wystawiania faktur, konsekwencje opóźnienia oraz ostateczny model rozliczenia Exams.",
   },
   {
-    tytul: "4. Zawieszenie karnetu i rezygnacja",
+    tytul: "4. Zawieszenie karnetu",
     tresc:
-      "Karnet można zawiesić w obu modelach. Opłacone spotkania nie przepadają i mogą zostać wykorzystane w kolejnych terminach. Wpłaconych środków nie zwracamy.",
+      "Karnet można zawiesić w obu modelach — przy chorobie, wyjeździe lub innej przerwie. Opłacone spotkania nie przepadają: wracają do puli i można je wykorzystać w kolejnych terminach.",
     doUstalenia:
-      "Sposób i wyprzedzenie zgłoszenia zawieszenia, okres ważności niewykorzystanych zajęć, tryb rezygnacji. Do weryfikacji prawnej: relacja tego zapisu do prawa odstąpienia od umowy zawartej na odległość (14 dni).",
+      "Sposób i wyprzedzenie zgłoszenia zawieszenia, maksymalny czas zawieszenia oraz okres ważności niewykorzystanych spotkań.",
   },
   {
-    tytul: "5. Nieobecności i odrabianie",
+    tytul: "5. Rezygnacja i rozliczenie",
+    tresc:
+      "Z zajęć można zrezygnować w każdej chwili, z zachowaniem miesięcznego okresu wypowiedzenia. Spotkania opłacone z góry, a niewykorzystane po upływie wypowiedzenia, rozliczamy proporcjonalnie i zwracamy w terminie 14 dni. Jeżeli rezygnacja wynika z przyczyn po naszej stronie, zwrot obejmuje wszystkie niewykorzystane spotkania, bez okresu wypowiedzenia.",
+    ryzyko:
+      "Poprzednia wersja mówiła „wpłaconych środków nie zwracamy”. Bezwarunkowe wyłączenie zwrotu w umowie z konsumentem to jeden z najczęściej kwestionowanych zapisów w tej branży. Powyższe brzmienie odpowiada rynkowemu standardowi (wypowiedzenie plus rozliczenie proporcjonalne), ale okres wypowiedzenia i termin zwrotu musi zatwierdzić prawnik.",
+    doUstalenia:
+      "Długość okresu wypowiedzenia (rynkowy standard to jeden miesiąc), forma zgłoszenia rezygnacji oraz sposób rozliczenia rabatu semestralnego, jeśli rodzic rezygnuje przed końcem semestru.",
+  },
+  {
+    tytul: "6. Odstąpienie od umowy zawartej na odległość",
+    tresc:
+      "Jeżeli umowa została zawarta przez formularz na stronie lub telefonicznie, rodzic może odstąpić od niej w terminie 14 dni od zawarcia, bez podania przyczyny i bez kosztów. Jeżeli na wyraźną prośbę rodzica zajęcia rozpoczną się przed upływem tego terminu, przy odstąpieniu rozliczamy proporcjonalnie spotkania, które już się odbyły.",
+    ryzyko:
+      "Tej sekcji wcześniej nie było. Przy zapisie przez formularz przepisy o prawie odstąpienia stosują się niezależnie od tego, czy regulamin o nich wspomina — ich pominięcie nie wyłącza uprawnienia, a bywa traktowane jako wprowadzanie konsumenta w błąd.",
+    doUstalenia:
+      "Wzór oświadczenia o odstąpieniu i adres, na który je kierować. Do potwierdzenia przez prawnika: brzmienie zgody na rozpoczęcie zajęć przed upływem 14 dni.",
+  },
+  {
+    tytul: "7. Nieobecności i odrabianie",
     tresc:
       "Nieobecność zgłoszoną z wyprzedzeniem można odrobić w innej grupie tego samego poziomu.",
     doUstalenia:
       "Minimalne wyprzedzenie zgłoszenia, limit odrabianych zajęć, zasady przy dłuższej chorobie i przy zajęciach indywidualnych.",
   },
   {
-    tytul: "6. Odwołanie zajęć przez centrum",
+    tytul: "8. Odwołanie zajęć przez centrum",
     tresc:
-      "Jeśli zajęcia nie odbędą się z naszej winy, wyznaczamy termin zastępczy.",
+      "Jeśli zajęcia nie odbędą się z przyczyn po naszej stronie, wyznaczamy termin zastępczy. Jeżeli termin zastępczy nie dojdzie do skutku, spotkanie rozliczamy albo zwracamy.",
     doUstalenia:
       "Tryb informowania rodziców, termin odrobienia, zasady przy odwołaniu z przyczyn niezależnych oraz minimalna liczebność grupy, poniżej której grupa nie rusza.",
   },
   {
-    tytul: "7. Obowiązki uczestnika i rodzica",
+    tytul: "9. Obowiązki uczestnika i rodzica",
     tresc:
       "Uczestnik przestrzega zasad bezpieczeństwa i zasad współpracy w grupie. Rodzic zapewnia punktualne przyprowadzenie i odbiór dziecka.",
     doUstalenia:
-      "Zasady zachowania, tryb postępowania przy powtarzającym się naruszaniu zasad, odpowiedzialność za rzeczy pozostawione w centrum.",
+      "Zasady zachowania oraz tryb postępowania przy powtarzającym się naruszaniu zasad — z zapisem, że rozwiązanie umowy przez centrum jest ostatecznością i poprzedza je rozmowa z rodzicem.",
   },
   {
-    tytul: "8. Wizerunek i dane osobowe",
+    tytul: "10. Rzeczy pozostawione w centrum",
+    tresc:
+      "Za rzeczy zgubione lub zniszczone w centrum odpowiadamy na zasadach ogólnych. Prosimy, żeby dzieci nie przynosiły na zajęcia wartościowych przedmiotów, których nie potrzebują — nie zapewniamy dla nich osobnego przechowania.",
+    ryzyko:
+      "Częsty w tej branży zapis „nie ponosimy odpowiedzialności za rzeczy pozostawione” jest bezwarunkowym wyłączeniem odpowiedzialności wobec konsumenta i bywa kwestionowany. Powyższe brzmienie zachowuje prośbę do rodziców, ale nie wyłącza odpowiedzialności z góry.",
+    doUstalenia:
+      "Do potwierdzenia przez prawnika: czy centrum chce wprowadzić depozyt na wartościowe przedmioty i na jakich zasadach.",
+  },
+  {
+    tytul: "11. Wizerunek i dane osobowe",
     tresc:
       "Publikacja zdjęć wymaga odrębnej, pisemnej zgody rodzica, którą można wycofać w każdej chwili. Szczegóły opisujemy w Standardach Ochrony Małoletnich oraz w polityce prywatności.",
     doUstalenia:
       "Wzór zgody wizerunkowej i termin usunięcia materiałów po wycofaniu zgody.",
   },
   {
-    tytul: "9. Reklamacje i zmiany regulaminu",
+    tytul: "12. Reklamacje i zmiany regulaminu",
     tresc:
-      "Uwagi i reklamacje przyjmujemy pisemnie, na adres e-mail centrum.",
+      "Uwagi i reklamacje przyjmujemy pisemnie, na adres e-mail centrum, i odpowiadamy na nie w terminie 14 dni. O zmianie regulaminu informujemy z wyprzedzeniem; jeżeli rodzic nie akceptuje zmiany, może rozwiązać umowę bez zachowania okresu wypowiedzenia.",
+    ryzyko:
+      "Zapis o jednostronnej zmianie regulaminu bez prawa rezygnacji jest typową klauzulą kwestionowaną w umowach z konsumentem. Powyższe brzmienie daje rodzicowi wyjście, co jest rynkowym standardem.",
     doUstalenia:
-      "Termin rozpatrzenia reklamacji, tryb informowania o zmianach regulaminu i okres, po którym zmiany wchodzą w życie.",
+      "Wyprzedzenie, z jakim informujecie o zmianach (najczęściej 14 dni), oraz kanał informowania — e-mail czy ogłoszenie w centrum.",
   },
 ];
 ---
 
 <StronaPrawna
   tytul="Regulamin"
-  opis="Zasady uczestnictwa w zajęciach Skills Academy w Szczecinie: zapis, karnet i płatności, zawieszenie, nieobecności, obowiązki uczestnika i rodzica."
+  opis="Zasady uczestnictwa w zajęciach Skills Academy w Szczecinie: zapis, karnet i płatności, zawieszenie, rezygnacja i rozliczenie, odstąpienie od umowy, obowiązki uczestnika i rodzica."
   wstep="Zasady, na jakich prowadzimy zajęcia i na jakich zapisujecie dziecko. Dokument jest w wersji roboczej — przed publikacją musi go potwierdzić prawnik."
+  uwagaWstepna="Regulamin jest umową z konsumentem, więc całość wymaga weryfikacji pod kątem klauzul niedozwolonych. Zapisy najbardziej narażone przepisaliśmy na brzmienie odpowiadające standardowi rynkowemu i oznaczyliśmy je poniżej."
   sekcje={sekcje}
 />
