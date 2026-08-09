@@ -1,0 +1,176 @@
+---
+import { url } from "../lib/site.js";
+---
+
+{/*
+  BANER ZGODY I BRAMKA ANALITYKI
+
+  Odtworzone z makiet „Zgoda cookies" i „Analityka — wdrożenie". Zasada jest
+  jedna i nienegocjowalna: żaden skrypt analityczny nie ładuje się przed
+  zgodą. Konfiguracja siedzi w jednym miejscu (stała ANALYTICS poniżej),
+  a dopóki `provider` jest `null`, bramka nie robi nic — baner działa, wybór
+  jest zapamiętywany, ale nie ma czego uruchamiać.
+
+  Przycisk „Akceptuję wszystkie" jest kobaltowy, nie koralowy. Koral zostaje
+  zarezerwowany dla głównego wezwania na stronie — baner zgody nie ma z nim
+  konkurować o wzrok.
+*/}
+<div
+  class="zgoda-cookies"
+  data-zgoda
+  role="dialog"
+  aria-modal="false"
+  aria-label="Zgoda na pliki cookies"
+  hidden
+>
+  <div class="zgoda-cookies__panel">
+    <h2 class="zgoda-cookies__tytul">Pliki cookies</h2>
+    <p class="zgoda-cookies__tresc">
+      Niezbędne pliki cookies utrzymują działanie strony i formularza zapisu.
+      Analityczne pomagają nam sprawdzić, które treści są dla rodziców
+      przydatne — używamy ich tylko z Waszą zgodą. Szczegóły w
+      <a href={url("/polityka-prywatnosci")}>polityce prywatności</a>.
+    </p>
+    <div class="zgoda-cookies__przyciski">
+      <button type="button" class="przycisk przycisk--marka" data-zgoda-wszystkie>
+        Akceptuję wszystkie
+      </button>
+      <button type="button" class="przycisk przycisk--obrys" data-zgoda-niezbedne>
+        Tylko niezbędne
+      </button>
+    </div>
+    <p class="zgoda-cookies__nota">
+      Zgodę możecie w każdej chwili zmienić — odnośnik „Zgody cookies”
+      w stopce.
+    </p>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var KLUCZ = "sa-cookie-consent";
+
+    /* ── Konfiguracja analityki ──────────────────────────────────────────
+       Wdrożenie: ustawcie `provider` i wklejcie identyfikator. Do tego czasu
+       nic się nie ładuje. Warianty bezpłatne:
+         'cloudflare' — Cloudflare Web Analytics, bez cookies, token z panelu
+         'umami'      — Umami (własny serwer albo plan bezpłatny), skrypt + id
+         'ga4'        — Google Analytics 4, identyfikator G-XXXXXXX
+       Rekomendacja z dokumentu wdrożeniowego: na start 'cloudflare'. */
+    var ANALYTICS = {
+      provider: null,
+      cloudflareToken: "",
+      umamiSrc: "",
+      umamiWebsiteId: "",
+      ga4Id: "",
+    };
+
+    var baner = document.querySelector("[data-zgoda]");
+    if (!baner) return;
+    var zaladowane = false;
+
+    /* Ładuje skrypt dopiero po zgodzie. Bez zgody nie robi nic. */
+    function zaladujAnalitykę() {
+      if (zaladowane || !ANALYTICS.provider) return;
+      zaladowane = true;
+      var s = document.createElement("script");
+      s.defer = true;
+      if (ANALYTICS.provider === "cloudflare") {
+        s.src = "https://static.cloudflareinsights.com/beacon.min.js";
+        s.setAttribute(
+          "data-cf-beacon",
+          JSON.stringify({ token: ANALYTICS.cloudflareToken })
+        );
+      } else if (ANALYTICS.provider === "umami") {
+        s.src = ANALYTICS.umamiSrc;
+        s.setAttribute("data-website-id", ANALYTICS.umamiWebsiteId);
+      } else if (ANALYTICS.provider === "ga4") {
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=" + ANALYTICS.ga4Id;
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag("js", new Date());
+        window.gtag("config", ANALYTICS.ga4Id, { anonymize_ip: true });
+      } else {
+        return;
+      }
+      document.head.appendChild(s);
+    }
+
+    /* Jedyny punkt, z którego wolno uruchamiać analitykę. */
+    function oglos(poziom) {
+      window.saConsent = { level: poziom, analytics: poziom === "all" };
+      /* Jeden punkt zgłaszania celów. Bez zgody zdarzenia są pomijane, więc
+         reszta strony może wołać saTrack bez sprawdzania warunków. */
+      window.saTrack = function (nazwa, dane) {
+        if (!window.saConsent || !window.saConsent.analytics) return;
+        if (window.umami && window.umami.track) window.umami.track(nazwa, dane);
+        else if (window.gtag) window.gtag("event", nazwa, dane || {});
+      };
+      if (window.saConsent.analytics) zaladujAnalitykę();
+      window.dispatchEvent(
+        new CustomEvent("sa-consent", { detail: window.saConsent })
+      );
+    }
+
+    function pokaz() {
+      baner.hidden = false;
+    }
+    function schowaj() {
+      baner.hidden = true;
+    }
+
+    function zdecyduj(poziom) {
+      try {
+        localStorage.setItem(KLUCZ, poziom);
+      } catch (e) {}
+      oglos(poziom);
+      schowaj();
+    }
+
+    var zapisane = null;
+    try {
+      zapisane = localStorage.getItem(KLUCZ);
+    } catch (e) {}
+    if (zapisane) oglos(zapisane);
+    else pokaz();
+
+    baner
+      .querySelector("[data-zgoda-wszystkie]")
+      .addEventListener("click", function () {
+        zdecyduj("all");
+      });
+    baner
+      .querySelector("[data-zgoda-niezbedne]")
+      .addEventListener("click", function () {
+        zdecyduj("necessary");
+      });
+
+    /* Odnośnik „Zgody cookies" w stopce otwiera baner ponownie. */
+    window.addEventListener("sa-consent-reopen", pokaz);
+
+    /* Dwa cele, które faktycznie mierzą skuteczność strony. Zdarzenia
+       wysyłają się z każdej podstrony, z informacją, skąd je wywołano. */
+    function zglos(nazwa) {
+      if (typeof window.saTrack === "function")
+        window.saTrack(nazwa, { skad: location.pathname });
+    }
+    document.addEventListener(
+      "click",
+      function (e) {
+        var tel = e.target.closest && e.target.closest('a[href^="tel:"]');
+        if (tel) zglos("telefon_klik");
+      },
+      true
+    );
+    document.addEventListener(
+      "submit",
+      function () {
+        zglos("zapis_formularz");
+      },
+      true
+    );
+  })();
+</script>

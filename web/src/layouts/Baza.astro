@@ -2,6 +2,7 @@
 import Naglowek from "../components/Naglowek.astro";
 import Stopka from "../components/Stopka.astro";
 import PasekAkcji from "../components/PasekAkcji.astro";
+import ZgodaCookies from "../components/ZgodaCookies.astro";
 import { firma, url } from "../lib/site.js";
 import "../styles/style.css";
 
@@ -77,6 +78,7 @@ const znacznik = {
       <slot />
     </main>
     <Stopka />
+    <ZgodaCookies />
     <PasekAkcji senior={senior} />
   </body>
 </html>

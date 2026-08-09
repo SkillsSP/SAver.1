@@ -1541,6 +1541,103 @@ button {
   color: var(--koral-700);
 }
 
+/* ==========================================================================
+   BANER ZGODY NA COOKIES
+   Przycisk potwierdzenia jest kobaltowy — koral zostaje zarezerwowany dla
+   głównego wezwania na stronie i baner nie ma z nim konkurować o wzrok.
+   ========================================================================== */
+.zgoda-cookies {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 80;
+  display: flex;
+  justify-content: center;
+  padding: var(--space-2);
+  pointer-events: none;
+  animation: zgoda-wjazd 0.28s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+.zgoda-cookies[hidden] {
+  display: none;
+}
+
+@keyframes zgoda-wjazd {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.zgoda-cookies__panel {
+  pointer-events: auto;
+  width: 100%;
+  max-width: 40rem;
+  padding: clamp(1.125rem, 2.2vw, 1.5rem);
+  background: var(--tlo-strony);
+  border: var(--wlos);
+  border-radius: var(--radius-xl);
+}
+
+.zgoda-cookies__tytul {
+  font-family: var(--font-odkrywca);
+  font-weight: var(--waga-polgruba);
+  font-size: 1.0625rem;
+  letter-spacing: -0.005em;
+  margin-bottom: var(--space-1);
+}
+
+.zgoda-cookies__tresc {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  margin-bottom: var(--space-2);
+}
+.zgoda-cookies__tresc a {
+  color: var(--kobalt-600);
+  font-weight: var(--waga-polgruba);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.zgoda-cookies__przyciski {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.zgoda-cookies__przyciski .przycisk {
+  flex: 1 1 auto;
+}
+
+.zgoda-cookies__nota {
+  font-size: 0.78125rem;
+  color: var(--slate-500);
+  line-height: 1.55;
+  margin-top: var(--space-2);
+}
+
+/* Wariant przycisku w kolorze marki — używany wyłącznie w banerze zgody. */
+.przycisk--marka {
+  background: var(--kobalt-600);
+  border-color: var(--kobalt-600);
+  color: var(--bialy);
+}
+.przycisk--marka:hover {
+  background: var(--kobalt-700);
+  border-color: var(--kobalt-700);
+}
+
+/* Na telefonie baner i pasek akcji zajmują to samo miejsce u dołu ekranu.
+   Dopóki rodzic nie rozstrzygnie zgody, pasek akcji się nie pokazuje —
+   jedna decyzja naraz, bez dwóch nakładających się warstw. Wymaga, żeby
+   baner stał w kodzie przed paskiem akcji. */
+.zgoda-cookies:not([hidden]) ~ .pasek-akcji {
+  display: none;
+}
+
 /* Numer telefonu zaufania — ma być czytelny z odległości i klikalny jednym
    dotknięciem. To jedyne miejsce, gdzie numer jest ważniejszy od nagłówka. */
 .numer-alarmowy {
@@ -1642,6 +1739,22 @@ button {
   color: var(--kobalt-600);
 }
 .stopka__linki a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+/* Przycisk otwierający baner zgody — wygląda jak pozostałe odnośniki
+   w stopce, ale musi być przyciskiem, bo nie prowadzi pod żaden adres. */
+.stopka__zgody {
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--kobalt-600);
+  text-align: left;
+}
+.stopka__zgody:hover {
   text-decoration: underline;
   text-underline-offset: 0.15em;
 }

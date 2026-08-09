@@ -63,6 +63,12 @@ const rok = new Date().getFullYear();
           <li><a href={url("/polityka-prywatnosci")}>Polityka prywatności</a></li>
           <li><a href={url("/regulamin")}>Regulamin</a></li>
           <li><a href={url("/klauzula-rodo")}>Klauzula RODO</a></li>
+          <li>
+            {/* Otwiera baner ponownie — zgodę można zmienić w każdej chwili. */}
+            <button type="button" class="stopka__zgody" data-otworz-zgody>
+              Zgody cookies
+            </button>
+          </li>
         </ul>
       </div>
     </div>
@@ -76,3 +82,9 @@ const rok = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  document.querySelector("[data-otworz-zgody]")?.addEventListener("click", function () {
+    window.dispatchEvent(new CustomEvent("sa-consent-reopen"));
+  });
+</script>
