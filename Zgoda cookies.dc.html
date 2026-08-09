@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/styles.css">
+<script src="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/_ds_bundle.js"></script>
+<style>
+  @keyframes sa-consent-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  [data-consent] { animation: sa-consent-in .28s cubic-bezier(.2,.7,.3,1) both; }
+  @media (prefers-reduced-motion: reduce) { [data-consent] { animation: none; } }
+</style>
+</helmet>
+
+<sc-if value="{{ visible }}" hint-placeholder-val="{{ true }}">
+  <div data-consent role="dialog" aria-modal="false" aria-label="Zgoda na pliki cookies" style="position:fixed;left:0;right:0;bottom:0;z-index:80;padding:16px;display:flex;justify-content:center;pointer-events:none;font-family:Lexend,system-ui,sans-serif">
+    <div style="pointer-events:auto;width:100%;max-width:640px;background:#FBF8F3;border:1px solid rgba(26,34,48,.13);border-radius:16px;padding:clamp(18px,2.2vw,24px);color:#1A2230">
+      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:17px;margin:0 0 8px;letter-spacing:-.005em">Pliki cookies</h2>
+      <p style="font-size:14px;line-height:1.65;margin:0 0 16px;text-wrap:pretty">Niezbędne pliki cookies utrzymują działanie strony i formularza zapisu. Analityczne pomagają nam sprawdzić, które treści są dla rodziców przydatne — używamy ich tylko z Waszą zgodą. Szczegóły w <a href="Polityka prywatności.dc.html" style="color:#1E5FCC;font-weight:600">polityce prywatności</a>.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <button type="button" onClick="{{ acceptAll }}" style="font-family:inherit;font-size:14.5px;font-weight:600;color:#fff;background:#1E5FCC;border:1px solid #1E5FCC;padding:12px 22px;border-radius:10px;min-height:44px;cursor:pointer;flex:1 1 auto" style-hover="background:#1A54B5;border-color:#1A54B5">Akceptuję wszystkie</button>
+        <button type="button" onClick="{{ acceptNecessary }}" style="font-family:inherit;font-size:14.5px;font-weight:600;color:#1E5FCC;background:none;border:1px solid rgba(30,95,204,.45);padding:12px 22px;border-radius:10px;min-height:44px;cursor:pointer;flex:1 1 auto" style-hover="background:rgba(30,95,204,.08)">Tylko niezbędne</button>
+      </div>
+      <div style="font-size:12.5px;color:#5B6B7A;line-height:1.55;margin-top:12px">Zgodę możecie w każdej chwili zmienić — odnośnik „Zgody cookies” w stopce.</div>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:300}}">
+const KEY = 'sa-cookie-consent';
+
+// ── Konfiguracja analityki ──────────────────────────────────────────────
+// Wdrożenie: ustaw provider i wklej identyfikator. Do tego czasu nic się
+// nie ładuje. Warianty darmowe:
+//   'cloudflare' — Cloudflare Web Analytics, bez cookies, token z panelu
+//   'umami'      — Umami (własny serwer albo darmowy plan), skrypt + id
+//   'ga4'        — Google Analytics 4, identyfikator G-XXXXXXX
+const ANALYTICS = {
+  provider: null,
+  cloudflareToken: '',
+  umamiSrc: '',
+  umamiWebsiteId: '',
+  ga4Id: ''
+};
+
+class Component extends DCLogic {
+  state = { visible: false };
+
+  componentDidMount() {
+    let saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    if (saved) {
+      this.publish(saved);
+    } else {
+      this.setState({ visible: true });
+    }
+    this._reopen = () => this.setState({ visible: true });
+    window.addEventListener('sa-consent-reopen', this._reopen);
+
+    // Dwa cele, które faktycznie mierzą skuteczność strony.
+    this._onClick = (e) => {
+      const tel = e.target.closest && e.target.closest('a[href^="tel:"]');
+      if (tel) this.track('telefon_klik');
+    };
+    this._onSubmit = () => this.track('zapis_formularz');
+    document.addEventListener('click', this._onClick, true);
+    document.addEventListener('submit', this._onSubmit, true);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('sa-consent-reopen', this._reopen);
+    document.removeEventListener('click', this._onClick, true);
+    document.removeEventListener('submit', this._onSubmit, true);
+  }
+
+  track(name) {
+    if (typeof window.saTrack === 'function') window.saTrack(name, { skad: location.pathname });
+  }
+
+  // Ładuje skrypt dopiero po zgodzie. Bez zgody nie robi nic.
+  loadAnalytics() {
+    if (this._loaded || !ANALYTICS.provider) return;
+    this._loaded = true;
+    const s = document.createElement('script');
+    s.defer = true;
+    if (ANALYTICS.provider === 'cloudflare') {
+      s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+      s.setAttribute('data-cf-beacon', JSON.stringify({ token: ANALYTICS.cloudflareToken }));
+    } else if (ANALYTICS.provider === 'umami') {
+      s.src = ANALYTICS.umamiSrc;
+      s.setAttribute('data-website-id', ANALYTICS.umamiWebsiteId);
+    } else if (ANALYTICS.provider === 'ga4') {
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + ANALYTICS.ga4Id;
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', ANALYTICS.ga4Id, { anonymize_ip: true });
+    } else {
+      return;
+    }
+    document.head.appendChild(s);
+  }
+
+  // Jedyny punkt, z którego wolno uruchamiać analitykę:
+  // window.saConsent.analytics === true oznacza zgodę udzieloną.
+  publish(level) {
+    window.saConsent = { level: level, analytics: level === 'all' };
+    // Jeden punkt zgłaszania celów. Bez zgody zdarzenia są pomijane,
+    // więc reszta strony może wołać saTrack bez sprawdzania warunków.
+    window.saTrack = (name, props) => {
+      if (!window.saConsent || !window.saConsent.analytics) return;
+      if (window.umami && window.umami.track) window.umami.track(name, props);
+      else if (window.gtag) window.gtag('event', name, props || {});
+    };
+    if (window.saConsent.analytics) this.loadAnalytics();
+    window.dispatchEvent(new CustomEvent('sa-consent', { detail: window.saConsent }));
+  }
+
+  decide(level) {
+    try { localStorage.setItem(KEY, level); } catch (e) {}
+    this.publish(level);
+    this.setState({ visible: false });
+  }
+
+  renderVals() {
+    return {
+      visible: this.state.visible,
+      acceptAll: () => this.decide('all'),
+      acceptNecessary: () => this.decide('necessary')
+    };
+  }
+}
+</script>
+</body>
+</html>

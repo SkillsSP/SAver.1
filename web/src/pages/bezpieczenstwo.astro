@@ -1,7 +1,7 @@
 ---
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
-import { url, wielkoscGrupy, telefonHref, telefonTekst } from "../lib/site.js";
+import { url, wielkoscGrupy, firma, telefonHref, telefonTekst } from "../lib/site.js";
 
 const tel = telefonHref();
 
@@ -35,19 +35,52 @@ const zgloszenie = [
   },
   {
     tytul: "Powiadomienie rodzica i służb",
-    opis: "Informujemy rodzica lub opiekuna prawnego, a gdy podejrzenie dotyczy przestępstwa — odpowiednie służby.",
+    opis: "Informujemy rodziców, chyba że są osobami podejrzewanymi. Przy podejrzeniu przestępstwa zawiadamiamy policję lub prokuraturę, a przy zagrożeniu dobra dziecka — sąd rodzinny.",
   },
   {
-    tytul: "Dokumentacja i wnioski",
-    opis: "Spisujemy przebieg sprawy i wracamy do standardów, żeby sprawdzić, co wymaga zmiany.",
+    tytul: "Wsparcie i wnioski",
+    opis: "Ustalamy z rodzicem plan wsparcia dziecka. Po zakończeniu sprawy sprawdzamy, co w naszych procedurach zawiodło, i zapisujemy zmianę.",
   },
+];
+
+/* Numery ogólnopolskie, bezpłatne i czynne całą dobę. Podajemy je obok własnych
+   danych kontaktowych, bo dziecko musi mieć drogę zgłoszenia niezależną od
+   centrum — także wtedy, gdy podejrzenie dotyczy osoby stąd. */
+const telefonyZaufania = [
+  {
+    nazwa: "Telefon zaufania dla dzieci i młodzieży",
+    numer: "116 111",
+    opis: "Bezpłatny, czynny całą dobę",
+  },
+  {
+    nazwa: "Rzecznik Praw Dziecka",
+    numer: "800 12 12 12",
+    opis: "Bezpłatny, czynny całą dobę",
+  },
+];
+
+const dokumenty = [
+  "Standardy Ochrony Małoletnich",
+  "Zgoda na wykorzystanie wizerunku",
+  "Upoważnienie do odbioru dziecka",
+];
+
+/* Wersja dla dziecka — ustawa wymaga jej obok wersji pełnej. Zdania krótkie,
+   w drugiej osobie, bez terminów prawnych. */
+const zasadyDlaDziecka = [
+  "Nikt nie ma prawa Cię krzywdzić. Ani dziecko, ani dorosły.",
+  "Jeśli coś Ci się nie podoba, możesz powiedzieć STOP.",
+  "Nie musisz się przytulać ani dawać ręki, jeśli nie chcesz.",
+  "Nie robimy Ci zdjęć, jeśli Ty albo Twoi rodzice tego nie chcecie.",
+  "Możesz powiedzieć o wszystkim każdej osobie, która tu pracuje.",
+  "Kiedy powiesz, że ktoś Cię skrzywdził, uwierzymy Ci i pomożemy.",
 ];
 ---
 
 <Baza
   aktywna="o-nas"
   tytul="Standardy Ochrony Małoletnich"
-  opis="Standardy Ochrony Małoletnich obowiązujące w Skills Academy w Szczecinie: weryfikacja osób pracujących z dziećmi, zasady bezpiecznego kontaktu, wizerunek, procedura zgłoszeń."
+  opis="Standardy Ochrony Małoletnich obowiązujące w Skills Academy w Szczecinie: weryfikacja osób pracujących z dziećmi, zasady bezpiecznego kontaktu, wizerunek, procedura zgłoszeń i telefony zaufania."
 >
   <section class="naglowek-strony">
     <div class="szerokosc">
@@ -69,12 +102,12 @@ const zgloszenie = [
       <DoUzupelnienia czego="Przegląd prawny">
         Ustawa wymaga opublikowania dwóch wersji standardów jednocześnie: pełnej
         i skróconej, napisanej językiem zrozumiałym dla dziecka. Obie są poniżej.
-        Przed publikacją serwisu treść musi przejść przegląd prawny, a Wy musicie
+        Przed publikacją treść musi przejść przegląd prawny, a Wy musicie
         uzupełnić: numer i datę wersji dokumentu, datę następnego przeglądu,
         imię, nazwisko i funkcję osoby odpowiedzialnej za standardy wraz
         z zastępcą, wiek samodzielnego wyjścia, liczbę dni na usunięcie
-        materiałów po wycofaniu zgody wizerunkowej oraz częstotliwość przeglądu
-        apteczek.
+        materiałów po wycofaniu zgody wizerunkowej, częstotliwość przeglądu
+        apteczek oraz adres e-mail do zgłoszeń.
       </DoUzupelnienia>
     </div>
   </section>
@@ -149,7 +182,8 @@ const zgloszenie = [
             <p class="tekst-drugi">
               Bez pisemnej zgody rodzica nie publikujemy żadnego zdjęcia ani
               nagrania. Zgodę można wycofać w każdej chwili, bez podawania powodu
-              — usuwamy wtedy materiał z naszych kanałów.
+              — usuwamy wtedy materiał z naszych kanałów w terminie ustalonym
+              w zgodzie.
             </p>
             <ul class="lista-znaczona">
               <li>Nigdy nie podpisujemy zdjęć imieniem i nazwiskiem dziecka</li>
@@ -201,42 +235,114 @@ const zgloszenie = [
     </div>
   </section>
 
+  {/* GDZIE ZGŁOSIĆ */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Zgłoszenia</span>
+        <h2 class="tytul-1">Gdzie zgłosić</h2>
+        <p class="wiodacy">
+          Zgłoszenie można złożyć anonimowo. Jeśli zostawicie kontakt,
+          odpowiadamy w ciągu jednego dnia roboczego.
+        </p>
+      </div>
+
+      <div class="siatka siatka--3">
+        <article class="karta karta--luzna">
+          <span class="plakietka plakietka--kobalt">W centrum</span>
+          <h3 class="tytul-4">Bezpośrednio do nas</h3>
+          <ul class="lista-rozdzielona">
+            <li>
+              <span class="etykieta">E-mail do zgłoszeń</span>
+              <span class="wartosc">{firma.emailZgloszenia ?? "adres w uzupełnieniu"}</span>
+            </li>
+            <li>
+              <span class="etykieta">Telefon</span>
+              <span class="wartosc">
+                {tel ? <a class="link-w-zdaniu" href={tel}>{telefonTekst()}</a> : telefonTekst()}
+              </span>
+            </li>
+          </ul>
+        </article>
+
+        {telefonyZaufania.map((t) => (
+          <article class="karta karta--luzna">
+            <span class="plakietka plakietka--koral">Niezależnie od centrum</span>
+            <h3 class="tytul-4">{t.nazwa}</h3>
+            <p class="numer-alarmowy">
+              <a href={`tel:${t.numer.replace(/\s/g, "")}`}>{t.numer}</a>
+            </p>
+            <p class="tekst-drobny">{t.opis}</p>
+          </article>
+        ))}
+      </div>
+
+      <p class="tekst-maly tekst-drugi" style="margin-top: var(--space-4); max-width: var(--szerokosc-tekstu);">
+        Numery ogólnopolskie podajemy celowo obok własnych. Dziecko musi mieć
+        drogę zgłoszenia niezależną od centrum — także wtedy, gdy podejrzenie
+        dotyczy kogoś stąd.
+      </p>
+    </div>
+  </section>
+
+  {/* DOKUMENTY */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Dokumenty</span>
+          <h2 class="tytul-1">Do wglądu i pobrania</h2>
+          <p class="tekst-drugi tekst-maly">
+            Papierowy egzemplarz jest zawsze dostępny w biurze.
+          </p>
+        </div>
+        <div class="stos">
+          <ul class="lista-rozdzielona">
+            {dokumenty.map((d) => (
+              <li>
+                <span class="etykieta">{d}</span>
+                <span class="wartosc">plik w przygotowaniu</span>
+              </li>
+            ))}
+          </ul>
+          <DoUzupelnienia czego="Pliki do pobrania">
+            Po przeglądzie prawnym wgrajcie trzy pliki PDF do
+            <code>web/public/dokumenty/</code> i podmieńcie w tej sekcji
+            zastępniki na odnośniki. Do czasu wgrania lepiej pokazywać „plik
+            w przygotowaniu" niż odnośnik prowadzący donikąd.
+          </DoUzupelnienia>
+        </div>
+      </div>
+    </div>
+  </section>
+
   {/* WERSJA DLA DZIECKA — wymagana ustawą, osobnym językiem */}
   <section class="sekcja sekcja--tint">
     <div class="szerokosc">
       <div class="naglowek-sekcji">
         <span class="nadtytul">Wersja skrócona</span>
-        <h2 class="tytul-1">Dla dziecka</h2>
-        <p class="wiodacy">
-          To ta sama treść, napisana tak, żeby dało się ją przeczytać razem
-          z dzieckiem.
-        </p>
+        <h2 class="tytul-1">Twoje zasady w Skills Academy</h2>
+        <p class="wiodacy">Te zasady obowiązują wszystkich, także dorosłych.</p>
       </div>
 
       <div class="siatka siatka--2">
         <article class="karta karta--luzna">
-          <h3 class="tytul-3">Masz prawo czuć się bezpiecznie</h3>
           <ul class="lista-znaczona">
-            <li>Nikt dorosły nie może Cię uderzyć, wyśmiewać ani krzyczeć na Ciebie.</li>
-            <li>Nie musisz się przytulać ani dotykać, jeśli nie chcesz. Możesz powiedzieć „nie”.</li>
-            <li>Nikt dorosły z centrum nie będzie pisał do Ciebie prywatnie.</li>
-            <li>Twoje zdjęcie pojawi się gdzieś tylko wtedy, gdy rodzic się zgodzi.</li>
+            {zasadyDlaDziecka.map((z) => <li>{z}</li>)}
           </ul>
         </article>
 
         <article class="karta karta--luzna">
-          <h3 class="tytul-3">Powiedz komuś, jeśli coś jest nie tak</h3>
-          <ul class="lista-znaczona">
-            <li>Jeśli ktoś zachowa się wobec Ciebie źle — powiedz o tym dorosłemu, któremu ufasz.</li>
-            <li>Możesz powiedzieć rodzicowi, prowadzącemu albo komuś w biurze.</li>
-            <li>Nigdy nie będziesz miał_a przez to kłopotów. To nie jest skarżenie.</li>
-            <li>Zajmiemy się tym tego samego dnia.</li>
-          </ul>
-          {tel && (
-            <p class="tekst-maly">
-              Twój rodzic może też zadzwonić: <a class="link-w-zdaniu" href={tel}>{telefonTekst()}</a>
-            </p>
-          )}
+          <h3 class="tytul-3">Możesz też zadzwonić</h3>
+          <p class="tekst-drugi tekst-maly">
+            Możesz porozmawiać z kimś spoza centrum. To nic nie kosztuje.
+          </p>
+          <p class="numer-alarmowy">
+            <a href="tel:116111">116 111</a>
+          </p>
+          <p class="tekst-drobny">
+            Telefon Zaufania dla Dzieci i Młodzieży, czynny przez całą dobę
+          </p>
         </article>
       </div>
     </div>

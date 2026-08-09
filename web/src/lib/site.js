@@ -26,6 +26,10 @@ export const firma = {
   nip: null,
   godzinyBiura: null,
   mapaOsadzenie: null,
+  /* Adres do zgłoszeń dotyczących bezpieczeństwa dziecka. Ustawa wymaga
+     wskazania kanału zgłoszeń w standardach ochrony małoletnich — może to być
+     ten sam adres co ogólny, ale osobna skrzynka bywa czytelniejsza. */
+  emailZgloszenia: null,
   /* Adres, pod który formularz zapisu wysyła zgłoszenie. Dopóki jest `null`,
      formularz nie udaje, że działa: pokazuje uczciwy komunikat i kieruje do
      telefonu, zamiast kończyć zgłoszenie błędem. Wpiszcie tu adres z Formspree,

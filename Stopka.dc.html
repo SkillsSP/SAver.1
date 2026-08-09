@@ -14,7 +14,7 @@
 </helmet>
 
 <div style="font-family:Lexend,system-ui,sans-serif;color:#1A2230">
-  <footer style="border-top:1px solid rgba(26,34,48,.13)">
+  <footer id="kontakt" style="border-top:1px solid rgba(26,34,48,.13)">
     <div style="max-width:1200px;margin:0 auto;padding:clamp(34px,4.5vw,52px) 24px clamp(28px,3.5vw,40px)">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:clamp(26px,3.4vw,44px)">
         <div>
@@ -55,7 +55,10 @@
       </div>
       <div style="margin-top:clamp(28px,4vw,42px);padding-top:20px;border-top:1px solid rgba(26,34,48,.13);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#5B6B7A">
         <span>© 2026 Skills Academy · NIP <span style="border-bottom:1px dashed rgba(232,101,74,.7)">[numer]</span></span>
-        <span>Szczecin, Polska</span>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+          <button type="button" onClick="{{ reopenConsent }}" style="font-family:inherit;font-size:12.5px;font-weight:600;color:#1E5FCC;background:none;border:none;padding:0;cursor:pointer;text-align:left">Zgody cookies</button>
+          <span>Szczecin, Polska</span>
+        </div>
       </div>
     </div>
   </footer>
@@ -82,7 +85,13 @@ class Component extends DCLogic {
   }
 
   renderVals() {
-    return { isMobile: this.state.w < 780 };
+    return {
+      isMobile: this.state.w < 780,
+      reopenConsent: () => {
+        try { localStorage.removeItem('sa-cookie-consent'); } catch (e) {}
+        window.dispatchEvent(new CustomEvent('sa-consent-reopen'));
+      }
+    };
   }
 }
 </script>

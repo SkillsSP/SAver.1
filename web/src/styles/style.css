@@ -128,10 +128,9 @@
 /* ==========================================================================
    FONTY — odmiany statyczne, hostowane lokalnie, bez zapytań do obcych serwerów.
 
-   Świadomie zostajemy przy siedmiu plikach statycznych zamiast dwóch krojów
-   zmiennych. Kroje zmienne dałyby mniejszy transfer, ale każda waga jest tu
-   osobnym, przetestowanym plikiem — nic nie zależy od interpolacji osi ani od
-   obsługi „truetype-variations" w starszych przeglądarkach.
+   Serwis korzysta wyłącznie z siedmiu plików w web/public/fonts: każda waga
+   to osobny, przetestowany krój. Decyzja jest wiążąca — nie podmieniamy ich
+   na warianty zmienne, także wtedy, gdy takie pliki pojawią się w projekcie.
 
    UWAGA PRZY ZMIANIE ADRESU SERWISU: ścieżki zawierają przedrostek „/SAver.1",
    bo taka jest wartość `base` w astro.config.mjs. Po przejściu na własną
@@ -1540,6 +1539,23 @@ button {
   letter-spacing: 0.06em;
   font-size: 0.6875rem;
   color: var(--koral-700);
+}
+
+/* Numer telefonu zaufania — ma być czytelny z odległości i klikalny jednym
+   dotknięciem. To jedyne miejsce, gdzie numer jest ważniejszy od nagłówka. */
+.numer-alarmowy {
+  font-family: var(--font-odkrywca);
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  font-weight: var(--waga-polgruba);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.numer-alarmowy a {
+  color: var(--kobalt-700);
+}
+.numer-alarmowy a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
 }
 
 /* Zapis podwyższonego ryzyka — mocniejszy sygnał niż zwykła nota redakcyjna,

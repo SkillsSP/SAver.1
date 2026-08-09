@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/colors.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/styles.css">
+<script src="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/_ds_bundle.js"></script>
+<style>
+  body { margin: 0; background: #FBF8F3; }
+  a { color: #1E5FCC; text-decoration: none; }
+  a:hover { color: #E8654A; }
+  *, *::before, *::after { box-sizing: border-box; }
+</style>
+</helmet>
+
+<div style="background:#FBF8F3;color:#1A2230;font-family:Lexend,system-ui,sans-serif;min-height:100vh">
+
+  <section style="background:#1E5FCC;border-radius:0 0 24px 24px">
+    <div style="max-width:1000px;margin:0 auto;padding:clamp(44px,7vw,80px) 24px clamp(38px,5vw,60px)">
+      <div style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72);font-weight:600;margin-bottom:16px">Dokument wdrożeniowy</div>
+      <h1 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(30px,4.6vw,50px);line-height:1.08;letter-spacing:-.018em;color:#fff;margin:0;max-width:22ch">Analityka — warianty darmowe</h1>
+      <p style="font-size:clamp(15.5px,1.5vw,18px);line-height:1.65;color:rgba(255,255,255,.86);margin:20px 0 0;max-width:62ch;text-wrap:pretty">Strona jest przygotowana technicznie: bramka zgody, punkt uruchamiania skryptu i dwa cele są już oprogramowane. Do uruchomienia brakuje wyłącznie decyzji o narzędziu i jednego identyfikatora.</p>
+    </div>
+  </section>
+
+  <section style="max-width:1000px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px 0">
+    <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Krok 1 — zrobić od razu, bez kodu</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px">
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(20px,2.4vw,26px)">
+        <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:19px;margin:0 0 10px;letter-spacing:-.005em">Google Search Console</h2>
+        <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0 0 12px">Pokazuje, na jakie zapytania rodzice trafiają na stronę i czy Google w ogóle ją widzi. Nie ładuje skryptu, więc nie wymaga zgody.</p>
+        <div style="font-size:13.5px;line-height:1.65;color:#5B6B7A;border-top:1px solid rgba(26,34,48,.13);padding-top:12px">Potwierdzenie własności najprościej wpisem DNS u dostawcy domeny — nie wymaga zmian w plikach strony.</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(20px,2.4vw,26px)">
+        <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:19px;margin:0 0 10px;letter-spacing:-.005em">Profil firmy w Google</h2>
+        <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0 0 12px">Dla lokalnego centrum to prawdopodobnie większe źródło telefonów niż sama strona. Statystyki profilu pokazują wyświetlenia w mapach i liczbę połączeń.</p>
+        <div style="font-size:13.5px;line-height:1.65;color:#5B6B7A;border-top:1px solid rgba(26,34,48,.13);padding-top:12px">Wymaga adresu i godzin otwarcia — tych samych, które trafią na stronę.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1000px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px 0">
+    <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(32px,4vw,48px)">
+      <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Krok 2 — wybór narzędzia</div>
+      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,28px);margin:0 0 8px;letter-spacing:-.01em">Trzy warianty bez opłat</h2>
+      <p style="font-size:15px;line-height:1.7;color:#5B6B7A;margin:0 0 24px;max-width:70ch;text-wrap:pretty">Każdy z nich jest już obsłużony w kodzie. Wybór to jedno słowo w konfiguracji.</p>
+
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ options }}" as="o" hint-placeholder-count="3">
+          <div style="border-top:1px solid rgba(26,34,48,.13);padding:20px 0;display:grid;grid-template-columns:minmax(0,1fr);gap:10px">
+            <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+              <div style="font-family:Fredoka,system-ui,sans-serif;font-size:19px;font-weight:600;letter-spacing:-.005em">{{ o.name }}</div>
+              <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#5B6B7A;border:1px solid rgba(26,34,48,.13);border-radius:999px;padding:3px 10px">{{ o.tag }}</div>
+            </div>
+            <div style="font-size:14.5px;line-height:1.7;color:#1A2230;max-width:74ch;text-wrap:pretty">{{ o.body }}</div>
+            <div style="font-size:13.5px;line-height:1.65;color:#5B6B7A;max-width:74ch">{{ o.cost }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(20px,2.4vw,26px);margin-top:26px">
+        <h3 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:17px;margin:0 0 10px;letter-spacing:-.005em">Rekomendacja</h3>
+        <p style="font-size:14.5px;line-height:1.7;margin:0;max-width:74ch;text-wrap:pretty">Cloudflare Web Analytics na start — zero kosztu, zero cookies, kilka minut pracy. Umami wtedy, gdy zaczniecie potrzebować własnych celów i pełnej kontroli nad danymi. Google Analytics tylko wtedy, gdy ruszą płatne reklamy — inaczej płacicie złożonością za dane, których nie wykorzystacie.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1000px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px 0">
+    <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(32px,4vw,48px)">
+      <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Krok 3 — jedno miejsce w kodzie</div>
+      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,28px);margin:0 0 8px;letter-spacing:-.01em">Plik <span style="font-family:Lexend,system-ui,sans-serif;font-size:.86em">Zgoda cookies.dc.html</span></h2>
+      <p style="font-size:15px;line-height:1.7;color:#5B6B7A;margin:0 0 22px;max-width:74ch;text-wrap:pretty">Na początku logiki komponentu jest blok konfiguracji. Ustawcie w nim nazwę narzędzia i identyfikator — nic więcej nie trzeba dotykać. Do tego momentu żaden skrypt się nie ładuje.</p>
+      <pre style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:20px;margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.75;color:#1A2230;overflow-x:auto">const ANALYTICS = {
+  provider: 'cloudflare',   // albo 'umami' / 'ga4' / null
+  cloudflareToken: 'TU_TOKEN_Z_PANELU',
+  umamiSrc: '',
+  umamiWebsiteId: '',
+  ga4Id: ''
+};</pre>
+      <div style="background:#FBF8F3;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:16px 20px;margin-top:16px;font-size:13.5px;line-height:1.7;color:#1A2230">
+        <span style="display:block;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;margin-bottom:6px">Czego nie robić</span>
+        Nie wklejajcie skryptu analityki wprost w nagłówek strony ani przez menedżera tagów uruchamianego bezwarunkowo. Skrypt wstawiony poza tą bramką odpala się przed zgodą — a to jest dokładnie to naruszenie, przed którym baner ma chronić.
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1000px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px 0">
+    <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(32px,4vw,48px)">
+      <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Co już mierzy się samo</div>
+      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,28px);margin:0 0 8px;letter-spacing:-.01em">Dwa cele, nie liczba odsłon</h2>
+      <p style="font-size:15px;line-height:1.7;color:#5B6B7A;margin:0 0 22px;max-width:74ch;text-wrap:pretty">Odsłony nie powiedzą, czy strona działa. To mówią dopiero te dwa zdarzenia — wysyłają się automatycznie, na każdej podstronie, z informacją o tym, skąd rodzic je wywołał.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px">
+        <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(18px,2.2vw,24px)">
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;font-weight:600;color:#1E5FCC;margin-bottom:8px">telefon_klik</div>
+          <div style="font-size:14px;line-height:1.7;color:#1A2230">Dotknięcie numeru telefonu — w pasku na telefonie, w stopce, w hero i w bandach zamykających.</div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(18px,2.2vw,24px)">
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;font-weight:600;color:#1E5FCC;margin-bottom:8px">zapis_formularz</div>
+          <div style="font-size:14px;line-height:1.7;color:#1A2230">Wysłanie formularza zgłoszenia. W panelu narzędzia oznaczcie oba jako cele — wtedy zobaczycie, która podstrona przyprowadza rodziców.</div>
+        </div>
+      </div>
+      <div style="font-size:14px;line-height:1.7;color:#5B6B7A;margin-top:20px;max-width:74ch;text-wrap:pretty">Najtańsza atrybucja nie wymaga narzędzi: pytanie „skąd Państwo o nas wiedzą” przy każdym telefonie. Przy Waszej skali będzie dokładniejsze niż każdy panel.</div>
+    </div>
+  </section>
+
+  <section style="max-width:1000px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px clamp(52px,7vw,86px)">
+    <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(32px,4vw,48px)">
+      <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Krok 4 — po wyborze narzędzia</div>
+      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,28px);margin:0 0 20px;letter-spacing:-.01em">Do dopisania w dokumentach</h2>
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ followUps }}" as="f" hint-placeholder-count="3">
+          <div style="border-top:1px solid rgba(26,34,48,.13);padding:16px 0;display:grid;grid-template-columns:minmax(0,1fr);gap:5px">
+            <div style="font-size:15px;font-weight:600">{{ f.where }}</div>
+            <div style="font-size:14px;line-height:1.7;color:#5B6B7A;max-width:74ch;text-wrap:pretty">{{ f.what }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      options: [
+        { name: 'Cloudflare Web Analytics',
+          tag: 'Najprostsze',
+          body: 'Bez cookies i bez identyfikatora użytkownika. Pokazuje odsłony, źródła wejść i najpopularniejsze podstrony — dokładnie to, co przy tej skali wystarcza. Nie obsługuje własnych celów, więc dwa zdarzenia zobaczycie dopiero po przejściu na inne narzędzie.',
+          cost: 'Bezpłatne bez limitu odsłon. Wymaga konta Cloudflare; strona nie musi być u nich hostowana.' },
+        { name: 'Umami',
+          tag: 'Najwięcej kontroli',
+          body: 'Otwarte oprogramowanie, bez cookies, z obsługą własnych celów — czyli jedyny darmowy wariant, w którym zobaczycie kliknięcia w telefon i wysłania formularza rozbite na podstrony.',
+          cost: 'Bezpłatne przy instalacji na własnym serwerze. Chmura producenta ma plan darmowy z limitem zdarzeń.' },
+        { name: 'Google Analytics 4',
+          tag: 'Tylko pod reklamy',
+          body: 'Najbogatsze dane i pełna integracja z kampaniami, ale wymaga zgody, więc część ruchu zniknie z raportów. Panel jest rozbudowany na tyle, że bez wprawy łatwiej z niego wyczytać błędny wniosek niż trafny.',
+          cost: 'Bezpłatne. Realny koszt to czas nauki i utrzymanie zgodności.' }
+      ],
+      followUps: [
+        { where: 'Polityka prywatności, sekcja 7',
+          what: 'Lista konkretnych plików cookies z celem i czasem życia oraz nazwa dostawcy analityki. Dziś sekcja opisuje mechanizm zgody, ale nie wymienia narzędzia — bo go jeszcze nie ma.' },
+        { where: 'Klauzula RODO',
+          what: 'Dopisanie dostawcy analityki do listy odbiorców danych, jeśli wybrane narzędzie przetwarza dane w imieniu centrum.' },
+        { where: 'Umowa powierzenia',
+          what: 'Przy narzędziu w chmurze potrzebna jest umowa powierzenia przetwarzania z dostawcą. Przy instalacji na własnym serwerze — nie.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
