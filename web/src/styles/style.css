@@ -86,6 +86,11 @@
   --interlinia-ciasna: 1.14;
   --interlinia-srednia: 1.35;
 
+  /* Quicksand kończy skalę na 700 i jest optycznie lżejszy od Fredoki, więc
+     nagłówki muszą stać na maksimum. Ta zmienna dotyczy wyłącznie kroju
+     akcentowego — wagi w Lexendzie zostają bez zmian. */
+  --waga-naglowka: 700;
+
   --waga-zwykla: 400;
   --waga-srednia: 500;
   --waga-polgruba: 600;
@@ -335,7 +340,7 @@ button {
 .tytul-display {
   font-family: var(--font-odkrywca);
   font-size: var(--text-display);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: var(--interlinia-ciasna);
   letter-spacing: -0.015em;
 }
@@ -343,7 +348,7 @@ button {
 .tytul-1 {
   font-family: var(--font-odkrywca);
   font-size: var(--text-h1);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: var(--interlinia-ciasna);
   letter-spacing: -0.01em;
 }
@@ -351,14 +356,14 @@ button {
 .tytul-2 {
   font-family: var(--font-odkrywca);
   font-size: var(--text-h2);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: var(--interlinia-srednia);
 }
 
 .tytul-3 {
   font-family: var(--font-odkrywca);
   font-size: var(--text-h3);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: var(--interlinia-srednia);
 }
 
@@ -1014,7 +1019,7 @@ button {
 .wiek__lata {
   font-family: var(--font-odkrywca);
   font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: 1.1;
   color: var(--kobalt-600);
 }
@@ -1068,7 +1073,7 @@ button {
 .misja__cytat {
   font-family: var(--font-odkrywca);
   font-size: var(--text-h2);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: var(--interlinia-srednia);
   color: var(--kobalt-700);
   padding-left: var(--space-3);
@@ -1095,7 +1100,7 @@ button {
 .przebieg__czas {
   font-family: var(--font-odkrywca);
   font-size: var(--text-maly);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   color: var(--koral-700);
   padding-top: 0.1rem;
 }
@@ -1136,7 +1141,7 @@ button {
   content: "0" counter(krok);
   font-family: var(--font-odkrywca);
   font-size: var(--text-maly);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   color: var(--kobalt-600);
 }
 .rejestr-senior .kroki__krok::before {
@@ -1273,7 +1278,7 @@ button {
 .cena__kwota {
   font-family: var(--font-odkrywca);
   font-size: clamp(1.75rem, 1.5rem + 1vw, 2.25rem);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: 1.1;
 }
 .cena__kwota small {
@@ -1314,7 +1319,7 @@ button {
 .pozycja-cennika__kwota {
   font-family: var(--font-odkrywca);
   font-size: var(--text-h3);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   white-space: nowrap;
 }
 
@@ -1553,7 +1558,7 @@ button {
 
 .zgoda-cookies__tytul {
   font-family: var(--font-odkrywca);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   font-size: 1.0625rem;
   letter-spacing: -0.005em;
   margin-bottom: var(--space-1);
@@ -1611,7 +1616,7 @@ button {
 .numer-alarmowy {
   font-family: var(--font-odkrywca);
   font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: 1.1;
   letter-spacing: -0.01em;
 }
