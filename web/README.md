@@ -24,7 +24,7 @@ Budowanie wersji produkcyjnej: `npm run build --prefix web` (wynik w `web/dist/`
 | `src/components/` | Powtarzalne elementy: nawigacja, stopka, odesłania, wezwania. |
 | `src/styles/style.css` | **Cały wygląd serwisu.** Zmienne `:root` na górze pliku. |
 | `src/lib/site.js` | Dane kontaktowe, menu, grupy wiekowe, fakultety. |
-| `public/logo/` | Pakiet znaku. Kroje (Lexend + Quicksand) pobierane są z Google Fonts — patrz komentarz na górze `style.css`. |
+| `public/logo/`, `public/fonts/` | Pakiet znaku i kroje Lexend + Quicksand (hostowane lokalnie). |
 
 ## Zanim opublikujecie — do uzupełnienia
 

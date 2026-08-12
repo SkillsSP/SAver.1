@@ -134,27 +134,77 @@
 }
 
 /* ==========================================================================
-   FONTY
+   FONTY — odmiany statyczne, hostowane lokalnie
 
-   Kroje ładujemy z Google Fonts, a nie z własnego katalogu. Powód jest
-   konkretny: samodzielnie hostowane pliki okazały się podzbiorami. Fredoka
-   miała 320 glifów i nie zawierała ą ć ę ń ś ź ż ani ich wersalików — tylko
-   ł, Ł, ó, Ó. Ponieważ stały na niej wszystkie nagłówki, polskie wyrazy
-   rozsypywały się na dwa kroje naraz. Żadna zmiana sposobu dostarczania tego
-   nie naprawiała, bo brakowało samych znaków.
+   Krojem akcentowym jest Quicksand, nie Fredoka. Powód jest twardy: Fredoka
+   nie zawiera ą ć ę ń ś ź ż ani ich wersalików — ma wyłącznie ł, Ł, ó, Ó.
+   Sprawdzone pomiarem tablicy cmap: 320 glifów wobec 694 w Quicksandzie.
+   Ponieważ na Fredoce stały wszystkie nagłówki, każdy polski wyraz rozsypywał
+   się na dwa kroje naraz — najwyraźniej na iPhonie, gdzie brakujące litery
+   podstawiało SF Pro o innej szerokości i wysokości x.
 
-   Krój akcentowy to teraz Quicksand — ten sam rejestr, pełne latin-ext.
+   Pliki leżą u nas, nie na obcym serwerze: nie ma zapytania do Google przy
+   każdym wejściu, więc adres IP odwiedzającego nigdzie nie wycieka. Każda waga
+   to osobny plik statyczny — kroje zmienne są w tym projekcie wyłączone,
+   mimo że katalog źródłowy je zawiera.
 
-   Wagi wypisujemy pojedynczo (500;600;700), a nie zakresem (400..700).
-   Zakres każe Google podać krój zmienny; wyliczenie wag daje pliki
-   statyczne. Kroje zmienne są w tym projekcie świadomie wyłączone.
+   Przed każdą podmianą kroju: sprawdźcie pokrycie polskich znaków w pliku,
+   a nie na oko w podglądzie. Właśnie to przeoczenie kosztowało nas Fredokę.
 
-   UWAGA O PRYWATNOŚCI: to zapytanie do serwera Google, więc trafia do niego
-   adres IP odwiedzającego. Odnotowane w polityce prywatności. Alternatywą
-   jest pobranie kompletnych plików i hostowanie ich u siebie — wtedy znika
-   zapytanie do obcego serwera, ale trzeba pilnować, żeby pliki były pełne,
-   a nie podzbiorami.
+   UWAGA PRZY ZMIANIE ADRESU SERWISU: ścieżki zawierają przedrostek „/SAver.1",
+   bo taka jest wartość `base` w astro.config.mjs. Po przejściu na własną
+   domenę i zmianie `base` na '/' trzeba usunąć przedrostek w siedmiu regułach
+   poniżej. To jedyne miejsce w arkuszu, które o `base` wie.
    ========================================================================== */
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Quicksand";
+  src: url("/SAver.1/fonts/Quicksand-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Quicksand";
+  src: url("/SAver.1/fonts/Quicksand-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Quicksand";
+  src: url("/SAver.1/fonts/Quicksand-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* ==========================================================================
    RESET I PODSTAWY
