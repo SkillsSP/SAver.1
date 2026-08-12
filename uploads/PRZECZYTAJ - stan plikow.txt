@@ -1,0 +1,65 @@
+SKILLS ACADEMY — CO PRZEKAZUJEMY DALEJ, A CO NIE
+Stan na 12 sierpnia 2026
+
+═══════════════════════════════════════════════════════════════
+AKTUALNE — te pliki są obowiązujące
+═══════════════════════════════════════════════════════════════
+
+STRATEGIA I DOKUMENTY BIZNESOWE
+  zalozenia-marki-skills-academy.md            założenia marki, v1.1
+  wytyczne-marki-kids-skills-academy.md        wytyczne marki, v3.1
+  Kids_Skills_Academy_BP_v2.docx               biznesplan, wersja poprawiona
+  Skills_Academy_streszczenie_v2.docx          streszczenie, wersja poprawiona
+
+MATERIAŁY DLA GRAFIKA I DRUKARNI
+  skills-academy-identyfikacja-final.html      identyfikacja wizualna, v1.2
+  skills-academy-brief-graficzny.html          brief dla grafika, v2.1
+  ../logo/                                     pakiet znaku, v1.1
+  ../logo/README.txt                           spis plików logo i zakres pracy
+
+DLA PROGRAMISTY
+  ../web-poprawki/CZYTAJ-TO-NAJPIERW.md        instrukcja podmiany
+  ../web-poprawki/style.css                    arkusz stylów do web/src/styles/
+
+═══════════════════════════════════════════════════════════════
+NIEAKTUALNE — nie przekazywać nikomu na zewnątrz
+═══════════════════════════════════════════════════════════════
+
+  prototype/                                   cały katalog, wersje robocze
+  prototype/skills-academy-identyfikacja-final.html
+  prototype/skills-academy-brief-graficzny.html
+  skills-academy-struktura-serwisu-v1.html     zastąpiony przez „Struktura serwisu"
+  Kids_Skills_Academy_BP_poprawiony.docx       poprzednik BP_v2
+  Skills_Academy_streszczenie.docx             poprzednik streszczenie_v2
+
+Zostawiamy je świadomie, jako zapis historii decyzji.
+
+Dlaczego są nieaktualne:
+  - opisują krój Fredoka albo Baloo 2 jako akcentowy; obowiązuje Quicksand
+  - podają kontrast koralu 3,1:1 i biały napis na koralu; obowiązuje napis
+    grafitowy na koralu marki #E8654A, 4,86:1
+  - opisują Exams jako trzeci filar; Exams stoi POZA zajęciami podstawowymi
+    i jest kupowany osobno, ze zniżką 5–10% dla uczestników karnetu
+  - używają wycofanego terminu „Rdzeń" i „zajęcia bazowe"
+
+═══════════════════════════════════════════════════════════════
+CO ZOSTAJE OTWARTE
+═══════════════════════════════════════════════════════════════
+
+Wymaga decyzji Waszej:
+  1. miesięczna stawka za Exams — bez niej Rozdział 14 biznesplanu nie ma
+     czwartej linii przychodu, a zniżka 5–10% nie ma od czego być liczona
+  2. średnia ważona w Rozdziale 14: zostawić 320 zł z adnotacją o zaokrągleniu
+     w dół, czy podnieść do wyliczonych 336 zł
+
+Wymaga pracy w programie wektorowym:
+  3. wersja CMYK/Pantone znaku z zatwierdzonym proofem przed pierwszym drukiem
+  4. odstęp między sygnetem a literą „k" w skills-academy-logo.svg jest
+     luźniejszy niż w serwisie (ok. 0,27 em wobec 0,18 em) — do wyrównania
+     przy najbliższej korekcie znaku; różnica jest widoczna dopiero przy
+     dużych rozmiarach
+
+Wymaga uzupełnienia danych:
+  5. dane administratora w klauzuli RODO, regulaminie i polityce prywatności
+  6. imię, nazwisko i wykształcenie prowadzącej matematykę
+  7. liczebności grup, częstotliwość arkuszy próbnych, zakres materiału

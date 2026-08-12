@@ -24,8 +24,8 @@
 
   <section style="background:#1E5FCC;border-radius:0 0 24px 24px">
     <div style="max-width:1000px;margin:0 auto;padding:clamp(44px,7vw,80px) 24px clamp(38px,5vw,60px)">
-      <div style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72);font-weight:600;margin-bottom:16px">Dokument wdrożeniowy</div>
-      <h1 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(30px,4.6vw,50px);line-height:1.08;letter-spacing:-.018em;color:#fff;margin:0;max-width:22ch">Analityka — warianty darmowe</h1>
+      <div style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.86);font-weight:600;margin-bottom:16px">Dokument wdrożeniowy</div>
+      <h1 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:clamp(30px,4.6vw,50px);line-height:1.08;letter-spacing:-.018em;color:#fff;margin:0;max-width:22ch">Analityka — warianty darmowe</h1>
       <p style="font-size:clamp(15.5px,1.5vw,18px);line-height:1.65;color:rgba(255,255,255,.86);margin:20px 0 0;max-width:62ch;text-wrap:pretty">Strona jest przygotowana technicznie: bramka zgody, punkt uruchamiania skryptu i dwa cele są już oprogramowane. Do uruchomienia brakuje wyłącznie decyzji o narzędziu i jednego identyfikatora.</p>
     </div>
   </section>
@@ -34,12 +34,12 @@
     <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Krok 1 — zrobić od razu, bez kodu</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px">
       <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(20px,2.4vw,26px)">
-        <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:19px;margin:0 0 10px;letter-spacing:-.005em">Google Search Console</h2>
+        <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:19px;margin:0 0 10px;letter-spacing:-.005em">Google Search Console</h2>
         <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0 0 12px">Pokazuje, na jakie zapytania rodzice trafiają na stronę i czy Google w ogóle ją widzi. Nie ładuje skryptu, więc nie wymaga zgody.</p>
         <div style="font-size:13.5px;line-height:1.65;color:#5B6B7A;border-top:1px solid rgba(26,34,48,.13);padding-top:12px">Potwierdzenie własności najprościej wpisem DNS u dostawcy domeny — nie wymaga zmian w plikach strony.</div>
       </div>
       <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(20px,2.4vw,26px)">
-        <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:19px;margin:0 0 10px;letter-spacing:-.005em">Profil firmy w Google</h2>
+        <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:19px;margin:0 0 10px;letter-spacing:-.005em">Profil firmy w Google</h2>
         <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0 0 12px">Dla lokalnego centrum to prawdopodobnie większe źródło telefonów niż sama strona. Statystyki profilu pokazują wyświetlenia w mapach i liczbę połączeń.</p>
         <div style="font-size:13.5px;line-height:1.65;color:#5B6B7A;border-top:1px solid rgba(26,34,48,.13);padding-top:12px">Wymaga adresu i godzin otwarcia — tych samych, które trafią na stronę.</div>
       </div>
@@ -49,14 +49,14 @@
   <section style="max-width:1000px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px 0">
     <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(32px,4vw,48px)">
       <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Krok 2 — wybór narzędzia</div>
-      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,28px);margin:0 0 8px;letter-spacing:-.01em">Trzy warianty bez opłat</h2>
+      <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:clamp(22px,2.6vw,28px);margin:0 0 8px;letter-spacing:-.01em">Trzy warianty bez opłat</h2>
       <p style="font-size:15px;line-height:1.7;color:#5B6B7A;margin:0 0 24px;max-width:70ch;text-wrap:pretty">Każdy z nich jest już obsłużony w kodzie. Wybór to jedno słowo w konfiguracji.</p>
 
       <div style="display:flex;flex-direction:column">
         <sc-for list="{{ options }}" as="o" hint-placeholder-count="3">
           <div style="border-top:1px solid rgba(26,34,48,.13);padding:20px 0;display:grid;grid-template-columns:minmax(0,1fr);gap:10px">
             <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
-              <div style="font-family:Fredoka,system-ui,sans-serif;font-size:19px;font-weight:600;letter-spacing:-.005em">{{ o.name }}</div>
+              <div style="font-family:Quicksand,system-ui,sans-serif;font-size:19px;font-weight:700;letter-spacing:-.005em">{{ o.name }}</div>
               <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#5B6B7A;border:1px solid rgba(26,34,48,.13);border-radius:999px;padding:3px 10px">{{ o.tag }}</div>
             </div>
             <div style="font-size:14.5px;line-height:1.7;color:#1A2230;max-width:74ch;text-wrap:pretty">{{ o.body }}</div>
@@ -66,7 +66,7 @@
       </div>
 
       <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(20px,2.4vw,26px);margin-top:26px">
-        <h3 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:17px;margin:0 0 10px;letter-spacing:-.005em">Rekomendacja</h3>
+        <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:17px;margin:0 0 10px;letter-spacing:-.005em">Rekomendacja</h3>
         <p style="font-size:14.5px;line-height:1.7;margin:0;max-width:74ch;text-wrap:pretty">Cloudflare Web Analytics na start — zero kosztu, zero cookies, kilka minut pracy. Umami wtedy, gdy zaczniecie potrzebować własnych celów i pełnej kontroli nad danymi. Google Analytics tylko wtedy, gdy ruszą płatne reklamy — inaczej płacicie złożonością za dane, których nie wykorzystacie.</p>
       </div>
     </div>
@@ -75,7 +75,7 @@
   <section style="max-width:1000px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px 0">
     <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(32px,4vw,48px)">
       <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Krok 3 — jedno miejsce w kodzie</div>
-      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,28px);margin:0 0 8px;letter-spacing:-.01em">Plik <span style="font-family:Lexend,system-ui,sans-serif;font-size:.86em">Zgoda cookies.dc.html</span></h2>
+      <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:clamp(22px,2.6vw,28px);margin:0 0 8px;letter-spacing:-.01em">Plik <span style="font-family:Lexend,system-ui,sans-serif;font-size:.86em">Zgoda cookies.dc.html</span></h2>
       <p style="font-size:15px;line-height:1.7;color:#5B6B7A;margin:0 0 22px;max-width:74ch;text-wrap:pretty">Na początku logiki komponentu jest blok konfiguracji. Ustawcie w nim nazwę narzędzia i identyfikator — nic więcej nie trzeba dotykać. Do tego momentu żaden skrypt się nie ładuje.</p>
       <pre style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:20px;margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.75;color:#1A2230;overflow-x:auto">const ANALYTICS = {
   provider: 'cloudflare',   // albo 'umami' / 'ga4' / null
@@ -94,7 +94,7 @@
   <section style="max-width:1000px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px 0">
     <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(32px,4vw,48px)">
       <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Co już mierzy się samo</div>
-      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,28px);margin:0 0 8px;letter-spacing:-.01em">Dwa cele, nie liczba odsłon</h2>
+      <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:clamp(22px,2.6vw,28px);margin:0 0 8px;letter-spacing:-.01em">Dwa cele, nie liczba odsłon</h2>
       <p style="font-size:15px;line-height:1.7;color:#5B6B7A;margin:0 0 22px;max-width:74ch;text-wrap:pretty">Odsłony nie powiedzą, czy strona działa. To mówią dopiero te dwa zdarzenia — wysyłają się automatycznie, na każdej podstronie, z informacją o tym, skąd rodzic je wywołał.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px">
         <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:clamp(18px,2.2vw,24px)">
@@ -113,7 +113,7 @@
   <section style="max-width:1000px;margin:0 auto;padding:clamp(40px,5.5vw,64px) 24px clamp(52px,7vw,86px)">
     <div style="border-top:1px solid rgba(26,34,48,.13);padding-top:clamp(32px,4vw,48px)">
       <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:14px">Krok 4 — po wyborze narzędzia</div>
-      <h2 style="font-family:Fredoka,system-ui,sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,28px);margin:0 0 20px;letter-spacing:-.01em">Do dopisania w dokumentach</h2>
+      <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:clamp(22px,2.6vw,28px);margin:0 0 20px;letter-spacing:-.01em">Do dopisania w dokumentach</h2>
       <div style="display:flex;flex-direction:column">
         <sc-for list="{{ followUps }}" as="f" hint-placeholder-count="3">
           <div style="border-top:1px solid rgba(26,34,48,.13);padding:16px 0;display:grid;grid-template-columns:minmax(0,1fr);gap:5px">

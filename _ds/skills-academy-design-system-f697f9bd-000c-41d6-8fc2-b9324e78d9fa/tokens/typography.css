@@ -1,8 +1,10 @@
 :root{
   /* Mędrzec (Sage) — Lexend, carries all body copy and the whole Teens Senior track */
   --font-sage:'Lexend',sans-serif;
-  /* Odkrywca (Explorer) — Fredoka, headlines/mission names only, never Teens Senior */
-  --font-explorer:'Fredoka',sans-serif;
+  /* Odkrywca (Explorer) — Quicksand, headlines/mission names only, never Teens Senior.
+     Fredoka wycofana: brak polskich znaków ą ć ę ń ś ź ż. Quicksand kończy się na wadze 700
+     (Fredoka/Baloo szły wyżej), więc nagłówki składamy wagą 700, nie 600. */
+  --font-explorer:Quicksand,sans-serif;
 
   --text-eyebrow:12px;
   --text-caption:12.5px;

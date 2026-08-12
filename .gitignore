@@ -17,9 +17,9 @@ npm-debug.log*
 # Ustawienia lokalne Claude Code (mogą zawierać ścieżki z tej maszyny)
 .claude/settings.local.json
 
-# Kroje zmienne są świadomie wyłączone z serwisu — używamy wyłącznie odmian
-# statycznych z web/public/fonts. Ta reguła pilnuje, żeby plik zmienny nie
-# trafił do serwisu przez przypadek. Pliki źródłowe w assets/fonts/ zostają
-# nietknięte, po prostu nie są przez serwis używane.
+# Kroje zmienne są w tym projekcie świadomie wyłączone. Serwis pobiera kroje
+# z Google Fonts, wypisując wagi pojedynczo (nie zakresem), więc dostaje pliki
+# statyczne. Gdyby ktoś wrócił do hostowania u siebie, ta reguła pilnuje, żeby
+# nie wrzucić pliku zmiennego. Pliki w assets/fonts/ zostają nietknięte.
 web/public/fonts/*Variable*
 web/public/fonts/*-VF.*

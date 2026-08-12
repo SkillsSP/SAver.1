@@ -38,25 +38,20 @@
   --tekst-glowny: var(--grafit-900);
   --tekst-drugi: var(--grafit-600);
   --tekst-na-marce: var(--bialy);
-  /* 86% krycia daje 4,81:1 na kobalcie — tyle samo co akapit obok.
-     Przy 72% nadtytuł 11,5 px schodził do 3,85:1. */
-  --tekst-na-marce-miekki: rgba(255, 255, 255, 0.86);
+  --tekst-na-marce-miekki: rgba(255, 255, 255, 0.85);
 
-  /* Koral jako tło przycisku akcji — wersja B z dokumentu „Przycisk CTA".
+  /* Koral jako tło przycisku akcji.
 
-     Biały napis na koralu marki dawał 3,29:1, czyli poniżej progu WCAG AA
-     dla tekstu tej wielkości. Są dwa wyjścia: przyciemnić tło albo zmienić
-     kolor napisu. Wybrane jest drugie — kolor marki zostaje dokładnie taki
-     jak w logo i w sygnecie (#E8654A), a napis jest grafitowy, co daje
-     4,86:1.
+     Napis na koralu jest GRAFITOWY, nigdy biały. Biel na #E8654A daje 3,29:1
+     i nie przechodzi WCAG AA (wymóg 4,5:1 dla tekstu poniżej ok. 19 px);
+     grafit #1A2230 daje 4,86:1. Dzięki temu tłem akcji zostaje koral marki —
+     dokładnie ten sam odcień co dolne koi w znaku, w druku i na ekranie.
+     Wersja z białym napisem na ciemniejszym koralu #C94F36 była wcześniejszym
+     rozwiązaniem tego samego problemu; wycofana w sierpniu 2026, żeby marka
+     miała jeden koral zamiast dwóch podobnych odcieni.
 
-     Powód wyboru nie jest estetyczny: drugi odcień koralu trzeba by dopisać
-     do palety jako osobny kolor funkcyjny, zamówić dla niego drugi Pantone
-     i pilnować, żeby nikt nie pomylił obu odcieni. Jeden kolor iskry w znaku,
-     w druku i na ekranie jest tańszy w utrzymaniu.
-
-     Najechanie rozjaśnia tło zamiast je przyciemniać — przy ciemnym napisie
-     ciemnienie tła obniżałoby kontrast zamiast go podnosić. */
+     Najechanie ROZJAŚNIA tło do #F0785F (grafit nadal 5,6:1), zamiast je
+     przyciemniać — przyciemnianie zbliżałoby przycisk do wycofanego odcienia. */
   --akcja: var(--koral-500);
   --akcja-hover: #f0785f;
   --tekst-na-akcji: var(--grafit-900);
@@ -69,6 +64,9 @@
   /* ---------- TYPOGRAFIA — płynne skalowanie rem ---------- */
   --font-medrzec: "Lexend", ui-sans-serif, system-ui, sans-serif;
   --font-odkrywca: "Quicksand", ui-sans-serif, system-ui, sans-serif;
+  /* Quicksand kończy się na wadze 700 i jest optycznie lżejszy od Fredoki,
+     dlatego nagłówki składamy 700, a nie 600 jak wcześniej. */
+  --waga-naglowka: 700;
 
   --text-nadtytul: 0.75rem;
   --text-drobny: 0.8125rem;
@@ -129,27 +127,70 @@
 }
 
 /* ==========================================================================
-   FONTY
+   FONTY — odmiany statyczne, hostowane lokalnie, bez zapytań do obcych serwerów.
 
-   Kroje ładujemy z Google Fonts, a nie z własnego katalogu. Powód jest
-   konkretny: samodzielnie hostowane pliki okazały się podzbiorami. Fredoka
-   miała 320 glifów i nie zawierała ą ć ę ń ś ź ż ani ich wersalików — tylko
-   ł, Ł, ó, Ó. Ponieważ stały na niej wszystkie nagłówki, polskie wyrazy
-   rozsypywały się na dwa kroje naraz. Żadna zmiana sposobu dostarczania tego
-   nie naprawiała, bo brakowało samych znaków.
+   Serwis korzysta wyłącznie z siedmiu plików w web/public/fonts: każda waga
+   to osobny, przetestowany krój. Decyzja jest wiążąca — nie podmieniamy ich
+   na warianty zmienne, także wtedy, gdy takie pliki pojawią się w projekcie.
 
-   Krój akcentowy to teraz Quicksand — ten sam rejestr, pełne latin-ext.
-
-   Wagi wypisujemy pojedynczo (500;600;700), a nie zakresem (400..700).
-   Zakres każe Google podać krój zmienny; wyliczenie wag daje pliki
-   statyczne. Kroje zmienne są w tym projekcie świadomie wyłączone.
-
-   UWAGA O PRYWATNOŚCI: to zapytanie do serwera Google, więc trafia do niego
-   adres IP odwiedzającego. Odnotowane w polityce prywatności. Alternatywą
-   jest pobranie kompletnych plików i hostowanie ich u siebie — wtedy znika
-   zapytanie do obcego serwera, ale trzeba pilnować, żeby pliki były pełne,
-   a nie podzbiorami.
+   UWAGA PRZY ZMIANIE ADRESU SERWISU: ścieżki zawierają przedrostek „/SAver.1",
+   bo taka jest wartość `base` w astro.config.mjs. Po przejściu na własną
+   domenę i zmianie `base` na '/' trzeba usunąć przedrostek w siedmiu regułach
+   poniżej. To jedyne miejsce w arkuszu, które o `base` wie.
    ========================================================================== */
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/SAver.1/fonts/Lexend-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+/* Quicksand zastąpił Fredokę (sierpień 2026). Powód: Fredoka NIE ZAWIERA
+   polskich znaków ą ć ę ń ś ź ż — ma wyłącznie ł Ł ó Ó, więc nagłówki na iOS
+   składały się częściowo krojem systemowym. Sprawdzone pomiarem glifów.
+   Pliki: fonts.google.com/specimen/Quicksand → katalog static/ */
+@font-face {
+  font-family: "Quicksand";
+  src: url("/SAver.1/fonts/Quicksand-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Quicksand";
+  src: url("/SAver.1/fonts/Quicksand-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Quicksand";
+  src: url("/SAver.1/fonts/Quicksand-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* ==========================================================================
    RESET I PODSTAWY
@@ -161,9 +202,6 @@
 }
 
 html {
-  /* Bez tej deklaracji iOS i Android w trybie ciemnym renderują pola input
-     i select na ciemnym tle — wpisywany tekst potrafi zniknąć. */
-  color-scheme: light;
   scroll-behavior: smooth;
   /* kotwice nie chowają się pod przyklejonym paskiem */
   scroll-padding-top: calc(var(--wysokosc-paska) + var(--space-2));
@@ -335,7 +373,7 @@ button {
 .tytul-display {
   font-family: var(--font-odkrywca);
   font-size: var(--text-display);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: var(--interlinia-ciasna);
   letter-spacing: -0.015em;
 }
@@ -343,7 +381,7 @@ button {
 .tytul-1 {
   font-family: var(--font-odkrywca);
   font-size: var(--text-h1);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: var(--interlinia-ciasna);
   letter-spacing: -0.01em;
 }
@@ -351,14 +389,14 @@ button {
 .tytul-2 {
   font-family: var(--font-odkrywca);
   font-size: var(--text-h2);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: var(--interlinia-srednia);
 }
 
 .tytul-3 {
   font-family: var(--font-odkrywca);
   font-size: var(--text-h3);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: var(--interlinia-srednia);
 }
 
@@ -1014,7 +1052,7 @@ button {
 .wiek__lata {
   font-family: var(--font-odkrywca);
   font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: 1.1;
   color: var(--kobalt-600);
 }
@@ -1068,7 +1106,7 @@ button {
 .misja__cytat {
   font-family: var(--font-odkrywca);
   font-size: var(--text-h2);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: var(--interlinia-srednia);
   color: var(--kobalt-700);
   padding-left: var(--space-3);
@@ -1095,7 +1133,7 @@ button {
 .przebieg__czas {
   font-family: var(--font-odkrywca);
   font-size: var(--text-maly);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   color: var(--koral-700);
   padding-top: 0.1rem;
 }
@@ -1136,7 +1174,7 @@ button {
   content: "0" counter(krok);
   font-family: var(--font-odkrywca);
   font-size: var(--text-maly);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   color: var(--kobalt-600);
 }
 .rejestr-senior .kroki__krok::before {
@@ -1273,7 +1311,7 @@ button {
 .cena__kwota {
   font-family: var(--font-odkrywca);
   font-size: clamp(1.75rem, 1.5rem + 1vw, 2.25rem);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: 1.1;
 }
 .cena__kwota small {
@@ -1285,7 +1323,6 @@ button {
 
 .pozycja-cennika {
   display: grid;
-  min-height: 1.5rem;
   gap: var(--space-1);
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
@@ -1314,7 +1351,7 @@ button {
 .pozycja-cennika__kwota {
   font-family: var(--font-odkrywca);
   font-size: var(--text-h3);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   white-space: nowrap;
 }
 
@@ -1553,7 +1590,7 @@ button {
 
 .zgoda-cookies__tytul {
   font-family: var(--font-odkrywca);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   font-size: 1.0625rem;
   letter-spacing: -0.005em;
   margin-bottom: var(--space-1);
@@ -1611,7 +1648,7 @@ button {
 .numer-alarmowy {
   font-family: var(--font-odkrywca);
   font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
-  font-weight: var(--waga-polgruba);
+  font-weight: var(--waga-naglowka);
   line-height: 1.1;
   letter-spacing: -0.01em;
 }
@@ -1700,17 +1737,8 @@ button {
 .stopka__linki {
   display: flex;
   flex-direction: column;
-  /* Odstęp zmniejszony, bo wysokość przejmuje wewnętrzny padding odnośnika —
-     kolumna wygląda tak samo, a cel dotykowy rośnie z 17 do 24 px. */
-  gap: 0.125rem;
+  gap: 0.6875rem;
   font-size: 0.875rem;
-}
-.stopka__linki a,
-.stopka__zgody {
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.5rem;
-  padding-block: 0.28125rem;
 }
 .stopka__linki a {
   color: var(--kobalt-600);

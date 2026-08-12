@@ -1,0 +1,29 @@
+SKILLS ACADEMY — CO W TYM KATALOGU JEST NIEAKTUALNE
+Stan na 11 sierpnia 2026
+
+Poniższe pliki to migawki wcześniejszych wersji. Zostawiamy je świadomie,
+jako zapis historii decyzji, ale NIE WOLNO ich przekazywać drukarni,
+programiście ani nikomu na zewnątrz.
+
+NIEAKTUALNE — nie używać:
+
+  prototype/                                  cały katalog, wersje robocze
+  prototype/skills-academy-identyfikacja-final.html
+  prototype/skills-academy-brief-graficzny.html
+  skills-academy-struktura-serwisu-v1.html    zastąpiony przez „Struktura serwisu"
+
+Dlaczego są nieaktualne:
+  - opisują krój Fredoka albo Baloo 2 jako akcentowy; obowiązuje Quicksand
+  - podają kontrast koralu 3,1:1 i biały napis na koralu; obowiązuje napis
+    grafitowy, 4,86:1
+  - część opisuje Exams jako trzeci filar; Exams stoi POZA zajęciami
+    podstawowymi
+  - używają wycofanego terminu „Rdzeń"
+
+AKTUALNE — te przekazujemy dalej:
+
+  skills-academy-identyfikacja-final.html     identyfikacja wizualna, v1.2
+  skills-academy-brief-graficzny.html         brief dla grafika, v2.1
+  wytyczne-marki-kids-skills-academy.md       wytyczne marki, v3.1
+  ../logo/                                    pakiet znaku, v1.1
+  ../logo/README.txt                          spis plików logo i zakres pracy

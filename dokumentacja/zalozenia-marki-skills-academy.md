@@ -2,7 +2,7 @@
 
 # Założenia marki
 
-**Dokument strategiczny. Wersja 1.0**
+**Dokument strategiczny. Wersja 1.1**
 
 ---
 
@@ -44,8 +44,7 @@ Wartości bez przypisanych zachowań są dekoracją. Poniżej sześć wartości 
 | Wartość | Jak jest widoczna |
 |---|---|
 | **Rozwój** | Postęp mierzony i pokazywany rodzicowi, a nie deklarowany. Program rośnie razem z uczestnikiem od 5. do 19. roku życia |
-| **Samodzielność** | Dziecko wykonuje czynności samo, pod okiem, a nie ogląda pokaz. Filar Useful Skills istnieje po to, żeby po zajęciach coś realnie potrafiło |
-| **Odpowiedzialność** | Zajęcia obejmują konsekwencje decyzji, w tym cyfrowych. Uczestnik uczy się reagować, a nie tylko unikać |
+| **Samodzielność** | Dziecko wykonuje czynności samo, pod okiem, a nie ogląda pokaz. Filar Useful Skills istnieje po to, żeby po zajęciach coś realnie potrafiło || **Odpowiedzialność** | Zajęcia obejmują konsekwencje decyzji, w tym cyfrowych. Uczestnik uczy się reagować, a nie tylko unikać |
 | **Kreatywność** | Fakultety dobierane według zainteresowań, a nie narzucane. Uczestnik ma realny wpływ na to, czego się uczy |
 | **Współpraca** | Praca w małych grupach i projektach zespołowych jest formą zajęć, a nie dodatkiem do nich |
 | **Bezpieczeństwo** | Wdrożone Standardy Ochrony Małoletnich, weryfikacja osób pracujących z dziećmi, jasne procedury. Bezpieczeństwo jest warunkiem wstępnym, nie elementem oferty |
@@ -81,7 +80,7 @@ Powyższa tabela opisuje, **kto podejmuje decyzję i co go przekonuje**. Sekcja 
 |---|---|
 | **Pozycjonowanie** | Świadomie nie szkoła językowa, lecz Centrum Kompetencji Przyszłości. Dotyczy Kids i Teens Junior; Teens Senior pozycjonowany osobno |
 | **Hasło główne (Kids i Teens Junior)** | „Angielski dla życia, nie tylko dla szkoły" |
-| **Hasło Teens Senior** | „Konkretny plan na maturę z angielskiego" |
+| **Hasło Teens Senior** | „Konkretny plan na maturę" |
 
 **Dlaczego dwa hasła, a nie jedno.** Hasło główne świadomie odcina się od „szkolności", co jest trafne dla Kids i Teens Junior, ale wprost sprzeczne z sensem istnienia Teens Senior, który *jest* przygotowaniem do konkretnego egzaminu szkolnego. Rozciąganie jednego hasła na obie oferty osłabiłoby wiarygodność tej drugiej. Rozdzielenie haseł jest spójne z tym, że Teens Senior ma już osobny rejestr tonalny i osobną etykietę kolorystyczną, opisane w wytycznych marki (sekcje 4.2 i 5.1).
 
@@ -109,8 +108,11 @@ Pozycjonowanie wymaga dowodów, inaczej pozostaje deklaracją. Marka dysponuje t
 
 Skills Academy funkcjonuje jako **jedna marka z dwiema ścieżkami**, a nie jako dwie osobne marki.
 
-- **Kids i Teens Junior (5–15 lat)** realizują pełny model zajęcia bazowe i fakultety (Rozdział 9 biznesplanu), przy czym Teens Junior ma trzeci filar zajęć bazowych, czyli Exams, przygotowujący do egzaminu ósmoklasisty
+- **Kids i Teens Junior (5–15 lat)** realizują pełny model zajęć podstawowych i fakultetów (Rozdział 9 biznesplanu). Zajęcia podstawowe to **Useful Skills i Life Skills — dwa filary, nie trzy**
+- **Exams** (egzamin ósmoklasisty oraz matura, z angielskiego i z matematyki) stoi **poza modelem filarowym**, kupowany niezależnie od zajęć podstawowych i dostępny także dla osób spoza centrum, ze zniżką dla uczestników karnetu
 - **Teens Senior (16–19 lat)** to samodzielna oferta przygotowania do matury, świadomie poza modelem filarowym, zaprojektowana jako stabilne źródło przychodu od startu, na sprawdzonym rynku korepetycji maturalnych
+
+**Zmiana w wersji 1.1.** Wcześniej Exams było opisane jako trzeci filar zajęć bazowych dla Teens Junior. Odłączenie usuwa sprzeczność cenową: ta sama usługa nie może być jednocześnie częścią karnetu i osobno płatną ofertą dla kogoś z zewnątrz. Termin „zajęcia bazowe" zastąpiony „zajęciami podstawowymi" w całym dokumencie (słownik: wytyczne marki, sekcja 4.3).
 
 **Dlaczego jedna marka, a nie dwie.** Rozszerzenie oferty do 19. roku życia stworzyło napięcie między komunikacją do dziecka a komunikacją do maturzysty. Rozważane były trzy rozwiązania: jedna marka dla całego zakresu, marka nadrzędna z submarką dla starszych, oraz ograniczenie oferty do młodszych grup. Wybrano wariant pierwszy, ponieważ druga marka oznaczałaby podwojenie kosztów marketingowych przy dwuosobowym zespole, a ograniczenie zakresu wymagałoby rezygnacji z przychodu, który finansuje start działalności.
 

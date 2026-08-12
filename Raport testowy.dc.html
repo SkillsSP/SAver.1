@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<title>Raport testowy — Skills Academy</title>
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/styles.css">
+</helmet>
+
+<div style="background:#FBF8F3;color:#1A2230;font-family:Lexend,system-ui,sans-serif;min-height:100vh">
+
+  <section style="background:#1E5FCC;border-radius:0 0 24px 24px">
+    <div style="max-width:960px;margin:0 auto;padding:clamp(38px,5.5vw,66px) 24px clamp(34px,5vw,56px)">
+      <div style="font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.86);font-weight:600;margin-bottom:16px">Kontrola jakości · sierpień 2026</div>
+      <h1 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,46px);line-height:1.1;letter-spacing:-.01em;color:#fff;margin:0;max-width:20ch;text-wrap:balance">Raport testowy przed wydaniem</h1>
+      <p style="font-size:clamp(15.5px,1.5vw,18px);line-height:1.65;color:rgba(255,255,255,.86);margin:20px 0 0;max-width:62ch;text-wrap:pretty">Dwanaście podstron sprawdzonych na szerokościach 320, 390 i 768 px, z pomiarem kontrastu, celów dotykowych i zachowania fontów. Poniżej co było zepsute, co naprawiono i co świadomie zostawiono.</p>
+    </div>
+  </section>
+
+  <main style="max-width:960px;margin:0 auto;padding:clamp(40px,5vw,64px) 24px clamp(60px,7vw,90px)">
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:clamp(23px,2.8vw,30px);margin:0 0 8px;letter-spacing:-.01em">Naprawione</h2>
+    <p style="font-size:15px;color:#5B6B7A;line-height:1.6;margin:0 0 28px;max-width:64ch">Każda pozycja była realnym defektem, nie kosmetyką.</p>
+
+    <div style="display:flex;flex-direction:column;gap:0">
+
+      <div style="border-top:1px solid rgba(26,34,48,.13);padding:22px 0;display:grid;grid-template-columns:minmax(0,1fr);gap:8px">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#1A2230;background:#E8654A;padding:3px 9px;border-radius:999px">Krytyczne</span>
+          <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:19px;margin:0">Brakujące polskie znaki na iPhonie</h3>
+        </div>
+        <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0 0 12px;max-width:74ch;text-wrap:pretty">Problem miał dwie warstwy. Pierwsza: samodzielnie hostowane pliki były podzbiorami — Lexend 685 glifów bez Ł i ł, Fredoka 320 glifów. Przejście na Google Fonts naprawiło Lexenda w całości.</p>
+        <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0;max-width:74ch;text-wrap:pretty">Druga warstwa okazała się poważniejsza: <b>Fredoka w ogóle nie zawiera polskich znaków</b> ą, ć, ę, ń, ś, ź, ż — ani w pliku lokalnym, ani w wersji z CDN. Ma tylko ł, Ł, ó, Ó. Ponieważ na niej stały wszystkie nagłówki, żadna zmiana sposobu dostarczenia fontu tego nie ratowała. Krój akcentowy został zamieniony na <b>Baloo 2</b> — ten sam charakter, pełne latin-ext. Sprawdzone pomiarem szerokości glifów dla każdej litery osobno, nie wzrokowo.</p>
+      </div>
+
+      <div style="border-top:1px solid rgba(26,34,48,.13);padding:22px 0;display:grid;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#1A2230;background:#E8654A;padding:3px 9px;border-radius:999px">Krytyczne</span>
+          <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:19px;margin:0">Biały tekst na koralu nie spełniał WCAG</h3>
+        </div>
+        <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0;max-width:74ch;text-wrap:pretty">Kontrast 3,29:1 przy wymaganych 4,5:1 — dotyczyło to głównego przycisku „Umów zajęcia próbne", paska „Zadzwoń teraz" i plakietek „Unikat". Kolor marki został nietknięty; zmienił się kolor napisu na grafitowy, co daje 4,86:1. Stan najechania rozjaśnia się teraz zamiast ciemnieć, bo przy ciemnym napisie ciemnienie tła obniżało kontrast.</p>
+      </div>
+
+      <div style="border-top:1px solid rgba(26,34,48,.13);padding:22px 0;display:grid;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#1E5FCC;padding:3px 9px;border-radius:999px">Wysokie</span>
+          <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:19px;margin:0">Menu mobilne bez dwóch podstron i bez CTA</h3>
+        </div>
+        <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0;max-width:74ch;text-wrap:pretty">Pozycja „Program" prowadziła prosto na zajęcia podstawowe, więc z telefonu nie dało się dojść do Fakultetów ani do zajęć indywidualnych. Menu ma teraz rozwiniętą sekcję Program i przycisk zapisu. Dostało też ograniczenie wysokości z własnym przewijaniem — na iPhonie w poziomie lista wychodziła poza ekran bez możliwości dojechania do końca.</p>
+      </div>
+
+      <div style="border-top:1px solid rgba(26,34,48,.13);padding:22px 0;display:grid;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#1E5FCC;padding:3px 9px;border-radius:999px">Wysokie</span>
+          <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:19px;margin:0">Ciemny motyw systemu psuł pola formularza</h3>
+        </div>
+        <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0;max-width:74ch;text-wrap:pretty">Bez deklaracji <code style="font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#fff;border:1px solid rgba(26,34,48,.13);padding:1px 6px;border-radius:5px">color-scheme</code> iOS i Android w trybie ciemnym renderują pola input i select na ciemnym tle, przez co wpisywany tekst potrafi zniknąć. Ustawione na jasny.</p>
+      </div>
+
+      <div style="border-top:1px solid rgba(26,34,48,.13);padding:22px 0;display:grid;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#5B6B7A;padding:3px 9px;border-radius:999px">Średnie</span>
+          <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:19px;margin:0">Cele dotykowe w stopce poniżej normy</h3>
+        </div>
+        <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0;max-width:74ch;text-wrap:pretty">Dwanaście odnośników miało 17–19 px wysokości przy wymaganych 24 px. Doszedł wewnętrzny odstęp, przy jednoczesnym zmniejszeniu odstępu między nimi, więc kolumny wyglądają jak wcześniej. To samo w wierszach cennika.</p>
+      </div>
+
+      <div style="border-top:1px solid rgba(26,34,48,.13);padding:22px 0;display:grid;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#5B6B7A;padding:3px 9px;border-radius:999px">Średnie</span>
+          <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:19px;margin:0">Nadtytuły na kobalcie za jasne</h3>
+        </div>
+        <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0;max-width:74ch;text-wrap:pretty">Biel o kryciu 72 procent przy rozmiarze 11,5 px dawała 3,85:1. Podniesione do 86 procent, czyli 4,81:1 — tyle samo, co akapit obok, więc hero jest teraz spójny.</p>
+      </div>
+
+      <div style="border-top:1px solid rgba(26,34,48,.13);border-bottom:1px solid rgba(26,34,48,.13);padding:22px 0;display:grid;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#5B6B7A;padding:3px 9px;border-radius:999px">Średnie</span>
+          <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:19px;margin:0">Obsługa klawiatury i ikony systemowe</h3>
+        </div>
+        <p style="font-size:14.5px;line-height:1.7;color:#1A2230;margin:0;max-width:74ch;text-wrap:pretty">Doszedł odnośnik „Przejdź do treści" jako pierwszy element tabulacji, widoczny obrys zaznaczenia działający i na jasnym, i na kobaltowym tle, oraz blokada animacji dla osób z ustawieniem ograniczonego ruchu. Strony dostały ikonę Apple Touch, plik .ico i manifest — wcześniej Safari nie miał czego pokazać przy dodaniu do ekranu początkowego.</p>
+      </div>
+
+    </div>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:clamp(23px,2.8vw,30px);margin:48px 0 8px;letter-spacing:-.01em">Sprawdzone i czyste</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin-top:22px">
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:18px 20px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:6px">Brak przewijania w poziomie</div>
+        <div style="font-size:13.5px;color:#5B6B7A;line-height:1.6">320, 390 i 768 px — żaden element nie wychodzi poza ekran.</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:18px 20px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:6px">Formularz zapisu</div>
+        <div style="font-size:13.5px;color:#5B6B7A;line-height:1.6">Pola opisane etykietami, rozmiar 16 px blokuje samoczynne przybliżanie na iOS, podpowiadanie telefonu i e-maila działa.</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:18px 20px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:6px">Struktura nagłówków</div>
+        <div style="font-size:13.5px;color:#5B6B7A;line-height:1.6">Jeden H1 na stronę, kolejność bez przeskoków, język dokumentu ustawiony na polski.</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:18px 20px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:6px">Bramka cookies</div>
+        <div style="font-size:13.5px;color:#5B6B7A;line-height:1.6">Przyciski 44 px, animacja wyłączana przy ograniczonym ruchu, zgodę da się zmienić ze stopki.</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:18px 20px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:6px">Bezpieczny obszar iPhone'a</div>
+        <div style="font-size:13.5px;color:#5B6B7A;line-height:1.6">Dolny pasek akcji i menu uwzględniają pasek gestu, nic nie chowa się pod krawędzią.</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:18px 20px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:6px">Pozostałe kontrasty</div>
+        <div style="font-size:13.5px;color:#5B6B7A;line-height:1.6">Szary na bazie 5,18:1, kobalt na bazie 5,56:1, grafit na bazie 15,07:1 — wszystkie z zapasem.</div>
+      </div>
+    </div>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:clamp(23px,2.8vw,30px);margin:48px 0 8px;letter-spacing:-.01em">Zostawione świadomie</h2>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-top:22px">
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:20px 22px">
+        <div style="font-size:15.5px;font-weight:600;margin-bottom:7px">Plakietki o rozmiarze 10 px</div>
+        <div style="font-size:14px;color:#5B6B7A;line-height:1.65;text-wrap:pretty">„Unikat" i „Taniej" są mniejsze, niż lubię, ale to etykiety pomocnicze przy tekście, który sam w sobie niesie treść. Kontrast mają poprawny. Do podniesienia, jeśli uznasz, że giną.</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:20px 22px">
+        <div style="font-size:15.5px;font-weight:600;margin-bottom:7px">Linki wewnątrz zdań poniżej 24 px</div>
+        <div style="font-size:14px;color:#5B6B7A;line-height:1.65;text-wrap:pretty">Odnośniki typu „albo zadzwoń" siedzą w akapicie i norma wprost je z wymogu wielkości zwalnia. Powiększanie ich rozstrzeliłoby wiersze.</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(26,34,48,.13);border-radius:14px;padding:20px 22px">
+        <div style="font-size:15.5px;font-weight:600;margin-bottom:7px">Znaczniki obszarów strony</div>
+        <div style="font-size:14px;color:#5B6B7A;line-height:1.65;text-wrap:pretty">Treść nie jest opakowana w znacznik <code style="font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#FBF8F3;border:1px solid rgba(26,34,48,.13);padding:1px 6px;border-radius:5px">main</code>, bo w prototypie nagłówek i stopka siedzą w tym samym pojemniku co treść. Przy przepisywaniu na docelowy system programista powinien to rozdzielić — czytniki ekranu zyskają skok do treści.</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(232,101,74,.45);border-radius:14px;padding:20px 22px">
+        <div style="font-size:15.5px;font-weight:600;margin-bottom:7px">Polskie znaki w nazwach plików</div>
+        <div style="font-size:14px;color:#5B6B7A;line-height:1.65;text-wrap:pretty">Nazwy w rodzaju <b>Strona główna.dc.html</b> działają w prototypie, ale jako adresy potrafią się sypać właśnie na iOS, bo system zapisuje „ę" innym ciągiem bajtów niż serwer. Docelowe adresy są już opisane w Strukturze serwisu i są w całości bezogonkowe — programista bierze je stamtąd.</div>
+      </div>
+    </div>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:clamp(23px,2.8vw,30px);margin:48px 0 8px;letter-spacing:-.01em">Blokuje publikację</h2>
+    <div style="background:#1E5FCC;border-radius:16px;padding:clamp(22px,3vw,30px);margin-top:22px;color:#fff">
+      <p style="font-size:15.5px;line-height:1.7;margin:0 0 16px;max-width:70ch;text-wrap:pretty">Nie są to defekty, tylko dane, których jeszcze nie ma. W układzie są oznaczone koralową przerywaną linią, żeby nic nie umknęło.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:1.6">
+        <div style="display:flex;gap:11px"><span style="color:#E8654A;flex-shrink:0">◆</span><div>Kwoty w cenniku — wszystkie pozycje mają dziś zastępnik</div></div>
+        <div style="display:flex;gap:11px"><span style="color:#E8654A;flex-shrink:0">◆</span><div>Adres, telefon, e-mail, NIP i godziny pracy w stopce</div></div>
+        <div style="display:flex;gap:11px"><span style="color:#E8654A;flex-shrink:0">◆</span><div>Numer telefonu w odnośnikach „Zadzwoń teraz" — obecnie zero-zero-zero</div></div>
+        <div style="display:flex;gap:11px"><span style="color:#E8654A;flex-shrink:0">◆</span><div>Podpięcie formularza do skrzynki lub systemu zgłoszeń</div></div>
+        <div style="display:flex;gap:11px"><span style="color:#E8654A;flex-shrink:0">◆</span><div>Identyfikator analityki w bramce zgody</div></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</x-dc>
+</body>
+</html>

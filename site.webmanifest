@@ -1,0 +1,14 @@
+{
+  "name": "Skills Academy",
+  "short_name": "Skills Academy",
+  "lang": "pl",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF8F3",
+  "theme_color": "#1E5FCC",
+  "icons": [
+    { "src": "logo/skills-academy-favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "logo/skills-academy-favicon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "logo/skills-academy-favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

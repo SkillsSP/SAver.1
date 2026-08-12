@@ -679,8 +679,8 @@ const QA = [{
   q: 'Czym różni się to od szkoły językowej?',
   a: 'Nie uczymy słówek na pamięć — uczymy dzieci działać po angielsku: pytać, negocjować, rozwiązywać problemy w realnych misjach. Angielski jest narzędziem, nie samym celem zajęć.'
 }, {
-  q: 'Co to jest Rdzeń i fakultety?',
-  a: 'Rdzeń to obowiązkowe zajęcia bazowe — Useful Skills i Life Skills (a dla Teens Junior dodatkowo Exams, przygotowanie do ósmoklasisty). Fakultety to zajęcia wybierane wg zainteresowań dziecka, np. programowanie, teatr czy sport.'
+  q: 'Co to są zajęcia podstawowe i fakultety?',
+  a: 'Zajęcia podstawowe to Useful Skills i Life Skills — dwa filary jednego spotkania. Fakultety to zajęcia wybierane wg zainteresowań dziecka, np. programowanie, teatr czy sport. Exams, czyli przygotowanie do egzaminu ósmoklasisty i matury, stoi poza zajęciami podstawowymi jako osobna oferta.'
 }, {
   q: 'Na jakich badaniach opiera się program?',
   a: 'Metodologia czerpie z rekomendacji OECD, UNESCO, UNICEF i WHO oraz z metod TPR (Total Physical Response) i PBL (nauka przez projekty), a nie z autorskich, niesprawdzonych pomysłów.'
@@ -1113,7 +1113,7 @@ function Pricing({
       marginBottom: 14,
       lineHeight: 1.5
     }
-  }, "Rdze\u0144 (Useful Skills + Life Skills) + jeden fakultet do wyboru. Liczba spotka\u0144 tygodniowo do ustalenia."), /*#__PURE__*/React.createElement(Button, {
+  }, "Zaj\u0119cia podstawowe (Useful Skills + Life Skills) + jeden fakultet do wyboru. Liczba spotka\u0144 tygodniowo do ustalenia."), /*#__PURE__*/React.createElement(Button, {
     variant: "outline",
     size: "sm",
     onClick: onCta
@@ -1156,7 +1156,7 @@ const STEPS = [{
 }, {
   n: '02',
   title: 'Dobieramy grupę i program',
-  desc: 'Krótka rozmowa o wieku i poziomie dziecka, dopasowanie do Rdzenia i fakultetów.'
+  desc: 'Krótka rozmowa o wieku i poziomie dziecka, dopasowanie do zajęć podstawowych i fakultetów.'
 }, {
   n: '03',
   title: 'Dziecko zaczyna pierwszą misję',
@@ -1235,7 +1235,7 @@ const PILLARS = [{
   desc: 'Samodzielność, współpraca i odpowiedzialność — kompetencje życiowe ćwiczone przy okazji języka.'
 }, {
   name: 'Exams',
-  desc: 'Trzeci filar Rdzenia dla Teens Junior — przygotowanie do egzaminu ósmoklasisty.'
+  desc: 'Osobna oferta poza zajęciami podstawowymi — przygotowanie do egzaminu ósmoklasisty dla Teens Junior.'
 }];
 function ProgramPillars() {
   const {
@@ -1265,7 +1265,7 @@ function ProgramPillars() {
       margin: '0 0 24px',
       color: 'var(--text-primary)'
     }
-  }, "Rdze\u0144 \u2014 obowi\u0105zkowe zaj\u0119cia bazowe"), /*#__PURE__*/React.createElement("div", {
+  }, "Zaj\u0119cia podstawowe \u2014 Useful Skills i Life Skills"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))',

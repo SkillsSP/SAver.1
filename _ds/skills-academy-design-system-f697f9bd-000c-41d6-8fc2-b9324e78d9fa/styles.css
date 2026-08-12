@@ -3,3 +3,47 @@
 @import 'tokens/typography.css';
 @import 'tokens/spacing.css';
 @import 'tokens/effects.css';
+
+/* ── Warstwa bazowa (dodana po audycie wieloplatformowym) ─────────────── */
+
+:root {
+  /* Wymusza jasny wygląd pól formularza. Bez tego iOS i Android w trybie
+     ciemnym renderują input/select/textarea na ciemnym tle, przez co tekst
+     w polach potrafi zniknąć. */
+  color-scheme: light;
+}
+
+html {
+  /* Safari na iPhonie powiększa tekst po obrocie do poziomu. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  /* Szara plama na tapnięciu w Chrome na Androidzie. */
+  -webkit-tap-highlight-color: rgba(30, 95, 204, .15);
+}
+
+/* Domyślne linki — gdyby ktoś dodał <a> bez stylu inline, ma wyglądać
+   jak marka, nie jak domyślny niebieski przeglądarki. */
+a { color: #1E5FCC; text-decoration: none; }
+a:hover { color: #1A54B5; text-decoration: underline; }
+
+/* Widoczny focus dla klawiatury. Podwójny obrys działa i na jasnym,
+   i na kobaltowym tle. */
+:focus-visible {
+  outline: 2px solid #1A2230;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(251, 248, 243, .9);
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

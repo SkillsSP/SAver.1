@@ -39,8 +39,8 @@
         "message": "Raw px value — use a design-system spacing token via var()."
       },
       {
-        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Lexend|Fredoka))/i]",
-        "message": "Font not provided by the design system. Available: Lexend, Fredoka."
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Lexend|Quicksand))/i]",
+        "message": "Font not provided by the design system. Available: Lexend, Quicksand."
       },
       {
         "selector": "JSXOpeningElement[name.name='Badge'] > JSXAttribute > JSXIdentifier[name!=/^(?:tone|children|key|ref|className|style|children)$/]",
@@ -331,7 +331,7 @@
       "--shadow-raised": "shadow"
     },
     "fontFamilies": [
-      "Fredoka",
+      "Quicksand",
       "Lexend"
     ]
   }

@@ -14,6 +14,7 @@
 </helmet>
 
 <header style="position:sticky;top:0;z-index:50;background:#FBF8F3;border-bottom:1px solid rgba(26,34,48,.13);font-family:Lexend,system-ui,sans-serif;color:#1A2230">
+  <a href="#tresc" onClick="{{ skipToContent }}" style="position:absolute;left:-9999px;top:0;font-size:15px;font-weight:600" style-focus="left:12px;top:12px;z-index:60;background:#1E5FCC;color:#fff;padding:12px 18px;border-radius:10px">Przejdź do treści</a>
   <div style="max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px">
     <a href="Strona główna.dc.html" aria-label="Skills Academy" style="display:flex;align-items:flex-end;gap:0px;color:#1A2230;flex-shrink:0;margin-left:-7px">
       <img src="logo/skills-academy-sygnet.svg" alt="" aria-hidden="true" style="width:38px;height:38px;display:block;transform:translateY(-0.2px);margin-right:-3.7px">
@@ -38,11 +39,11 @@
     <div style="border-top:1px solid rgba(26,34,48,.13);background:#fff">
       <div style="max-width:1200px;margin:0 auto;padding:26px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px">
         <div>
-          <a href="Zajęcia indywidualne.dc.html" style="font-size:15px;font-weight:600;color:#1E5FCC">Indywidualne</a>
+          <a href="Zajęcia indywidualne.dc.html" style="font-size:15px;font-weight:600;color:#1E5FCC">Zajęcia indywidualne</a>
           <div style="font-size:13px;color:#5B6B7A;line-height:1.55;margin-top:5px">Zajęcia 1:1 — rozwój, egzamin ósmoklasisty, matura.</div>
         </div>
         <div>
-          <a href="Zajęcia podstawowe.dc.html" style="font-size:15px;font-weight:600;color:#1E5FCC">Podstawowe</a>
+          <a href="Zajęcia podstawowe.dc.html" style="font-size:15px;font-weight:600;color:#1E5FCC">Zajęcia podstawowe</a>
           <div style="font-size:13px;color:#5B6B7A;line-height:1.55;margin-top:5px">Useful Skills i Life Skills — baza każdego karnetu.</div>
         </div>
         <div>
@@ -60,14 +61,14 @@
           <div style="font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#5B6B7A;font-weight:600;padding-bottom:10px;border-bottom:1px solid rgba(26,34,48,.13)">Egzamin ósmoklasisty</div>
           <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
             <a href="Exams.dc.html#e8" style="font-size:15px;font-weight:600;color:#1E5FCC">Angielski</a>
-            <div style="display:flex;align-items:center;gap:8px"><a href="Exams.dc.html#e8" style="font-size:15px;font-weight:600;color:#1E5FCC">Matematyka</a><span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#E8654A;padding:2px 8px;border-radius:999px">Unikat</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><a href="Exams.dc.html#e8" style="font-size:15px;font-weight:600;color:#1E5FCC">Matematyka</a><span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#1A2230;background:#E8654A;padding:2px 8px;border-radius:999px">Unikat</span></div>
           </div>
         </div>
         <div>
           <div style="font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#5B6B7A;font-weight:600;padding-bottom:10px;border-bottom:1px solid rgba(26,34,48,.13)">Matura</div>
           <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
             <a href="Exams.dc.html#matura" style="font-size:15px;font-weight:600;color:#1E5FCC">Angielski <span style="font-weight:400;color:#5B6B7A;font-size:13px">— podstawowy i rozszerzony</span></a>
-            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><a href="Exams.dc.html#matura" style="font-size:15px;font-weight:600;color:#1E5FCC">Matematyka <span style="font-weight:400;color:#5B6B7A;font-size:13px">— podstawowy</span></a><span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#E8654A;padding:2px 8px;border-radius:999px">Unikat</span></div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><a href="Exams.dc.html#matura" style="font-size:15px;font-weight:600;color:#1E5FCC">Matematyka <span style="font-weight:400;color:#5B6B7A;font-size:13px">— podstawowy</span></a><span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#1A2230;background:#E8654A;padding:2px 8px;border-radius:999px">Unikat</span></div>
           </div>
         </div>
       </div>
@@ -75,12 +76,16 @@
   </sc-if>
 
   <sc-if value="{{ mobileOpen }}" hint-placeholder-val="{{ false }}">
-    <div style="border-top:1px solid rgba(26,34,48,.13);background:#FBF8F3;padding:8px 24px 22px;display:flex;flex-direction:column">
-      <a href="Zajęcia podstawowe.dc.html" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">Program</a>
+    <div style="border-top:1px solid rgba(26,34,48,.13);background:#FBF8F3;padding:8px 24px calc(22px + env(safe-area-inset-bottom));display:flex;flex-direction:column;max-height:calc(100vh - 76px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch">
+      <div style="font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#5B6B7A;font-weight:600;padding:16px 0 4px">Program</div>
+      <a href="Zajęcia podstawowe.dc.html" style="font-size:16px;font-weight:600;color:#1A2230;padding:14px 0;border-bottom:1px solid rgba(26,34,48,.13)">Zajęcia podstawowe</a>
+      <a href="Fakultety.dc.html" style="font-size:16px;font-weight:600;color:#1A2230;padding:14px 0;border-bottom:1px solid rgba(26,34,48,.13)">Fakultety</a>
+      <a href="Zajęcia indywidualne.dc.html" style="font-size:16px;font-weight:600;color:#1A2230;padding:14px 0;border-bottom:1px solid rgba(26,34,48,.13)">Zajęcia indywidualne</a>
       <a href="Exams.dc.html" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">Exams</a>
       <a href="Cennik.dc.html" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">Cennik</a>
       <a href="Strona główna.dc.html#o-nas" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">O nas</a>
-      <a href="Strona główna.dc.html#kontakt" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0">Kontakt</a>
+      <a href="Strona główna.dc.html#kontakt" style="font-size:16px;font-weight:600;color:#1A2230;padding:15px 0;border-bottom:1px solid rgba(26,34,48,.13)">Kontakt</a>
+      <a href="Zapisy.dc.html" data-cta style="margin-top:18px;text-align:center;font-size:15.5px;font-weight:600;color:#1E5FCC;border:1px solid rgba(30,95,204,.45);border-radius:10px;padding:15px 20px;min-height:44px">Umów zajęcia próbne</a>
     </div>
   </sc-if>
 
@@ -128,7 +133,14 @@ class Component extends DCLogic {
       kontaktStyle: this.item(a === 'kontakt'),
       toggleProgram: () => this.setState(s => ({ programOpen: !s.programOpen, examsOpen: false })),
       toggleExams: () => this.setState(s => ({ examsOpen: !s.examsOpen, programOpen: false })),
-      toggleMobile: () => this.setState(s => ({ mobileOpen: !s.mobileOpen }))
+      toggleMobile: () => this.setState(s => ({ mobileOpen: !s.mobileOpen })),
+      skipToContent: (e) => {
+        e.preventDefault();
+        const h = document.querySelector('h1');
+        if (!h) return;
+        h.setAttribute('tabindex', '-1');
+        h.focus();
+      }
     };
   }
 }

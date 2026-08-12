@@ -1,25 +1,17 @@
-/* Lexend (Sage/body) + Fredoka (Explorer/accent) — self-hosted z assets/fonts/.
-   Oba to fonty zmienne: jeden plik pokrywa cały zakres wag (Lexend 100–900,
-   Fredoka 300–700), łącznie z pośrednią wagą 550 używaną w logotypie.
-   Pełny zestaw glifów, więc latin-ext (ą ć ę ł ń ó ś ź ż) jest w środku —
-   nie ma potrzeby dzielenia na podzbiory ani deklarowania unicode-range.
-   Licencja: OFL, patrz assets/fonts/*-OFL.txt. */
+/* Lexend (tekst) + Quicksand (nagłówki).
 
-@font-face {
-  font-family: 'Lexend';
-  src: url('../../../assets/fonts/Lexend-Variable.ttf') format('truetype-variations'),
-       url('../../../assets/fonts/Lexend-Variable.ttf') format('truetype');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
+   ⚠ Fredoka została wycofana z serwisu. Powód: krój NIE ZAWIERA polskich
+   znaków ą ć ę ń ś ź ż (ani wersalików) — ani w pliku samodzielnie hostowanym,
+   ani w wersji z Google Fonts. Ma tylko ł Ł ó Ó. Ponieważ na kroju
+   akcentowym stały wszystkie nagłówki H1–H3, iOS podstawiał brakujące
+   litery z SF Pro; na Androidzie podmiana była mniej widoczna.
+   Zweryfikowane pomiarem glifów, nie na oko.
 
-@font-face {
-  font-family: 'Fredoka';
-  src: url('../../../assets/fonts/Fredoka-Variable.ttf') format('truetype-variations'),
-       url('../../../assets/fonts/Fredoka-Variable.ttf') format('truetype');
-  font-weight: 300 700;
-  font-stretch: 75% 125%;
-  font-style: normal;
-  font-display: swap;
-}
+   Krój akcentowy wybrany przez klientkę: Quicksand (pełne latin-ext).
+   UWAGA DLA PROGRAMISTY: Quicksand kończy się na wadze 700 — nagłówki
+   składamy wagą 700, nie 600 jak wcześniej. Lexend ma komplet polskich znaków.
+
+   Pliki w assets/fonts/ (Lexend-Variable.ttf, Fredoka-Variable.ttf) to
+   podzbiory „latin" — zostawione wyłącznie jako archiwum, nieużywane. */
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400..700&family=Lexend:wght@100..900&display=swap');

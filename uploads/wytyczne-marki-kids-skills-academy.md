@@ -1,7 +1,7 @@
 # Wytyczne Marki — Skills Academy
 
 **Dokument uzupełniający do biznesplanu „Centrum Kompetencji Przyszłości dla Dzieci"**
-Wersja 3.0. Sekcja 5 (tożsamość wizualna) zamknięta: system kolorów, typografii i znaku. Sekcje 0, 1 i 4.2 zaktualizowane po ustaleniach struktury serwisu — Exams odłączone od modelu filarowego, oferta egzaminacyjna rozszerzona o matematykę, hasło Teens Senior skrócone. Struktura serwisu w osobnym dokumencie („Struktura serwisu", wersja 3.0).
+Wersja 3.1. Sekcja 5 (tożsamość wizualna) zamknięta: system kolorów, typografii i znaku. Sekcje 0, 1 i 4.2 zaktualizowane po ustaleniach struktury serwisu — Exams odłączone od modelu filarowego i sprzedawane osobno, ze zniżką dla uczestników karnetu; oferta egzaminacyjna obejmuje angielski i matematykę, hasło Teens Senior skrócone. Struktura serwisu w osobnym dokumencie („Struktura serwisu", wersja 3.0).
 
 ---
 
@@ -17,7 +17,7 @@ Rozstrzygnięte: nazwa **Skills Academy** (bez „Kids") działa jako jedna mark
 
 - **Kids + Teens Junior (5–15 lat)**, pełny model zajęcia podstawowe + fakultety (Rozdz. 9 biznesplanu). Zajęcia podstawowe to **Useful Skills i Life Skills** — dwa filary, nie trzy
 - **Teens Senior (16–19 lat)**, osobna, standalone oferta przygotowania do matury, świadomie poza modelem filarowym, zaprojektowana jako stabilne źródło przychodu od startu, na sprawdzonym rynku korepetycji maturalnych
-- **Exams**, przygotowanie egzaminacyjne (egzamin ósmoklasisty oraz matura), **poza modelem filarowym**, kupowane niezależnie od zajęć podstawowych i dostępne także dla osób spoza centrum
+- **Exams**, przygotowanie egzaminacyjne z angielskiego i z matematyki (egzamin ósmoklasisty oraz matura), **poza modelem filarowym**, kupowane niezależnie od zajęć podstawowych i dostępne także dla osób spoza centrum. Uczestnicy karnetu mają zniżkę (wysokość: patrz biznesplan, Rozdz. 9.3)
 
 **Zmiana względem wersji 2.0.** Exams z angielskiego było wcześniej opisane jako trzeci filar zajęć podstawowych dla Teens Junior. Odłączenie usuwa sprzeczność, która pojawiała się przy cenniku: ta sama usługa nie może być jednocześnie częścią karnetu i osobno płatną ofertą dla kogoś z zewnątrz. Od tej wersji zajęcia podstawowe to wyłącznie Useful Skills i Life Skills, a Exams jest osobną ofertą na tych samych zasadach dla wszystkich.
 
@@ -40,9 +40,11 @@ Zaczerpnięte wprost z biznesplanu (Rozdział 2). To nie są elementy do wymyśl
 | **Hasło główne (Kids + Teens Junior)** | „Angielski dla życia, nie tylko dla szkoły" |
 | **Hasło Teens Senior** | „Konkretny plan na maturę" — celowo inne niż hasło główne, bo Teens Senior *jest* dla szkoły wprost, i udawanie inaczej osłabiłoby wiarygodność tej oferty. Bez nazwy przedmiotu w haśle, odkąd oferta obejmuje angielski i matematykę; przedmiot pojawia się w podtytule strony, nie w haśle |
 
+**Druga uwaga, po dodaniu matematyki:** pozycjonowanie główne („Centrum Kompetencji Przyszłości dla Dzieci") i hasło główne („Angielski dla życia, nie tylko dla szkoły") opisują Kids + Teens Junior i pozostają bez zmian. Nie wolno ich natomiast rozciągać na całość oferty — od momentu, w którym uczeń może przyjść wyłącznie na matematykę, zdanie „u nas wszystko dzieje się po angielsku" przestaje być prawdziwe. Strona Exams potrzebuje własnego zdania wprost: „Przygotowanie egzaminacyjne prowadzimy z angielskiego i z matematyki. Można je wybrać osobno, niezależnie od zajęć podstawowych."
+
 **Uwaga o sprzeczności, którą to rozwiązuje:** hasło główne świadomie odcina się od „szkolności", dobre dla Kids i Teens Junior, ale wprost sprzeczne z sensem istnienia Teens Senior (który *jest* przygotowaniem do konkretnego egzaminu szkolnego). Zamiast rozciągać jedno hasło na obie oferty, Teens Senior dostaje własne, uczciwe wobec swojego celu, spójne z tym, że ma już osobny rejestr tonalny (sekcja 4.2) i osobną paletę (sekcja 5.1).
 
-**Druga uwaga, po dodaniu matematyki:** pozycjonowanie główne („Centrum Kompetencji Przyszłości dla Dzieci") i hasło główne („Angielski dla życia, nie tylko dla szkoły") opisują Kids + Teens Junior i pozostają bez zmian. Nie wolno ich natomiast rozciągać na całość oferty — od momentu, w którym uczeń może przyjść wyłącznie na matematykę, zdanie „u nas wszystko dzieje się po angielsku" przestaje być prawdziwe. Strona Exams potrzebuje własnego zdania wprost: „Przygotowanie egzaminacyjne prowadzimy z angielskiego i z matematyki. Można je wybrać osobno, niezależnie od zajęć podstawowych."
+
 
 ---
 
@@ -155,7 +157,7 @@ System jest zamknięty i gotowy do produkcji. Obejmuje pięć kolorów, z który
 | Kolor | HEX | Funkcja | Kontrast |
 |---|---|---|---|
 | Kobalt | `#1E5FCC` | Lider: hero, logo, główne bloki, nagłówki sekcji | AA, 5,6:1 na bazie |
-| Koral | `#E8654A` | Iskra: wyłącznie główne CTA i pojedyncze akcenty | duży tekst i UI, 3,1:1 |
+| Koral | `#E8654A` | Iskra: wyłącznie główne CTA i pojedyncze akcenty | tekst na koralu zawsze grafitowy, 4,9:1 |
 | Slate | `#5B6B7A` | Etykieta: wyłącznie oferta Teens Senior | AA, 5,2:1 na bazie |
 | Cloud Dancer | `#FBF8F3` | Baza: tło strony i dokumentów | tło podstawowe |
 | Grafit | `#1A2230` | Tekst: kolor treści, nie czysta czerń | AAA, około 14:1 |
@@ -175,13 +177,13 @@ Dwa kroje, dwie role. Oba dostępne bezpłatnie w Google Fonts, bez kosztów lic
 | Krój | Rola | Zastosowanie |
 |---|---|---|
 | **Lexend** | Podstawowy (Mędrzec) | Cały tekst: treść, dokumenty, przyciski, wnioski grantowe, całość materiałów Teens Senior. Wagi 400, 500, 600, 700 |
-| **Fredoka** | Akcentowy (Odkrywca) | Wyłącznie nagłówki i nazwy misji dla Kids oraz Teens Junior. Nigdy w dłuższym tekście. Wagi 500, 600 |
+| **Quicksand** | Akcentowy (Odkrywca) | Wyłącznie nagłówki i nazwy misji dla Kids oraz Teens Junior. Nigdy w dłuższym tekście. Wagi 600, 700 — krój kończy się na 700 |
 
 Lexend został zaprojektowany i przetestowany pod kątem płynności czytania, dlatego niesie główny ciężar komunikacji, działając zarówno dla dziecka uczącego się liter, jak i dla maturzysty pracującego z arkuszem.
 
-Wykluczenie Fredoki z materiałów Teens Senior to jedna decyzja typograficzna, która automatycznie wymusza właściwy rejestr tej oferty, bez pilnowania go osobno przy każdym materiale.
+Wykluczenie kroju akcentowego z materiałów Teens Senior to jedna decyzja typograficzna, która automatycznie wymusza właściwy rejestr tej oferty, bez pilnowania go osobno przy każdym materiale.
 
-**Do potwierdzenia przy produkcji druku:** rendering wszystkich polskich znaków diakrytycznych (ą, ć, ę, ł, ń, ó, ś, ź, ż) w kroju Fredoka.
+**Zmiana kroju akcentowego (sierpień 2026).** Pierwotnie rolę Odkrywcy pełniła **Fredoka**. Krój został wycofany, bo nie zawiera polskich znaków ą, ć, ę, ń, ś, ź, ż — ma wyłącznie ł, Ł, ó, Ó. Ponieważ na kroju akcentowym stoją wszystkie nagłówki, każdy nagłówek z ogonkiem renderował te litery fontem systemowym; na iOS było to wyraźnie widoczne. Zastępuje ją **Quicksand**: ten sam charakter (geometryczny, zaokrąglony, ciepły), pełne latin-ext. Zweryfikowane pomiarem szerokości glifów, nie oceną wzrokową.
 
 ### 5.3 Znak
 
@@ -195,7 +197,7 @@ Znak jest zamknięty i zwektoryzowany — także wordmark, zamieniony na krzywe.
 - bryła pełna, jednolita, bez obrysu i bez przezroczystości
 - pole ochronne: wysokość sygnetu z każdej strony znaku
 - minimalny rozmiar: logo pełne 90 px na ekranie / 30 mm w druku; sygnet 24 px / 10 mm. Poniżej 32 px stosować wersję bez oczu (favicon)
-- lockup z nazwą: „kills" i „ACADEMY" krojem **Lexend** (550 / 500), sygnet w miejscu pierwszej litery. Fredoka nie występuje w znaku
+- lockup z nazwą: „kills" i „ACADEMY" krojem **Lexend** (550 / 500), sygnet w miejscu pierwszej litery. Krój akcentowy nie występuje w znaku
 - warianty: poziomy, pionowy, sam sygnet, rewers, monochrom grafitowy i biały
 
 **Zakazy użycia:** obracanie, odbicie lustrzane, zmiana proporcji, zamiana kolorów koi (górne zawsze grafitowe), usuwanie lub powiększanie oczu powyżej 32 px, dodawanie cieni, obrysów, gradientów i efektów przestrzennych, umieszczanie na tle o zbyt niskim kontraście.
@@ -204,7 +206,7 @@ Znak jest zamknięty i zwektoryzowany — także wordmark, zamieniony na krzywe.
 
 Zasady składu:
 
-- wordmark krojem **Lexend 600**, `letter-spacing: -.015em`, `line-height: 1`. Fredoka w znaku nie występuje
+- wordmark krojem **Lexend 600**, `letter-spacing: -.015em`, `line-height: 1`. Krój akcentowy w znaku nie występuje
 - dolna krawędź sygnetu leży **na linii bazowej** wordmarku, nie na dolnej krawędzi jego pudełka tekstowego. Przy `line-height: 1` prawdziwa linia bazowa Lexend leży ok. 0,14 em **wyżej** niż dół pudełka — pominięcie tej różnicy sprawia, że znak wizualnie opada. Wzór: `przesunięcie = (line-height − (ascent + descent)) / 2 + ascent − line-height + margines_dolny_sygnetu`, gdzie margines dolny sygnetu = 4,75/64 wysokości pliku SVG
 - sygnet w pliku SVG ma marginesy wewnętrzne (rysunek zajmuje 54,5 z 64 jednostek), więc wysokość obrazka jest zawsze większa od wysokości samego znaku o 17%
 - **odstęp między znakiem a literą „k"**: 4 px przy wordmarku 22 px (nagłówek), 3 px przy 18 px (stopka) — mierzone od krawędzi rysunku do krawędzi litery, nie od krawędzi pliku. Marginesy wewnętrzne SVG trzeba skompensować ujemnym `margin-right` na obrazku
@@ -212,7 +214,12 @@ Zasady składu:
 - oczy pokazujemy dopiero, gdy narysowany znak ma co najmniej 32 px; poniżej stosujemy `skills-academy-favicon.svg` (wersja bez oczu)
 - każdy lockup składany z osobnych elementów dostaje `aria-label="Skills Academy"`, żeby czytnik ekranu przeczytał pełną nazwę, a nie „kills Academy"
 
-**Status produkcyjny.** Dostarczone: warianty logo (poziomy, pionowy, sygnet), wersje kolorystyczne (podstawowa, rewers, monochrom), favicony SVG/ICO/PNG, awatary do mediów społecznościowych, rastry logo pełnego (PNG 2400 / 1200 / 500, rewers, JPG na bieli) oraz pliki SVG z wordmarkiem zamienionym na krzywe — nie wymagają zainstalowanego kroju Lexend po stronie odbiorcy. Do wykonania: wersja CMYK/Pantone z zatwierdzonym proofem przed pierwszym drukiem oraz jednostronicowa karta marki. Zakres ten opisuje osobny brief graficzny (v2.0).
+**Status produkcyjny.** Dostarczone: warianty logo (poziomy, pionowy, sygnet), wersje kolorystyczne (podstawowa, rewers, monochrom), favicony SVG/ICO/PNG, awatary do mediów społecznościowych, rastry logo pełnego (PNG 2400 / 1200 / 500, rewers, JPG na bieli) oraz pliki SVG z wordmarkiem zamienionym na krzywe — nie wymagają zainstalowanego kroju Lexend po stronie odbiorcy. Do wykonania: wersja CMYK/Pantone z zatwierdzonym proofem przed pierwszym drukiem oraz jednostronicowa karta marki. Zakres ten opisuje osobny brief graficzny (v2.1).
+
+**Zmiany w wersji 3.1 (sierpień 2026).** Dwie korekty wymuszone testami, obie opisane w miejscu, którego dotyczą:
+
+- **Krój akcentowy: Fredoka → Quicksand** (sekcja 5.2). Fredoka nie zawiera polskich znaków ą, ć, ę, ń, ś, ź, ż — na iPhonie nagłówki składały się częściowo krojem systemowym.
+- **Napis na koralu: biel → grafit** (sekcja 5.1). Biel dawała kontrast 3,29:1, poniżej progu WCAG AA dla tekstu. Grafit daje 4,86:1. Stan najechania rozjaśnia tło zamiast je przyciemniać.
 
 ### 5.4 Ruch i mikrointerakcje
 
@@ -222,7 +229,7 @@ Marka jest wizualnie płaska i statyczna: brak cieni, gradientów i tekstur. Ruc
 
 | Element | Zachowanie | Czas | Krzywa |
 |---|---|---|---|
-| Przycisk koralowy (CTA) | ciemniejszy koral `#D4553B` + przesunięcie 1 px w górę | 160 ms | `ease` |
+| Przycisk koralowy (CTA) | jaśniejszy koral `#F0785F` + przesunięcie 1 px w górę | 160 ms | `ease` |
 | Przycisk — wciśnięcie | powrót do pozycji wyjściowej | 160 ms | `ease` |
 | Link nawigacji | zmiana koloru na kobalt, tło `rgba(30,95,204,.08)` | 160 ms | `ease` |
 | Pasek CTA na telefonie — pojawienie | wjazd od dołu, jednorazowo | 340 ms | `cubic-bezier(.2,.7,.3,1)` |
@@ -248,7 +255,7 @@ Biznesplan (Rozdz. 10.3) definiuje cztery kanały; Google rozbity jest tu na dwa
 | Instagram | Budowanie marki | Równowaga Odkrywca/Mędrzec — estetyka + treść |
 | TikTok | Kids 2–3 i Teens Junior pośrednio i częściowo bezpośrednio | Odkrywca dominuje — energia, ruch, humor; jedyny kanał, gdzie warto mówić wprost do nastolatka z Teens Junior, nie tylko do rodzica |
 | Google (lokalnie) | Wyszukujący rodzice Kids/Teens Junior | Mędrzec, język rzeczowy, słowa kluczowe z pozycjonowania |
-| Google (Teens Senior) | Maturzyści i rodzice szukający korepetycji, osobno dla angielskiego i matematyki | Wyłącznie Mędrzec — to kategoria o bardzo wysokiej intencji wyszukiwania („korepetycje matura angielski Szczecin"), gdzie liczy się trafność słów kluczowych i dowód skuteczności, nie budowanie marki |
+| Google (Teens Senior) | Maturzyści i rodzice szukający korepetycji, osobno dla angielskiego i matematyki | Wyłącznie Mędrzec — to kategoria o bardzo wysokiej intencji wyszukiwania („korepetycje matura angielski Szczecin"), gdzie liczy się trafność słów kluczowych i dowód skuteczności, nie budowanie marki | Wyłącznie Mędrzec — to kategoria o bardzo wysokiej intencji wyszukiwania („korepetycje matura angielski Szczecin"), gdzie liczy się trafność słów kluczowych i dowód skuteczności, nie budowanie marki |
 
 Zasada: głos marki (archetyp + osobowość) pozostaje identyczny w Kids i Teens Junior, zmienia się tylko proporcja i rejestr, zgodnie z zasadą „stały głos, zmienny ton" z sekcji 4.1. Teens Senior jest świadomym wyjątkiem od tej zasady (patrz 4.2 i sekcja 0). To osobna oferta z własnym, węższym rejestrem.
 
