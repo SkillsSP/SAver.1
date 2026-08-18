@@ -423,11 +423,14 @@ button {
   line-height: var(--interlinia-srednia);
 }
 
-/* Rejestr Teens Senior: wyłącznie Lexend, bez Fredoki */
+/* Rejestr Teens Senior: wyłącznie Lexend, bez kroju akcentowego */
 .rejestr-senior .tytul-display,
 .rejestr-senior .tytul-1,
 .rejestr-senior .tytul-2,
 .rejestr-senior .tytul-3,
+/* Baner zgody jest wspólny dla całego serwisu, więc na stronie maturalnej
+   trafiał w nią krojem akcentowym. Rejestr Teens Senior nie robi wyjątków. */
+.rejestr-senior .zgoda-cookies__tytul,
 .tytul--medrzec {
   font-family: var(--font-medrzec);
   font-weight: var(--waga-gruba);
