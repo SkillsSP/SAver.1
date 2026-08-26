@@ -30,11 +30,15 @@ export const firma = {
      wskazania kanału zgłoszeń w standardach ochrony małoletnich — może to być
      ten sam adres co ogólny, ale osobna skrzynka bywa czytelniejsza. */
   emailZgloszenia: null,
-  /* Adres, pod który formularz zapisu wysyła zgłoszenie. Dopóki jest `null`,
-     formularz nie udaje, że działa: pokazuje uczciwy komunikat i kieruje do
-     telefonu, zamiast kończyć zgłoszenie błędem. Wpiszcie tu adres z Formspree,
-     Netlify Forms albo własnego serwera, a formularz włączy się sam. */
-  formularzEndpoint: null,
+  /* Adres, pod który formularz zapisu wysyła zgłoszenie. Obsługuje go funkcja
+     Cloudflare Pages w functions/api/zapis.js — ta sama domena, żaden pośrednik.
+     Funkcja przepisuje zgłoszenie na skrzynkę i nic nie zapisuje.
+
+     Zanim zacznie działać, w panelu Cloudflare trzeba ustawić RESEND_API_KEY
+     i MAIL_DO. Do tego czasu funkcja odpowiada kodem 503, a strona pokazuje
+     rodzicowi uczciwy komunikat i prośbę o telefon — zgłoszenie nie ginie po
+     cichu. Szczegóły w komentarzu na górze functions/api/zapis.js. */
+  formularzEndpoint: "/api/zapis",
 };
 
 /** Telefon w formacie do `tel:` — cyfry bez spacji. */
@@ -172,24 +176,32 @@ export const fakultety = [
     wiodace:
       "Rytm, głos i wspólne granie. Dziecko nie uczy się nut na wejściu — najpierw gra, potem rozumie, co zagrało.",
     szczegol: "Zakres i instrumenty",
+    zdjecie: "fakultet-music",
+    zdjecieAlt: "Grupa dzieci śpiewa razem podczas zajęć",
   },
   {
     nazwa: "Art Skills",
     wiodace:
       "Rysunek, kolaż, praca przestrzenna. Zadanie zawsze ma cel wykraczający poza samą technikę.",
     szczegol: "Techniki i materiały",
+    zdjecie: "fakultet-art",
+    zdjecieAlt: "Chłopiec lepi figurki z gliny przy stole z innymi dziećmi",
   },
   {
     nazwa: "Acting Skills",
     wiodace:
       "Scena, głos i obecność przed grupą. Najkrótsza droga do tego, żeby dziecko przestało bać się mówić.",
     szczegol: "Formy pracy i pokaz końcowy",
+    zdjecie: "fakultet-acting",
+    zdjecieAlt: "Dzieci odgrywają scenkę teatralną w sali",
   },
   {
     nazwa: "Motion Skills",
     wiodace:
       "Ruch, koordynacja i praca zespołowa. Dla dzieci, które nie usiedzą — i dobrze.",
     szczegol: "Rodzaj aktywności i przestrzeń",
+    zdjecie: "fakultet-motion",
+    zdjecieAlt: "Dzieci rozciągają kolorową chustę animacyjną we wspólnej zabawie ruchowej",
   },
 ];
 

@@ -1,15 +1,16 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 
-// Statyczny serwis wizytówkowy.
+// Statyczny serwis wizytówkowy pod własną domeną skilful.pl.
 //
-// `site` i `base` są ustawione pod adres projektowy GitHub Pages
-// (https://<uzytkownik>.github.io/SAver.1/). Po podłączeniu własnej domeny:
-//   1. `site` -> adres domeny, `base` -> "/",
-//   2. usunąć przedrostek "/SAver.1" z reguł @font-face w src/styles/style.css.
+// Serwis stoi w katalogu głównym domeny, więc `base` to "/". Gdyby kiedyś
+// wrócił pod adres projektowy (https://<uzytkownik>.github.io/<repo>/), trzeba
+// ustawić `base` na nazwę repozytorium i dopisać ten sam przedrostek do reguł
+// @font-face w src/styles/style.css — to jedyne ścieżki w arkuszu, które
+// o `base` wiedzą.
 export default defineConfig({
-  site: "https://evolynvoncersival-debug.github.io",
-  base: "/SAver.1",
+  site: "https://skilful.pl",
+  base: "/",
   trailingSlash: "ignore",
   build: {
     format: "directory",

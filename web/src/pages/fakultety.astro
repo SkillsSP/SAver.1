@@ -3,6 +3,7 @@ import Baza from "../layouts/Baza.astro";
 import OdeslanieDoGrup from "../components/OdeslanieDoGrup.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
+import Zdjecie from "../components/Zdjecie.astro";
 import { url, fakultety } from "../lib/site.js";
 
 const wybor = [
@@ -44,7 +45,14 @@ const wybor = [
     <div class="szerokosc">
       <div class="siatka siatka--2">
         {fakultety.map((f) => (
-          <article class="karta karta--luzna">
+          <article class="karta karta--luzna karta--ze-zdjeciem">
+            <Zdjecie
+              nazwa={f.zdjecie}
+              alt={f.zdjecieAlt}
+              proporcje="16 / 9"
+              rozmiary="(min-width: 56rem) 30rem, 100vw"
+              klasa="zdjecie--w-karcie"
+            />
             <h2 class="tytul-3">{f.nazwa}</h2>
             <p class="tekst-drugi tekst-maly">{f.wiodace}</p>
             <p class="tekst-drobny">{f.szczegol}: do ustalenia przed startem naboru.</p>

@@ -2,8 +2,8 @@ User-agent: *
 Allow: /
 
 # Dokumenty formalne nie powinny konkurować w wynikach ze stronami oferty.
-Disallow: /SAver.1/polityka-prywatnosci
-Disallow: /SAver.1/regulamin
-Disallow: /SAver.1/klauzula-rodo
+Disallow: /polityka-prywatnosci
+Disallow: /regulamin
+Disallow: /klauzula-rodo
 
-Sitemap: https://evolynvoncersival-debug.github.io/SAver.1/sitemap.xml
+Sitemap: https://skilful.pl/sitemap.xml

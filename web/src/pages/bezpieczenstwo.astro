@@ -1,6 +1,7 @@
 ---
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import Zdjecie from "../components/Zdjecie.astro";
 import { url, wielkoscGrupy, firma, telefonHref, telefonTekst } from "../lib/site.js";
 
 const tel = telefonHref();
@@ -94,6 +95,20 @@ const zasadyDlaDziecka = [
           prowadzących, biuro, osoby współpracujące.
         </p>
       </div>
+    </div>
+  </section>
+
+  {/* ZDJĘCIE WIODĄCE — bezpieczeństwo ćwiczone, nie deklarowane */}
+  <section class="sekcja sekcja--bez-gory">
+    <div class="szerokosc">
+      <Zdjecie
+        nazwa="bezpieczenstwo-pierwsza-pomoc"
+        alt="Policjant tłumaczy grupie dzieci zasady bezpiecznego przechodzenia przez jezdnię"
+        proporcje="21 / 9"
+        rozmiary="(min-width: 72rem) 68rem, 100vw"
+        pilne={true}
+        klasa="zdjecie--pas"
+      />
     </div>
   </section>
 

@@ -53,8 +53,9 @@ const poWyslaniu = [
           <form
             class="formularz"
             method="post"
-            action={endpoint ?? undefined}
-            data-endpoint={endpoint ? "tak" : "nie"}
+            action={endpoint}
+            data-telefon={tel ?? ""}
+            data-telefon-tekst={tel ? telefonTekst() : ""}
           >
             <div class="pole">
               <label for="dziecko">Imię dziecka</label>
@@ -110,39 +111,41 @@ const poWyslaniu = [
               </label>
             </div>
 
-            {endpoint ? (
-              <button type="submit" class="przycisk przycisk--akcja przycisk--pelny">
-                Wyślij zgłoszenie
-              </button>
-            ) : (
-              <>
-                <button
-                  type="submit"
-                  class="przycisk przycisk--akcja przycisk--pelny"
-                  disabled
-                  aria-describedby="formularz-nieczynny"
-                >
-                  Wyślij zgłoszenie
-                </button>
-                <p class="komunikat-formularza" id="formularz-nieczynny">
-                  Formularz nie jest jeszcze podłączony do skrzynki.
-                  {tel ? (
-                    <> Do czasu wdrożenia prosimy o telefon: <a href={tel}>{telefonTekst()}</a>.</>
-                  ) : (
-                    <> Do czasu wdrożenia i uzupełnienia numeru telefonu nie da się przez niego wysłać zgłoszenia.</>
-                  )}
-                </p>
-              </>
-            )}
+            {/* Pułapka na roboty. Ukryta przed człowiekiem i przed czytnikiem
+                ekranu, bez atrybutu required — wypełni ją tylko automat. */}
+            <div class="pulapka" aria-hidden="true">
+              <label for="firma">Nazwa firmy</label>
+              <input type="text" id="firma" name="firma" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <button type="submit" class="przycisk przycisk--akcja przycisk--pelny">
+              Wyślij zgłoszenie
+            </button>
+
+            {/* Komunikat po wysłaniu. `aria-live` sprawia, że czytnik ekranu
+                przeczyta go od razu, bez przenoszenia fokusu. */}
+            <p class="komunikat-formularza" data-status hidden aria-live="polite"></p>
+
+            <noscript>
+              <p class="komunikat-formularza">
+                Wysyłka formularza wymaga włączonego JavaScriptu.
+                {tel ? (
+                  <> Bez niego prosimy o telefon: <a href={tel}>{telefonTekst()}</a>.</>
+                ) : (
+                  <> Bez niego prosimy o kontakt telefoniczny.</>
+                )}
+              </p>
+            </noscript>
           </form>
 
-          <DoUzupelnienia czego="Podłączenie formularza">
-            W <code>src/lib/site.js</code> pole <code>formularzEndpoint</code>
-            jest puste, więc przycisk jest świadomie wyłączony — lepiej to niż
-            zgłoszenie, które kończy się błędem i znika. Wpiszcie tam adres
-            z Formspree, Netlify Forms albo własnego serwera, a formularz włączy
-            się sam, bez zmian w kodzie strony. Sprawdźcie potem jedno prawdziwe
-            zgłoszenie od początku do końca.
+          <DoUzupelnienia czego="Podłączenie skrzynki">
+            Formularz wysyła zgłoszenie do funkcji <code>/api/zapis</code>, która
+            przepisuje je na skrzynkę i niczego nie zapisuje. Żeby ruszyła,
+            w panelu Cloudflare trzeba dodać dwie wartości:
+            <code>RESEND_API_KEY</code> jako sekret i <code>MAIL_DO</code>
+            z adresem odbiorcy. Do tego czasu rodzic dostaje komunikat, że
+            formularz czeka na podłączenie — nie błąd i nie ciszę. Po ustawieniu
+            wyślijcie jedno prawdziwe zgłoszenie i sprawdźcie, czy doszło.
           </DoUzupelnienia>
         </div>
 
@@ -221,3 +224,78 @@ const poWyslaniu = [
     </div>
   </section>
 </Baza>
+
+<script>
+  /* Wysyłka zgłoszenia bez przeładowania strony.
+
+     Formularz ma poprawny `action` i `method`, więc gdyby ten skrypt się nie
+     wykonał, przeglądarka wysłałaby go klasycznie — funkcja przyjmuje oba
+     formaty. Skrypt służy tylko temu, żeby rodzic zobaczył odpowiedź na
+     miejscu, zamiast trafiać na surową odpowiedź serwera. */
+  const formularz = document.querySelector(".formularz");
+  const status = formularz?.querySelector("[data-status]");
+
+  if (formularz && status) {
+    const przycisk = formularz.querySelector('button[type="submit"]');
+    const napisPrzycisku = przycisk?.textContent ?? "";
+    const tel = formularz.dataset.telefon;
+    const telTekst = formularz.dataset.telefonTekst;
+
+    /** Dokleja prośbę o telefon, o ile numer jest już znany. */
+    function zProsbaOTelefon(tresc) {
+      status.textContent = tresc;
+      if (!tel) return;
+      status.append(" Prosimy o telefon: ");
+      const odnosnik = document.createElement("a");
+      odnosnik.href = tel;
+      odnosnik.textContent = telTekst;
+      status.append(odnosnik, ".");
+    }
+
+    function pokaz(rodzaj) {
+      status.hidden = false;
+      status.dataset.rodzaj = rodzaj;
+    }
+
+    formularz.addEventListener("submit", async (zdarzenie) => {
+      if (!formularz.reportValidity()) return;
+      zdarzenie.preventDefault();
+
+      przycisk.disabled = true;
+      przycisk.textContent = "Wysyłamy…";
+      status.hidden = true;
+      status.textContent = "";
+
+      try {
+        const odpowiedz = await fetch(formularz.action, {
+          method: "POST",
+          headers: { accept: "application/json" },
+          body: new FormData(formularz),
+        });
+        const tresc = await odpowiedz.json().catch(() => ({}));
+
+        if (odpowiedz.ok) {
+          status.textContent =
+            "Dziękujemy. Zgłoszenie do nas dotarło — odezwiemy się telefonicznie.";
+          pokaz("sukces");
+          formularz.reset();
+          /* Zdarzenie leci do analityki tylko wtedy, gdy odwiedzający zgodził
+             się na ciasteczka — bramkę trzyma window.saTrack. */
+          window.saTrack?.("zapis_formularz");
+          return;
+        }
+
+        zProsbaOTelefon(
+          tresc.blad || "Nie udało się wysłać zgłoszenia."
+        );
+        pokaz("blad");
+      } catch {
+        zProsbaOTelefon("Brak połączenia z siecią — zgłoszenie nie wyszło.");
+        pokaz("blad");
+      } finally {
+        przycisk.disabled = false;
+        przycisk.textContent = napisPrzycisku;
+      }
+    });
+  }
+</script>

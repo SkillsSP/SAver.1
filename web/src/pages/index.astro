@@ -1,6 +1,7 @@
 ---
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import Zdjecie from "../components/Zdjecie.astro";
 import {
   url,
   grupyWiekowe,
@@ -70,6 +71,34 @@ const przebiegMisji = [
           <li class="hero__fakt">Grupy do {wielkoscGrupy} osób</li>
           <li class="hero__fakt">Zajęcia podstawowe w całości po angielsku</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 1b ── PAS ZDJĘĆ. Trzy ujęcia zamiast opisu: dziecko przy zadaniu,
+       praca w grupie i fakultet. Rodzic ogląda, zanim zacznie czytać. */}
+  <section class="sekcja sekcja--bez-gory">
+    <div class="szerokosc">
+      <div class="pas-zdjec">
+        <Zdjecie
+          nazwa="podstawowe-glowne"
+          alt="Dzieci pracują w drużynie nad wspólnym zadaniem technicznym"
+          proporcje="4 / 3"
+          rozmiary="(min-width: 56rem) 22rem, 100vw"
+          pilne={true}
+        />
+        <Zdjecie
+          nazwa="dzieci-w-dzialaniu"
+          alt="Dzieci pochylone nad globusem podczas zajęć"
+          proporcje="4 / 3"
+          rozmiary="(min-width: 56rem) 22rem, 100vw"
+        />
+        <Zdjecie
+          nazwa="fakultet-acting"
+          alt="Dzieci odgrywają scenkę teatralną w sali"
+          proporcje="4 / 3"
+          rozmiary="(min-width: 56rem) 22rem, 100vw"
+        />
       </div>
     </div>
   </section>

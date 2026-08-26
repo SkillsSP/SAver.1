@@ -3,6 +3,7 @@ import Baza from "../../layouts/Baza.astro";
 import OdeslanieDoGrup from "../../components/OdeslanieDoGrup.astro";
 import DoUzupelnienia from "../../components/DoUzupelnienia.astro";
 import ZapisCta from "../../components/ZapisCta.astro";
+import Zdjecie from "../../components/Zdjecie.astro";
 import { url } from "../../lib/site.js";
 ---
 
@@ -36,6 +37,20 @@ import { url } from "../../lib/site.js";
           </a>
         </div>
       </div>
+    </div>
+  </section>
+
+  {/* ZDJĘCIE WIODĄCE */}
+  <section class="sekcja sekcja--bez-gory">
+    <div class="szerokosc">
+      <Zdjecie
+        nazwa="exams-e8"
+        alt="Uczeń rozwiązuje arkusz egzaminacyjny"
+        proporcje="21 / 9"
+        rozmiary="(min-width: 72rem) 68rem, 100vw"
+        pilne={true}
+        klasa="zdjecie--pas"
+      />
     </div>
   </section>
 

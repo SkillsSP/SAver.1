@@ -1,0 +1,48 @@
+---
+import { url } from "../lib/site.js";
+
+/* ==========================================================================
+   ZDJĘCIE
+
+   Pliki przygotowuje narzedzia/zdjecia.mjs — dla każdego ujęcia powstaje wersja
+   800 i 1600 px w WebP. Ten komponent podaje przeglądarce oba warianty, żeby
+   telefon nie pobierał pliku przeznaczonego na duży ekran.
+
+   Opisy alternatywne trzymamy przy nazwach plików w narzedzia/zdjecia.mjs
+   i przekazujemy tutaj — dzięki temu podmiana zdjęcia wymusza podmianę opisu.
+   ========================================================================== */
+
+interface Props {
+  /** Nazwa bez rozmiaru i rozszerzenia, np. „fakultet-music". */
+  nazwa: string;
+  alt: string;
+  /** Proporcje kadru. Domyślnie poziomy, bo taki jest rytm całego serwisu. */
+  proporcje?: string;
+  /** Pierwsze zdjęcie na stronie ładujemy od razu, resztę leniwie. */
+  pilne?: boolean;
+  /** Podpowiedź dla przeglądarki, ile miejsca zdjęcie zajmie. */
+  rozmiary?: string;
+  klasa?: string;
+}
+
+const {
+  nazwa,
+  alt,
+  proporcje = "3 / 2",
+  pilne = false,
+  rozmiary = "(min-width: 56rem) 34rem, 100vw",
+  klasa = "",
+} = Astro.props;
+---
+
+<figure class={`zdjecie ${klasa}`.trim()} style={`--proporcje:${proporcje}`}>
+  <img
+    src={url(`/zdjecia/${nazwa}-800.webp`)}
+    srcset={`${url(`/zdjecia/${nazwa}-800.webp`)} 800w, ${url(`/zdjecia/${nazwa}-1600.webp`)} 1600w`}
+    sizes={rozmiary}
+    alt={alt}
+    loading={pilne ? "eager" : "lazy"}
+    decoding="async"
+    fetchpriority={pilne ? "high" : undefined}
+  />
+</figure>

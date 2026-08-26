@@ -7,6 +7,19 @@ web/dist/
 web/.astro/
 dist/
 
+# Zdjęcia w rozdzielczości aparatowej — 629 MB, pojedyncze ujęcie do 25 MB.
+# Do serwisu idzie wyłącznie wynik z web/narzedzia/zdjecia.mjs, czyli WebP
+# w web/public/zdjecia (razem ok. 1,5 MB). Oryginały zostają na dysku:
+# repozytorium Git nigdy nie zapomina dużego pliku, nawet po jego usunięciu.
+zdjęcia/
+tmp_ppt_broszury/
+
+# Baza placówek do kontaktu zawiera nazwiska dyrektorów pobrane z RSPO.
+# To dane osobowe — nie trzymamy ich w repozytorium kodu, bo historia Gita
+# jest trwała, a uprawnienia do repozytorium to nie to samo co podstawa
+# przetwarzania. Pliki zostają lokalnie.
+baza-placowek/
+
 # Pliki lokalne i systemowe
 .DS_Store
 Thumbs.db

@@ -3,6 +3,7 @@ import Baza from "../layouts/Baza.astro";
 import OdeslanieDoGrup from "../components/OdeslanieDoGrup.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
+import Zdjecie from "../components/Zdjecie.astro";
 import { url, wielkoscGrupy } from "../lib/site.js";
 
 const przebieg = [
@@ -49,11 +50,32 @@ const przebieg = [
     </div>
   </section>
 
+  {/* ZDJĘCIE WIODĄCE — dzieci przy zadaniu, nie przy ławkach */}
+  <section class="sekcja sekcja--bez-gory">
+    <div class="szerokosc">
+      <Zdjecie
+        nazwa="podstawowe-glowne"
+        alt="Dzieci pracują w drużynie nad wspólnym zadaniem technicznym"
+        proporcje="21 / 9"
+        rozmiary="(min-width: 72rem) 68rem, 100vw"
+        pilne={true}
+        klasa="zdjecie--pas"
+      />
+    </div>
+  </section>
+
   {/* DWA FILARY */}
   <section class="sekcja">
     <div class="szerokosc">
       <div class="siatka siatka--2">
-        <article class="karta karta--luzna">
+        <article class="karta karta--luzna karta--ze-zdjeciem">
+          <Zdjecie
+            nazwa="podstawowe-useful"
+            alt="Dziewczynki w okularach ochronnych pracują przy warsztacie stolarskim"
+            proporcje="16 / 9"
+            rozmiary="(min-width: 56rem) 30rem, 100vw"
+            klasa="zdjecie--w-karcie"
+          />
           <span class="plakietka plakietka--kobalt">Filar I</span>
           <h2 class="tytul-3">Useful Skills</h2>
           <p class="tekst-drugi tekst-maly">
@@ -67,7 +89,14 @@ const przebieg = [
           </ul>
         </article>
 
-        <article class="karta karta--luzna">
+        <article class="karta karta--luzna karta--ze-zdjeciem">
+          <Zdjecie
+            nazwa="podstawowe-life"
+            alt="Dzieci ćwiczą pierwszą pomoc na fantomach podczas zajęć"
+            proporcje="16 / 9"
+            rozmiary="(min-width: 56rem) 30rem, 100vw"
+            klasa="zdjecie--w-karcie"
+          />
           <span class="plakietka plakietka--kobalt">Filar II</span>
           <h2 class="tytul-3">Life Skills</h2>
           <p class="tekst-drugi tekst-maly">

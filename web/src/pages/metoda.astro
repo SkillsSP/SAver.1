@@ -1,5 +1,6 @@
 ---
 import Baza from "../layouts/Baza.astro";
+import Zdjecie from "../components/Zdjecie.astro";
 import ZapisCta from "../components/ZapisCta.astro";
 import { url, grupyWiekowe, zrodla, wielkoscGrupy } from "../lib/site.js";
 
@@ -35,6 +36,20 @@ const metody = [
           doboru grup.
         </p>
       </div>
+    </div>
+  </section>
+
+  {/* ZDJĘCIE WIODĄCE */}
+  <section class="sekcja sekcja--bez-gory">
+    <div class="szerokosc">
+      <Zdjecie
+        nazwa="lokal-sala"
+        alt="Dzieci spędzają czas w sali zajęciowej"
+        proporcje="21 / 9"
+        rozmiary="(min-width: 72rem) 68rem, 100vw"
+        pilne={true}
+        klasa="zdjecie--pas"
+      />
     </div>
   </section>
 
