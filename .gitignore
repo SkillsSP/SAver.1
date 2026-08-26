@@ -27,6 +27,13 @@ Thumbs.db
 *.log
 npm-debug.log*
 
+# Skille instalowane poleceniem `npx skills add`. Prawdziwe pliki leżą
+# w .agents/skills i to one są w repozytorium. Katalog poniżej to wyłącznie
+# dowiązania, które CLI tworzy pod Claude Code — ścieżkami BEZWZGLĘDNYMI
+# tej maszyny, więc u kogokolwiek innego byłyby martwe. Po sklonowaniu
+# repozytorium odtwarza je `npx skills add supabase/agent-skills`.
+.claude/skills/
+
 # Ustawienia lokalne Claude Code (mogą zawierać ścieżki z tej maszyny)
 .claude/settings.local.json
 

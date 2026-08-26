@@ -61,7 +61,7 @@ domeny bez `www`.
    | Build command | `npm run build` |
    | Build output directory | `dist` |
    | Root directory | `web` |
-   | Zmienna `NODE_VERSION` | `20` |
+   | Zmienna `NODE_VERSION` | `24` |
 
    **Root directory** jest najważniejsze — bez niego Cloudflare szuka
    `package.json` w korzeniu repozytorium i budowanie kończy się błędem.
