@@ -22,7 +22,7 @@ export const firma = {
   kodPocztowy: null,
   telefon: null,
   telefonZapis: null,
-  email: "info@skilful.pl",
+  email: "kontakt@skilful.pl",
   nip: null,
   godzinyBiura: null,
   mapaOsadzenie: null,
@@ -30,13 +30,13 @@ export const firma = {
      wskazania kanału zgłoszeń w standardach ochrony małoletnich.
 
      Na razie ten sam adres co ogólny — decyzja świadoma i tymczasowa. Warto
-     ją zmienić, zanim ruszą zajęcia: na `info@` przychodzą zapytania o cennik
-     i terminy, więc czyta ją zwykle kilka osób. Zgłoszenie o krzywdzeniu
+     ją zmienić, zanim ruszą zajęcia: na `kontakt@` przychodzą zapytania
+     o cennik i terminy, więc czyta ją zwykle kilka osób. Zgłoszenie o krzywdzeniu
      dziecka trafia wtedy do tej samej skrzynki co pytanie o wolne miejsca.
      Osobny adres czytany wyłącznie przez osobę odpowiedzialną za standardy
      ochrony małoletnich zawęża krąg odbiorców do tych, którzy mają prawo
      takie zgłoszenie przeczytać. */
-  emailZgloszenia: "info@skilful.pl",
+  emailZgloszenia: "kontakt@skilful.pl",
   /* Adres, pod który formularz zapisu wysyła zgłoszenie. Są dwie gotowe drogi
      i obie robią to samo: przepisują zgłoszenie na skrzynkę przez Resend
      i niczego nie zapisują.

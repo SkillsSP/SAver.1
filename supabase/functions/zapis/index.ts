@@ -17,7 +17,7 @@
 
      supabase login
      supabase link --project-ref <ref-projektu>
-     supabase secrets set RESEND_API_KEY=re_... MAIL_DO=info@skilful.pl \
+     supabase secrets set RESEND_API_KEY=re_... MAIL_DO=kontakt@skilful.pl \
                           MAIL_OD=formularz@skilful.pl
      supabase functions deploy zapis --no-verify-jwt
 

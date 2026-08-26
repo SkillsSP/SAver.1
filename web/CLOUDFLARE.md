@@ -10,7 +10,7 @@ zrobić za Was; wszystko po stronie kodu jest gotowe.
 | --- | --- |
 | Domena `skilful.pl` | kupiona w **OVHcloud** |
 | Kod serwisu | GitHub, `SkillsSP/SAver.1`, gałąź `main`, katalog `web/` |
-| Poczta `info@skilful.pl` | u dotychczasowego dostawcy (najpewniej OVH) |
+| Poczta `kontakt@skilful.pl` | u dotychczasowego dostawcy (najpewniej OVH) |
 | Serwis pod domeną | stara wersja z GitHub Pages, bez stylów — naprawi to pierwsze wdrożenie z Cloudflare |
 
 ---
@@ -23,7 +23,7 @@ nie zadziałać.
 Zmiana serwerów nazw na Cloudflare oznacza, że **Cloudflare przejmuje całą
 strefę DNS domeny** — nie tylko wpisy strony, ale też wpisy poczty. Jeśli
 rekordy MX nie zostaną odtworzone po stronie Cloudflare, **poczta na adres
-`info@skilful.pl` przestanie przychodzić**, a nadawcy będą dostawać odbicia.
+`kontakt@skilful.pl` przestanie przychodzić**, a nadawcy będą dostawać odbicia.
 
 Kolejność, która to wyklucza:
 
@@ -38,7 +38,7 @@ Kolejność, która to wyklucza:
    Czego brakuje, dopiszcie ręcznie. Rekordy MX muszą się zgadzać co do
    nazwy i priorytetu.
 4. Dopiero teraz zmieńcie nameservery w OVH.
-5. Po zmianie wyślijcie **wiadomość testową na `info@skilful.pl`** z konta
+5. Po zmianie wyślijcie **wiadomość testową na `kontakt@skilful.pl`** z konta
    spoza domeny (np. prywatnej Gmail) i sprawdźcie, czy doszła.
 
 Jeśli wolicie tego uniknąć, jest droga bez ruszania nameserverów — patrz
@@ -117,7 +117,7 @@ błędu albo ciszy.
    | Nazwa | Typ | Wartość |
    | --- | --- | --- |
    | `RESEND_API_KEY` | **Secret** | klucz z punktu 3 |
-   | `MAIL_DO` | Text | `info@skilful.pl` |
+   | `MAIL_DO` | Text | `kontakt@skilful.pl` |
    | `MAIL_OD` | Text | `formularz@skilful.pl` |
 
    `RESEND_API_KEY` musi być typu **Secret**, nie Text — inaczej klucz zobaczy
@@ -129,7 +129,7 @@ błędu albo ciszy.
 
 5. Kliknijcie **Retry deployment**, żeby funkcja zobaczyła nowe zmienne.
 6. Wyślijcie **jedno prawdziwe zgłoszenie** przez formularz i sprawdźcie, czy
-   doszło na `info@skilful.pl`. To jedyny wiarygodny test.
+   doszło na `kontakt@skilful.pl`. To jedyny wiarygodny test.
 
 ---
 
