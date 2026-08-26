@@ -27,18 +27,32 @@ export const firma = {
   godzinyBiura: null,
   mapaOsadzenie: null,
   /* Adres do zgłoszeń dotyczących bezpieczeństwa dziecka. Ustawa wymaga
-     wskazania kanału zgłoszeń w standardach ochrony małoletnich — może to być
-     ten sam adres co ogólny, ale osobna skrzynka bywa czytelniejsza. */
-  emailZgloszenia: null,
-  /* Adres, pod który formularz zapisu wysyła zgłoszenie. Obsługuje go funkcja
-     Cloudflare Pages w functions/api/zapis.js — ta sama domena, żaden pośrednik.
-     Funkcja przepisuje zgłoszenie na skrzynkę i nic nie zapisuje.
+     wskazania kanału zgłoszeń w standardach ochrony małoletnich.
 
-     Zanim zacznie działać, w panelu Cloudflare trzeba ustawić RESEND_API_KEY
-     i MAIL_DO. Do tego czasu funkcja odpowiada kodem 503, a strona pokazuje
-     rodzicowi uczciwy komunikat i prośbę o telefon — zgłoszenie nie ginie po
-     cichu. Szczegóły w komentarzu na górze functions/api/zapis.js. */
-  formularzEndpoint: "/api/zapis",
+     Na razie ten sam adres co ogólny — decyzja świadoma i tymczasowa. Warto
+     ją zmienić, zanim ruszą zajęcia: na `info@` przychodzą zapytania o cennik
+     i terminy, więc czyta ją zwykle kilka osób. Zgłoszenie o krzywdzeniu
+     dziecka trafia wtedy do tej samej skrzynki co pytanie o wolne miejsca.
+     Osobny adres czytany wyłącznie przez osobę odpowiedzialną za standardy
+     ochrony małoletnich zawęża krąg odbiorców do tych, którzy mają prawo
+     takie zgłoszenie przeczytać. */
+  emailZgloszenia: "info@skilful.pl",
+  /* Adres, pod który formularz zapisu wysyła zgłoszenie. Są dwie gotowe drogi
+     i obie robią to samo: przepisują zgłoszenie na skrzynkę przez Resend
+     i niczego nie zapisują.
+
+       supabase/functions/zapis/index.ts   — gdy strona stoi na GitHub Pages
+       web/functions/api/zapis.js          — gdy strona stoi na Cloudflare Pages
+
+     Dla Supabase wpiszcie tu pełny adres funkcji po jej wdrożeniu:
+       "https://<ref-projektu>.supabase.co/functions/v1/zapis"
+     Dla Cloudflare wystarczy ścieżka "/api/zapis", bo funkcja stoi wtedy
+     w tej samej domenie co strona.
+
+     Dopóki jest `null`, przycisk wysyłki jest wyłączony i strona mówi wprost,
+     że formularz czeka na podłączenie. To lepsze niż przycisk, który
+     przeładowuje stronę i gubi wpisane dane. */
+  formularzEndpoint: null,
 };
 
 /** Telefon w formacie do `tel:` — cyfry bez spacji. */

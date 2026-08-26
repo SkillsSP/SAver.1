@@ -53,7 +53,7 @@ const poWyslaniu = [
           <form
             class="formularz"
             method="post"
-            action={endpoint}
+            action={endpoint ?? undefined}
             data-telefon={tel ?? ""}
             data-telefon-tekst={tel ? telefonTekst() : ""}
           >
@@ -118,9 +118,33 @@ const poWyslaniu = [
               <input type="text" id="firma" name="firma" tabindex="-1" autocomplete="off" />
             </div>
 
-            <button type="submit" class="przycisk przycisk--akcja przycisk--pelny">
-              Wyślij zgłoszenie
-            </button>
+            {endpoint ? (
+              <button type="submit" class="przycisk przycisk--akcja przycisk--pelny">
+                Wyślij zgłoszenie
+              </button>
+            ) : (
+              /* Bez adresu odbiorczego przycisk zostaje wyłączony. Formularz,
+                 który po kliknięciu przeładowuje stronę i gubi wpisane dane,
+                 jest gorszy od formularza, który uczciwie mówi, że nie działa. */
+              <>
+                <button
+                  type="submit"
+                  class="przycisk przycisk--akcja przycisk--pelny"
+                  disabled
+                  aria-describedby="formularz-nieczynny"
+                >
+                  Wyślij zgłoszenie
+                </button>
+                <p class="komunikat-formularza" id="formularz-nieczynny">
+                  Formularz nie jest jeszcze podłączony do skrzynki.
+                  {tel ? (
+                    <> Prosimy o telefon: <a href={tel}>{telefonTekst()}</a>.</>
+                  ) : (
+                    <> Prosimy o kontakt na <a href={`mailto:${firma.email}`}>{firma.email}</a>.</>
+                  )}
+                </p>
+              </>
+            )}
 
             {/* Komunikat po wysłaniu. `aria-live` sprawia, że czytnik ekranu
                 przeczyta go od razu, bez przenoszenia fokusu. */}
