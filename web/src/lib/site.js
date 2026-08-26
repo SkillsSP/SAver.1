@@ -47,20 +47,13 @@ export const firma = {
          Pages, wysyła przez Resend. Nieużywany, ale trzymany na wypadek
          przenosin.
 
-     Dla Supabase — projekt nmhwdjqmmeovgoersjll — adres jest już znany
-     i wystarczy go tu wkleić, gdy funkcja będzie wdrożona:
-       "https://nmhwdjqmmeovgoersjll.supabase.co/functions/v1/zapis"
-     Dla Cloudflare wystarczy ścieżka "/api/zapis", bo funkcja stoi wtedy
+     Dla Cloudflare byłaby to ścieżka "/api/zapis", bo funkcja stałaby wtedy
      w tej samej domenie co strona.
 
-     Nie wpisujcie adresu przed wdrożeniem funkcji. Niewdrożona odpowiada
-     kodem 404, a wtedy rodzic dostaje komunikat o nieudanej wysyłce zamiast
-     informacji, że formularz dopiero czeka na podłączenie.
-
-     Dopóki jest `null`, przycisk wysyłki jest wyłączony i strona mówi wprost,
-     że formularz czeka na podłączenie. To lepsze niż przycisk, który
-     przeładowuje stronę i gubi wpisane dane. */
-  formularzEndpoint: null,
+     Gdyby ten adres kiedyś wyzerować, przycisk wysyłki wyłącza się sam,
+     a strona mówi wprost, że formularz czeka na podłączenie — to lepsze niż
+     przycisk, który przeładowuje stronę i gubi wpisane dane. */
+  formularzEndpoint: "https://nmhwdjqmmeovgoersjll.supabase.co/functions/v1/zapis",
 };
 
 /** Telefon w formacie do `tel:` — cyfry bez spacji. */
