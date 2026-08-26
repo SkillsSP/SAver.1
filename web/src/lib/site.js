@@ -44,10 +44,15 @@ export const firma = {
        supabase/functions/zapis/index.ts   — gdy strona stoi na GitHub Pages
        web/functions/api/zapis.js          — gdy strona stoi na Cloudflare Pages
 
-     Dla Supabase wpiszcie tu pełny adres funkcji po jej wdrożeniu:
-       "https://<ref-projektu>.supabase.co/functions/v1/zapis"
+     Dla Supabase — projekt nmhwdjqmmeovgoersjll — adres jest już znany
+     i wystarczy go tu wkleić, gdy funkcja będzie wdrożona:
+       "https://nmhwdjqmmeovgoersjll.supabase.co/functions/v1/zapis"
      Dla Cloudflare wystarczy ścieżka "/api/zapis", bo funkcja stoi wtedy
      w tej samej domenie co strona.
+
+     Nie wpisujcie adresu przed wdrożeniem funkcji. Niewdrożona odpowiada
+     kodem 404, a wtedy rodzic dostaje komunikat o nieudanej wysyłce zamiast
+     informacji, że formularz dopiero czeka na podłączenie.
 
      Dopóki jest `null`, przycisk wysyłki jest wyłączony i strona mówi wprost,
      że formularz czeka na podłączenie. To lepsze niż przycisk, który
