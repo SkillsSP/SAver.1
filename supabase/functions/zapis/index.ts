@@ -2,11 +2,10 @@
    ODBIÓR ZGŁOSZENIA Z FORMULARZA → E-MAIL   (Supabase Edge Function)
 
    Wysyłka idzie przez SMTP własnej poczty w OVH, a nie przez zewnętrzną usługę
-   pocztową. Powód jest praktyczny: skrzynka i tak istnieje i działa, więc nie
-   zakładamy nowego konta, nie dodajemy rekordów DNS i nie ruszamy wpisu SPF —
-   a dopisanie drugiego wpisu SPF potrafi położyć całą pocztę firmy, nie tylko
-   formularz. Przy okazji nie dochodzi kolejny podmiot przetwarzający dane
-   dziecka.
+   pocztową. Skrzynka i tak istnieje i działa, więc nie zakładamy nowego konta,
+   nie dodajemy rekordów DNS i nie ruszamy wpisu SPF — a dopisanie drugiego
+   wpisu SPF potrafi położyć całą pocztę firmy, nie tylko formularz. Przy okazji
+   nie dochodzi kolejny podmiot przetwarzający dane dziecka.
 
    Dane nigdzie się nie zapisują — lecą prosto na skrzynkę i tyle. To świadomy
    wybór zamiast tabeli w bazie: zgłoszenia zawierają imię i wiek dziecka,
@@ -16,14 +15,16 @@
    zgłoszeń.
 
    ---------------------------------------------------------------------------
-   NADAWCA MUSI BYĆ TĄ SAMĄ SKRZYNKĄ, KTÓRĄ SIĘ LOGUJEMY
+   DLACZEGO WŁASNA OBSŁUGA SMTP, A NIE GOTOWA BIBLIOTEKA
 
-   OVH nie pozwala wysyłać „w imieniu" innego adresu niż uwierzytelniony.
-   Dlatego wiadomość idzie z `kontakt@skilful.pl` na `kontakt@skilful.pl`.
-   Wysyłka do siebie samego jest tu w porządku: w temacie stoi imię i wiek
-   dziecka, więc zgłoszenie widać na liście bez otwierania. Adres rodzica
-   ląduje w nagłówku Reply-To, żeby „Odpowiedz" trafiało do rodzica, a nie
-   z powrotem do nas.
+   Pierwsza wersja korzystała z denomailera pobieranego z deno.land. Kończyła
+   się błędem „peer closed connection without sending TLS close_notify" —
+   biblioteka nie dogadywała się z proxy SMTP w OVH. Ręczna rozmowa z tym samym
+   serwerem przechodzi bez zarzutu, więc protokół nie był problemem.
+
+   Własna obsługa jest tu tańsza niż szukanie innej biblioteki: potrzeba pięciu
+   komend i jednej wiadomości tekstowej. Przy okazji znika zależność pobierana
+   z sieci przy każdym starcie funkcji — a deno.land/x jest wygaszane.
 
    ---------------------------------------------------------------------------
    SEKRETY DO USTAWIENIA W PANELU SUPABASE
@@ -39,26 +40,22 @@
    rodzicowi informację, że formularz czeka na podłączenie. Zgłoszenie nigdy
    nie ginie po cichu.
 
-   ---------------------------------------------------------------------------
-   WDROŻENIE
-
-     supabase functions deploy zapis --no-verify-jwt \
-       --project-ref nmhwdjqmmeovgoersjll
-
-   `--no-verify-jwt` jest konieczne. Domyślnie funkcja żąda nagłówka
-   Authorization z kluczem projektu, a formularz na stronie publicznej nie ma
-   go komu podać — rodzic dostałby 401 zamiast potwierdzenia.
+   OVH nie pozwala wysyłać „w imieniu" innego adresu niż uwierzytelniony,
+   dlatego nadawcą jest ta sama skrzynka co odbiorcą. Wysyłka do siebie samego
+   jest tu w porządku: w temacie stoi imię i wiek dziecka, więc zgłoszenie widać
+   na liście bez otwierania, a adres rodzica siedzi w nagłówku Reply-To.
    ========================================================================== */
-
-import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const LIMIT_DLUGOSCI = 200;
 
-/* Ile czekamy na serwer poczty, zanim się poddamy. Bez tego, gdyby połączenia
-   SMTP były z tego środowiska blokowane, zapytanie wisiałoby aż do limitu
-   platformy, a rodzic patrzyłby w kręcące się kółko. Lepiej po dziesięciu
-   sekundach powiedzieć wprost, że nie wyszło. */
-const LIMIT_CZASU_MS = 10_000;
+/* Ile czekamy na pojedynczą odpowiedź serwera poczty. Bez limitu zawieszony
+   serwer trzymałby zapytanie aż do limitu platformy, a rodzic patrzyłby
+   w kręcące się kółko. */
+const LIMIT_ODPOWIEDZI_MS = 8000;
+
+/* Koniec wiersza w protokole SMTP. Zbudowany z kodów znaków, bo sekwencja
+   ucieczki w tym miejscu bywa gubiona przy automatycznej edycji pliku. */
+const KONIEC_LINII = String.fromCharCode(13, 10);
 
 /* Skąd wolno wywołać funkcję. Gwiazdka byłaby wygodniejsza, ale wtedy dowolna
    strona mogłaby wysyłać zgłoszenia w imieniu marki i zapychać skrzynkę. */
@@ -83,10 +80,6 @@ function oczysc(wartosc: unknown, limit = LIMIT_DLUGOSCI): string {
   return wartosc.replace(/[\r\n]+/g, " ").trim().slice(0, limit);
 }
 
-function ucieczkaHtml(tekst: string): string {
-  return tekst.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
 function odpowiedz(
   status: number,
   tresc: unknown,
@@ -108,13 +101,162 @@ function wygladaJakEmail(adres: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(adres);
 }
 
+/** Base64 z tekstu w UTF-8. Samo btoa() nie przyjmuje znaków spoza łaciny,
+    więc najpierw zamieniamy tekst na bajty. Bez tego polskie znaki w temacie
+    i w treści wysypywałyby wysyłkę. */
+function base64(tekst: string): string {
+  const bajty = new TextEncoder().encode(tekst);
+  let binarnie = "";
+  for (const b of bajty) binarnie += String.fromCharCode(b);
+  return btoa(binarnie);
+}
+
+/** Nagłówek z polskimi znakami musi być zakodowany — norma dopuszcza
+    w nagłówkach wiadomości wyłącznie ASCII. */
+function naglowekZPolskimi(tekst: string): string {
+  return /^[ -~]*$/.test(tekst) ? tekst : `=?UTF-8?B?${base64(tekst)}?=`;
+}
+
+/** Łamie długi ciąg base64 na wiersze po 76 znaków, jak wymaga norma. */
+function polamBase64(dane: string): string {
+  return (dane.match(/.{1,76}/g) ?? []).join(KONIEC_LINII);
+}
+
+/* --------------------------------------------------------------------------
+   ROZMOWA Z SERWEREM POCZTY
+   -------------------------------------------------------------------------- */
+
+interface Przesylka {
+  serwer: string;
+  port: number;
+  uzytkownik: string;
+  haslo: string;
+  doKogo: string;
+  odpowiedzDo?: string;
+  temat: string;
+  tresc: string;
+}
+
+async function wyslij(p: Przesylka): Promise<void> {
+  const polaczenie = await Deno.connectTls({ hostname: p.serwer, port: p.port });
+  const koder = new TextEncoder();
+  const dekoder = new TextDecoder();
+  let bufor = "";
+
+  /* Odpowiedź serwera bywa wieloliniowa: wiersze pośrednie mają myślnik po
+     kodzie („250-"), ostatni ma spację albo sam kod. Czytamy tak długo, aż
+     w buforze pojawi się wiersz kończący — inaczej kolejne komendy czytałyby
+     resztki poprzedniej odpowiedzi i cała rozmowa przesunęłaby się o krok.
+     Właśnie to widać było w diagnostyce: odpowiedź na EHLO przyszła w dwóch
+     pakietach i każdy następny odczyt trafiał o jeden za wcześnie. */
+  async function czytaj(): Promise<string> {
+    while (true) {
+      const dopasowanie = bufor.match(/^\d{3}(?: [^\n]*)?\n/m);
+      if (dopasowanie) {
+        const koniec = dopasowanie.index! + dopasowanie[0].length;
+        const calosc = bufor.slice(0, koniec);
+        bufor = bufor.slice(koniec);
+        return calosc.trim();
+      }
+      const kawalek = new Uint8Array(4096);
+      const ile = await Promise.race([
+        polaczenie.read(kawalek),
+        new Promise<null>((_, odrzuc) =>
+          setTimeout(
+            () => odrzuc(new Error("serwer poczty nie odpowiedział na czas")),
+            LIMIT_ODPOWIEDZI_MS,
+          )
+        ),
+      ]);
+      if (ile === null) throw new Error("serwer poczty zamknął połączenie");
+      bufor += dekoder.decode(kawalek.subarray(0, ile));
+    }
+  }
+
+  /** Wysyła komendę i sprawdza kod odpowiedzi. Treść odpowiedzi trafia do
+      wyjątku, więc w logach widać wprost, czy odrzucono hasło, czy adres. */
+  async function komenda(linia: string, oczekiwany: number, etykieta: string) {
+    await polaczenie.write(koder.encode(linia + KONIEC_LINII));
+    const odp = await czytaj();
+    if (!odp.startsWith(String(oczekiwany))) {
+      throw new Error(`${etykieta}: serwer odpowiedział „${odp.slice(0, 200)}”`);
+    }
+    return odp;
+  }
+
+  try {
+    const powitanie = await czytaj();
+    if (!powitanie.startsWith("220")) {
+      throw new Error(`powitanie: serwer odpowiedział „${powitanie.slice(0, 200)}”`);
+    }
+
+    await komenda("EHLO skilful.pl", 250, "EHLO");
+    await komenda("AUTH LOGIN", 334, "rozpoczęcie logowania");
+    await komenda(base64(p.uzytkownik), 334, "login");
+    await komenda(base64(p.haslo), 235, "hasło");
+
+    await komenda(`MAIL FROM:<${p.uzytkownik}>`, 250, "nadawca");
+    await komenda(`RCPT TO:<${p.doKogo}>`, 250, "odbiorca");
+    await komenda("DATA", 354, "rozpoczęcie treści");
+
+    const naglowki = [
+      `From: ${naglowekZPolskimi("Formularz Skills Academy")} <${p.uzytkownik}>`,
+      `To: <${p.doKogo}>`,
+      ...(p.odpowiedzDo ? [`Reply-To: <${p.odpowiedzDo}>`] : []),
+      `Subject: ${naglowekZPolskimi(p.temat)}`,
+      `Date: ${new Date().toUTCString()}`,
+      "MIME-Version: 1.0",
+      "Content-Type: text/plain; charset=UTF-8",
+      /* Treść idzie w base64. Poza obsługą polskich znaków załatwia to problem
+         wiersza zaczynającego się kropką, którą protokół traktuje jako koniec
+         wiadomości — w base64 taki wiersz nie powstanie. */
+      "Content-Transfer-Encoding: base64",
+    ].join(KONIEC_LINII);
+
+    const wiadomosc =
+      naglowki + KONIEC_LINII + KONIEC_LINII + polamBase64(base64(p.tresc));
+
+    await polaczenie.write(
+      koder.encode(wiadomosc + KONIEC_LINII + "." + KONIEC_LINII),
+    );
+    const potwierdzenie = await czytaj();
+    if (!potwierdzenie.startsWith("250")) {
+      throw new Error(`wysyłka: serwer odpowiedział „${potwierdzenie.slice(0, 200)}”`);
+    }
+
+    /* QUIT wypada wysłać, ale odpowiedzi już nie czytamy — OVH potrafi zamknąć
+       połączenie bez pożegnania, a to nie ma wpływu na przyjętą wiadomość.
+       Właśnie o to rozbijała się poprzednia wersja z gotową biblioteką. */
+    try {
+      await polaczenie.write(koder.encode("QUIT" + KONIEC_LINII));
+    } catch { /* nieistotne */ }
+  } finally {
+    try {
+      polaczenie.close();
+    } catch { /* nieistotne */ }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   OBSŁUGA ZAPYTANIA
+   -------------------------------------------------------------------------- */
+
+/* Siatka bezpieczeństwa: nieobsłużone odrzucenie obietnicy ubija cały proces,
+   a wtedy platforma odpowiada pustym błędem 503 — bez treści i bez nagłówków
+   CORS, więc przeglądarka pokazuje to jako zerwane połączenie zamiast
+   czytelnego komunikatu. */
+globalThis.addEventListener("unhandledrejection", (zdarzenie) => {
+  console.error("Nieobsłużone odrzucenie obietnicy:", zdarzenie.reason);
+  zdarzenie.preventDefault();
+});
+
 Deno.serve(async (request: Request) => {
   const cors = naglowkiCors(request.headers.get("origin"));
 
-  /* Zapytanie wstępne przeglądarki przy wywołaniu międzydomenowym. */
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: cors });
   }
+
   if (request.method !== "POST") {
     return odpowiedz(405, { blad: "Dozwolona jest wyłącznie metoda POST." }, cors);
   }
@@ -154,9 +296,6 @@ Deno.serve(async (request: Request) => {
 
   const haslo = Deno.env.get("SMTP_HASLO");
   const uzytkownik = Deno.env.get("SMTP_USER") ?? "kontakt@skilful.pl";
-  const serwer = Deno.env.get("SMTP_HOST") ?? "ssl0.ovh.net";
-  const port = Number(Deno.env.get("SMTP_PORT") ?? "465");
-  const doKogo = Deno.env.get("MAIL_DO") ?? uzytkownik;
 
   if (!haslo) {
     return odpowiedz(
@@ -170,65 +309,36 @@ Deno.serve(async (request: Request) => {
     );
   }
 
-  const wiersze: [string, string][] = [
+  const tresc = [
     ["Imię dziecka", imieDziecka],
     ["Wiek", wiekDziecka],
     ["Telefon", telefon],
     ["E-mail", email || "nie podano"],
     ["Zgoda na kontakt", "tak"],
-  ];
-
-  const klient = new SMTPClient({
-    connection: {
-      hostname: serwer,
-      port,
-      /* Port 465 szyfruje od pierwszego bajtu. Gdyby ktoś przestawił port na
-         587, połączenie zaczyna się jawnie i przechodzi w szyfrowane przez
-         STARTTLS — stąd rozgałęzienie. */
-      tls: port === 465,
-      auth: { username: uzytkownik, password: haslo },
-    },
-  });
+  ]
+    .map(([k, v]) => `${k}: ${v}`)
+    .join("\n");
 
   try {
-    await Promise.race([
-      klient.send({
-        from: `Formularz Skills Academy <${uzytkownik}>`,
-        to: doKogo,
-        /* „Odpowiedz" ma trafiać do rodzica, a nie z powrotem do nas — ale
-           tylko wtedy, gdy rodzic podał sensowny adres. */
-        replyTo: email && wygladaJakEmail(email) ? email : undefined,
-        subject: `Zapis na zajęcia próbne — ${imieDziecka}, ${wiekDziecka}`,
-        content: wiersze.map(([k, v]) => `${k}: ${v}`).join("\n"),
-        html: wiersze
-          .map(
-            ([k, v]) =>
-              `<p><strong>${ucieczkaHtml(k)}:</strong> ${ucieczkaHtml(v)}</p>`,
-          )
-          .join(""),
-      }),
-      new Promise((_, odrzuc) =>
-        setTimeout(
-          () => odrzuc(new Error(`Serwer poczty nie odpowiedział w ${LIMIT_CZASU_MS} ms`)),
-          LIMIT_CZASU_MS,
-        )
-      ),
-    ]);
+    await wyslij({
+      serwer: Deno.env.get("SMTP_HOST") ?? "ssl0.ovh.net",
+      port: Number(Deno.env.get("SMTP_PORT") ?? "465"),
+      uzytkownik,
+      haslo,
+      doKogo: Deno.env.get("MAIL_DO") ?? uzytkownik,
+      odpowiedzDo: email && wygladaJakEmail(email) ? email : undefined,
+      temat: `Zapis na zajęcia próbne — ${imieDziecka}, ${wiekDziecka}`,
+      tresc,
+    });
   } catch (e) {
-    /* Szczegóły zostają w logach Supabase — rodzicowi nic nie powiedzą,
-       a nam wskażą, czy to złe hasło, czy zablokowane połączenie. */
+    /* Szczegóły zostają w logach — rodzicowi nic nie powiedzą, a nam wskażą,
+       czy odrzucono hasło, czy zerwano połączenie. */
     console.error("Wysyłka SMTP nie powiodła się:", e);
     return odpowiedz(
       502,
       { blad: "Nie udało się wysłać zgłoszenia. Prosimy spróbować telefonicznie." },
       cors,
     );
-  } finally {
-    /* Połączenie trzeba domknąć, inaczej funkcja potrafi wisieć po odesłaniu
-       odpowiedzi. Błąd przy zamykaniu nie ma już wpływu na zgłoszenie. */
-    try {
-      await klient.close();
-    } catch { /* nieistotne */ }
   }
 
   return odpowiedz(200, { ok: true }, cors);
