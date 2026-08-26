@@ -1,16 +1,49 @@
 # Uruchomienie serwisu na Cloudflare Pages — skilful.pl
 
-Instrukcja dla osoby z dostępem do konta Cloudflare i do repozytorium
-**SkillsSP/SAver.1**. Logowania ani zakładania kont nie da się zrobić za Was;
-wszystko po stronie kodu jest już gotowe.
+Instrukcja dla osoby z dostępem do konta Cloudflare, do OVHcloud i do
+repozytorium **SkillsSP/SAver.1**. Logowania ani zakładania kont nie da się
+zrobić za Was; wszystko po stronie kodu jest gotowe.
 
-**Stan kodu:** serwis jest ustawiony pod `https://skilful.pl` w katalogu
-głównym domeny (`base: "/"`). Formularz zapisu wysyła zgłoszenia do funkcji
-`/api/zapis`, która przepisuje je na skrzynkę.
+**Stan wyjściowy**
 
-**Uwaga na kolejność:** dopóki nie wykonacie kroku 1, stary adres
-`…github.io/SAver.1/` pokazuje stronę bez stylów i bez fontów. Tak ma być —
-ścieżki są policzone od katalogu głównego domeny, a nie od podkatalogu.
+| Element | Gdzie jest |
+| --- | --- |
+| Domena `skilful.pl` | kupiona w **OVHcloud** |
+| Kod serwisu | GitHub, `SkillsSP/SAver.1`, gałąź `main`, katalog `web/` |
+| Poczta `info@skilful.pl` | u dotychczasowego dostawcy (najpewniej OVH) |
+| Serwis pod domeną | stara wersja z GitHub Pages, bez stylów — naprawi to pierwsze wdrożenie z Cloudflare |
+
+---
+
+## ⚠️ Zanim ruszycie nameservery — poczta
+
+To jedyny krok w całej instrukcji, który może coś **zepsuć**, a nie tylko
+nie zadziałać.
+
+Zmiana serwerów nazw na Cloudflare oznacza, że **Cloudflare przejmuje całą
+strefę DNS domeny** — nie tylko wpisy strony, ale też wpisy poczty. Jeśli
+rekordy MX nie zostaną odtworzone po stronie Cloudflare, **poczta na adres
+`info@skilful.pl` przestanie przychodzić**, a nadawcy będą dostawać odbicia.
+
+Kolejność, która to wyklucza:
+
+1. W panelu OVH otwórzcie **strefę DNS** domeny `skilful.pl` i wyeksportujcie
+   ją albo zróbcie zrzut ekranu **wszystkich** rekordów. Interesują Was
+   szczególnie: `MX`, `TXT` ze wpisem `v=spf1`, `TXT` z `_dmarc`, oraz
+   `CNAME`/`TXT` z nazwą zawierającą `._domainkey` (podpisy DKIM).
+2. Dodajcie domenę w Cloudflare (krok 2 poniżej). Cloudflare przy dodawaniu
+   **sam skanuje** istniejącą strefę i zwykle przenosi rekordy — ale zwykle
+   to nie zawsze.
+3. **Porównajcie listę w Cloudflare z tym, co zapisaliście w punkcie 1.**
+   Czego brakuje, dopiszcie ręcznie. Rekordy MX muszą się zgadzać co do
+   nazwy i priorytetu.
+4. Dopiero teraz zmieńcie nameservery w OVH.
+5. Po zmianie wyślijcie **wiadomość testową na `info@skilful.pl`** z konta
+   spoza domeny (np. prywatnej Gmail) i sprawdźcie, czy doszła.
+
+Jeśli wolicie tego uniknąć, jest droga bez ruszania nameserverów — patrz
+„Wariant B” na końcu. Jest wygodniejsza dla poczty, ale trudniejsza dla
+domeny bez `www`.
 
 ---
 
@@ -30,106 +63,136 @@ głównym domeny (`base: "/"`). Formularz zapisu wysyła zgłoszenia do funkcji
    | Root directory | `web` |
    | Zmienna `NODE_VERSION` | `20` |
 
-   Pole **Root directory** jest najważniejsze — bez niego Cloudflare szuka
+   **Root directory** jest najważniejsze — bez niego Cloudflare szuka
    `package.json` w korzeniu repozytorium i budowanie kończy się błędem.
 
 5. **Save and Deploy.** Pierwsze budowanie trwa 1–2 minuty. Dostaniecie adres
-   tymczasowy `nazwa-projektu.pages.dev` — sprawdźcie na nim, czy strona ma
-   style i fonty, zanim przejdziecie dalej.
+   `nazwa-projektu.pages.dev`. Sprawdźcie na nim, czy strona ma style, fonty
+   i zdjęcia — **zanim** ruszycie domenę.
+
+> Cloudflare buduje serwis sam, bez GitHub Actions. To rozwiązuje przy okazji
+> problem, przez który wdrożenia przestały wychodzić po przeniesieniu
+> repozytorium do organizacji SkillsSP.
 
 ---
 
-## 2. Podłączenie domeny skilful.pl
+## 2. Podłączenie domeny z OVHcloud
 
-1. Domena musi być w Cloudflare: **Websites** → **Add a site** → `skilful.pl`.
-   Potem u rejestratora, u którego kupiliście domenę, zmieniacie serwery nazw
-   (nameservery) na te, które pokaże Cloudflare. Propagacja trwa od kilkunastu
-   minut do kilku godzin.
-2. Wróćcie do projektu Pages → **Custom domains** → **Set up a custom domain**
-   → `skilful.pl`.
-3. Powtórzcie dla `www.skilful.pl`. Cloudflare sam doda wpisy DNS i wystawi
-   certyfikat — nic nie kupujecie.
-4. Ustawcie jeden adres jako główny, a drugi jako przekierowanie, żeby ta sama
-   treść nie istniała pod dwoma adresami. Wyszukiwarka traktuje to jak duplikat.
+1. W Cloudflare: **Websites** → **Add a site** → `skilful.pl` → plan **Free**.
+2. Cloudflare przeskanuje obecną strefę DNS i pokaże znalezione rekordy.
+   **Teraz wykonajcie punkt 3 z ostrzeżenia powyżej** — porównajcie tę listę
+   z wpisami z OVH i uzupełnijcie braki, zwłaszcza `MX` i `SPF`.
+3. Cloudflare poda dwa serwery nazw, np. `xxx.ns.cloudflare.com`.
+4. W panelu OVH: **Domeny** → `skilful.pl` → zakładka **Serwery DNS** →
+   **Zmień serwery DNS** → wpiszcie oba adresy z Cloudflare.
+   Propagacja trwa od kilkunastu minut do kilku godzin; OVH potrafi też
+   wymagać potwierdzenia mailem.
+5. Gdy Cloudflare pokaże domenę jako **Active**, wróćcie do projektu Pages →
+   **Custom domains** → **Set up a custom domain** → `skilful.pl`.
+   Powtórzcie dla `www.skilful.pl`.
+6. Certyfikat SSL Cloudflare wystawia sam. Nic nie kupujecie.
 
 ---
 
 ## 3. Podłączenie skrzynki do formularza
 
-Formularz zapisu jest już podpięty do funkcji `web/functions/api/zapis.js`,
-ale sama funkcja potrzebuje dostępu do usługi wysyłającej pocztę. Bez tego
-odpowiada kodem 503, a rodzic widzi komunikat „formularz nie jest jeszcze
-podłączony do skrzynki” zamiast błędu albo ciszy.
+Formularz zapisu jest podpięty do funkcji `web/functions/api/zapis.js`.
+Potrzebuje usługi wysyłającej pocztę. Bez niej odpowiada kodem 503, a rodzic
+widzi komunikat „formularz nie jest jeszcze podłączony do skrzynki” zamiast
+błędu albo ciszy.
 
-1. Załóżcie konto na **resend.com** (plan darmowy: 3000 wiadomości miesięcznie,
-   z zapasem na kilka lat przy tej skali) i potwierdźcie w nim domenę
-   `skilful.pl`. Resend poda trzy wpisy DNS do dodania — w Cloudflare wchodzą
-   pod **Websites → skilful.pl → DNS**.
-2. W Resend wygenerujcie klucz API. Zaczyna się od `re_`. **Zobaczycie go
+1. Załóżcie konto na **resend.com** (plan darmowy: 3000 wiadomości miesięcznie
+   — przy tej skali zapas na lata) i dodajcie w nim domenę `skilful.pl`.
+2. Resend poda rekordy DNS do dodania. **Uwaga na SPF:** jeśli w strefie jest
+   już wpis `v=spf1` od dotychczasowej poczty, **nie dodawajcie drugiego** —
+   domena może mieć tylko jeden rekord SPF. Trzeba dopisać fragment Resendu
+   do istniejącego wpisu, przed końcowym `~all` albo `-all`. Dwa osobne wpisy
+   SPF unieważniają się nawzajem i psują dostarczalność.
+3. W Resend wygenerujcie klucz API. Zaczyna się od `re_`. **Zobaczycie go
    tylko raz** — zapiszcie od razu w menedżerze haseł.
-3. W Cloudflare: **Workers & Pages** → projekt → **Settings** →
+4. W Cloudflare: **Workers & Pages** → projekt → **Settings** →
    **Variables and Secrets** → dodajcie trzy pozycje dla środowiska
    **Production**:
 
    | Nazwa | Typ | Wartość |
    | --- | --- | --- |
-   | `RESEND_API_KEY` | **Secret** | klucz z punktu 2 |
-   | `MAIL_DO` | Text | adres, na który mają przychodzić zgłoszenia |
+   | `RESEND_API_KEY` | **Secret** | klucz z punktu 3 |
+   | `MAIL_DO` | Text | `info@skilful.pl` |
    | `MAIL_OD` | Text | `formularz@skilful.pl` |
 
-   `RESEND_API_KEY` musi być typu **Secret**, nie Text — inaczej klucz będzie
-   widoczny w panelu dla każdego, kto ma do niego dostęp.
+   `RESEND_API_KEY` musi być typu **Secret**, nie Text — inaczej klucz zobaczy
+   każdy, kto ma dostęp do panelu.
 
-4. Kliknijcie **Retry deployment**, żeby funkcja zobaczyła nowe zmienne.
-5. Wyślijcie **jedno prawdziwe zgłoszenie** przez formularz na stronie
-   i sprawdźcie, czy doszło. To jedyny wiarygodny test.
+   `MAIL_OD` to adres **nadawcy**, nie skrzynka — nie musi istnieć jako konto
+   pocztowe, wystarczy że domena jest potwierdzona w Resend. Celowo jest inny
+   niż `info@`, żeby w skrzynce od razu było widać, co przyszło z formularza.
 
-Zgłoszenia nigdzie się nie zapisują — lecą na skrzynkę i tyle. To świadomy
-wybór: mniej danych osobowych w spoczynku znaczy mniej do opisania w rejestrze
-czynności przetwarzania i mniej do stracenia.
+5. Kliknijcie **Retry deployment**, żeby funkcja zobaczyła nowe zmienne.
+6. Wyślijcie **jedno prawdziwe zgłoszenie** przez formularz i sprawdźcie, czy
+   doszło na `info@skilful.pl`. To jedyny wiarygodny test.
 
 ---
 
-## 4. Wyłączenie starego adresu GitHub Pages
+## 4. Sprzątanie po GitHub Pages
 
-Kiedy `skilful.pl` zacznie działać, w repozytorium **SkillsSP/SAver.1**:
-**Settings** → **Pages** → **Source** → **None**.
+Dopiero **gdy `skilful.pl` działa z Cloudflare**:
 
-Workflow publikujący na Pages został już usunięty z repozytorium. Na jego
-miejscu jest `.github/workflows/budowanie.yml`, który tylko sprawdza, czy
-projekt się buduje, i niczego nie publikuje.
+1. W repozytorium: **Settings** → **Pages** → **Source** → **None**.
+2. Dajcie znać — usunę wtedy z repozytorium plik `CNAME`, jego kopię
+   w `web/public/CNAME` i workflow `.github/workflows/deploy.yml`.
+   Wszystkie trzy są mechanizmami GitHub Pages i na Cloudflare nic nie robią.
+
+Zostawienie starego adresu włączonego oznacza tę samą treść pod dwoma
+adresami — wyszukiwarka traktuje to jak duplikat.
 
 ---
 
 ## 5. Zgłoszenie mapy serwisu
 
 Po uruchomieniu domeny dodajcie serwis w **Google Search Console** i zgłoście
-mapę pod adresem:
+mapę:
 
 ```
 https://skilful.pl/sitemap.xml
 ```
 
-Mapa zawiera 13 adresów. Trzy dokumenty formalne (regulamin, polityka
-prywatności, klauzula RODO) są z niej świadomie wyłączone, żeby nie
-konkurowały w wynikach ze stronami oferty.
+Mapa zawiera 13 adresów. Regulamin, polityka prywatności i klauzula RODO są
+z niej świadomie wyłączone, żeby nie konkurowały w wynikach ze stronami oferty.
 
 ---
 
-## Dlaczego mail, a nie baza D1
+## Wariant B — bez ruszania nameserverów
 
-D1 przydałby się wtedy, gdyby zgłoszenia miały być zapisywane i przeglądane
-w panelu. Przy tej skali to koszt bez pokrycia:
+Jeśli nie chcecie przenosić DNS z OVH (na przykład dlatego, że poczta jest
+tam skonfigurowana i działa), Cloudflare Pages da się podpiąć wpisem CNAME
+w OVH. Haczyk: `skilful.pl` bez `www` to domena szczytowa, a klasyczny CNAME
+jest tam niedozwolony. OVH nie oferuje odpowiednika ALIAS/ANAME, więc w tym
+wariancie:
 
-- zgłoszenia zawierają **imię i wiek dziecka**, czyli dane osobowe małoletnich;
-- Cloudflare staje się wtedy **podmiotem przetwarzającym** i potrzebna jest
-  umowa powierzenia przetwarzania danych;
-- w polityce prywatności i klauzuli RODO trzeba dopisać, gdzie dane leżą, jak
-  długo i kto ma do nich dostęp;
-- ktoś musi te zgłoszenia regularnie odczytywać — baza bez panelu do
-  przeglądania jest mniej użyteczna niż e-mail, który sam przychodzi.
+- `www.skilful.pl` → CNAME na `nazwa-projektu.pages.dev`, działa normalnie,
+- `skilful.pl` bez `www` → trzeba przekierować przez usługę przekierowań OVH
+  na `www.skilful.pl`.
 
-Przy kilkunastu–kilkudziesięciu zgłoszeniach miesięcznie formularz wysyłający
-e-mail załatwia sprawę bez żadnego z tych obowiązków. D1 zaczyna się opłacać
-dopiero przy potrzebie historii zgłoszeń, statusów („oddzwoniono”, „zapisany”)
-albo raportów.
+Serwis działa, ale adres główny staje się `www.skilful.pl`. Wariant A
+(nameservery w Cloudflare) jest czystszy — pod warunkiem przeniesienia
+rekordów poczty, o którym mowa na górze.
+
+---
+
+## O Supabase
+
+Baza nie jest w tej układance potrzebna i celowo jej nie używamy. Formularz
+przepisuje zgłoszenie na skrzynkę i nic nie zapisuje, bo zgłoszenia zawierają
+**imię i wiek dziecka**, czyli dane osobowe małoletnich. Trzymanie ich w bazie
+oznacza umowę powierzenia przetwarzania z dostawcą, opis w rejestrze czynności
+przetwarzania, ustalony okres przechowywania oraz dopisanie tego wszystkiego
+do polityki prywatności i klauzuli RODO.
+
+Supabase zacznie się opłacać, gdy pojawi się potrzeba historii zgłoszeń,
+statusów („oddzwoniono”, „zapisany”) albo raportów — czyli wtedy, gdy ktoś
+faktycznie będzie w tej bazie pracował. Przy kilkunastu zgłoszeniach
+miesięcznie e-mail, który sam przychodzi na skrzynkę, jest wygodniejszy
+i nie pociąga żadnego z tych obowiązków.
+
+Jeśli mimo to chcecie zapis do Supabase — powiedzcie, dopiszę zapis obok
+wysyłki maila (nie zamiast), żeby awaria bazy nie gubiła zgłoszeń.

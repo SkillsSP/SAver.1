@@ -22,7 +22,7 @@ export const firma = {
   kodPocztowy: null,
   telefon: null,
   telefonZapis: null,
-  email: null,
+  email: "info@skilful.pl",
   nip: null,
   godzinyBiura: null,
   mapaOsadzenie: null,
