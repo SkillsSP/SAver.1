@@ -1882,3 +1882,249 @@ button {
 /* ==========================================================================
    POMOCNICZE
    ========================================================================== */
+
+/* ==========================================================================
+   ZDJĘCIE W TLE NAGŁÓWKA
+
+   Z paczki 01-zdjecia, przełożone na nazwy zmiennych z tego arkusza: paczka
+   używała --chmura-50 i --font-naglowek, których tu nie ma. Wklejona bez
+   tłumaczenia rozwiązałaby te dwie zmienne w nic i cicho zepsuła tło paska
+   oraz krój numeru telefonu.
+
+   Zasada z sekcji 5.5 wytycznych marki: zdjęcie nigdy nie leży samo pod
+   tekstem i nigdy nie dostaje gradientu. Nad nim stoją dwie płaskie warstwy —
+   grafit wyrównuje jasność kadru, kobalt oddaje kolor marki. Identyfikacja
+   jest płaska i fotografia ma w to wejść, a nie tego rozmontować.
+   ========================================================================== */
+
+.hero--foto,
+.naglowek-strony--foto {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Punkt kadrowania ustawiany osobno dla każdej podstrony zmienną --foto-kadr,
+   żeby twarze nie wychodziły z ramki przy zmianie proporcji bloku. */
+.hero__foto,
+.naglowek-strony__foto {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--foto-kadr, center 45%);
+  display: block;
+}
+
+/* Warstwa 1 — grafit. Wyrównuje jasność między jasnymi i ciemnymi kadrami,
+   dzięki czemu ta sama receptura działa na każdym zdjęciu. */
+.hero--foto::before,
+.naglowek-strony--foto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--grafit-900);
+  opacity: 0.34;
+}
+
+/* Warstwa 2 — kobalt. Kolor prowadzący marki zostaje na swoim miejscu. */
+.hero--foto::after,
+.naglowek-strony--foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--kobalt-600);
+  opacity: 0.6;
+}
+
+/* Rejestr cichy — strony formalne. Zdjęcie ledwo się przebija, bo to
+   dokumenty, nie oferta. */
+.naglowek-strony--cichy::before {
+  opacity: 0.3;
+}
+.naglowek-strony--cichy::after {
+  opacity: 0.72;
+}
+
+/* Tekst na zdjęciu idzie w pełną biel. Biel 86-procentowa
+   (--tekst-na-marce-miekki) wystarczała na jednolitym kobalcie; na zdjęciu
+   spada poniżej progu WCAG AA, bo tło pod nią przestaje być jednorodne. */
+.hero--foto .hero__zdanie,
+.hero--foto .hero__fakt,
+.hero--foto .nadtytul--na-marce,
+.hero--foto .telefon-obok,
+.naglowek-strony--foto .hero__zdanie,
+.naglowek-strony--foto .naglowek-strony__meta,
+.naglowek-strony--foto .nadtytul--na-marce,
+.naglowek-strony--foto p,
+.naglowek-strony--foto li {
+  color: var(--bialy);
+}
+
+/* Kreski i obrysy o stopień mocniej — na fotografii cieńsza linia ginie. */
+.hero--foto .hero__fakty,
+.naglowek-strony--foto .naglowek-strony__meta {
+  border-top-color: rgba(255, 255, 255, 0.34);
+}
+.hero--foto .przycisk--duch,
+.naglowek-strony--foto .przycisk--duch {
+  border-color: rgba(255, 255, 255, 0.72);
+}
+
+/* Odnośnik treściowy w nagłówku. Domyślny kobalt na kobaltowym tle jest
+   niewidoczny — kontrast 1:1. */
+.hero--foto a:not(.przycisk),
+.naglowek-strony--foto a:not(.przycisk) {
+  color: var(--bialy);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+}
+
+/* Treść nad warstwami. */
+.hero--foto .hero__tresc,
+.naglowek-strony--foto .naglowek-strony__tresc {
+  position: relative;
+}
+
+/* Wariant grafitowy — jedna warstwa, bez kobaltu. Należy do matury, nie do
+   całego Exams: ósmoklasista to Teens Junior, a grafit jest w systemie
+   zarezerwowany dla Teens Senior. */
+.naglowek-strony--senior.naglowek-strony--foto::after {
+  display: none;
+}
+.naglowek-strony--senior.naglowek-strony--foto::before {
+  opacity: 0.74;
+}
+.naglowek-strony--senior {
+  background: var(--grafit-900);
+}
+
+/* ==========================================================================
+   PASEK UŻYTKOWY — nad nawigacją, na każdej podstronie
+
+   Przewija się razem ze stroną; przyklejona zostaje wyłącznie nawigacja pod
+   nim. Dlatego pasek musi stać jako rodzeństwo <header>, przed nim, a nie
+   w jego środku — włożony do środka przykleiłby się razem z nawigacją
+   i zabrał wysokość na każdym ekranie.
+   ========================================================================== */
+
+.pasek-uzytkowy {
+  background: var(--cloud-50);
+  border-bottom: var(--wlos);
+  padding: var(--space-1) var(--space-3);
+}
+
+.pasek-uzytkowy__tresc {
+  max-width: var(--szerokosc-strony);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+  /* Na telefonie pasek zawija się na dwa wiersze i to jest zamierzone —
+     nic nie znika, numer nie skraca się do wersalikowego „ZADZWOŃ". */
+  flex-wrap: wrap;
+}
+
+.pasek-uzytkowy__haslo {
+  font-size: var(--text-drobny);
+  font-weight: var(--waga-srednia);
+  color: var(--tekst-drugi);
+}
+
+.pasek-uzytkowy__kontakt {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  flex-wrap: wrap;
+}
+
+.pasek-uzytkowy__kontakt a {
+  font-size: var(--text-drobny);
+  font-weight: var(--waga-polgruba);
+  text-decoration: none;
+}
+
+/* Telefon w graficie, nie w koralu: koral na kremowym daje 3,1:1, poniżej
+   progu. Grafit na kremowym — 13,2:1. Kobalt zostaje dla odnośnika
+   treściowego, żeby dwa linki obok siebie nie ważyły tyle samo. */
+.pasek-uzytkowy__telefon {
+  color: var(--grafit-900);
+}
+
+/* ==========================================================================
+   PODSTRONA KONTAKTU
+
+   Karty dróg kontaktu i formularz korzystają z istniejących klas .karta
+   i .pole — poniżej wyłącznie to, czego w arkuszu nie ma.
+   ========================================================================== */
+
+/* Karta drogi kontaktu jest klikalna w całości. */
+.droga-kontaktu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: clamp(var(--space-3), 2.4vw, var(--space-4));
+  background: var(--tlo-karty);
+  border: var(--wlos);
+  border-radius: var(--radius-lg);
+  color: var(--tekst-glowny);
+  text-decoration: none;
+}
+
+.droga-kontaktu:hover {
+  border-color: rgba(30, 95, 204, 0.45);
+  color: var(--tekst-glowny);
+}
+
+.droga-kontaktu__etykieta {
+  font-size: var(--text-nadtytul);
+  font-weight: var(--waga-polgruba);
+  letter-spacing: var(--trop-nadtytul);
+  text-transform: uppercase;
+  color: var(--tekst-drugi);
+}
+
+.droga-kontaktu__wartosc {
+  font-size: var(--text-wiodacy);
+  font-weight: var(--waga-polgruba);
+  color: var(--kobalt-600);
+  overflow-wrap: anywhere;
+}
+
+/* Numer telefonu jest największy z czterech — to główna droga kontaktu.
+   Krojem jest Lexend, nie krój akcentowy: numer w Quicksandzie czytałby się
+   jak element dziecięcego rejestru, a to informacja użytkowa. */
+.droga-kontaktu__wartosc--telefon {
+  font-family: var(--font-medrzec);
+  font-size: var(--text-h3);
+  font-weight: var(--waga-gruba);
+  letter-spacing: -0.01em;
+}
+
+.droga-kontaktu__opis {
+  font-size: var(--text-maly);
+  line-height: var(--interlinia-tekst);
+  color: var(--tekst-drugi);
+}
+
+/* Wiersz godzin: nazwa z lewej, wartość z prawej. */
+.godziny__wiersz {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-size: var(--text-bazowy);
+  line-height: var(--interlinia-tekst);
+}
+
+/* Zakotwiczenia muszą zejść pod przyklejoną nawigację, inaczej po kliknięciu
+   nagłówek sekcji chowa się za paskiem. */
+#formularz,
+#dojazd,
+#metoda {
+  scroll-margin-top: 5.5rem;
+}

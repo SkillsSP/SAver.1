@@ -1,0 +1,114 @@
+/* ==========================================================================
+   ZDJĘCIE W TLE NAGŁÓWKA
+   Dopisek do web/src/styles/style.css — wklej na koniec arkusza.
+
+   Zasada: zdjęcie nigdy nie leży samo pod tekstem. Nad nim stoją dwie
+   płaskie warstwy — grafit wyrównuje jasność kadru, kobalt oddaje kolor
+   marki. Bez gradientów, bez przyciemnień od dołu; identyfikacja jest
+   płaska i zdjęcie musi w to wejść, a nie tego rozmontować.
+
+   Warianty:
+     .hero--foto              baner strony głównej
+     .naglowek-strony--foto   nagłówek podstrony
+     .naglowek-strony--cichy  strony formalne (regulamin, polityka, RODO)
+   ========================================================================== */
+
+.hero--foto,
+.naglowek-strony--foto {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Zdjęcie. Punkt kadrowania ustawiany per strona zmienną --foto-kadr,
+   żeby twarze nie wychodziły z ramki przy zmianie proporcji bloku. */
+.hero__foto,
+.naglowek-strony__foto {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--foto-kadr, center 45%);
+  display: block;
+}
+
+/* Warstwa 1 — grafit. Wyrównuje jasność między jasnymi i ciemnymi kadrami,
+   dzięki czemu ta sama receptura działa na każdym zdjęciu. */
+.hero--foto::before,
+.naglowek-strony--foto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--grafit-900);
+  opacity: 0.34;
+}
+
+/* Warstwa 2 — kobalt. Kolor prowadzący marki zostaje na swoim miejscu. */
+.hero--foto::after,
+.naglowek-strony--foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--kobalt-600);
+  opacity: 0.6;
+}
+
+/* Rejestr cichy — strony formalne. Zdjęcie ledwo się przebija, bo to
+   dokumenty, nie oferta. */
+.naglowek-strony--cichy::before {
+  opacity: 0.3;
+}
+.naglowek-strony--cichy::after {
+  opacity: 0.72;
+}
+
+/* Tekst na zdjęciu idzie w pełną biel. Półprzezroczysta biel
+   (--tekst-na-marce-miekki, 85%) wystarczała na jednolitym kobalcie;
+   na zdjęciu spada pod próg kontrastu WCAG AA. */
+.hero--foto .hero__zdanie,
+.hero--foto .hero__fakt,
+.hero--foto .nadtytul--na-marce,
+.hero--foto .telefon-obok,
+.naglowek-strony--foto .hero__zdanie,
+.naglowek-strony--foto .naglowek-strony__meta,
+.naglowek-strony--foto .nadtytul--na-marce,
+.naglowek-strony--foto p,
+.naglowek-strony--foto li {
+  color: var(--bialy);
+}
+
+/* Kreski i obrysy też o stopień mocniej — na fotografii cieńsza linia ginie. */
+.hero--foto .hero__fakty,
+.naglowek-strony--foto .naglowek-strony__meta {
+  border-top-color: rgba(255, 255, 255, 0.34);
+}
+.hero--foto .przycisk--duch,
+.naglowek-strony--foto .przycisk--duch {
+  border-color: rgba(255, 255, 255, 0.72);
+}
+.hero--foto a:not(.przycisk),
+.naglowek-strony--foto a:not(.przycisk) {
+  color: var(--bialy);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+}
+
+/* Treść nad warstwami. */
+.hero--foto .hero__tresc,
+.naglowek-strony--foto .naglowek-strony__tresc {
+  position: relative;
+}
+
+/* Wariant grafitowy — jedna warstwa, bez kobaltu. Produkcja ma już
+   .naglowek-strony--senior na płaskim graficie; ta reguła dokłada mu
+   zdjęcie w tym samym rejestrze. */
+.naglowek-strony--senior.naglowek-strony--foto::after {
+  display: none;
+}
+.naglowek-strony--senior.naglowek-strony--foto::before {
+  opacity: 0.74;
+}

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills Academy. Identyfikacja Wizualna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kobalt:#1E5FCC; --kobalt-deep:#14459B; --kobalt-tint:#E5EDFB;
+    --coral:#E8654A; --coral-tint:#FCE7E1;
+    --slate:#5B6B7A; --slate-tint:#EDEFF2;
+    --base:#FBF8F3; --graphite:#1A2230; --graphite-soft:#4C5666;
+    --line:rgba(26,34,48,0.13); --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--base); color:var(--graphite); font-family:'Lexend',sans-serif; line-height:1.65;}
+  .wrap{max-width:940px; margin:0 auto; padding:0 32px 100px;}
+
+  /* header band */
+  .band{background:var(--kobalt); color:var(--white); border-radius:0 0 24px 24px; padding:52px 44px 46px; margin-bottom:60px;}
+  .band .kicker{font-size:12px; letter-spacing:.16em; text-transform:uppercase; opacity:.8; font-weight:600; margin-bottom:16px;}
+  .band-logo{display:flex; align-items:center; gap:16px; margin-bottom:22px;}
+  .band-logo .name{font-family:Quicksand,sans-serif; font-weight:600; font-size:30px;}
+  .band h1{font-family:Quicksand,sans-serif; font-weight:600; font-size:26px; margin:0 0 8px; font-weight:600;}
+  .band p{margin:0; font-size:15px; color:rgba(255,255,255,.85); max-width:520px;}
+
+  .eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--kobalt-deep); font-weight:600; margin:0 0 10px;}
+  h2{font-family:Quicksand,sans-serif; font-weight:600; font-size:23px; margin:0 0 6px;}
+  h3{font-size:15px; font-weight:600; margin:0 0 4px;}
+  p{margin:0 0 14px;}
+  .lede{color:var(--graphite-soft); font-size:14.5px; max-width:620px; margin-bottom:26px;}
+  section{margin-top:66px; padding-top:34px; border-top:1px solid var(--line);}
+
+  /* color system */
+  .colors{display:grid; grid-template-columns:repeat(auto-fit,minmax(165px,1fr)); gap:14px;}
+  .swatch{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--white);}
+  .swatch .fill{height:92px; position:relative;}
+  .swatch .role-badge{position:absolute; top:10px; left:10px; font-size:10px; font-weight:600; padding:3px 8px; border-radius:20px; background:rgba(255,255,255,.9); color:var(--graphite);}
+  .swatch .meta{padding:13px 15px;}
+  .swatch .hx{font-size:13px; font-weight:600; margin-bottom:3px;}
+  .swatch .desc{font-size:12px; color:var(--graphite-soft); line-height:1.45;}
+  .swatch .wcag{font-size:11px; color:var(--kobalt-deep); font-weight:600; margin-top:6px;}
+
+  /* typography */
+  .type-card{border:1px solid var(--line); border-radius:14px; padding:24px 26px; background:var(--white); margin-bottom:14px;}
+  .type-card .role{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--coral); font-weight:600; margin-bottom:10px;}
+  .spec-accent{font-family:Quicksand,sans-serif; font-weight:600; font-size:30px; color:var(--kobalt); margin-bottom:6px;}
+  .spec-lexend{font-family:'Lexend',sans-serif; font-size:16px; color:var(--graphite); max-width:560px;}
+  .spec-scale{font-family:Quicksand,sans-serif; color:var(--graphite); margin-bottom:4px;}
+  .type-note{font-size:12.5px; color:var(--graphite-soft); margin-top:12px; padding-top:12px; border-top:1px dashed var(--line);}
+  .pl-check{font-family:Quicksand,sans-serif; font-size:22px; color:var(--kobalt); letter-spacing:.02em; margin-top:8px;}
+
+  /* logo usage */
+  .usage-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px;}
+  .ubox{border:1px solid var(--line); border-radius:14px; padding:18px; text-align:center; background:var(--white);}
+  .ubox .frame{height:84px; display:flex; align-items:center; justify-content:center; margin-bottom:12px; border-radius:10px;}
+  .ubox .lbl{font-size:12.5px; font-weight:600;}
+  .ubox.ok .lbl{color:#1E7A4D;}
+  .ubox.no .lbl{color:var(--coral);}
+
+  /* live mockup */
+  .browser{border:1px solid var(--line); border-radius:16px; overflow:hidden; margin-top:8px;}
+  .bar{height:38px; background:#F0EEE9; display:flex; align-items:center; gap:6px; padding:0 14px; border-bottom:1px solid var(--line);}
+  .dot{width:10px;height:10px;border-radius:50%;}
+  .url{margin-left:12px; font-size:11px; background:#fff; border-radius:6px; padding:4px 12px; color:#8A857A;}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:15px 26px; background:var(--base); border-bottom:1px solid var(--line);}
+  .nav .logo{display:flex; align-items:center; gap:9px; font-family:Quicksand,sans-serif; font-weight:600; font-size:16px;}
+  .nav-links{display:flex; gap:16px; font-size:12.5px; color:var(--graphite-soft); align-items:center;}
+  .nav-cta{font-size:12.5px; font-weight:600; color:var(--graphite); background:var(--coral); padding:8px 15px; border-radius:9px;}
+  .hero{padding:40px 26px; background:var(--kobalt); color:#fff;}
+  .hero .pills{display:flex; gap:7px; flex-wrap:wrap; margin-bottom:15px;}
+  .pill{font-size:11px; font-weight:600; padding:4px 11px; border-radius:20px;}
+  .hero h3{font-family:Quicksand,sans-serif; font-weight:600; font-size:27px; color:#fff; margin:0 0 10px; max-width:430px; line-height:1.15;}
+  .hero .sub{font-size:14px; color:rgba(255,255,255,.85); max-width:410px; margin-bottom:20px;}
+  .hero .actions{display:flex; gap:10px; flex-wrap:wrap;}
+  .btn-primary{font-size:13px; font-weight:600; color:#fff; background:var(--coral); padding:11px 22px; border-radius:10px;}
+  .btn-ghost{font-size:13px; font-weight:600; color:#fff; border:1.5px solid rgba(255,255,255,.5); padding:11px 20px; border-radius:10px;}
+
+  .principle{background:var(--white); border:1px solid var(--line); border-left:3px solid var(--coral); border-radius:12px; padding:16px 20px; font-size:13.5px; color:var(--graphite); margin-top:20px;}
+  .principle b{color:var(--kobalt-deep);}
+
+  footer{margin-top:80px; padding-top:24px; border-top:1px solid var(--line); font-size:12px; color:var(--graphite-soft);}
+  footer ul{margin:8px 0 0; padding-left:18px;}
+  footer li{margin-bottom:4px;}
+</style>
+</head>
+<body>
+
+  <div class="band">
+    <div class="kicker">Identyfikacja wizualna · wersja 1.3 · znak zamknięty</div>
+    <div class="band-logo" aria-label="Skills Academy" style="align-items:flex-end;gap:0;margin-left:-9px">
+      <img src="../logo/skills-academy-sygnet-rewers.svg" alt="" aria-hidden="true" style="width:52px;height:52px;display:block;transform:translateY(-0.2px);margin-right:-5.1px">
+      <div class="name" style="font-family:'Lexend',sans-serif;font-weight:600;letter-spacing:-.015em;line-height:1">kills Academy</div>
+    </div>
+    <h1>Kobalt · Wariant B</h1>
+    <p>Zaufanie i energia w jednym systemie. Kobalt niesie markę, koral prowadzi wzrok do jednego działania, reszta usuwa się z drogi.</p>
+  </div>
+
+  <div class="wrap">
+
+    <!-- KOLOR -->
+    <section style="border-top:none; margin-top:0; padding-top:0;">
+      <p class="eyebrow">01 · System koloru</p>
+      <h2>Pięć kolorów, pięć zadań</h2>
+      <p class="lede">Każdy kolor ma jedną, jasno przypisaną funkcję, żaden nie jest dekoracją. Wszystkie pary tekst/tło policzone wg formuły kontrastu WCAG 2.1.</p>
+      <div class="colors">
+        <div class="swatch">
+          <div class="fill" style="background:var(--kobalt);"><span class="role-badge">Lider</span></div>
+          <div class="meta">
+            <div class="hx">#1E5FCC</div>
+            <div class="desc">Kobalt: hero, logo, główne bloki, nagłówki sekcji.</div>
+            <div class="wcag">AA · 5,6:1 na bazie</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="fill" style="background:var(--coral);"><span class="role-badge">Iskra</span></div>
+          <div class="meta">
+            <div class="hx">#E8654A</div>
+            <div class="desc">Koral: wyłącznie główne CTA i pojedyncze akcenty. Napis na koralu zawsze grafitowy, nigdy biały. Nigdy jako tło drobnego tekstu.</div>
+            <div class="wcag">tekst grafitowy na koralu · 4,86:1</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="fill" style="background:var(--slate);"><span class="role-badge">Etykieta</span></div>
+          <div class="meta">
+            <div class="hx">#5B6B7A</div>
+            <div class="desc">Slate: wyłącznie oznaczenie oferty Teens Senior (matura). Osobny, spokojniejszy rejestr.</div>
+            <div class="wcag">AA · 5,2:1 na bazie</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="fill" style="background:var(--base); border-bottom:1px solid var(--line);"><span class="role-badge">Baza</span></div>
+          <div class="meta">
+            <div class="hx">#FBF8F3</div>
+            <div class="desc">Cloud Dancer: tło strony i dokumentów. Ciepła biel, nie plastikowa.</div>
+            <div class="wcag">tło podstawowe</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="fill" style="background:var(--graphite);"><span class="role-badge" style="background:rgba(255,255,255,.9);">Tekst</span></div>
+          <div class="meta">
+            <div class="hx">#1A2230</div>
+            <div class="desc">Grafit: kolor tekstu. Nie czysta czerń: łagodniejszy dla oka, spokrewniony z kobaltem.</div>
+            <div class="wcag">AAA · ~14:1 na bazie</div>
+          </div>
+        </div>
+      </div>
+      <div class="principle"><b>Zasada podziału:</b> kolor tekstu i baza to warstwa neutralna (czytelność), kobalt/koral/slate to warstwa funkcyjna (znaczenie). Rozdzielenie ich sprawia, że system pozostaje oszczędny mimo pięciu kodów.</div>
+    </section>
+
+    <!-- TYPOGRAFIA -->
+    <section>
+      <p class="eyebrow">02 · Typografia</p>
+      <h2>Dwa kroje, dwie role</h2>
+      <p class="lede">Lexend niesie cały tekst i całą markę. Quicksand pojawia się wyłącznie tam, gdzie liczy się charakter, nigdy w dłuższym tekście, nigdy w materiałach Teens Senior. Krój akcentowy zmieniono z Fredoki, która nie zawiera polskich znaków ą ć ę ń ś ź ż.</p>
+
+      <div class="type-card">
+        <div class="role">Krój podstawowy. Mędrzec</div>
+        <div class="spec-scale" style="font-family:'Lexend'; font-size:26px; font-weight:600;">Lexend</div>
+        <div class="spec-lexend">Angielski dla życia, nie tylko dla szkoły. Uczymy dzieci działać po angielsku, pytać, negocjować, rozwiązywać problemy.</div>
+        <div class="pl-check" style="font-family:'Lexend'; font-size:17px; font-weight:500;">Polskie znaki: ą ć ę ł ń ó ś ź ż. Ą Ć Ę Ł Ń Ó Ś Ź Ż</div>
+        <div class="type-note">Wszędzie: treść, dokumenty, wnioski grantowe, całe materiały Teens Senior. Zaprojektowany pod płynność czytania, działa dla 6-latka uczącego się liter i dla maturzysty przy arkuszu.</div>
+      </div>
+
+      <div class="type-card">
+        <div class="role">Krój akcentowy. Odkrywca (Kids + Teens Junior)</div>
+        <div class="spec-accent">Dziś jesteś detektywem</div>
+        <div class="pl-check">Polskie znaki: ą ć ę ł ń ó ś ź ż</div>
+        <div class="type-note">Wyłącznie nagłówki, nazwy misji, materiały na zajęciach. Nigdy w dłuższym tekście. Nie występuje w komunikacji Teens Senior, tam wszystko zostaje w Lexend. <b>Wagi:</b> 600 i 700 — krój kończy się na 700, więc nagłówki składamy maksymalną wagą. <b>Polskie znaki:</b> komplet, sprawdzony pomiarem glifów w pliku kroju.</div>
+      </div>
+    </section>
+
+    <!-- LOGO -->
+    <section>
+      <p class="eyebrow">03 · Znak</p>
+      <h2>Dwa koi, jedna litera</h2>
+      <p class="lede">Dwie ryby koi splecione w literę „S": górna grafitowa (struktura. Mędrzec), dolna koralowa (ruch. Odkrywca). Oba ogony kończą się ostrym szpicem, oczy są jedynym prześwitem w bryle. Znak zastępuje pierwszą literę nazwy, nie stoi obok niej.</p>
+      <div class="usage-grid">
+        <div class="ubox ok">
+          <div class="frame" style="background:var(--base);"><svg width="150" viewBox="0 0 148.7 108" aria-hidden="true"><defs><mask id="u1"><rect width="64" height="64" fill="#fff"/><path d="M25 27L40 31L38 38L23 34Z" fill="#000"/><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"/></mask></defs><g transform="translate(7 21.2) scale(.68)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#1A2230" mask="url(#u1)"/><g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#E8654A" mask="url(#u1)"/></g><circle cx="47.5" cy="11.5" r="1.35" fill="#FBF8F3"/><circle cx="16.5" cy="52.5" r="1.35" fill="#FBF8F3"/></g><text x="47" y="61" fill="#1A2230" font-family="Lexend,Arial,sans-serif" font-size="48" font-weight="550" letter-spacing="-1.7">kills</text><text x="14.6" y="91" fill="#5B6B7A" font-family="Lexend,Arial,sans-serif" font-size="15" font-weight="500" letter-spacing="4.4">ACADEMY</text></svg></div>
+          <div class="lbl">Wersja podstawowa</div>
+        </div>
+        <div class="ubox ok">
+          <div class="frame" style="background:var(--kobalt);"><svg width="150" viewBox="0 0 148.7 108" aria-hidden="true"><defs><mask id="u2"><rect width="64" height="64" fill="#fff"/><path d="M25 27L40 31L38 38L23 34Z" fill="#000"/><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"/></mask></defs><g transform="translate(7 21.2) scale(.68)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#FBF8F3" mask="url(#u2)"/><g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#E8654A" mask="url(#u2)"/></g><circle cx="47.5" cy="11.5" r="1.35" fill="#E8654A"/><circle cx="16.5" cy="52.5" r="1.35" fill="#FBF8F3"/></g><text x="47" y="61" fill="#FBF8F3" font-family="Lexend,Arial,sans-serif" font-size="48" font-weight="550" letter-spacing="-1.7">kills</text><text x="14.6" y="91" fill="rgba(251,248,243,.75)" font-family="Lexend,Arial,sans-serif" font-size="15" font-weight="500" letter-spacing="4.4">ACADEMY</text></svg></div>
+          <div class="lbl">Rewers na kobalcie</div>
+        </div>
+        <div class="ubox ok">
+          <div class="frame" style="background:var(--base);"><svg width="66" height="66" viewBox="0 0 64 64" aria-hidden="true"><defs><mask id="u3"><rect width="64" height="64" fill="#fff"/><path d="M25 27L40 31L38 38L23 34Z" fill="#000"/><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"/></mask></defs><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#1A2230" mask="url(#u3)"/><g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#1A2230" mask="url(#u3)"/></g><circle cx="47.5" cy="11.5" r="1.35" fill="#FFFFFF"/><circle cx="16.5" cy="52.5" r="1.35" fill="#FFFFFF"/></svg></div>
+          <div class="lbl">Sygnet · monochrom (druk 1-kolor)</div>
+        </div>
+        <div class="ubox ok">
+          <div class="frame" style="background:var(--base);"><svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true"><defs><mask id="u4"><rect width="64" height="64" fill="#fff"/><path d="M25 27L40 31L38 38L23 34Z" fill="#000"/><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"/></mask></defs><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#1A2230" mask="url(#u4)"/><g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#E8654A" mask="url(#u4)"/></g></svg></div>
+          <div class="lbl">Favicon bez oczu · 16–24 px</div>
+        </div>
+        <div class="ubox no">
+          <div class="frame" style="background:var(--base); opacity:.5;"><span style="display:inline-block; transform:rotate(22deg) scaleX(-1);"><svg width="60" height="60" viewBox="0 0 64 64" aria-hidden="true"><defs><mask id="u5"><rect width="64" height="64" fill="#fff"/><path d="M25 27L40 31L38 38L23 34Z" fill="#000"/><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"/></mask></defs><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#1A2230" mask="url(#u5)"/><g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#E8654A" mask="url(#u5)"/></g><circle cx="47.5" cy="11.5" r="1.35" fill="#FBF8F3"/><circle cx="16.5" cy="52.5" r="1.35" fill="#FBF8F3"/></svg></span></div>
+          <div class="lbl">Nigdy: obrót, odbicie, zniekształcenie</div>
+        </div>
+        <div class="ubox no">
+          <div class="frame" style="background:var(--base);"><svg width="60" height="60" viewBox="0 0 64 64" aria-hidden="true"><defs><mask id="u6"><rect width="64" height="64" fill="#fff"/><path d="M25 27L40 31L38 38L23 34Z" fill="#000"/><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"/></mask></defs><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#1E5FCC" mask="url(#u6)"/><g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#5B6B7A" mask="url(#u6)"/></g><circle cx="47.5" cy="11.5" r="1.35" fill="#FBF8F3"/><circle cx="16.5" cy="52.5" r="1.35" fill="#FBF8F3"/></svg></div>
+          <div class="lbl">Nigdy: podmiana kolorów koi</div>
+        </div>
+      </div>
+      <div class="principle"><b>Pole ochronne:</b> wysokość sygnetu z każdej strony. <b>Minimalny rozmiar:</b> logo pełne 90 px / 30 mm szerokości, sygnet 24 px / 10 mm. Poniżej 32 px stosować wersję bez oczu (favicon). <b>Pakiet plików</b> (poziomy, pionowy, sygnet, rewers, mono, favicony, awatary) jest gotowy w katalogu <code>logo/</code>; do wykonania pozostaje master z wordmarkiem na krzywych i wersja CMYK/Pantone.</div>
+    </section>
+
+    <!-- ZASTOSOWANIE -->
+    <section>
+      <p class="eyebrow">04 · System w działaniu</p>
+      <h2>Strona główna. Wariant B</h2>
+      <p class="lede">Kobaltowy hero buduje rozpoznawalność, koral pojawia się tylko na przyciskach akcji, więc wzrok idzie prosto do „zapisz". To nie estetyka, to konwersja.</p>
+      <div class="browser">
+        <div class="bar"><span class="dot" style="background:#E8654A;"></span><span class="dot" style="background:#F2C230;"></span><span class="dot" style="background:#1E5FCC;"></span><span class="url">skillsacademy.pl</span></div>
+        <div class="nav">
+          <div class="logo" aria-label="Skills Academy" style="align-items:flex-end;gap:0;margin-left:-5px;font-family:'Lexend',sans-serif;letter-spacing:-.015em;line-height:1">
+            <img src="../logo/skills-academy-favicon.svg" alt="" aria-hidden="true" style="width:28px;height:28px;display:block;transform:translateY(-0.1px);margin-right:-4.2px">
+            kills Academy
+          </div>
+          <div class="nav-links"><span>Program</span><span>Exams</span><span>Cennik</span><span>O nas</span><span>Kontakt</span><span class="nav-cta">Zapisz dziecko</span></div>
+        </div>
+        <div class="hero">
+          <div class="pills">
+            <span class="pill" style="background:rgba(255,255,255,.22); color:#fff;">Kids</span>
+            <span class="pill" style="background:rgba(255,255,255,.22); color:#fff;">Teens Junior</span>
+            <span class="pill" style="background:var(--slate); color:#fff;">Teens Senior · Matura</span>
+          </div>
+          <h3>Dziś jesteś detektywem lotniska</h3>
+          <div class="sub">Misje, realne umiejętności i pewność siebie, wszystko po angielsku, bo to język działania, nie tylko przedmiot w dzienniku.</div>
+          <div class="actions">
+            <span class="btn-primary">Umów zajęcia próbne</span>
+            <span class="btn-ghost">Zobacz program →</span>
+          </div>
+        </div>
+      </div>
+      <div class="principle"><b>Kluczowa zasada Wariantu B:</b> koral występuje na stronie tylko raz w polu widzenia, na przycisku akcji. Jeden kontrastowy element = wzrok idzie dokładnie tam, gdzie ma pójść.</div>
+    </section>
+
+    <section>
+      <p class="eyebrow">05 · Fotografia</p>
+      <h2>Zdjęcie pod płaską przykrywką</h2>
+      <p class="lede">Dodane w wersji 1.3. Do wersji 1.2 system opisywał wyłącznie płaskie wypełnienia i nie miał żadnej reguły dla zdjęć — co czytano jako zakaz fotografii. To było niedopowiedzenie, nie decyzja. Zdjęcie wchodzi do systemu, ale nie leży nigdy samo pod tekstem.</p>
+      <table style="width:100%;border-collapse:collapse;margin-top:18px;font-size:14px">
+        <tr style="border-bottom:1px solid rgba(26,34,48,.13)">
+          <th style="text-align:left;padding:10px 12px 10px 0;font-weight:600">Zastosowanie</th>
+          <th style="text-align:left;padding:10px 12px;font-weight:600">Warstwy krycia</th>
+          <th style="text-align:left;padding:10px 0 10px 12px;font-weight:600">Po co</th>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(26,34,48,.13)">
+          <td style="padding:10px 12px 10px 0">Baner i nagłówki ofertowe</td>
+          <td style="padding:10px 12px">grafit 34% + kobalt 60%</td>
+          <td style="padding:10px 0 10px 12px">kadr rozpoznawalny, kolor marki prowadzi</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(26,34,48,.13)">
+          <td style="padding:10px 12px 10px 0">Strony formalne</td>
+          <td style="padding:10px 12px">grafit 30% + kobalt 72%</td>
+          <td style="padding:10px 0 10px 12px">rejestr cichy — dokument, nie oferta</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(26,34,48,.13)">
+          <td style="padding:10px 12px 10px 0">Teens Senior</td>
+          <td style="padding:10px 12px">grafit 74%, bez kobaltu</td>
+          <td style="padding:10px 0 10px 12px">rejestr poważny, bez koloru akcentowego</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px 10px 0">Kafle i karty w treści</td>
+          <td style="padding:10px 12px">brak warstw</td>
+          <td style="padding:10px 0 10px 12px">ramka z kreską włoskową, podpis pod kadrem</td>
+        </tr>
+      </table>
+      <div class="principle" style="margin-top:18px"><b>Trzy reguły bez wyjątków:</b> żadnych gradientów ani przyciemnień od dołu — tylko płaskie krycie. Tekst na zdjęciu w pełnej bieli, nigdy w bieli 85%, która na fotografii spada pod próg WCAG AA. Żadny podpis pod zdjęciem stockowym nie twierdzi, że to nasze zajęcia — nazywa obszar kompetencji, a pod galerią stoi zdanie o materiale ilustracyjnym.</div>
+      <div class="principle" style="margin-top:12px"><b>Trzy kadry muszą być własne:</b> portret prowadzącej, sala centrum, pokaz na koniec semestru. Stockowa twarz podpisana nazwiskiem podkopuje jedyny dowód wiarygodności, jaki marka ma przed pierwszym semestrem. Do czasu ich powstania te miejsca dostają kadr z działania albo znikają — nigdy nie zostaje po nich pusta ramka z zapowiedzią.</div>
+    </section>
+
+    <footer>
+      Podstawa systemu:
+      <ul>
+        <li>Kolory: kontrast obliczony wg formuły relatywnej luminancji WCAG 2.1 (AA 4,5:1 tekst / 3:1 duży tekst i UI)</li>
+        <li>Kobalt jako lider: rodzina niebieska, najlepiej udokumentowany w marketingu sygnał zaufania i kompetencji; najlepszy wynik w symulacji daltonizmu spośród testowanych kandydatów</li>
+        <li>Typografia: Lexend (krój optymalizowany pod płynność czytania) + Quicksand (akcent, pełne latin-ext). Zmiana w wersji 1.2: krojem akcentowym była Fredoka — wycofana, bo nie zawiera polskich znaków ą ć ę ń ś ź ż</li>
+        <li>Kolor napisu na koralu zmieniony z bieli na grafit (wersja 1.2): biel dawała 3,29:1, poniżej progu WCAG AA</li>
+        <li>Fotografia dopisana w wersji 1.3: do 1.2 system nie miał reguły dla zdjęć, a zakaz gradientów i tekstur czytano jako zakaz fotografii. Zdjęcie wchodzi pod płaskie warstwy krycia; pełny opis w wytycznych marki, sekcja 5.5</li>
+        <li>Znak: zwektoryzowany, pakiet plików produkcyjnych w katalogu <code>logo/</code>. Do wykonania: wersja CMYK/Pantone z proofem. Wordmark jest już na krzywych, polskie znaki sprawdzone pomiarem glifów</li>
+      </ul>
+    </footer>
+
+  </div>
+</body>
+</html>

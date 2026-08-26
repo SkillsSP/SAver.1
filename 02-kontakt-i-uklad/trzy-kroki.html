@@ -1,0 +1,81 @@
+<!-- ==========================================================================
+     SEKCJA „TRZY KROKI" — strona główna
+     Wchodzi przed blokiem zapisów, po pasku kafli tematycznych.
+     Klasy .sekcja, .karta, .nadtytul są już w arkuszu produkcyjnym.
+     ========================================================================== -->
+
+<section class="sekcja">
+  <div class="sekcja__tresc">
+    <p class="nadtytul">Jak zaczynamy</p>
+    <h2 class="sekcja__naglowek">Trzy kroki do pierwszych zajęć</h2>
+    <p class="sekcja__lead">
+      Decyzję o zapisie podejmujecie po zajęciach próbnych, nie przed.
+      Dalej prowadzimy Was my.
+    </p>
+
+    <div class="kroki">
+      <div class="karta krok">
+        <p class="krok__numer">01</p>
+        <h3 class="krok__tytul">Rozmowa i dobór grupy</h3>
+        <p class="krok__opis">
+          Pytamy o wiek, o to, co dziecko już umie i czego się boi. Czasem
+          powiemy, że lepiej zadziała inna ścieżka niż ta, po którą przyszliście.
+        </p>
+      </div>
+
+      <div class="karta krok">
+        <p class="krok__numer">02</p>
+        <h3 class="krok__tytul">Zajęcia próbne</h3>
+        <p class="krok__opis">
+          Dziecko wchodzi do grupy na normalnych zasadach — nie na pokazową
+          lekcję dla rodziców. Po spotkaniu mówimy, co widzieliśmy.
+        </p>
+      </div>
+
+      <div class="karta krok">
+        <p class="krok__numer">03</p>
+        <h3 class="krok__tytul">Zapis i karnet</h3>
+        <p class="krok__opis">
+          Wybieracie karnet i ewentualny fakultet. Zasady odwoływania
+          i zawieszania są w <a href="/regulamin">regulaminie</a>, nie
+          w rozmowie telefonicznej.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CSS do dopisku:
+
+.kroki {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: clamp(20px, 2.6vw, 30px);
+  margin-top: clamp(28px, 3.5vw, 40px);
+}
+
+.krok__numer {
+  font-family: var(--font-naglowek);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1;
+  color: var(--kobalt-600);
+  margin: 0 0 16px;
+}
+
+.krok__tytul {
+  font-family: var(--font-naglowek);
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.005em;
+  margin: 0 0 10px;
+}
+
+.krok__opis {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--tekst-drugi);
+  margin: 0;
+}
+
+-->

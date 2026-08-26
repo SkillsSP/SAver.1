@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills Academy. Brief graficzny</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Quicksand:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kobalt:#1E5FCC; --kobalt-deep:#14459B; --kobalt-tint:#E5EDFB;
+    --coral:#E8654A; --slate:#5B6B7A; --base:#FBF8F3; --graphite:#1A2230; --graphite-soft:#4C5666;
+    --line:rgba(26,34,48,0.14); --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--base); color:var(--graphite); font-family:'Lexend',sans-serif; line-height:1.6;}
+  .sheet{max-width:900px; margin:0 auto; padding:0 34px 90px;}
+
+  /* header */
+  .top{display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+       border-bottom:2px solid var(--kobalt); padding:44px 0 20px; margin-bottom:8px; flex-wrap:wrap;}
+  .top .id{display:flex; align-items:center; gap:14px;}
+  .top .id .nm{font-family:Quicksand,sans-serif; font-weight:600; font-size:24px;}
+  .top .meta{text-align:right; font-size:12px; color:var(--graphite-soft);}
+  .doc-title{font-family:Quicksand,sans-serif; font-weight:600; font-size:30px; margin:22px 0 6px;}
+  .doc-sub{color:var(--graphite-soft); font-size:14.5px; max-width:640px; margin-bottom:8px;}
+
+  h2{font-family:Quicksand,sans-serif; font-weight:600; font-size:19px; margin:0 0 4px; color:var(--kobalt-deep);}
+  .sec{margin-top:44px; padding-top:22px; border-top:1px solid var(--line);}
+  .sec-lead{color:var(--graphite-soft); font-size:13.5px; margin-bottom:18px; max-width:640px;}
+  .num{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--coral); font-weight:500; letter-spacing:.04em;}
+
+  /* logo brief */
+  .logo-row{display:grid; grid-template-columns:180px 1fr; gap:26px; align-items:start;}
+  @media(max-width:600px){.logo-row{grid-template-columns:1fr;}}
+  .logo-frame{background:var(--white); border:1px solid var(--line); border-radius:14px; height:150px; display:flex; align-items:center; justify-content:center;}
+  .logo-spec p{margin:0 0 8px; font-size:13.5px;}
+  .logo-spec b{color:var(--graphite);}
+
+  /* color table */
+  table{width:100%; border-collapse:collapse; font-size:13px; margin-top:6px;}
+  th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  th{font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--graphite-soft); font-weight:600;}
+  .chip{width:26px; height:26px; border-radius:7px; display:inline-block; vertical-align:middle; border:1px solid var(--line);}
+  .mono{font-family:'JetBrains Mono',monospace; font-weight:500;}
+  td .role{font-weight:600;}
+  td .use{color:var(--graphite-soft); font-size:12px;}
+
+  /* type */
+  .type-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:600px){.type-grid{grid-template-columns:1fr;}}
+  .type-card{background:var(--white); border:1px solid var(--line); border-radius:14px; padding:20px 22px;}
+  .type-card .lab{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--coral); font-weight:600; margin-bottom:10px;}
+  .type-card .big{font-size:26px; margin-bottom:6px;}
+  .type-card .info{font-size:12.5px; color:var(--graphite-soft);}
+  .type-card .src{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--kobalt-deep); margin-top:8px; word-break:break-all;}
+
+  /* deliverables checklist */
+  .deliv{background:var(--white); border:1px solid var(--line); border-radius:14px; padding:8px 4px;}
+  .deliv-item{display:flex; gap:12px; padding:11px 18px; border-bottom:1px solid var(--line); align-items:flex-start;}
+  .deliv-item:last-child{border-bottom:none;}
+  .box{width:16px; height:16px; border:1.5px solid var(--kobalt); border-radius:4px; flex-shrink:0; margin-top:2px;}
+  .deliv-item .txt{font-size:13.5px;}
+  .deliv-item .txt b{display:block;}
+  .deliv-item .txt span{color:var(--graphite-soft); font-size:12px;}
+
+  .rule-box{background:var(--kobalt-tint); border-radius:12px; padding:15px 20px; font-size:13px; color:var(--graphite); margin-top:16px;}
+  .rule-box b{color:var(--kobalt-deep);}
+
+  .donts{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:8px;}
+  @media(max-width:600px){.donts{grid-template-columns:1fr;}}
+  .dont{font-size:12.5px; color:var(--graphite-soft); padding:9px 14px; background:var(--white); border:1px solid var(--line); border-radius:10px;}
+  .dont::before{content:"✕"; color:var(--coral); font-weight:700; margin-right:8px;}
+
+  footer{margin-top:48px; padding-top:18px; border-top:1px solid var(--line); font-size:11.5px; color:var(--graphite-soft);}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="top">
+    <div class="id">
+      <svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true"><defs><mask id="bh"><rect width="64" height="64" fill="#fff"/><path d="M25 27L40 31L38 38L23 34Z" fill="#000"/><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"/></mask></defs><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#1A2230" mask="url(#bh)"/><g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#E8654A" mask="url(#bh)"/></g><circle cx="47.5" cy="11.5" r="1.35" fill="#FBF8F3"/><circle cx="16.5" cy="52.5" r="1.35" fill="#FBF8F3"/></svg>
+      <span class="nm">Skills Academy</span>
+    </div>
+    <div class="meta">Brief graficzny · v2.2<br>Znak zamknięty · do wykonania mastera produkcyjnego</div>
+  </div>
+
+  <div class="doc-title">Brief dla grafika</div>
+  <p class="doc-sub">Znak jest zamknięty i zwektoryzowany, komplet plików ekranowych jest już przygotowany (katalog <code>logo/</code>). Ten dokument nie prosi o propozycje ani o przeprojektowanie: zadaniem jest master produkcyjny — wordmark na krzywych, wersja CMYK/Pantone i rastry z tego mastera.</p>
+
+  <!-- 1. LOGO -->
+  <div class="sec">
+    <div class="num">01 / ZNAK</div>
+    <h2>Znak finalny (do mastera, nie do zmian)</h2>
+    <p class="sec-lead">Dwie ryby koi splecione w literę „S". Sylwety są w pełni wektorowe i zatwierdzone — geometrii nie modyfikujemy. Pliki źródłowe SVG w katalogu <code>logo/</code>.</p>
+    <div class="logo-row">
+      <div class="logo-frame"><svg width="160" viewBox="0 0 148.7 108" aria-hidden="true"><defs><mask id="b1"><rect width="64" height="64" fill="#fff"/><path d="M25 27L40 31L38 38L23 34Z" fill="#000"/><path d="M25 27L30.8 31.47L24.142 30.001Z" fill="#fff"/></mask></defs><g transform="translate(7 21.2) scale(.68)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#1A2230" mask="url(#b1)"/><g transform="rotate(180 32 32)"><path d="M35 33C29 31 22 30 16 27C9 23 10 15 17 10C26 3 42 3 51 10C53 13 52 17 47 21C43 16 37 14 31 16C24 18 22 23 25 27C27 30 31 31 35 33Z" fill="#E8654A" mask="url(#b1)"/></g><circle cx="47.5" cy="11.5" r="1.35" fill="#FBF8F3"/><circle cx="16.5" cy="52.5" r="1.35" fill="#FBF8F3"/></g><text x="47" y="61" fill="#1A2230" font-family="Lexend,Arial,sans-serif" font-size="48" font-weight="550" letter-spacing="-1.7">kills</text><text x="14.6" y="91" fill="#5B6B7A" font-family="Lexend,Arial,sans-serif" font-size="15" font-weight="500" letter-spacing="4.4">ACADEMY</text></svg></div>
+      <div class="logo-spec">
+        <p><b>Koncepcja:</b> górne koi grafitowe (struktura), dolne koralowe (ruch). Oba ogony kończą się ostrym szpicem; oczy to jedyny prześwit w bryle. Sygnet zastępuje pierwszą literę nazwy.</p>
+        <p><b>Kolory znaku:</b> górne koi Grafit #1A2230 · dolne koi Koral #E8654A · oczy Cloud Dancer #FBF8F3.</p>
+        <p><b>Wordmark:</b> „kills" + „ACADEMY" krojem Lexend 550/500, <b>zamieniony na krzywe</b> we wszystkich plikach SVG — nie wymagają zainstalowanego kroju.</p>
+        <p><b>Pole ochronne:</b> wysokość sygnetu z każdej strony. <b>Minimalny rozmiar:</b> logo pełne 90 px / 30 mm szerokości, sygnet 24 px / 10 mm; poniżej 32 px wersja bez oczu (favicon).</p>
+        <p><b>Wersje w pakiecie:</b> pozioma, pionowa, sam sygnet, rewers, monochrom grafit i biały, favicony SVG/ICO/PNG, awatary kwadrat i koło.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. KOLORY -->
+  <div class="sec">
+    <div class="num">02 / KOLOR</div>
+    <h2>System kolorów (pięć kodów, pięć funkcji)</h2>
+    <p class="sec-lead">Kody ostateczne. Każdy kolor ma jedną przypisaną funkcję, nie do zamiany miejscami. Wszystkie pary tekst/tło przechodzą kontrast WCAG AA.</p>
+    <table>
+      <tr><th>Kolor</th><th>HEX</th><th>Funkcja</th><th>Kontrast</th></tr>
+      <tr><td><span class="chip" style="background:#1E5FCC;"></span></td><td class="mono">#1E5FCC</td><td><span class="role">Kobalt, lider</span><br><span class="use">hero, logo, główne bloki, nagłówki</span></td><td class="mono">AA 5,6:1</td></tr>
+      <tr><td><span class="chip" style="background:#E8654A;"></span></td><td class="mono">#E8654A</td><td><span class="role">Koral, iskra</span><br><span class="use">wyłącznie główne CTA i akcenty; nigdy tło drobnego tekstu; napis na koralu zawsze grafitowy</span></td><td class="mono">4,86:1</td></tr>
+      <tr><td><span class="chip" style="background:#5B6B7A;"></span></td><td class="mono">#5B6B7A</td><td><span class="role">Slate, etykieta</span><br><span class="use">wyłącznie oferta Teens Senior (matura)</span></td><td class="mono">AA 5,2:1</td></tr>
+      <tr><td><span class="chip" style="background:#FBF8F3;"></span></td><td class="mono">#FBF8F3</td><td><span class="role">Cloud Dancer, baza</span><br><span class="use">tło strony i dokumentów</span></td><td class="mono">tło</td></tr>
+      <tr><td><span class="chip" style="background:#1A2230;"></span></td><td class="mono">#1A2230</td><td><span class="role">Grafit, tekst</span><br><span class="use">kolor tekstu (nie czysta czerń)</span></td><td class="mono">AAA ~14:1</td></tr>
+    </table>
+    <div class="rule-box"><b>Napis na koralu.</b> Zawsze Grafit #1A2230, nigdy biel. Biały tekst na koralu daje 3,29:1 i nie przechodzi WCAG AA; grafit daje 4,86:1. Stan najechania rozjaśnia tło do #F0785F, nie przyciemnia.</div>
+    <div class="rule-box"><b>Zasada wariantu B:</b> na dowolnym ekranie koral pojawia się tylko raz w polu widzenia, na przycisku akcji. Jeden kontrastowy element prowadzi wzrok dokładnie tam, gdzie ma pójść.</div>
+  </div>
+
+  <!-- 3. TYPOGRAFIA -->
+  <div class="sec">
+    <div class="num">03 / TYPOGRAFIA</div>
+    <h2>Kroje pisma</h2>
+    <p class="sec-lead">Dwa kroje, obie rodziny darmowe (Google Fonts), bez kosztów licencji. Quicksand nie występuje w materiałach Teens Senior.</p>
+    <div class="type-grid">
+      <div class="type-card">
+        <div class="lab">Podstawowy: cały tekst</div>
+        <div class="big" style="font-family:'Lexend';font-weight:600;">Lexend</div>
+        <div class="info">Treść, dokumenty, przyciski, całe materiały Teens Senior. Wagi: 400 / 500 / 600 / 700.</div>
+        <div class="src">fonts.google.com/specimen/Lexend</div>
+      </div>
+      <div class="type-card">
+        <div class="lab">Akcentowy: tylko nagłówki</div>
+        <div class="big" style="font-family:Quicksand;font-weight:700;">Quicksand</div>
+        <div class="info">Wyłącznie nagłówki i nazwy misji (Kids + Teens Junior). Nigdy w dłuższym tekście. Wagi: 600 / 700 — krój kończy się na 700.</div>
+        <div class="src">fonts.google.com/specimen/Quicksand</div>
+      </div>
+    </div>
+    <div class="rule-box"><b>Zmiana kroju akcentowego.</b> Fredoka została wycofana — nie zawiera polskich znaków ą ć ę ń ś ź ż (sprawdzone pomiarem glifów, nie na oko). Zastąpiona krojem Quicksand o zbliżonym charakterze i pełnym latin-ext.</div>
+  </div>
+
+  <!-- 4. PLIKI DO DOSTARCZENIA -->
+  <div class="sec">
+    <div class="num">04 / STATUS PLIKÓW</div>
+    <h2>Co jest gotowe, co zostaje do wykonania</h2>
+    <p class="sec-lead">Pięć pozycji jest dostarczonych i wdrożonych. Dwie pozostałe to zakres pracy grafika.</p>
+    <div class="deliv">
+      <div class="deliv-item"><span class="box" style="background:#1E5FCC;border-color:#1E5FCC;"></span><span class="txt"><b style="text-decoration:line-through;color:#4C5666;">Warianty logo</b><span>poziomy, pionowy, sam sygnet — SVG w katalogu logo/</span></span></div>
+      <div class="deliv-item"><span class="box" style="background:#1E5FCC;border-color:#1E5FCC;"></span><span class="txt"><b style="text-decoration:line-through;color:#4C5666;">Wersje kolorystyczne</b><span>podstawowa, rewers na kobalcie/graficie, monochrom grafit, monochrom biały</span></span></div>
+      <div class="deliv-item"><span class="box" style="background:#1E5FCC;border-color:#1E5FCC;"></span><span class="txt"><b style="text-decoration:line-through;color:#4C5666;">Favicon i awatary</b><span>favicon SVG, .ico 16/32/48, PNG 16–512, awatar kwadratowy i kołowy</span></span></div>
+      <div class="deliv-item"><span class="box" style="background:#1E5FCC;border-color:#1E5FCC;"></span><span class="txt"><b style="text-decoration:line-through;color:#4C5666;">Rastry logo pełnego</b><span>PNG 2400 / 1200 / 500 px przezroczyste, rewers na kobalcie, układ pionowy, JPG na bieli — w katalogu logo/</span></span></div>
+      <div class="deliv-item"><span class="box" style="background:#1E5FCC;border-color:#1E5FCC;"></span><span class="txt"><b style="text-decoration:line-through;color:#4C5666;">Tekst na krzywych</b><span>wordmark Lexend zwektoryzowany we wszystkich SVG; master .ai/.eps/.pdf tylko jeśli drukarnia go zażąda</span></span></div>
+      <div class="deliv-item"><span class="box" style=""></span><span class="txt"><b style="">Wersja CMYK i Pantone + proof</b><span>wartości startowe w logo/README.txt; wymagane wizualne dopasowanie w profilu drukarni</span></span></div>
+
+      <div class="deliv-item"><span class="box" style=""></span><span class="txt"><b style="">Miniaturowa karta marki (1 strona)</b><span>logo + kody kolorów + nazwy krojów, do szybkiego wglądu — do druku i do maila</span></span></div>
+    </div>
+    <div class="rule-box"><b>Uwaga:</b> sylwety koi są zatwierdzone — master powstaje z dostarczonych SVG, bez rysowania znaku od nowa i bez korekt krzywych.</div>
+  </div>
+
+  <!-- 5. CZEGO NIE ROBIC -->
+  <div class="sec">
+    <div class="num">05 / FOTOGRAFIA</div>
+    <h2>Zdjęcia — zakres do zrobienia na miejscu</h2>
+    <p class="sec-lead">Serwis startuje na materiale ilustracyjnym (26 kadrów, wdrożone). Trzech kadrów nie da się kupić i to jest zakres sesji zdjęciowej — pełne reguły w wytycznych marki, sekcja 5.5.</p>
+    <div class="deliv">
+      <div class="deliv-item"><span class="box"></span><span class="txt"><b>Portrety prowadzących</b><span>zajęcia podstawowe i Exams; kadr do koła, oświetlenie naturalne. Stockowa twarz podpisana nazwiskiem podkopuje jedyny dostępny dowód wiarygodności</span></span></div>
+      <div class="deliv-item"><span class="box"></span><span class="txt"><b>Sala centrum</b><span>strona zapisów oraz zajęcia 1:1; w tym drugim przypadku kadr musi pokazywać przeszklenie i widoczność z zewnątrz, bo to warunek ze standardów ochrony małoletnich</span></span></div>
+      <div class="deliv-item"><span class="box"></span><span class="txt"><b>Pokaz na koniec semestru</b><span>po jednym kadrze na każdy z czterech fakultetów — Music, Art, Acting, Motion Skills; docelowo zastępują obecne zdjęcia na kartach</span></span></div>
+    </div>
+    <p style="margin-top:14px"><b>Warunki wspólne:</b> kadr poziomy, min. 2000 px szerokości, oświetlenie naturalne, jedna tonacja w całej sesji. Dziecko w trakcie działania — nie pozowana grupa pod ścianą. Każde zdjęcie uczestnika wymaga odrębnej, pisemnej zgody rodzica na wizerunek; zgoda na zajęcia nią nie jest.</p>
+    <p><b>Obróbka:</b> dwie wersje każdego kadru — 800 px i 1600 px, JPEG. Bez winiet, bez filtrów tonalnych, bez rozmycia tła w postępie — zdjęcie na stronie leży pod płaską warstwą krycia i każdy dodatkowy efekt się z nią bije.</p>
+  </div>
+
+  <div class="sec">
+    <div class="num">06 / OGRANICZENIA</div>
+    <h2>Czego ze znakiem robić nie wolno</h2>
+    <div class="donts">
+      <div class="dont">obracać ani przechylać znaku</div>
+      <div class="dont">odbijać lustrzanie</div>
+      <div class="dont">zmieniać proporcji (rozciągać/ściskać)</div>
+      <div class="dont">zamieniać kolorów koi (górne zawsze grafit)</div>
+      <div class="dont">dodawać cieni, obrysów, gradientów, efektów 3D</div>
+      <div class="dont">usuwać oczu powyżej 32 px ani ich powiększać</div>
+      <div class="dont">umieszczać na tle o zbyt niskim kontraście</div>
+    </div>
+  </div>
+
+  <footer>
+    Skills Academy · Szczecin, brief graficzny v2.2 (sierpień 2026). Znak zamknięty i zwektoryzowany; dokument służy do wykonania mastera produkcyjnego, nie do ponownego projektowania koncepcji. Kolory podane w HEX; do druku wymagane przeliczenie na CMYK. Kroje pisma dostępne bezpłatnie w Google Fonts.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -20,8 +20,8 @@ export const firma = {
      wizytówce Google — rozjazd osłabia widoczność w wynikach lokalnych. */
   ulica: null,
   kodPocztowy: null,
-  telefon: null,
-  telefonZapis: null,
+  telefon: "508 069 007",
+  telefonZapis: "+48 508 069 007",
   email: "kontakt@skilful.pl",
   nip: null,
   godzinyBiura: null,
@@ -56,10 +56,13 @@ export const firma = {
   formularzEndpoint: "https://nmhwdjqmmeovgoersjll.supabase.co/functions/v1/zapis",
 };
 
-/** Telefon w formacie do `tel:` — cyfry bez spacji. */
+/** Telefon w formacie do `tel:`. Bierzemy wersję z numerem kierunkowym,
+    bo `tel:508069007` nie zadzwoni z telefonu zalogowanego w obcej sieci —
+    a rodzic na wakacjach to nie jest przypadek brzegowy. */
 export function telefonHref() {
-  if (!firma.telefon) return null;
-  return "tel:" + firma.telefon.replace(/[^\d+]/g, "");
+  const numer = firma.telefonZapis ?? firma.telefon;
+  if (!numer) return null;
+  return "tel:" + numer.replace(/[^\d+]/g, "");
 }
 
 /** Widoczny telefon albo neutralny zastępnik. */
@@ -220,8 +223,62 @@ export const fakultety = [
   },
 ];
 
+/* --------------------------------------------------------------------------
+   ZESPÓŁ
+
+   Trzy osoby to zła liczba dla siatki `auto-fit`: przy każdym minimum kolumny
+   istnieje szerokość, na której wychodzi 2+1 i trzecia osoba zostaje sama pod
+   spodem. Dlatego zespół renderujemy jako wiersze w jednej karcie, nie jako
+   trzy kafle.
+
+   Pole `kwalifikacje` jest puste świadomie i jest to jedyny brak na podstronie
+   „O nas" — a zarazem jej najważniejsze zdanie. W edukacji premium nazwisko bez
+   wykształcenia, lat doświadczenia i uprawnień egzaminacyjnych nie jest jeszcze
+   dowodem. Do uzupełnienia przed startem.
+
+   Portretów nie ma i nie będzie do własnej sesji: stockowa twarz pod nazwiskiem
+   prowadzącej podkopałaby wszystko inne na tej stronie.
+   -------------------------------------------------------------------------- */
+export const zespol = [
+  {
+    imie: "Karolina Dumała",
+    rola: "odpowiada za standardy ochrony małoletnich",
+    przedmioty:
+      "angielski i matematyka (zajęcia podstawowe, egzamin ósmoklasisty, matura), fakultety Acting i Motion Skills, zajęcia 1:1",
+    kwalifikacje: null,
+  },
+  {
+    imie: "Kamil Dumała",
+    rola: "prowadzący",
+    przedmioty:
+      "angielski i matematyka (zajęcia podstawowe, egzamin ósmoklasisty), historia rozszerzona, zajęcia 1:1",
+    kwalifikacje: null,
+  },
+  {
+    imie: "Natalia Marczewska",
+    rola: "prowadząca",
+    przedmioty:
+      "angielski (zajęcia podstawowe, egzamin ósmoklasisty), fakultety Music i Art Skills, zajęcia 1:1",
+    kwalifikacje: null,
+  },
+];
+
+/* Ryzyko obsadowe warte odnotowania w kodzie, bo wynika z tabeli powyżej:
+   historię prowadzi jedna osoba, więc przy chorobie nie ma zastępstwa — a to
+   przedmiot sprzedawany pod konkretny termin egzaminu. Matematykę prowadzą
+   dwie osoby, angielski trzy. */
+
 /** Instytucje, na których opiera się program — pasek dowodu. */
 export const zrodla = ["OECD", "UNESCO", "UNICEF", "WHO", "EEF"];
 
-/** Maksymalna liczebność grupy — jedna liczba, używana w kilku miejscach. */
-export const wielkoscGrupy = 8;
+/* Liczebność grupy. Dotąd stała tu jedna liczba i strony pisały „do ośmiu",
+   co nie komunikowało dolnej granicy — a ta jest warunkiem uruchomienia grupy:
+   przy czterech zapisanych zajęcia się nie zaczynają. Stąd zakres, nie maksimum. */
+export const grupaMin = 5;
+export const grupaMax = 8;
+
+/** Gotowy zapis „5–8", żeby myślnik był wszędzie ten sam (półpauza, nie łącznik). */
+export const wielkoscGrupyTekst = `${grupaMin}–${grupaMax}`;
+
+/** Zachowane dla miejsc, które mówią wyłącznie o górnej granicy. */
+export const wielkoscGrupy = grupaMax;

@@ -1,0 +1,187 @@
+SKILLS ACADEMY — CO PRZEKAZUJEMY DALEJ, A CO NIE
+Stan na 26 sierpnia 2026
+
+═══════════════════════════════════════════════════════════════
+AKTUALNE — te pliki są obowiązujące
+═══════════════════════════════════════════════════════════════
+
+STRATEGIA I DOKUMENTY BIZNESOWE
+  zalozenia-marki-skills-academy.md            założenia marki, v1.1
+  wytyczne-marki-kids-skills-academy.md        wytyczne marki, v3.4
+  Kids_Skills_Academy_BP_v2.docx               biznesplan, wersja poprawiona
+  Skills_Academy_streszczenie_v2.docx          streszczenie, wersja poprawiona
+
+MATERIAŁY DLA GRAFIKA I DRUKARNI
+  skills-academy-identyfikacja-final.html      identyfikacja wizualna, v1.3
+  skills-academy-brief-graficzny.html          brief dla grafika, v2.2
+  ../logo/                                     pakiet znaku, v1.1
+  ../logo/README.txt                           spis plików logo i zakres pracy
+
+DLA PROGRAMISTY
+  ../web-poprawki/CZYTAJ-TO-NAJPIERW.md        instrukcja podmiany — kroje i CTA
+  ../web-poprawki/style.css                    arkusz stylów do web/src/styles/
+  ../web-poprawki-zdjecia/CZYTAJ-TO-NAJPIERW.md  instrukcja podmiany — zdjęcia
+  ../web-poprawki-zdjecia/naglowek-zdjecia.css   dopisek do arkusza stylów
+  ../web-poprawki-zdjecia/foto/                  52 pliki JPEG (26 kadrów × 2 rozmiary)
+  ../web-poprawki-kontakt/CZYTAJ-TO-NAJPIERW.md  instrukcja — kontakt i układ
+  ../web-poprawki-kontakt/kontakt-i-pasek.css    dopisek: pasek, kontakt, Exams
+  ../web-poprawki-kontakt/trzy-kroki.html        sekcja na stronę główną
+
+═══════════════════════════════════════════════════════════════
+NIEAKTUALNE — nie przekazywać nikomu na zewnątrz
+═══════════════════════════════════════════════════════════════
+
+  prototype/                                   cały katalog, wersje robocze
+  prototype/skills-academy-identyfikacja-final.html
+  prototype/skills-academy-brief-graficzny.html
+  skills-academy-struktura-serwisu-v1.html     zastąpiony przez „Struktura serwisu"
+  Kids_Skills_Academy_BP_poprawiony.docx       poprzednik BP_v2
+  Skills_Academy_streszczenie.docx             poprzednik streszczenie_v2
+
+Zostawiamy je świadomie, jako zapis historii decyzji.
+
+Dlaczego są nieaktualne:
+  - opisują krój Fredoka albo Baloo 2 jako akcentowy; obowiązuje Quicksand
+  - podają kontrast koralu 3,1:1 i biały napis na koralu; obowiązuje napis
+    grafitowy na koralu marki #E8654A, 4,86:1
+  - opisują Exams jako trzeci filar; Exams stoi POZA zajęciami podstawowymi
+    i jest kupowany osobno, ze zniżką 5–10% dla uczestników karnetu
+  - używają wycofanego terminu „Rdzeń" i „zajęcia bazowe"
+  - nie mają sekcji o fotografii; do wersji 3.1 wytycznych i 1.2 identyfikacji
+    marka nie miała żadnej reguły dla zdjęć, a zakaz gradientów i tekstur
+    czytano jako zakaz fotografii
+
+═══════════════════════════════════════════════════════════════
+CO ZOSTAJE OTWARTE
+═══════════════════════════════════════════════════════════════
+
+Wymaga decyzji Waszej:
+  1. miesięczna stawka za Exams — bez niej Rozdział 14 biznesplanu nie ma
+     czwartej linii przychodu, a zniżka 5–10% nie ma od czego być liczona
+  2. średnia ważona w Rozdziale 14: zostawić 320 zł z adnotacją o zaokrągleniu
+     w dół, czy podnieść do wyliczonych 336 zł
+
+Wymaga pracy w programie wektorowym:
+  3. wersja CMYK/Pantone znaku z zatwierdzonym proofem przed pierwszym drukiem
+  4. odstęp między sygnetem a literą „k" w skills-academy-logo.svg jest
+     luźniejszy niż w serwisie (ok. 0,27 em wobec 0,18 em) — do wyrównania
+     przy najbliższej korekcie znaku; różnica jest widoczna dopiero przy
+     dużych rozmiarach
+
+Sesja zdjęciowa — ODWOŁANA na tym etapie (sierpień 2026):
+  Trzy kadry, które miały wymagać sesji na miejscu — sala centrum, pokaz
+  semestralny i sala 1:1 — zastąpione materiałem z folderu. Zapowiedzi
+  „docelowo własne zdjęcie" zdjęte ze strony: obietnica bez terminu starzeje się
+  szybciej niż samo zdjęcie. Wszystkie 26 przygotowanych kadrów pracuje, zapasu
+  na rotację nie ma — pierwszy wpis w aktualnościach będzie wymagał nowego
+  materiału.
+  Jedyny wyjątek: portrety prowadzących. Stockowej twarzy pod nazwiskiem nie
+  wstawimy w żadnym scenariuszu — tam zostają same opisy tekstowe.
+
+Wymaga decyzji Waszej — wygląd:
+  8. czy wchodzimy w pełny układ lądowania sprzedażowego. Wariant gotowy
+     do porównania w „Strona główna - wariant Oponly", opis decyzji
+     w „Wariant Oponly - dokumentacja". Obecna wersja ma już z niego trzy
+     najmocniejsze elementy, więc różnica dotyczy roli kobaltu i długości strony
+
+Zamknięte w tej turze (sierpień 2026):
+  • podstrona kontaktu — zbudowana; wcześniej pozycja w pasku prowadziła do
+    zakotwiczenia w stopce, a przyciski kontaktowe na formularz zapisu
+  • kolor nagłówków — kobalt na całej ofercie, grafit tylko na Exams
+  • pasek użytkowy nad nawigacją i sekcja „trzy kroki" na stronie głównej
+  • matura z historii — dodana do Exams jako czwarta pozycja (rozszerzona)
+  • prowadzący — Karolina Dumała (angielski, matematyka, fakultety Acting
+    i Motion Skills), Kamil Dumała (angielski, matematyka, historia rozszerzona),
+    Natalia Marczewska (angielski, fakultety Music i Art). Wszyscy prowadzą też
+    zajęcia 1:1. Wpisani na sześciu podstronach
+  • osoba odpowiedzialna za standardy ochrony małoletnich — Karolina Dumała,
+    wpisana na kontakcie i w standardach. BLOKER 1 ZAMKNIĘTY
+  • podstrona „O nas" — zbudowana: zespół z przedmiotami, metoda, sekcja
+    „czego jeszcze nie mamy". Odnośniki w pasku, menu, stopce i na stronie
+    głównej prowadzą na podstronę, nie do zakotwiczenia
+  • obietnica raportu dla rodzica — ZDJĘTA ze strony w pięciu miejscach. Aneks,
+    sekcja 13: bez 2–4 mierzalnych umiejętności na moduł i arkusza obserwacji nie
+    ma pokrycia. W zamian rozmowa i konsultacja z prowadzącym — rzeczy, które
+    da się dowieźć od pierwszego dnia
+  • wytyczne 4.1 — „rekomendowana przez OECD i EEF" usunięte, zastąpione
+    odwołaniem do metaanaliz. Wytyczne podniesione do v3.4
+  • bibliografia — decyzja: zostaje zdanie o dokumentacji dostępnej na życzenie,
+    bez listy DOI na stronie
+  • twierdzenia o metodzie — cztery zdania zdjęte ze strony po aneksie naukowym:
+    „skuteczniejsze od nauczania podającego", „nie tłumaczy w głowie z polskiego",
+    „najkrótsza droga, żeby przestało bać się mówić" (Acting) oraz „odblokowują
+    szybciej niż kolejne ćwiczenia". Sygnatury OECD/UNESCO/EEF dostały podpis,
+    że są ramami kompetencji, nie rekomendacją metody. Opis w paczce 07
+  • cennik 2026/2027 wpisany — trzy progi programowe (200/250, 360, 500 zł),
+    Exams 350 zł, zajęcia 1:1 130/150/180 zł, minigrupy 2–4 osoby (cena
+    indywidualna), zniżka rodzeństwa 10%, program poleceń 50 zł,
+    dziesięć równych rat od września do czerwca. Grupy 5–8 osób.
+  • zabezpieczenie formularzy przed botami — honeypot, pułapka czasowa
+    i warunkowe pytanie kontrolne, bez CAPTCHY. Wymaga jeszcze powtórzenia
+    kontroli po stronie serwera
+  • Exams rozdzielone: /exams to strona rozdzielająca, egzamin ósmoklasisty
+    i matura mają osobne podstrony. Grafit zawężony do samej matury —
+    ósmoklasista to Teens Junior, więc został kobaltowy
+  • numer kontaktowy — 508 069 007, wpisany we wszystkich miejscach
+  • adres e-mail — kontakt@skilful.pl (było: kontakt@skillsacademy.pl)
+
+Wymaga uzupełnienia danych:
+  9. dane administratora w klauzuli RODO, regulaminie i polityce prywatności
+     — oraz w danych firmy na podstronie kontaktu (cztery miejsca, jedno brzmienie)
+  10. wykształcenie i doświadczenie każdej z trzech osób — nazwiska i przedmioty
+      są wpisane, opisy kwalifikacji stoją jako [nawias]
+  11. bezpośredni e-mail i numer do zgłoszeń ze standardów — nie może prowadzić
+      do biura ani do osób prowadzących zajęcia
+  12. czy szukacie kolejnych osób — zaznaczone „szukamy". Matematykę prowadzą
+      już dwie osoby, ale historia ma jedną — brak zastępstwa przy chorobie
+  11. liczebności grup, częstotliwość arkuszy próbnych, zakres materiału
+  12. zgody rodziców na wizerunek — wzór do przygotowania przed sesją zdjęciową
+  13. adres, kod, godziny biura i zajęć, dojazd, parking, wejście — wszystko
+      ukryte do podpisania umowy na lokal, patrz uwaga wyżej
+  14. imię, nazwisko i funkcja osoby odpowiedzialnej za standardy ochrony
+      małoletnich. BEZ TEGO podstrona kontaktu nie może iść na produkcję —
+      ustawa wymaga wskazania konkretnej osoby, nie adresu ogólnego
+  15. imię, nazwisko i wykształcenie prowadzącego historię — nowy przedmiot
+      w Exams, ta sama luka co przy matematyce
+
+  16. historia założycielska na „O nas" — dlaczego powstało centrum, skąd pomysł
+      na Useful & Life Skills. Jeden do trzech akapitów, bez zdjęcia. W tej
+      kategorii mocniejsze niż lista kwalifikacji
+
+  17. standard ewaluacji z sekcji 13 aneksu — 2–4 mierzalne umiejętności na
+      moduł, diagnoza początkowa i końcowa, arkusz obserwacji zapisujący
+      zachowania. Nie blokuje startu strony, bo obietnica raportu została zdjęta,
+      ale bez tego nie da się później opublikować żadnych wyników
+
+UWAGA — program poleceń kontra „rabaty nie łączą się" (DO POTWIERDZENIA):
+  Cennik zabrania łączenia rabatów, a zaraz potem wprowadza 50 zł za polecenie.
+  Jeśli polecenie jest rabatem, rodzic z dwojgiem dzieci traci 10% zniżki
+  rodzinnej w miesiącu, w którym kogoś poleci — program działa wtedy odwrotnie
+  do intencji. Na stronie oba mechanizmy stoją jako osobne, bez zdania
+  o łączeniu. Do potwierdzenia jednym zdaniem.
+
+UWAGA — fakultet bez zajęć podstawowych (DO DECYZJI):
+  Cennik pozwala wziąć jeden, dwa albo trzy fakultety samodzielnie, bez Useful
+  & Life Skills. Cała dokumentacja marki mówi natomiast, że zajęcia podstawowe
+  są bazą każdego karnetu, a fakultet jest dodatkiem (wytyczne sekcja 0 i 1,
+  założenia marki sekcja 6, struktura serwisu).
+  Strony fakultetów i cennika są już przepisane pod cennik. Jeśli tak ma zostać,
+  trzeba przepisać trzy dokumenty marki. Jeśli nie — trzeba zmienić cennik.
+  To jedyna otwarta sprzeczność w całym zestawie.
+
+UWAGA — brak lokalu:
+  Do momentu podpisania umowy na lokal wszystko, co go dotyczy, jest ukryte
+  na stronie, nie wpisane jako pusty nawias. Zdjęte: adres w stopce, na
+  zapisach, w kafelku „Gdzie" na stronie głównej i w nagłówku kontaktu; godziny
+  biura; cała sekcja „Gdzie jesteśmy" z mapą, dojazdem i parkingiem; karta
+  „Osobiście — przyjdźcie do biura" na kontakcie.
+  W ich miejscu stoi jedno zdanie: „Adres, godziny i dojazd podamy razem
+  z uruchomieniem zapisów". Miasto (Szczecin) i tryb (zajęcia stacjonarne)
+  zostają — to nie jest informacja o lokalu.
+  Po podpisaniu umowy: przywrócić sekcję dojazdu i kartę „Osobiście",
+  uzupełnić adres w stopce i na zapisach.
+
+UWAGA — domena i kontakt:
+  skilful.pl to nasza domena, używana też na ulotce i w materiałach drukowanych.
+  Adres e-mail: kontakt@skilful.pl. Telefon: 508 069 007.
+  Oba wpisane na stronie — nie „porządkować" domeny przy wdrożeniu.

@@ -1,0 +1,137 @@
+/* ==========================================================================
+   PASEK UŻYTKOWY, PODSTRONA KONTAKTU, GRAFITOWY NAGŁÓWEK EXAMS
+   Dopisek do web/src/styles/style.css — wklej po dopisku z paczki 01-zdjecia.
+
+   Trzy niezależne bloki. Każdy da się wdrożyć osobno.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. PASEK UŻYTKOWY — nad nawigacją, na każdej podstronie
+
+   Przewija się razem ze stroną; przyklejona zostaje tylko nawigacja pod nim.
+   Dlatego pasek MUSI stać jako element rodzeństwa PRZED <header>, nie w nim.
+   -------------------------------------------------------------------------- */
+
+.pasek-uzytkowy {
+  background: var(--chmura-50);
+  border-bottom: 1px solid var(--linia);
+  padding: 9px 24px;
+}
+
+.pasek-uzytkowy__tresc {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 24px;
+  flex-wrap: wrap;
+}
+
+.pasek-uzytkowy__haslo {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tekst-drugi);
+}
+
+.pasek-uzytkowy__kontakt {
+  display: flex;
+  align-items: center;
+  gap: 10px 22px;
+  flex-wrap: wrap;
+}
+
+.pasek-uzytkowy__kontakt a {
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Telefon w grafitcie, nie w kobalcie — kobalt zostaje dla odnośnika
+   treściowego, żeby dwa linki obok siebie nie ważyły tyle samo. */
+.pasek-uzytkowy__telefon {
+  color: var(--grafit-900);
+}
+
+/* --------------------------------------------------------------------------
+   2. PODSTRONA KONTAKTU
+
+   Cztery karty dróg kontaktu + formularz z wyborem tematu + adres, godziny,
+   dojazd + dane firmy. Formularz i karty korzystają z istniejących klas
+   .karta i .pole — poniżej tylko to, czego nie ma w arkuszu.
+   -------------------------------------------------------------------------- */
+
+/* Karta drogi kontaktu jest w całości klikalna. */
+.droga-kontaktu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: clamp(20px, 2.4vw, 26px);
+  background: var(--bialy);
+  border: 1px solid var(--linia);
+  border-radius: 14px;
+  color: var(--grafit-900);
+  text-decoration: none;
+}
+
+.droga-kontaktu:hover {
+  border-color: rgba(30, 95, 204, 0.45);
+  color: var(--grafit-900);
+}
+
+.droga-kontaktu__etykieta {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tekst-drugi);
+}
+
+.droga-kontaktu__wartosc {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--kobalt-600);
+  overflow-wrap: anywhere;
+}
+
+/* Numer telefonu jest największy z czterech — to główna droga. */
+.droga-kontaktu__wartosc--telefon {
+  font-family: var(--font-naglowek);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.droga-kontaktu__opis {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--tekst-drugi);
+}
+
+/* Wiersz godzin: nazwa z lewej, wartość z prawej. */
+.godziny__wiersz {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Zakotwiczenia #formularz i #dojazd muszą zejść pod przyklejoną nawigację. */
+#formularz,
+#dojazd {
+  scroll-margin-top: 88px;
+}
+
+/* --------------------------------------------------------------------------
+   3. GRAFITOWY NAGŁÓWEK EXAMS
+
+   Decyzja wdrożona: kobalt na całej ofercie, grafit tylko na ścieżce
+   egzaminacyjnej. Reguła bazowa jest w dopisku z paczki 01-zdjecia
+   (.naglowek-strony--senior.naglowek-strony--foto); tu tylko kolor tła
+   samego bloku, na wypadek gdyby zdjęcie się nie wczytało.
+   -------------------------------------------------------------------------- */
+
+.naglowek-strony--senior {
+  background: var(--grafit-900);
+}

@@ -43,3 +43,7 @@ npm-debug.log*
 # (assets/fonts, Quicksand) zostają nietknięte.
 web/public/fonts/*Variable*
 web/public/fonts/*-VF.*
+
+# Katalog roboczy CLI Supabase — zawiera dowiązanie do projektu i znaczniki
+# wersji, odtwarzane przy każdym uruchomieniu.
+supabase/.temp/
