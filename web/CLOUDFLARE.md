@@ -1,5 +1,11 @@
 # Uruchomienie serwisu na Cloudflare Pages — skilful.pl
 
+> **To wariant zapasowy, nie obecny stan.** Serwis stoi dziś na GitHub Pages
+> (publikacja przez Actions z gałęzi `main`), a formularz wysyła zgłoszenia
+> przez funkcję Supabase korzystającą z SMTP własnej poczty w OVH. Ten plik
+> opisuje, co zrobić, gdyby padła decyzja o przenosinach na Cloudflare —
+> wtedy formularz przechodzi na `web/functions/api/zapis.js` i Resend.
+
 Instrukcja dla osoby z dostępem do konta Cloudflare, do OVHcloud i do
 repozytorium **SkillsSP/SAver.1**. Logowania ani zakładania kont nie da się
 zrobić za Was; wszystko po stronie kodu jest gotowe.

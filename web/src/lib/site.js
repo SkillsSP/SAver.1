@@ -38,11 +38,14 @@ export const firma = {
      takie zgłoszenie przeczytać. */
   emailZgloszenia: "kontakt@skilful.pl",
   /* Adres, pod który formularz zapisu wysyła zgłoszenie. Są dwie gotowe drogi
-     i obie robią to samo: przepisują zgłoszenie na skrzynkę przez Resend
-     i niczego nie zapisują.
+     i obie przepisują zgłoszenie na skrzynkę, nie zapisując go nigdzie:
 
-       supabase/functions/zapis/index.ts   — gdy strona stoi na GitHub Pages
-       web/functions/api/zapis.js          — gdy strona stoi na Cloudflare Pages
+       supabase/functions/zapis/index.ts   — droga używana. Strona stoi na
+         GitHub Pages, a funkcja wysyła przez SMTP własnej poczty w OVH.
+         Bez nowego konta i bez ruszania rekordów DNS.
+       web/functions/api/zapis.js          — wariant zapasowy dla Cloudflare
+         Pages, wysyła przez Resend. Nieużywany, ale trzymany na wypadek
+         przenosin.
 
      Dla Supabase — projekt nmhwdjqmmeovgoersjll — adres jest już znany
      i wystarczy go tu wkleić, gdy funkcja będzie wdrożona:

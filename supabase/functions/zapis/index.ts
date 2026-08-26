@@ -1,47 +1,72 @@
 /* ==========================================================================
    ODBIÓR ZGŁOSZENIA Z FORMULARZA → E-MAIL   (Supabase Edge Function)
 
-   Odpowiednik functions/api/zapis.js z Cloudflare, przepisany na Deno. Służy
-   wariantowi bez Cloudflare: strona stoi na GitHub Pages, który serwuje
-   wyłącznie pliki statyczne i sam takiej funkcji nie uruchomi.
+   Wysyłka idzie przez SMTP własnej poczty w OVH, a nie przez zewnętrzną usługę
+   pocztową. Powód jest praktyczny: skrzynka i tak istnieje i działa, więc nie
+   zakładamy nowego konta, nie dodajemy rekordów DNS i nie ruszamy wpisu SPF —
+   a dopisanie drugiego wpisu SPF potrafi położyć całą pocztę firmy, nie tylko
+   formularz. Przy okazji nie dochodzi kolejny podmiot przetwarzający dane
+   dziecka.
 
    Dane nigdzie się nie zapisują — lecą prosto na skrzynkę i tyle. To świadomy
    wybór zamiast tabeli w bazie: zgłoszenia zawierają imię i wiek dziecka,
    a mniej danych osobowych w spoczynku znaczy mniej do opisania w rejestrze
-   czynności przetwarzania i mniej do stracenia. Jeśli kiedyś dojdzie zapis do
+   czynności przetwarzania i mniej do stracenia. Gdyby kiedyś doszedł zapis do
    tabeli, ma iść OBOK wysyłki, nie zamiast — awaria bazy nie może gubić
    zgłoszeń.
 
    ---------------------------------------------------------------------------
+   NADAWCA MUSI BYĆ TĄ SAMĄ SKRZYNKĄ, KTÓRĄ SIĘ LOGUJEMY
+
+   OVH nie pozwala wysyłać „w imieniu" innego adresu niż uwierzytelniony.
+   Dlatego wiadomość idzie z `kontakt@skilful.pl` na `kontakt@skilful.pl`.
+   Wysyłka do siebie samego jest tu w porządku: w temacie stoi imię i wiek
+   dziecka, więc zgłoszenie widać na liście bez otwierania. Adres rodzica
+   ląduje w nagłówku Reply-To, żeby „Odpowiedz" trafiało do rodzica, a nie
+   z powrotem do nas.
+
+   ---------------------------------------------------------------------------
+   SEKRETY DO USTAWIENIA W PANELU SUPABASE
+   (Project Settings → Edge Functions → Secrets)
+
+     SMTP_HASLO   hasło do skrzynki kontakt@skilful.pl — jedyne obowiązkowe
+     SMTP_USER    login, domyślnie kontakt@skilful.pl
+     SMTP_HOST    serwer, domyślnie ssl0.ovh.net
+     SMTP_PORT    port, domyślnie 465 (szyfrowanie od pierwszego bajtu)
+     MAIL_DO      odbiorca, domyślnie ten sam co SMTP_USER
+
+   Dopóki SMTP_HASLO jest puste, funkcja odpowiada kodem 503, a strona pokazuje
+   rodzicowi informację, że formularz czeka na podłączenie. Zgłoszenie nigdy
+   nie ginie po cichu.
+
+   ---------------------------------------------------------------------------
    WDROŻENIE
 
-     supabase login
-     supabase link --project-ref <ref-projektu>
-     supabase secrets set RESEND_API_KEY=re_... MAIL_DO=kontakt@skilful.pl \
-                          MAIL_OD=formularz@skilful.pl
-     supabase functions deploy zapis --no-verify-jwt
+     supabase functions deploy zapis --no-verify-jwt \
+       --project-ref nmhwdjqmmeovgoersjll
 
    `--no-verify-jwt` jest konieczne. Domyślnie funkcja żąda nagłówka
    Authorization z kluczem projektu, a formularz na stronie publicznej nie ma
    go komu podać — rodzic dostałby 401 zamiast potwierdzenia.
-
-   Adres funkcji po wdrożeniu:
-     https://<ref-projektu>.supabase.co/functions/v1/zapis
-   Ten adres wpisujecie w web/src/lib/site.js jako `formularzEndpoint`.
    ========================================================================== */
+
+import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const LIMIT_DLUGOSCI = 200;
 
-/* Skąd wolno wywołać funkcję. Gwiazdka byłaby wygodniejsza, ale wtedy
-   dowolna strona mogłaby wysyłać zgłoszenia w Waszym imieniu i zapychać
-   skrzynkę. Adres podglądowy z GitHub Pages zostaje na czas przenosin. */
-const DOZWOLONE_ZRODLA = [
-  "https://skilful.pl",
-  "https://www.skilful.pl",
-];
+/* Ile czekamy na serwer poczty, zanim się poddamy. Bez tego, gdyby połączenia
+   SMTP były z tego środowiska blokowane, zapytanie wisiałoby aż do limitu
+   platformy, a rodzic patrzyłby w kręcące się kółko. Lepiej po dziesięciu
+   sekundach powiedzieć wprost, że nie wyszło. */
+const LIMIT_CZASU_MS = 10_000;
+
+/* Skąd wolno wywołać funkcję. Gwiazdka byłaby wygodniejsza, ale wtedy dowolna
+   strona mogłaby wysyłać zgłoszenia w imieniu marki i zapychać skrzynkę. */
+const DOZWOLONE_ZRODLA = ["https://skilful.pl", "https://www.skilful.pl"];
 
 function naglowkiCors(zrodlo: string | null): Record<string, string> {
-  const dozwolone = zrodlo && DOZWOLONE_ZRODLA.includes(zrodlo) ? zrodlo : DOZWOLONE_ZRODLA[0];
+  const dozwolone =
+    zrodlo && DOZWOLONE_ZRODLA.includes(zrodlo) ? zrodlo : DOZWOLONE_ZRODLA[0];
   return {
     "access-control-allow-origin": dozwolone,
     "access-control-allow-methods": "POST, OPTIONS",
@@ -62,11 +87,25 @@ function ucieczkaHtml(tekst: string): string {
   return tekst.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function odpowiedz(status: number, tresc: unknown, cors: Record<string, string>): Response {
+function odpowiedz(
+  status: number,
+  tresc: unknown,
+  cors: Record<string, string>,
+): Response {
   return new Response(JSON.stringify(tresc), {
     status,
-    headers: { ...cors, "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+    headers: {
+      ...cors,
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store",
+    },
   });
+}
+
+/** Prosty adres e-mail. Nie sprawdzamy zgodności z normą, tylko czy da się
+    tego użyć jako Reply-To — błędny adres zepsułby nagłówek wiadomości. */
+function wygladaJakEmail(adres: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(adres);
 }
 
 Deno.serve(async (request: Request) => {
@@ -101,7 +140,8 @@ Deno.serve(async (request: Request) => {
   const wiekDziecka = oczysc(dane.wiek_dziecka, 40);
   const telefon = oczysc(dane.telefon, 40);
   const email = oczysc(dane.email, 120);
-  const zgoda = dane.zgoda === "on" || dane.zgoda === true || dane.zgoda === "true";
+  const zgoda =
+    dane.zgoda === "on" || dane.zgoda === true || dane.zgoda === "true";
 
   const braki: string[] = [];
   if (!imieDziecka) braki.push("imię dziecka");
@@ -112,15 +152,22 @@ Deno.serve(async (request: Request) => {
     return odpowiedz(400, { blad: `Brakuje pól: ${braki.join(", ")}.` }, cors);
   }
 
-  const klucz = Deno.env.get("RESEND_API_KEY");
-  const doKogo = Deno.env.get("MAIL_DO");
-  const odKogo = Deno.env.get("MAIL_OD") ?? "formularz@skilful.pl";
+  const haslo = Deno.env.get("SMTP_HASLO");
+  const uzytkownik = Deno.env.get("SMTP_USER") ?? "kontakt@skilful.pl";
+  const serwer = Deno.env.get("SMTP_HOST") ?? "ssl0.ovh.net";
+  const port = Number(Deno.env.get("SMTP_PORT") ?? "465");
+  const doKogo = Deno.env.get("MAIL_DO") ?? uzytkownik;
 
-  if (!klucz || !doKogo) {
-    return odpowiedz(503, {
-      blad: "Formularz nie jest jeszcze podłączony do skrzynki. Prosimy o kontakt telefoniczny.",
-      niepodlaczony: true,
-    }, cors);
+  if (!haslo) {
+    return odpowiedz(
+      503,
+      {
+        blad:
+          "Formularz nie jest jeszcze podłączony do skrzynki. Prosimy o kontakt telefoniczny.",
+        niepodlaczony: true,
+      },
+      cors,
+    );
   }
 
   const wiersze: [string, string][] = [
@@ -131,37 +178,57 @@ Deno.serve(async (request: Request) => {
     ["Zgoda na kontakt", "tak"],
   ];
 
+  const klient = new SMTPClient({
+    connection: {
+      hostname: serwer,
+      port,
+      /* Port 465 szyfruje od pierwszego bajtu. Gdyby ktoś przestawił port na
+         587, połączenie zaczyna się jawnie i przechodzi w szyfrowane przez
+         STARTTLS — stąd rozgałęzienie. */
+      tls: port === 465,
+      auth: { username: uzytkownik, password: haslo },
+    },
+  });
+
   try {
-    const wynik = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { authorization: `Bearer ${klucz}`, "content-type": "application/json" },
-      body: JSON.stringify({
-        from: `Formularz Skills Academy <${odKogo}>`,
-        to: [doKogo],
-        /* Odpowiedź z poczty ma trafić do rodzica, ale tylko wtedy,
-           gdy rodzic podał adres. */
-        reply_to: email || undefined,
+    await Promise.race([
+      klient.send({
+        from: `Formularz Skills Academy <${uzytkownik}>`,
+        to: doKogo,
+        /* „Odpowiedz" ma trafiać do rodzica, a nie z powrotem do nas — ale
+           tylko wtedy, gdy rodzic podał sensowny adres. */
+        replyTo: email && wygladaJakEmail(email) ? email : undefined,
         subject: `Zapis na zajęcia próbne — ${imieDziecka}, ${wiekDziecka}`,
-        text: wiersze.map(([k, v]) => `${k}: ${v}`).join("\n"),
+        content: wiersze.map(([k, v]) => `${k}: ${v}`).join("\n"),
         html: wiersze
-          .map(([k, v]) => `<p><strong>${ucieczkaHtml(k)}:</strong> ${ucieczkaHtml(v)}</p>`)
+          .map(
+            ([k, v]) =>
+              `<p><strong>${ucieczkaHtml(k)}:</strong> ${ucieczkaHtml(v)}</p>`,
+          )
           .join(""),
       }),
-    });
-
-    if (!wynik.ok) {
-      /* Treść błędu zostaje w logach Supabase. Rodzic dostaje komunikat bez
-         szczegółów technicznych, bo i tak nic mu nie powiedzą. */
-      console.error("Resend odrzucił wysyłkę:", wynik.status, await wynik.text());
-      return odpowiedz(502, {
-        blad: "Nie udało się wysłać zgłoszenia. Prosimy spróbować telefonicznie.",
-      }, cors);
-    }
+      new Promise((_, odrzuc) =>
+        setTimeout(
+          () => odrzuc(new Error(`Serwer poczty nie odpowiedział w ${LIMIT_CZASU_MS} ms`)),
+          LIMIT_CZASU_MS,
+        )
+      ),
+    ]);
   } catch (e) {
-    console.error("Błąd połączenia z Resend:", e);
-    return odpowiedz(502, {
-      blad: "Nie udało się wysłać zgłoszenia. Prosimy spróbować telefonicznie.",
-    }, cors);
+    /* Szczegóły zostają w logach Supabase — rodzicowi nic nie powiedzą,
+       a nam wskażą, czy to złe hasło, czy zablokowane połączenie. */
+    console.error("Wysyłka SMTP nie powiodła się:", e);
+    return odpowiedz(
+      502,
+      { blad: "Nie udało się wysłać zgłoszenia. Prosimy spróbować telefonicznie." },
+      cors,
+    );
+  } finally {
+    /* Połączenie trzeba domknąć, inaczej funkcja potrafi wisieć po odesłaniu
+       odpowiedzi. Błąd przy zamykaniu nie ma już wpływu na zgłoszenie. */
+    try {
+      await klient.close();
+    } catch { /* nieistotne */ }
   }
 
   return odpowiedz(200, { ok: true }, cors);
