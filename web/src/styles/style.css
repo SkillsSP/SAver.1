@@ -2128,3 +2128,122 @@ button {
 #metoda {
   scroll-margin-top: 5.5rem;
 }
+
+/* ==========================================================================
+   SIATKI — REGUŁA PARZYSTOŚCI (arkusz wdrożeniowy, sekcja 3.4)
+
+   `auto-fit` sam wybiera liczbę kolumn, więc przy stałej liczbie dzieci zawsze
+   istnieje szerokość, na której zostaje sierotka. Zakazane układy to 3+1 przy
+   czterech elementach i 2+1 przy trzech.
+
+   Minimum kolumny dobieramy tak, żeby kolumna o jeden za dużo się NIE ZMIEŚCIŁA.
+   Warunek: n · min + (n−1) · gap ≤ szerokość kontenera.
+   Kontener ma 71,25rem (1140 px), odstęp siatki 1,5rem (24 px).
+
+     dwa elementy   min 23,75rem (380 px) → 3 kolumny wymagają 1188 px, nie wchodzą
+     cztery         min 23,75rem (380 px) → 3 kolumny wymagają 1188 px, nie wchodzą
+     cztery z foto  min 30rem    (480 px) → jak wyżej, ale karta ze zdjęciem
+                                            potrzebuje szerszego kadru
+     sześć i więcej min 17,5rem  (280 px) → 4 kolumny wymagają 1192 px, nie wchodzą,
+                                            więc sześć kafli stoi 3+3, a nie 4+2
+
+   Czwórki tekstowe celowo mają 380, nie 480. Przy 480 dwie kolumny wymagają
+   984 px i cztery karty stoją jedna pod drugą aż do 1152 px — czyli na typowym
+   laptopie 1024 px sekcja rozjeżdża się w wysoką kolumnę. Oba progi wykluczają
+   sierotkę, więc wybieramy ten, który wcześniej wchodzi w układ 2×2.
+
+   Trzy elementy nie mają tu wariantu i to jest celowe: żadna wartość minimum
+   nie usuwa sierotki dla trzech kafli przy jednym punkcie granicznym. Trójki
+   składamy wierszami w jednej karcie — patrz .progi poniżej.
+
+   Przy każdej zmianie odstępu policzyć te warunki ponownie.
+   ========================================================================== */
+
+.siatka--para {
+  grid-template-columns: repeat(auto-fit, minmax(min(23.75rem, 100%), 1fr));
+}
+.siatka--czworo {
+  grid-template-columns: repeat(auto-fit, minmax(min(23.75rem, 100%), 1fr));
+}
+.siatka--czworo-foto {
+  grid-template-columns: repeat(auto-fit, minmax(min(30rem, 100%), 1fr));
+}
+.siatka--wiele {
+  grid-template-columns: repeat(auto-fit, minmax(min(17.5rem, 100%), 1fr));
+}
+
+/* ==========================================================================
+   PROGI — trzy pozycje jako wiersze w jednej karcie
+
+   Wzorzec dla każdej trójki w serwisie: progi cenowe i zespół. Nazwa i opis
+   z lewej, wartość z prawej. Na telefonie wiersz łamie się na dwa poziomy,
+   bo kwota przy długiej nazwie schodziłaby poniżej czytelnej szerokości.
+   ========================================================================== */
+
+.progi {
+  display: grid;
+  background: var(--tlo-karty);
+  border: var(--wlos);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.prog {
+  display: grid;
+  gap: var(--space-05) var(--space-3);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: baseline;
+  padding: var(--space-3) var(--space-4);
+  border-top: var(--wlos);
+}
+.prog:first-child {
+  border-top: 0;
+}
+
+@media (min-width: 40rem) {
+  .prog {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+.prog__nazwa {
+  font-weight: var(--waga-polgruba);
+  font-size: var(--text-wiodacy);
+}
+.prog__opis {
+  grid-column: 1;
+  font-size: var(--text-maly);
+  color: var(--tekst-drugi);
+  line-height: var(--interlinia-tekst);
+}
+.prog__kwota {
+  font-family: var(--font-medrzec);
+  font-size: var(--text-h3);
+  font-weight: var(--waga-gruba);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+@media (min-width: 40rem) {
+  .prog__kwota {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    text-align: right;
+  }
+}
+.prog__kwota small {
+  font-size: var(--text-maly);
+  font-weight: var(--waga-srednia);
+  color: var(--tekst-drugi);
+}
+
+/* Kwota odniesienia — ile te same zajęcia kosztowałyby brane osobno. To jedyny
+   sposób, żeby rodzic zobaczył korzyść progu bez czytania całej tabeli. */
+.prog__odniesienie {
+  grid-column: 1;
+  font-size: var(--text-drobny);
+  color: var(--tekst-drugi);
+}
+.prog__odniesienie s {
+  text-decoration-thickness: 1px;
+}

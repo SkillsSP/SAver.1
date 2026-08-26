@@ -24,27 +24,29 @@ const sekcje = [
       "Moment zawarcia umowy, wymagane dokumenty, lista osób upoważnionych do odbioru, informacje o zdrowiu dziecka.",
   },
   {
-    tytul: "3. Karnet i płatności",
+    tytul: "3. Opłaty i płatność",
     tresc:
-      "Karnet obejmuje określoną z góry liczbę spotkań w modelu miesięcznym albo semestralnym. Płatność następuje przelewem na konto centrum. Przygotowanie egzaminacyjne (Exams) rozliczane jest osobno, poza karnetem.",
+      "Kurs obejmuje rok szkolny. Opłata dzieli się na dziesięć równych rat, płatnych co miesiąc od września do czerwca. Wysokość raty zależy od liczby wybranych programów i jest stała — nie zmienia się wraz z liczbą spotkań przypadających na dany miesiąc, ponieważ obejmuje cały rok, a nie pojedyncze zajęcia. Płatność następuje przelewem na konto centrum. Przygotowanie egzaminacyjne (Exams) rozliczane jest osobno, poza karnetem grupowym; zajęcia indywidualne opłacane są za spotkanie.",
     doUstalenia:
-      "Kwoty (patrz cennik), termin płatności, numer konta, zasady wystawiania faktur, konsekwencje opóźnienia oraz ostateczny model rozliczenia Exams.",
+      "Dzień miesiąca, do którego wpływa rata, numer konta, zasady wystawiania faktur oraz konsekwencje opóźnienia płatności.",
   },
   {
-    tytul: "4. Zawieszenie karnetu",
+    tytul: "4. Rezygnacja w trakcie roku szkolnego",
     tresc:
-      "Karnet można zawiesić w obu modelach — przy chorobie, wyjeździe lub innej przerwie. Opłacone spotkania nie przepadają: wracają do puli i można je wykorzystać w kolejnych terminach.",
-    doUstalenia:
-      "Sposób i wyprzedzenie zgłoszenia zawieszenia, maksymalny czas zawieszenia oraz okres ważności niewykorzystanych spotkań.",
-  },
-  {
-    tytul: "5. Rezygnacja i rozliczenie",
-    tresc:
-      "Z zajęć można zrezygnować w każdej chwili, z zachowaniem miesięcznego okresu wypowiedzenia. Spotkania opłacone z góry, a niewykorzystane po upływie wypowiedzenia, rozliczamy proporcjonalnie i zwracamy w terminie 14 dni. Jeżeli rezygnacja wynika z przyczyn po naszej stronie, zwrot obejmuje wszystkie niewykorzystane spotkania, bez okresu wypowiedzenia.",
+      "Z ważnego powodu można zrezygnować z zajęć przed końcem roku szkolnego. Miesiąc, w którym rodzic zgłosi rezygnację, jest wówczas ostatnim płatnym z dziesięciu — kolejnych rat nie naliczamy i nie żądamy dopłaty za zajęcia, które już się odbyły. Za ważny powód uznajemy w szczególności dłuższą chorobę uczestnika, przeprowadzkę oraz zmianę szkoły. Wyliczenie to nie jest zamknięte; w razie wątpliwości rozstrzygamy na korzyść rodzica.",
     ryzyko:
-      "Poprzednia wersja mówiła „wpłaconych środków nie zwracamy”. Bezwarunkowe wyłączenie zwrotu w umowie z konsumentem to jeden z najczęściej kwestionowanych zapisów w tej branży. Powyższe brzmienie odpowiada rynkowemu standardowi (wypowiedzenie plus rozliczenie proporcjonalne), ale okres wypowiedzenia i termin zwrotu musi zatwierdzić prawnik.",
+      "Poprzednia wersja przewidywała zawieszenie karnetu z powrotem spotkań do puli — konstrukcję, której cennik roczny nie zna. Obecne brzmienie odpowiada modelowi rocznemu, ale wymaga uwagi w dwóch punktach. Po pierwsze, umowa roczna z konsumentem bez żadnej ścieżki wyjścia bywa kwestionowana jako klauzula niedozwolona; ten zapis taką ścieżkę tworzy. Po drugie, otwarte wyliczenie „ważnego powodu” działa na korzyść rodzica tylko wtedy, gdy centrum nie ocenia go arbitralnie — dlatego dopisane jest zdanie o rozstrzyganiu na korzyść rodzica. Całość do zatwierdzenia przez prawnika.",
     doUstalenia:
-      "Długość okresu wypowiedzenia (rynkowy standard to jeden miesiąc), forma zgłoszenia rezygnacji oraz sposób rozliczenia rabatu semestralnego, jeśli rodzic rezygnuje przed końcem semestru.",
+      "Forma zgłoszenia rezygnacji (pismo, e-mail, formularz) oraz dzień miesiąca, do którego zgłoszenie musi wpłynąć, żeby dany miesiąc był ostatnim płatnym.",
+  },
+  {
+    tytul: "5. Rozliczenie i zwroty",
+    tresc:
+      "Rat już zapłaconych za miesiące, w których zajęcia się odbyły, nie zwracamy — obejmowały wykonaną usługę. Jeżeli rezygnacja wynika z przyczyn po naszej stronie, na przykład z odwołania grupy albo zmiany terminu niemożliwej do przyjęcia przez rodzica, zwracamy część raty przypadającą na niezrealizowane zajęcia w terminie 14 dni. Nie pobieramy wpisowego ani opłaty za spotkanie odwołane z wyprzedzeniem.",
+    ryzyko:
+      "Najwcześniejsza wersja mówiła „wpłaconych środków nie zwracamy”. Bezwarunkowe wyłączenie zwrotu w umowie z konsumentem to jeden z najczęściej kwestionowanych zapisów w tej branży. Obecne brzmienie rozdziela dwa przypadki: rezygnację rodzica i przyczynę po stronie centrum. Termin zwrotu i sposób wyliczenia części raty musi zatwierdzić prawnik.",
+    doUstalenia:
+      "Sposób wyliczenia części raty przypadającej na niezrealizowane zajęcia oraz tryb zgłaszania roszczenia o zwrot.",
   },
   {
     tytul: "6. Odstąpienie od umowy zawartej na odległość",
@@ -60,7 +62,7 @@ const sekcje = [
     tresc:
       "Nieobecność zgłoszoną z wyprzedzeniem można odrobić w innej grupie tego samego poziomu.",
     doUstalenia:
-      "Minimalne wyprzedzenie zgłoszenia, limit odrabianych zajęć, zasady przy dłuższej chorobie i przy zajęciach indywidualnych.",
+      "Minimalne wyprzedzenie zgłoszenia, limit odrabianych zajęć oraz zasady przy zajęciach indywidualnych. Dłuższa choroba nie wymaga tu osobnej reguły — obejmuje ją sekcja 4.",
   },
   {
     tytul: "8. Odwołanie zajęć przez centrum",

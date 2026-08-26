@@ -2,287 +2,362 @@
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
-import { url, wielkoscGrupy } from "../lib/site.js";
+import { url, wielkoscGrupyTekst } from "../lib/site.js";
 
-/* Dwa sposoby rozliczenia na jednej stronie — karnet na zajęcia podstawowe
-   i pojedyncze spotkanie w Exams — muszą być wyraźnie rozdzielone. */
-const pozycjeKarnet = [
+/* ==========================================================================
+   CENNIK 2026/2027
+
+   Model: cena zależy od LICZBY PROGRAMÓW, nie od typu zajęć. Program to albo
+   Useful & Life Skills, albo jeden fakultet tematyczny. To zmiana wobec
+   poprzedniej wersji strony, która sprzedawała fakultet jako dopłatę do bazy.
+
+   Konsekwencja, którą trzeba znać: cennik pozwala wziąć sam fakultet, bez
+   zajęć podstawowych. Dokumentacja marki mówiła odwrotnie — decyzją
+   właścicielską idziemy za cennikiem, więc to dokumenty marki wymagają
+   przepisania, nie ta strona.
+
+   Usunięte konstrukcje, których cennik nie przewiduje, a poprzednia wersja
+   strony obiecywała: karnet miesięczny i semestralny jako dwa modele, rabat
+   za płatność semestralną z góry, rabat za drugi fakultet, zawieszenie
+   karnetu z powrotem spotkań do puli, zniżka na Exams dla uczestnika zajęć.
+   ========================================================================== */
+
+/* Trzy progi. Renderowane jako wiersze, nie karty — przy trzech elementach
+   każda siatka `auto-fit` ma szerokość, na której zostaje sierotka. */
+const progi = [
   {
-    nazwa: "Zajęcia podstawowe",
-    opis: "Useful Skills + Life Skills — baza każdego karnetu",
+    nazwa: "Jeden program",
+    opis: "Useful & Life Skills albo jeden fakultet tematyczny. Raz w tygodniu.",
+    kwota: "200 zł",
+    okres: "/ mies.",
+    wariant: "45 minut tygodniowo",
   },
   {
-    nazwa: "Fakultet",
-    opis: "Music, Art, Acting albo Motion Skills — dopłata do karnetu",
+    nazwa: "Jeden program, dłuższe spotkanie",
+    opis: "Ten sam zakres, spotkanie o kwadrans dłuższe.",
+    kwota: "250 zł",
+    okres: "/ mies.",
+    wariant: "60 minut tygodniowo",
   },
   {
-    nazwa: "Zajęcia indywidualne",
-    opis: "Spotkanie 1:1 z prowadzącym",
+    nazwa: "Dwa programy",
+    opis: "Na przykład Useful & Life Skills plus Music Skills.",
+    kwota: "360 zł",
+    okres: "/ mies.",
+    wariant: "2 × 45 minut tygodniowo",
+    osobno: "400 zł",
+  },
+  {
+    nazwa: "Trzy programy",
+    opis: "Pełny tydzień — zajęcia podstawowe i dwa fakultety.",
+    kwota: "500 zł",
+    okres: "/ mies.",
+    wariant: "3 × 45 minut tygodniowo",
+    osobno: "600 zł",
   },
 ];
 
-const pozycjeExams = [
-  { nazwa: "Egzamin ósmoklasisty — angielski", opis: `Grupa do ${wielkoscGrupy} osób albo 1:1` },
-  { nazwa: "Egzamin ósmoklasisty — matematyka", opis: `Grupa do ${wielkoscGrupy} osób albo 1:1`, unikat: true },
-  { nazwa: "Matura — angielski", opis: "Poziom podstawowy i rozszerzony" },
-  { nazwa: "Matura — matematyka", opis: "Poziom podstawowy", unikat: true },
+/* Pozycje rozliczane inaczej niż progi miesięczne. */
+const pozaKarnetem = [
+  {
+    nazwa: "Exams",
+    opis: "Przygotowanie do egzaminu ósmoklasisty albo matury. Osobna oferta, poza zajęciami podstawowymi.",
+    kwota: "350 zł",
+    okres: "/ mies.",
+    wariant: "2 × 45 minut albo 1 × 90 minut tygodniowo",
+  },
+  {
+    nazwa: "Zajęcia indywidualne · 45 minut",
+    opis: "Jeden prowadzący, jedno dziecko.",
+    kwota: "130 zł",
+    okres: "/ spotkanie",
+  },
+  {
+    nazwa: "Zajęcia indywidualne · 60 minut",
+    opis: "Najczęściej wybierany wariant.",
+    kwota: "150 zł",
+    okres: "/ spotkanie",
+  },
+  {
+    nazwa: "Zajęcia indywidualne · 80 minut",
+    opis: "Praca na pełnych arkuszach egzaminacyjnych.",
+    kwota: "180 zł",
+    okres: "/ spotkanie",
+  },
+  {
+    nazwa: "Minigrupa 2–4 osoby",
+    opis: "Na życzenie uczestników — na przykład dwoje rodzeństwa albo troje znajomych z klasy.",
+    kwota: "cena indywidualna",
+  },
+  {
+    nazwa: "Zajęcia próbne",
+    opis: "Jedno pełne spotkanie w grupie, na normalnych zasadach. Bez zobowiązań.",
+    kwota: "bezpłatne",
+    wyroznione: true,
+  },
 ];
 
 const pytania = [
   {
     pytanie: "Co, jeśli dziecko zachoruje?",
     odpowiedz:
-      "Nieobecność zgłoszoną z wyprzedzeniem odrabiamy w innej grupie tego samego poziomu. Przy dłuższej chorobie karnet można zawiesić — opłacone spotkania nie przepadają.",
+      "Rata jest stała i nie zależy od liczby spotkań w miesiącu — tak samo, jak nie rośnie w miesiącach dłuższych. Pojedynczą nieobecność zgłoszoną z wyprzedzeniem odrabiamy w innej grupie tego samego poziomu. Przy dłuższej chorobie obowiązuje reguła rezygnacji opisana wyżej.",
   },
   {
-    pytanie: "Czy mogę zrezygnować w trakcie semestru?",
+    pytanie: "Czy mogę zrezygnować w trakcie roku?",
     odpowiedz:
-      "Karnet można zawiesić w obu modelach. Opłacone spotkania nie przepadają: karnet obejmuje z góry określoną liczbę zajęć, więc wykorzystacie je w kolejnych terminach. Jeśli wolicie zrezygnować całkiem, obowiązuje miesięczny okres wypowiedzenia, a niewykorzystane spotkania rozliczamy proporcjonalnie i zwracamy w ciągu 14 dni.",
+      "Tak, z ważnego powodu. Miesiąc, w którym zgłosicie rezygnację, jest wtedy ostatnim płatnym — pozostałych rat nie naliczamy i nie żądamy dopłaty za zajęcia, które się już odbyły. Za ważny powód uznajemy między innymi dłuższą chorobę, przeprowadzkę i zmianę szkoły; lista nie jest zamknięta.",
   },
   {
-    pytanie: "Czy trzeba brać całość?",
+    pytanie: "Czy trzeba brać zajęcia podstawowe?",
     odpowiedz:
-      "Nie. Zajęcia podstawowe są bazą karnetu, ale Exams kupuje się osobno i można wziąć sam egzamin, bez zajęć podstawowych — na tych samych zasadach co uczestnik zajęć.",
+      "Nie. Cena zależy od liczby programów, a nie od tego, które wybierzecie. Można wziąć sam fakultet. Warto jednak wiedzieć, że angielski w działaniu jest rdzeniem tego, co robimy — dziecko, które przychodzi wyłącznie na Motion Skills, dostaje zajęcia ruchowe prowadzone po angielsku, a nie program językowy.",
+  },
+  {
+    pytanie: "Czy zniżka rodzinna i program poleceń się łączą?",
+    odpowiedz:
+      "Tak. To dwa niezależne mechanizmy: zniżka rodzinna jest stałym obniżeniem ceny, a 50 zł za polecenie jednorazową nagrodą. Polecenie nie zabiera zniżki rodzinnej.",
   },
   {
     pytanie: "Jak wygląda płatność?",
     odpowiedz:
-      "Przelewem na konto centrum. Fakturę wystawiamy na życzenie, także na firmę.",
+      "Przelewem na konto centrum, raz w miesiącu, przez dziesięć miesięcy od września do czerwca. Fakturę wystawiamy na życzenie, także na firmę.",
   },
 ];
 ---
 
 <Baza
   aktywna="cennik"
-  tytul="Cennik"
-  opis="Jedna cena, bez dopisków drobnym drukiem. Karnet na zajęcia podstawowe i fakultety, przygotowanie egzaminacyjne rozliczane osobno. Skills Academy Szczecin."
+  tytul="Cennik 2026/2027"
+  opis="Cena zależy od liczby programów: od 200 zł miesięcznie za jeden. Grupy 5–8 osób, dziesięć rat od września do czerwca, pierwsze zajęcia bezpłatne. Skills Academy Szczecin."
 >
   <section class="naglowek-strony">
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
-        <span class="nadtytul nadtytul--na-marce">Cennik</span>
+        <span class="nadtytul nadtytul--na-marce">Cennik 2026/2027</span>
         <h1 class="tytul-1">Jedna cena, bez dopisków drobnym drukiem</h1>
         <p class="hero__zdanie">
-          Materiały i konsultacje z prowadzącym są wliczone w karnet. Nie
-          pobieramy wpisowego ani opłaty za spotkanie odwołane w terminie.
+          Płacicie za liczbę programów, nie za ich rodzaj. Materiały
+          i konsultacje z prowadzącym są w cenie. Nie pobieramy wpisowego ani
+          opłaty za spotkanie odwołane w terminie.
         </p>
+        <ul class="naglowek-strony__meta">
+          <li>Od 200 zł miesięcznie</li>
+          <li>Grupy {wielkoscGrupyTekst} osób</li>
+          <li>Pierwsze zajęcia bezpłatne</li>
+        </ul>
       </div>
     </div>
   </section>
 
+  {/* PROGI — wiersze, nie karty. Powód w komentarzu przy .progi w arkuszu. */}
   <section class="sekcja">
     <div class="szerokosc">
-      <DoUzupelnienia czego="Kwoty">
-        Cała ta strona czeka na jedną decyzję: stawki. Do wpisania: cena
-        miesięczna i semestralna karnetu, dopłata za fakultet, stawka za
-        spotkanie 1:1 oraz cztery stawki egzaminacyjne. Zanim je ustalicie,
-        warto rozstrzygnąć trzy rzeczy z dokumentu struktury: czy Exams
-        rozliczacie za pojedyncze spotkanie czy cyklem przedmaturalnym, czy
-        uczestnik zajęć podstawowych dostaje zniżkę na Exams, i czy matura
-        z angielskiego na dwóch poziomach to dwie osobne oferty.
-      </DoUzupelnienia>
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Zajęcia w grupie</span>
+        <h2 class="tytul-1">Cena zależy od liczby programów</h2>
+        <p class="wiodacy">
+          Program to albo Useful &amp; Life Skills, albo jeden fakultet
+          tematyczny — Music, Art, Acting lub Motion Skills. Wybór należy do
+          Was i nie zmienia stawki.
+        </p>
+      </div>
+
+      <div class="progi">
+        {progi.map((p) => (
+          <div class="prog">
+            <span class="prog__nazwa">{p.nazwa}</span>
+            <span class="prog__opis">
+              {p.wariant} · {p.opis}
+            </span>
+            <span class="prog__kwota">
+              {p.kwota} <small>{p.okres}</small>
+            </span>
+            {p.osobno && (
+              <span class="prog__odniesienie">
+                Te same zajęcia brane osobno: <s>{p.osobno}</s>
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <p class="tekst-maly tekst-drugi" style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">
+        Grupy liczą {wielkoscGrupyTekst} osób. Dolna granica jest warunkiem
+        uruchomienia grupy — przy mniejszej liczbie zapisanych proponujemy
+        minigrupę albo inny termin.
+      </p>
     </div>
   </section>
 
-  {/* DWA MODELE KARNETU */}
+  {/* POZA PROGAMI — inny sposób rozliczenia */}
   <section class="sekcja sekcja--karta sekcja--wlos">
     <div class="szerokosc">
       <div class="naglowek-sekcji">
-        <span class="nadtytul">Karnet</span>
-        <h2 class="tytul-1">Wybierzcie sposób rozliczenia</h2>
+        <span class="nadtytul">Poza karnetem grupowym</span>
+        <h2 class="tytul-1">Exams, zajęcia 1:1 i minigrupy</h2>
         <p class="wiodacy">
-          Zakres zajęć jest identyczny. Różni się tylko długość zobowiązania
-          i cena za spotkanie.
+          Exams stoi poza zajęciami podstawowymi i rozliczamy je osobno.
+          Zajęcia indywidualne płacicie za spotkanie, bez zobowiązania na rok.
         </p>
       </div>
 
-      <div class="siatka siatka--2">
-        <article class="cena">
-          <h3 class="tytul-3">Model miesięczny</h3>
-          <p class="cena__kwota">
-            kwota <small>/ miesiąc</small>
-          </p>
-          <p class="tekst-maly tekst-drugi">
-            Płatność co miesiąc, rezygnacja z miesięcznym wyprzedzeniem. Dobry
-            wybór, gdy dopiero sprawdzacie, czy formuła pasuje dziecku.
-          </p>
-          <ul class="lista-rozdzielona">
-            <li>
-              <span class="etykieta">Liczba spotkań w miesiącu</span>
-              <span class="wartosc">do ustalenia</span>
-            </li>
-            <li>
-              <span class="etykieta">Zawieszenie karnetu — zgłoszenie</span>
-              <span class="wartosc">do ustalenia</span>
-            </li>
-          </ul>
-        </article>
-
-        <article class="cena cena--wyrozniona">
-          <span class="plakietka plakietka--koral" style="justify-self: start;">Taniej</span>
-          <h3 class="tytul-3">Model semestralny</h3>
-          <p class="cena__kwota">
-            kwota <small>/ semestr</small>
-          </p>
-          <p class="tekst-maly tekst-drugi">
-            Płatność jednorazowa lub w ratach. Dziecko ma zagwarantowane miejsce
-            w grupie do końca semestru, a Wy niższą cenę za spotkanie.
-          </p>
-          <ul class="lista-rozdzielona">
-            <li>
-              <span class="etykieta">Liczba spotkań w semestrze</span>
-              <span class="wartosc">do ustalenia</span>
-            </li>
-            <li>
-              <span class="etykieta">Oszczędność wobec modelu miesięcznego</span>
-              <span class="wartosc">do ustalenia</span>
-            </li>
-          </ul>
-        </article>
+      <div class="progi">
+        {pozaKarnetem.map((p) => (
+          <div class="prog">
+            <span class="prog__nazwa">{p.nazwa}</span>
+            <span class="prog__opis">
+              {p.wariant ? `${p.wariant} · ${p.opis}` : p.opis}
+            </span>
+            <span
+              class="prog__kwota"
+              style={p.wyroznione ? "color: var(--kobalt-600);" : undefined}
+            >
+              {p.kwota}
+              {p.okres && <small> {p.okres}</small>}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  {/* POZYCJE — KARNET */}
+  {/* ZNIŻKI — dwa niezależne mechanizmy */}
   <section class="sekcja">
     <div class="szerokosc">
       <div class="naglowek-sekcji">
-        <span class="nadtytul">Zajęcia w karnecie</span>
-        <h2 class="tytul-1">Zajęcia podstawowe, fakultety i 1:1</h2>
-        <p class="wiodacy">
-          Zajęcia podstawowe są bazą każdego karnetu. Fakultety i Exams
-          dokładacie osobno, w dowolnej konfiguracji. Każdy kolejny fakultet
-          obniża cenę jednostkową spotkania.
-        </p>
+        <span class="nadtytul">Zniżki</span>
+        <h2 class="tytul-1">Kiedy płacicie mniej</h2>
       </div>
 
-      <ul>
-        {pozycjeKarnet.map((p) => (
-          <li class="pozycja-cennika">
-            <span class="pozycja-cennika__nazwa">
-              <strong>{p.nazwa}</strong>
-              <span>{p.opis}</span>
-            </span>
-            <span class="pozycja-cennika__kwota">do ustalenia</span>
-          </li>
-        ))}
-        <li class="pozycja-cennika">
-          <span class="pozycja-cennika__nazwa">
-            <strong>Zajęcia próbne</strong>
-            <span>Jedno pełne spotkanie w grupie, bez zobowiązań</span>
-          </span>
-          <span class="pozycja-cennika__kwota" style="color: var(--kobalt-600);">bezpłatne</span>
-        </li>
-      </ul>
+      <div class="siatka siatka--para">
+        <article class="karta karta--luzna">
+          <h3 class="tytul-3">Rodzeństwo — 10%</h3>
+          <p class="tekst-drugi tekst-maly">
+            Gdy z centrum korzysta dwoje lub więcej dzieci z jednej rodziny,
+            zniżkę naliczamy na tańszy pakiet. Obowiązuje przez cały czas,
+            w którym oboje uczestniczą w zajęciach.
+          </p>
+        </article>
+
+        <article class="karta karta--luzna">
+          <h3 class="tytul-3">Polecenie — 50 zł</h3>
+          <p class="tekst-drugi tekst-maly">
+            Jeśli z Waszego polecenia zapisze się kolejny uczestnik, odejmujemy
+            50 zł od Waszej najbliższej raty. Naliczamy po opłaceniu przez niego
+            pierwszej raty.
+          </p>
+        </article>
+      </div>
+
+      <p class="tekst-maly tekst-drugi" style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">
+        <strong>Oba mechanizmy działają niezależnie.</strong> Zniżka rodzinna
+        jest stałym obniżeniem ceny, a polecenie jednorazową nagrodą — polecenie
+        nie zabiera zniżki rodzinnej.
+      </p>
     </div>
   </section>
 
-  {/* POZYCJE — EXAMS, rozliczane inaczej */}
-  <section class="sekcja sekcja--slate">
-    <div class="szerokosc">
-      <div class="naglowek-sekcji">
-        <span class="nadtytul nadtytul--slate">Exams — inny sposób rozliczenia</span>
-        <h2 class="tytul-1">Przygotowanie egzaminacyjne</h2>
-        <p class="wiodacy">
-          Exams nie wchodzi w karnet. Rozliczamy je osobno i można wziąć sam
-          egzamin, bez zajęć podstawowych, na tych samych zasadach dla uczestnika
-          zajęć i dla kogoś z zewnątrz.
-        </p>
-      </div>
-
-      <ul>
-        {pozycjeExams.map((p) => (
-          <li class="pozycja-cennika">
-            <span class="pozycja-cennika__nazwa">
-              <strong>
-                {p.nazwa}
-                {p.unikat && <span class="plakietka unikat">Unikat</span>}
-              </strong>
-              <span>{p.opis}</span>
-            </span>
-            <span class="pozycja-cennika__kwota">do ustalenia</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  {/* CO ZAWIERA CENA */}
+  {/* PŁATNOŚĆ I REZYGNACJA */}
   <section class="sekcja sekcja--karta sekcja--wlos">
-    <div class="szerokosc">
-      <div class="siatka siatka--2">
-        <div class="stos">
-          <h2 class="tytul-3">W cenie karnetu</h2>
-          <ul class="lista-znaczona lista-odhaczona">
-            <li>Wszystkie materiały i karty pracy</li>
-            <li>Konsultacja z prowadzącym na życzenie rodzica</li>
-            <li>Odrobienie zajęć odwołanych z wyprzedzeniem</li>
-            <li>Udział w wydarzeniach otwartych centrum</li>
-          </ul>
-        </div>
-        <div class="stos">
-          <h2 class="tytul-3">Zawieszenie karnetu</h2>
-          <p class="tekst-maly tekst-drugi">
-            Karnet to określona liczba spotkań, a nie abonament na czas. Jeśli coś
-            stanie na przeszkodzie (choroba, wyjazd, trudniejszy okres w szkole),
-            zajęcia czekają.
-          </p>
-          <ul class="lista-znaczona">
-            <li>Zawiesić można oba karnety: miesięczny i semestralny</li>
-            <li>Niewykorzystane spotkania przechodzą na kolejne terminy</li>
-            <li>
-              Przy rezygnacji obowiązuje miesięczny okres wypowiedzenia,
-              a niewykorzystane spotkania rozliczamy proporcjonalnie —
-              <a class="link-w-zdaniu" href={url("/regulamin")}>szczegóły w regulaminie</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* ZNIŻKI */}
-  <section class="sekcja">
     <div class="szerokosc">
       <div class="siatka--wiodaca">
         <div class="stos stos--ciasny">
-          <span class="nadtytul">Zniżki</span>
-          <h2 class="tytul-1">Kiedy płacicie mniej</h2>
+          <span class="nadtytul">Płatność</span>
+          <h2 class="tytul-1">Dziesięć rat, stała kwota</h2>
         </div>
         <div class="stos">
-          <ul class="lista-rozdzielona">
-            <li>
-              <span class="etykieta">Drugie i kolejne dziecko z rodziny</span>
-              <span class="wartosc">do ustalenia</span>
-            </li>
-            <li>
-              <span class="etykieta">Drugi fakultet</span>
-              <span class="wartosc">do ustalenia</span>
-            </li>
-            <li>
-              <span class="etykieta">Płatność za cały semestr z góry</span>
-              <span class="wartosc">do ustalenia</span>
-            </li>
-          </ul>
-          <p class="tekst-maly tekst-drugi">
-            Zniżki nie łączą się ze sobą — przy zbiegu naliczamy tę
-            korzystniejszą dla Was.
+          <p class="wiodacy">
+            Kurs obejmuje cały rok szkolny i opłacacie go w dziesięciu równych
+            ratach od września do czerwca.
           </p>
+          <ul class="lista-znaczona">
+            <li>
+              Rata jest stała niezależnie od liczby spotkań w danym miesiącu —
+              nie rośnie w miesiącach dłuższych i nie maleje w krótszych
+            </li>
+            <li>Płatność przelewem na konto centrum</li>
+            <li>Fakturę wystawiamy na życzenie, także na firmę</li>
+          </ul>
+
+          <h3 class="tytul-4" style="margin-top: var(--space-2);">
+            Rezygnacja w trakcie roku
+          </h3>
+          <p class="tekst-drugi tekst-maly">
+            Z ważnego powodu można zrezygnować przed końcem roku szkolnego.
+            Miesiąc, w którym zgłosicie rezygnację, jest wtedy ostatnim płatnym
+            z dziesięciu — pozostałych rat nie naliczamy.
+          </p>
+          <p class="tekst-drugi tekst-maly">
+            Za ważny powód uznajemy między innymi dłuższą chorobę,
+            przeprowadzkę i zmianę szkoły. Lista nie jest zamknięta —
+            rozstrzygamy na korzyść rodzica.
+            <a class="link-w-zdaniu" href={url("/regulamin")}>
+              Pełne zasady są w regulaminie
+            </a>.
+          </p>
+
+          <DoUzupelnienia czego="Termin płatności i numer konta">
+            Do wpisania dzień miesiąca, do którego wpływa rata, oraz numer
+            konta. To jedyne dwie rzeczy, których w tej sekcji jeszcze nie ma —
+            a rodzic zapyta o nie w pierwszej rozmowie.
+          </DoUzupelnienia>
         </div>
+      </div>
+    </div>
+  </section>
+
+  {/* W CENIE — cztery pozycje, siatka 2×2 */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Bez dopłat</span>
+        <h2 class="tytul-1">Co jest w cenie</h2>
+      </div>
+
+      <div class="siatka siatka--czworo">
+        <article class="karta">
+          <h3 class="tytul-4">Materiały i karty pracy</h3>
+          <p class="tekst-maly tekst-drugi">
+            Wszystko, czego dziecko używa na zajęciach. Nie kupujecie
+            podręcznika ani zeszytu ćwiczeń.
+          </p>
+        </article>
+        <article class="karta">
+          <h3 class="tytul-4">Konsultacja z prowadzącym</h3>
+          <p class="tekst-maly tekst-drugi">
+            Rozmowa o postępach dziecka, na Wasze życzenie. Prowadzący mówi
+            wprost, co działa, a co nie.
+          </p>
+        </article>
+        <article class="karta">
+          <h3 class="tytul-4">Odrobienie nieobecności</h3>
+          <p class="tekst-maly tekst-drugi">
+            Zajęcia odwołane z wyprzedzeniem odrabiamy w innej grupie tego
+            samego poziomu.
+          </p>
+        </article>
+        <article class="karta">
+          <h3 class="tytul-4">Wydarzenia otwarte</h3>
+          <p class="tekst-maly tekst-drugi">
+            Pokazy na koniec semestru i spotkania otwarte centrum. Bez
+            osobnego biletu.
+          </p>
+        </article>
       </div>
     </div>
   </section>
 
   {/* PYTANIA */}
-  <section class="sekcja">
+  <section class="sekcja sekcja--karta sekcja--wlos">
     <div class="szerokosc">
       <div class="siatka--wiodaca">
         <div class="stos stos--ciasny">
-          <span class="nadtytul">Płatności</span>
+          <span class="nadtytul">Pytania</span>
           <h2 class="tytul-1">Pytania, które wracają</h2>
           <p class="tekst-drugi tekst-maly">
-            Każde z nich i tak padnie w pierwszej rozmowie. Lepiej, żeby odpowiedź
-            była tutaj.
+            Każde z nich i tak padnie w pierwszej rozmowie. Lepiej, żeby
+            odpowiedź była tutaj.
           </p>
         </div>
         <div class="pytania">
