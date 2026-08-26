@@ -208,7 +208,8 @@ export const fakultety = [
   {
     nazwa: "Acting Skills",
     wiodace:
-      "Scena, głos i obecność przed grupą. Najkrótsza droga do tego, żeby dziecko przestało bać się mówić.",
+      "Scena, głos i obecność przed grupą. Dziecko ćwiczy mówienie do innych " +
+      "w sytuacji, w której ma to sens — bo gra rolę, a nie odpowiada przy tablicy.",
     szczegol: "Formy pracy i pokaz końcowy",
     zdjecie: "fakultet-acting",
     zdjecieAlt: "Dzieci odgrywają scenkę teatralną w sali",

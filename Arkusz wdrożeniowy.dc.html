@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/tokens/colors.css">
+<link rel="stylesheet" href="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/styles.css">
+<script src="_ds/skills-academy-design-system-f697f9bd-000c-41d6-8fc2-b9324e78d9fa/_ds_bundle.js"></script>
+<script src="./doc-page.js"></script>
+<style>
+  body { margin: 0; }
+  doc-page:not(:defined) { visibility: hidden; }
+  a { color: #1E5FCC; text-decoration: none; }
+  a:hover { color: #E8654A; }
+  table { break-inside: auto; }
+  tr, figure { break-inside: avoid; }
+</style>
+</helmet>
+
+<doc-page margin="0.7in">
+
+  <div slot="footer" style="font-family:Lexend,system-ui,sans-serif;font-size:9pt;color:#5B6B7A;border-top:1px solid rgba(26,34,48,.2);padding-top:6px;display:flex;justify-content:space-between;gap:16px">
+    <span>Skills Academy · arkusz wdrożeniowy · 27 sierpnia 2026</span>
+    <span>kontakt@skilful.pl · 508 069 007</span>
+  </div>
+
+  <div style="font-family:Lexend,system-ui,sans-serif;color:#1A2230;font-size:10.5pt;line-height:1.55">
+
+    <div style="font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:#5B6B7A;font-weight:600;margin-bottom:8px">Dokument wdrożeniowy · wersja 1.0</div>
+    <h1 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:26pt;line-height:1.1;letter-spacing:-.01em;margin:0 0 10px">Arkusz wdrożeniowy serwisu</h1>
+    <p style="font-size:12pt;line-height:1.5;color:#5B6B7A;margin:0 0 4px;max-width:62ch">Wszystko, co zostało uzgodnione, w kolejności wdrażania. Dokument zastępuje ustalenia rozproszone po instrukcjach w paczce — te zostają jako rozwinięcie szczegółów.</p>
+
+    <div style="background:#FBF8F3;border:1px solid rgba(26,34,48,.13);border-radius:10px;padding:14px 16px;margin:18px 0 26px">
+      <div style="font-size:9pt;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#5B6B7A;margin-bottom:8px">Trzy zasady, które obowiązują w całym wdrożeniu</div>
+      <div style="font-size:10.5pt;line-height:1.6"><strong>1.</strong> Żadna siatka z czterema elementami nie może wyjść 3+1, z trzema — 2+1. Powód i wartości minimalne w sekcji 3.4.<br><strong>2.</strong> Nic, czego nie da się dowieźć, nie wchodzi na stronę. Lista zdjętych obietnic w sekcji 8.<br><strong>3.</strong> Dane kontaktowe i firmowe muszą być identyczne w czterech miejscach: kontakt, regulamin, polityka prywatności, klauzula RODO.</div>
+    </div>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:16pt;margin:0 0 8px;letter-spacing:-.01em;break-after:avoid">1. Kolejność wdrożenia</h2>
+    <p style="margin:0 0 12px;color:#5B6B7A">Paczki są numerowane w kolejności zależności. Paczka 02 zakłada wdrożoną 01 (grafitowy nagłówek matury korzysta z reguł zdefiniowanych tam).</p>
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:24px">
+      <thead>
+        <tr style="border-bottom:1.5px solid rgba(26,34,48,.25)">
+          <th style="text-align:left;padding:7px 8px 7px 0;font-weight:600;width:22%">Paczka</th>
+          <th style="text-align:left;padding:7px 8px;font-weight:600">Zakres</th>
+          <th style="text-align:left;padding:7px 0 7px 8px;font-weight:600;width:26%">Pliki</th>
+        </tr>
+      </thead>
+      <tbody>
+        <sc-for list="{{ packages }}" as="p" hint-placeholder-count="8">
+          <tr style="border-bottom:1px solid rgba(26,34,48,.13)">
+            <td style="padding:8px 8px 8px 0;vertical-align:top;font-weight:600">{{ p.name }}</td>
+            <td style="padding:8px;vertical-align:top;line-height:1.5">{{ p.scope }}</td>
+            <td style="padding:8px 0 8px 8px;vertical-align:top;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:8.5pt;color:#5B6B7A;line-height:1.5">{{ p.files }}</td>
+          </tr>
+        </sc-for>
+      </tbody>
+    </table>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:16pt;margin:0 0 8px;letter-spacing:-.01em;break-after:avoid">2. Mapa serwisu — 15 podstron</h2>
+    <p style="margin:0 0 12px;color:#5B6B7A">Kolumna „nagłówek” podaje plik zdjęcia w tle i punkt kadrowania. Wszystkie nagłówki mają zdjęcie — receptura warstw w sekcji 3.3.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:9.5pt;margin-bottom:24px">
+      <thead>
+        <tr style="border-bottom:1.5px solid rgba(26,34,48,.25)">
+          <th style="text-align:left;padding:7px 8px 7px 0;font-weight:600;width:26%">Podstrona · URL</th>
+          <th style="text-align:left;padding:7px 8px;font-weight:600;width:28%">Nagłówek</th>
+          <th style="text-align:left;padding:7px 0 7px 8px;font-weight:600">Uwagi wdrożeniowe</th>
+        </tr>
+      </thead>
+      <tbody>
+        <sc-for list="{{ pages }}" as="s" hint-placeholder-count="15">
+          <tr style="border-bottom:1px solid rgba(26,34,48,.13)">
+            <td style="padding:8px 8px 8px 0;vertical-align:top"><span style="font-weight:600">{{ s.name }}</span><br><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:8pt;color:#1E5FCC">{{ s.url }}</span></td>
+            <td style="padding:8px;vertical-align:top;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:8pt;color:#5B6B7A;line-height:1.5">{{ s.hero }}</td>
+            <td style="padding:8px 0 8px 8px;vertical-align:top;line-height:1.5">{{ s.note }}</td>
+          </tr>
+        </sc-for>
+      </tbody>
+    </table>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:16pt;margin:0 0 8px;letter-spacing:-.01em;break-after:avoid">3. Specyfikacja globalna</h2>
+
+    <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:12pt;margin:14px 0 6px;break-after:avoid">3.1 Kolor</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:14px">
+      <tbody>
+        <sc-for list="{{ colors }}" as="c" hint-placeholder-count="5">
+          <tr style="border-bottom:1px solid rgba(26,34,48,.13)">
+            <td style="padding:7px 8px 7px 0;width:16%;font-weight:600">{{ c.name }}</td>
+            <td style="padding:7px 8px;width:14%;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">{{ c.hex }}</td>
+            <td style="padding:7px 0 7px 8px;line-height:1.5">{{ c.role }}</td>
+          </tr>
+        </sc-for>
+      </tbody>
+    </table>
+    <p style="margin:0 0 16px"><strong>Koral tylko na przyciskach akcji</strong>, z grafitowym napisem (4,86:1). Koral jako tekst na bieli daje 3,29:1 — poniżej progu WCAG AA, nie używać. Na maturze koral występuje wyłącznie na jednym przycisku; plakietki i numery kroków idą tam na graficie.</p>
+
+    <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:12pt;margin:14px 0 6px;break-after:avoid">3.2 Typografia</h3>
+    <p style="margin:0 0 16px"><strong>Lexend</strong> — cały tekst. <strong>Quicksand 700</strong> — nagłówki i akcenty. Fredoka jest wycofana: nie zawiera polskich znaków ą ć ę ń ś ź ż (sprawdzone pomiarem glifów). Quicksand kończy się na wadze 700, więc nagłówki składamy 700, nie 600. Usunąć pliki <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">Fredoka-*.ttf</span> z <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">public/SAver.1/fonts/</span>.</p>
+
+    <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:12pt;margin:14px 0 6px;break-after:avoid">3.3 Nagłówek ze zdjęciem — receptura</h3>
+    <p style="margin:0 0 10px">Zdjęcie nigdy nie leży samo pod tekstem. Nad nim dwie <strong>płaskie</strong> warstwy krycia — bez gradientów, bez przyciemnień od dołu.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:14px">
+      <thead>
+        <tr style="border-bottom:1.5px solid rgba(26,34,48,.25)">
+          <th style="text-align:left;padding:7px 8px 7px 0;font-weight:600;width:38%">Zastosowanie</th>
+          <th style="text-align:left;padding:7px 8px;font-weight:600;width:30%">Warstwy</th>
+          <th style="text-align:left;padding:7px 0 7px 8px;font-weight:600">Klasa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(26,34,48,.13)"><td style="padding:7px 8px 7px 0">Baner i nagłówki ofertowe</td><td style="padding:7px 8px">grafit 34% + kobalt 60%</td><td style="padding:7px 0 7px 8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:8.5pt">--foto</td></tr>
+        <tr style="border-bottom:1px solid rgba(26,34,48,.13)"><td style="padding:7px 8px 7px 0">Strony formalne</td><td style="padding:7px 8px">grafit 30% + kobalt 72%</td><td style="padding:7px 0 7px 8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:8.5pt">--foto --cichy</td></tr>
+        <tr style="border-bottom:1px solid rgba(26,34,48,.13)"><td style="padding:7px 8px 7px 0">Matura (Teens Senior)</td><td style="padding:7px 8px">grafit 74%, bez kobaltu</td><td style="padding:7px 0 7px 8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:8.5pt">--foto --senior</td></tr>
+      </tbody>
+    </table>
+    <p style="margin:0 0 16px"><strong>Tekst na zdjęciu w pełnej bieli</strong>, nie w bieli 85% — na fotografii spada pod próg WCAG AA. Kreski i obrysy o stopień mocniej: <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">rgba(255,255,255,.34)</span> i <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">.72</span>. Zdjęcia dekoracyjne w tle: <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">alt=""</span> plus <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">aria-hidden</span>. Baner ładuje się z <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">fetchpriority="high"</span>, resztę leniwie.</p>
+
+    <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:12pt;margin:14px 0 6px;break-after:avoid">3.4 Siatki — reguła parzystości</h3>
+    <p style="margin:0 0 10px"><span style="font-weight:600">Problem:</span> <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">auto-fit</span> sam wybiera liczbę kolumn, więc przy stałej liczbie dzieci zawsze istnieje szerokość, na której zostaje sierotka. Żadna wartość minimum tego nie naprawia dla trzech elementów przy jednym breakpoincie — dlatego progi cenowe i zespół są <strong>wierszami, nie kartami</strong>.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:14px">
+      <thead>
+        <tr style="border-bottom:1.5px solid rgba(26,34,48,.25)">
+          <th style="text-align:left;padding:7px 8px 7px 0;font-weight:600;width:18%">Elementów</th>
+          <th style="text-align:left;padding:7px 8px;font-weight:600;width:26%">Minimum kolumny</th>
+          <th style="text-align:left;padding:7px 0 7px 8px;font-weight:600">Gdzie</th>
+        </tr>
+      </thead>
+      <tbody>
+        <sc-for list="{{ grids }}" as="g" hint-placeholder-count="5">
+          <tr style="border-bottom:1px solid rgba(26,34,48,.13)">
+            <td style="padding:7px 8px 7px 0;font-weight:600">{{ g.count }}</td>
+            <td style="padding:7px 8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">{{ g.min }}</td>
+            <td style="padding:7px 0 7px 8px;line-height:1.5">{{ g.where }}</td>
+          </tr>
+        </sc-for>
+      </tbody>
+    </table>
+    <p style="margin:0 0 16px"><strong>Uwaga na odstęp:</strong> stopka ma cztery pozycje przy minimum 380 px i mieści się w 2×2 tylko dlatego, że jej gap to 44 px. Ten sam układ z gapem 28 px wpuszcza trzecią kolumnę przy 1280 px. Przy każdej zmianie odstępu policzyć ponownie: <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">n·min + (n−1)·gap</span>.</p>
+
+    <h3 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:12pt;margin:14px 0 6px;break-after:avoid">3.5 Pasek użytkowy i nawigacja</h3>
+    <p style="margin:0 0 16px">Pasek użytkowy jest <strong>rodzeństwem</strong> <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">&lt;header&gt;</span>, umieszczonym przed nim — nie jego dzieckiem. Włożony do środka przykleiłby się razem z nawigacją i zabrał 38 px wysokości na każdym ekranie. Przewija się; przyklejona zostaje tylko nawigacja. Zawartość: hasło z lewej, „Kontakt” i numer z prawej. Na telefonie zawija się na dwa wiersze — zamierzone; nie skracać numeru do wersalikowego „ZADZWOŃ”.</p>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:16pt;margin:20px 0 8px;letter-spacing:-.01em;break-after:avoid">4. Cennik 2026/2027</h2>
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:14px">
+      <thead>
+        <tr style="border-bottom:1.5px solid rgba(26,34,48,.25)">
+          <th style="text-align:left;padding:7px 8px 7px 0;font-weight:600;width:34%">Pozycja</th>
+          <th style="text-align:left;padding:7px 8px;font-weight:600">Zajęcia</th>
+          <th style="text-align:right;padding:7px 0 7px 8px;font-weight:600;width:22%">Cena</th>
+        </tr>
+      </thead>
+      <tbody>
+        <sc-for list="{{ prices }}" as="p" hint-placeholder-count="9">
+          <tr style="border-bottom:1px solid rgba(26,34,48,.13)">
+            <td style="padding:7px 8px 7px 0;font-weight:600">{{ p.item }}</td>
+            <td style="padding:7px 8px;line-height:1.5">{{ p.what }}</td>
+            <td style="padding:7px 0 7px 8px;text-align:right;font-weight:600;white-space:nowrap">{{ p.price }}</td>
+          </tr>
+        </sc-for>
+      </tbody>
+    </table>
+    <p style="margin:0 0 8px">Grupy <strong>5–8 osób</strong>. Zniżka dla rodzeństwa <strong>10%</strong> na tańszy pakiet; rabaty nie łączą się. Program poleceń: <strong>50 zł</strong> od kolejnej raty, gdy polecony uczestnik opłaci pierwszą. Kurs obejmuje rok szkolny, opłacany w <strong>10 równych ratach od września do czerwca</strong>; rata stała niezależnie od liczby spotkań w miesiącu.</p>
+    <p style="margin:0 0 16px"><strong>Do potwierdzenia przed wdrożeniem:</strong> czy polecenie kumuluje się ze zniżką rodzinną. Cennik zabrania łączenia rabatów, więc przy literalnym czytaniu rodzic dwojga dzieci traci 10%, gdy kogoś poleci. Na stronie oba mechanizmy stoją jako niezależne, bez zdania o łączeniu.</p>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:16pt;margin:20px 0 8px;letter-spacing:-.01em;break-after:avoid">5. Formularze</h2>
+    <p style="margin:0 0 10px">Dwa formularze: <strong>kontakt</strong> (wybór tematu + treść) i <strong>zapisy</strong> (dane dziecka). Na kontakcie pole „W jakiej sprawie” zmienia podpowiedź i przykład w polu treści — mapowanie w instrukcji paczki 02.</p>
+    <p style="margin:0 0 10px"><strong>Zgłoszenie ze standardów ochrony małoletnich musi trafiać na inny adres</strong> niż pozostałe trzy tematy — do osoby odpowiedzialnej, nie do biura. To wymóg ustawowy, nie preferencja.</p>
+    <div style="background:#FBF8F3;border:1px solid rgba(26,34,48,.13);border-radius:10px;padding:14px 16px;margin-bottom:16px">
+      <div style="font-size:9pt;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#5B6B7A;margin-bottom:8px">Ochrona przed botami — bez CAPTCHY</div>
+      <div style="line-height:1.6;margin-bottom:10px"><strong>W przeglądarce (jest w makiecie):</strong> pole-pułapka <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">firma_www</span> poza ekranem z <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">tabindex="-1"</span> — nie przez <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">display:none</span>, które boty wykrywają; pułapka czasowa poniżej 3 s; warunkowe pytanie kontrolne.</div>
+      <div style="line-height:1.6"><strong>Serwerowo — obowiązkowo, nie opcjonalnie.</strong> Honeypot w makiecie jest polem kontrolowanym przez React: bot ustawiający <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">input.value</span> w DOM nie zostanie złapany po stronie klienta. (1) Powtórzyć obie pułapki serwerowo. (2) Limit na IP — 3/godz., 10/dobę. (3) Znacznik czasu podpisany HMAC-iem, nie liczba w ukrytym polu. (4) Filtr treści: trzy i więcej URL-i do kolejki ręcznej. Jeśli spam przejdzie — Cloudflare Turnstile, nie reCAPTCHA (nie wysyła danych do Google).</div>
+    </div>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:16pt;margin:20px 0 8px;letter-spacing:-.01em;break-after:avoid">6. Zdjęcia</h2>
+    <p style="margin:0 0 16px">26 kadrów, każdy w dwóch wersjach: <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">-800.jpg</span> (kafle, karty) i <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">-1600.jpg</span> (tła nagłówków), razem 52 pliki do <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">public/SAver.1/foto/</span>. Wszystkie pracują na stronie w 38 miejscach — <strong>zapasu na rotację nie ma</strong>, pierwszy wpis w aktualnościach będzie wymagał nowego materiału. Kadrowanie przez <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9pt">object-fit: cover</span> z punktem ustawianym per zdjęcie. Podpis nazywa obszar kompetencji, nigdy wydarzenie — pod każdą galerią zdanie o materiale ilustracyjnym. Usunięcie tego zdania zmienia ilustrację w twierdzenie o faktach.</p>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:16pt;margin:20px 0 8px;letter-spacing:-.01em;break-after:avoid">7. Dane do uzupełnienia</h2>
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:24px">
+      <thead>
+        <tr style="border-bottom:1.5px solid rgba(26,34,48,.25)">
+          <th style="text-align:left;padding:7px 8px 7px 0;font-weight:600;width:30%">Pozycja</th>
+          <th style="text-align:left;padding:7px 8px;font-weight:600">Gdzie i dlaczego</th>
+        </tr>
+      </thead>
+      <tbody>
+        <sc-for list="{{ todos }}" as="t" hint-placeholder-count="7">
+          <tr style="border-bottom:1px solid rgba(26,34,48,.13)">
+            <td style="padding:8px 8px 8px 0;vertical-align:top;font-weight:600">{{ t.what }}</td>
+            <td style="padding:8px 0 8px 8px;vertical-align:top;line-height:1.5">{{ t.why }}</td>
+          </tr>
+        </sc-for>
+      </tbody>
+    </table>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:16pt;margin:20px 0 8px;letter-spacing:-.01em;break-after:avoid">8. Czego nie wolno napisać</h2>
+    <p style="margin:0 0 10px">Zdania zdjęte ze strony po aneksie naukowym. Jeśli wrócą — w treści, w reklamie, w materiałach dla rodziców — marka traci obronność twierdzeń.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:16px">
+      <thead>
+        <tr style="border-bottom:1.5px solid rgba(26,34,48,.25)">
+          <th style="text-align:left;padding:7px 8px 7px 0;font-weight:600;width:46%">Nie wolno</th>
+          <th style="text-align:left;padding:7px 0 7px 8px;font-weight:600">Zamiast tego</th>
+        </tr>
+      </thead>
+      <tbody>
+        <sc-for list="{{ banned }}" as="b" hint-placeholder-count="6">
+          <tr style="border-bottom:1px solid rgba(26,34,48,.13)">
+            <td style="padding:8px 8px 8px 0;vertical-align:top;line-height:1.5;color:#5B6B7A">{{ b.no }}</td>
+            <td style="padding:8px 0 8px 8px;vertical-align:top;line-height:1.5">{{ b.yes }}</td>
+          </tr>
+        </sc-for>
+      </tbody>
+    </table>
+    <p style="margin:0 0 16px">Sygnatury OECD, UNESCO, UNICEF, WHO i EEF zostają, ale <strong>z podpisem</strong>: „wskazują jako istotne ramy programowe”. Bez podpisu pasek logotypów czyta się jako rekomendacja metody, której żadna z tych organizacji nie wystawiła.</p>
+
+    <h2 style="font-family:Quicksand,system-ui,sans-serif;font-weight:700;font-size:16pt;margin:20px 0 8px;letter-spacing:-.01em;break-after:avoid">9. Odbiór — lista kontrolna</h2>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:10pt;margin-bottom:20px">
+      <sc-for list="{{ qa }}" as="q" hint-placeholder-count="12">
+        <div style="display:flex;gap:10px;align-items:flex-start;line-height:1.55;break-inside:avoid">
+          <span style="flex:0 0 auto;width:11px;height:11px;border:1.5px solid rgba(26,34,48,.4);border-radius:2px;margin-top:3px"></span>
+          <span>{{ q }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="border-top:1.5px solid rgba(26,34,48,.25);padding-top:14px;font-size:9.5pt;color:#5B6B7A;line-height:1.6">
+      <strong style="color:#1A2230">Dwie decyzje nadal otwarte.</strong> Pierwsza: fakultet bez zajęć podstawowych — cennik na to pozwala, dokumentacja marki mówi odwrotnie; strony poszły za cennikiem, więc do przepisania są albo trzy dokumenty marki, albo cennik. Druga: reguła na dłuższą przerwę w kursie rocznym — umowa z konsumentem bez zapisu o kilkutygodniowej chorobie albo przeprowadzce jest podatna na zakwestionowanie. Obie są opisane w regulaminie i w instrukcji paczki 05.
+    </div>
+
+  </div>
+</doc-page>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:1200}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      packages: [
+        { name: '00 · kroje i CTA', scope: 'Quicksand zamiast Fredoki, grafitowy napis na koralu. Usunąć pliki Fredoka-*.ttf.', files: 'style.css' },
+        { name: '01 · zdjęcia', scope: 'Zdjęcia w tle nagłówków, kafle tematyczne, dopisek CSS z warstwami krycia.', files: 'foto/ (52 pliki), naglowek-zdjecia.css' },
+        { name: '02 · kontakt i układ', scope: 'Podstrona /kontakt, pasek użytkowy, sekcja „trzy kroki”, grafit na maturze, podział Exams na trzy strony.', files: 'kontakt-i-pasek.css, trzy-kroki.html' },
+        { name: '03 · dokumentacja marki', scope: 'Wytyczne 3.4, identyfikacja 1.3, brief 2.2, założenia, stan plików. Materiał referencyjny, nie do wdrożenia.', files: '5 dokumentów' },
+        { name: '04 · audyt', scope: 'Co sprawdzone, co blokuje start. Przeczytać pierwsze, jeśli czas jest na jeden plik.', files: 'AUDYT-GOTOWOSCI.md' },
+        { name: '05 · cennik', scope: 'Ceny 2026/2027 na sześciu podstronach i w regulaminie, minigrupy, program poleceń.', files: 'CZYTAJ-TO-NAJPIERW.md' },
+        { name: '06 · O nas', scope: 'Podstrona /o-nas: zespół, metoda z kotwicą #metoda, sekcja „czego jeszcze nie mamy”.', files: 'CZYTAJ-TO-NAJPIERW.md' },
+        { name: '07 · metoda', scope: 'Korekta twierdzeń o skuteczności + pełny aneks naukowy ze źródłami.', files: 'aneks-naukowy-zrodla-metody.md' }
+      ],
+      pages: [
+        { name: 'Strona główna', url: '/', hero: 'motion-2 · center 42%', note: 'Pasek ośmiu kafli tematycznych, sekcja „trzy kroki” przed blokiem zapisów, kotwice #wiek, #o-nas, #cennik, #e8, #matura.' },
+        { name: 'Zajęcia podstawowe', url: '/podstawowe', hero: 'life-robotyka · center 50%', note: 'Sekcja „Life Skills w praktyce” — sześć kart. Trzy osoby w „Kto prowadzi”. Grupa 5–8, od 200 zł.' },
+        { name: 'Fakultety', url: '/fakultety', hero: 'life-przyjaciele · center 40%', note: 'Cztery karty 2×2 (min 480 px), każda z prowadzącym i ceną. Fakultet dostępny samodzielnie.' },
+        { name: 'Zajęcia indywidualne', url: '/indywidualne', hero: 'cooking-3 · center 45%', note: 'Stawki 130/150/180 zł w nagłówku. Blok „Kto prowadzi” z podziałem przedmiotów.' },
+        { name: 'Exams', url: '/exams', hero: 'life-grupa · center 45%', note: 'Strona rozdzielająca: dwie karty ścieżek, wspólny schemat pracy, CTA. Kobalt.' },
+        { name: 'Egzamin ósmoklasisty', url: '/exams/egzamin-osmoklasisty', hero: 'life-globus · center 45%', note: 'Kobalt — ósmoklasista to Teens Junior. Angielski i matematyka, dwie osoby w „Kto prowadzi”.' },
+        { name: 'Matura', url: '/exams/matura', hero: 'exam-1 · center 55%', note: 'Jedyna strona na graficie 74% bez kobaltu. Cztery przedmioty 2×2, oznaczenia na graficie.' },
+        { name: 'Cennik', url: '/cennik', hero: 'motion-5 · center 40%', note: 'Trzy progi jako wiersze, nie karty. Tabela „poza karnetem”, zasady płatności, zniżki.' },
+        { name: 'Zapisy', url: '/zapisy', hero: 'life-grupa · center 45%', note: 'Formularz z ochroną antybotową. Karta motion-3 obok. Podpis mówi o spotkaniu próbnym, nie o sali.' },
+        { name: 'Kontakt', url: '/kontakt', hero: 'motion-3 · center 45%', note: 'Trzy karty dróg kontaktu, formularz z wyborem tematu, karta zgłoszeń ze standardów, dane firmy 2×2.' },
+        { name: 'O nas', url: '/o-nas', hero: 'life-przyjaciele · center 40%', note: 'Zespół w wierszach. Kotwica #metoda ze scroll-margin-top 88px. Historia założycielska do napisania.' },
+        { name: 'Bezpieczeństwo', url: '/bezpieczenstwo', hero: 'life-bezpieczenstwo · center 40%', note: 'Pełny dokument standardów. Karta zgłoszeń z Karoliną Dumałą. Kadr life-strazak nad dokumentami.' },
+        { name: 'Regulamin', url: '/regulamin', hero: 'art-2 · center 40%', note: 'Rejestr cichy. Sekcje 3 i 4 przepisane pod model roczny; sekcja 4 ma oznaczone ryzyko prawne.' },
+        { name: 'Polityka prywatności', url: '/polityka-prywatnosci', hero: 'art-2 · center 40%', note: 'Rejestr cichy. Ten sam kadr co regulamin i RODO.' },
+        { name: 'Klauzula RODO', url: '/klauzula-rodo', hero: 'art-2 · center 40%', note: 'Rejestr cichy. Art. 13 RODO, dane administratora do uzupełnienia.' }
+      ],
+      colors: [
+        { name: 'Kobalt', hex: '#1E5FCC', role: 'Kolor prowadzący: nagłówki, nadtytuły, obrysy, linki.' },
+        { name: 'Koral', hex: '#E8654A', role: 'Wyłącznie przycisk akcji, jeden na widok. Napis grafitowy.' },
+        { name: 'Grafit', hex: '#1A2230', role: 'Tekst; warstwa krycia na zdjęciach; oznaczenia Teens Senior.' },
+        { name: 'Chmura', hex: '#FBF8F3', role: 'Tło strony.' },
+        { name: 'Linia', hex: 'rgba(26,34,48,.13)', role: 'Jedyny separator powierzchni. Zero cieni w całym serwisie.' }
+      ],
+      grids: [
+        { count: '2', min: '380 px', where: 'Zasady płatności i zniżki, bloki dwuelementowe w treści.' },
+        { count: '3', min: 'nie używać siatki', where: 'Progi cenowe i zespół — wiersze w jednej karcie. Karty kontaktu wyjątkowo 250 px, bo trzymają jeden rząd do szerokości telefonu.' },
+        { count: '4', min: '380–480 px', where: 'Fakultety 480, karty metody 380, dane firmy 380, stopka 380 przy gapie 44 px, „W cenie karnetu” 480 przy gapie 28 px.' },
+        { count: '4 (kroki 01–04)', min: '380 px', where: 'Jak pracujemy — na trzech stronach Exams, zajęciach podstawowych i w standardach.' },
+        { count: '6 i więcej', min: '240–260 px', where: 'Life Skills w praktyce, kafle tematyczne, grupy wiekowe.' }
+      ],
+      prices: [
+        { item: 'Jeden program', what: '1 × 45 min / tydzień', price: '200 zł / mc' },
+        { item: 'Jeden program', what: '1 × 60 min / tydzień', price: '250 zł / mc' },
+        { item: 'Dwa programy', what: '2 × 45 min / tydzień · osobno 400 zł', price: '360 zł / mc' },
+        { item: 'Trzy programy', what: '3 × 45 min / tydzień · osobno 600 zł', price: '500 zł / mc' },
+        { item: 'Exams', what: '2 × 45 min albo 1 × 90 min / tydzień', price: '350 zł / mc' },
+        { item: 'Indywidualne 45 min', what: 'jeden prowadzący, jedno dziecko', price: '130 zł / spotkanie' },
+        { item: 'Indywidualne 60 min', what: 'najczęściej wybierany wariant', price: '150 zł / spotkanie' },
+        { item: 'Indywidualne 80 min', what: 'praca na pełnych arkuszach', price: '180 zł / spotkanie' },
+        { item: 'Minigrupa 2–4 osoby', what: 'na życzenie uczestników', price: 'cena indywidualna' },
+        { item: 'Zajęcia próbne', what: 'jedno pełne spotkanie w grupie', price: 'bezpłatne' }
+      ],
+      todos: [
+        { what: 'E-mail i numer osoby odpowiedzialnej za standardy', why: 'Kontakt i standardy ochrony małoletnich. Nie mogą prowadzić do biura ani do osób prowadzących zajęcia — to warunek ustawowy. Osoba jest wskazana: Karolina Dumała.' },
+        { what: 'Kwalifikacje trzech prowadzących', why: 'Pięć podstron. Wykształcenie, lata doświadczenia, uprawnienia egzaminacyjne — jedno zdanie na osobę. W tej kategorii waży więcej niż samo nazwisko.' },
+        { what: 'Dane firmowe: NIP, REGON, administrator', why: 'Kontakt, regulamin, polityka prywatności, klauzula RODO — w jednym brzmieniu.' },
+        { what: 'Termin płatności raty i numer konta', why: 'Cennik, sekcja zasad płatności; regulamin, sekcja 3.' },
+        { what: 'Dane lokalu', why: 'Ukryte świadomie do podpisania umowy — nie wypełniać pustym nawiasem. Lista miejsc do przywrócenia w instrukcji paczki 02.' },
+        { what: 'Historia założycielska', why: 'Podstrona O nas, druga sekcja. Jeden do trzech akapitów, bez zdjęcia.' },
+        { what: 'Standard ewaluacji z aneksu, sekcja 13', why: '2–4 mierzalne umiejętności na moduł, diagnoza początkowa i końcowa, arkusz obserwacji. Nie blokuje startu, ale bez tego nie da się później opublikować żadnych wyników — wstecz się ich nie dorobi.' }
+      ],
+      banned: [
+        { no: '„podejściach, które OECD, UNESCO i EEF wskazują jako skuteczniejsze od nauczania podającego”', yes: '„Program łączy podejścia, dla których istnieją dowody z badań: uczenie słownictwa wspierane ruchem i gestem, nauczanie oparte na zadaniach, ustrukturyzowana współpraca…”' },
+        { no: '„dziecko nie tłumaczy w głowie z polskiego”', yes: '„od pierwszego spotkania angielski jest narzędziem do zrobienia czegoś, a nie przedmiotem do zaliczenia”' },
+        { no: '„najkrótsza droga do tego, żeby dziecko przestało bać się mówić” (Acting)', yes: '„dziecko ćwiczy mówienie do innych w sytuacji, w której ma to sens — bo gra rolę, a nie odpowiada przy tablicy”' },
+        { no: '„scena i praca w małej grupie odblokowują szybciej niż kolejne ćwiczenia”', yes: '„ćwiczymy mówienie w małej grupie i na scenie — w sytuacjach, w których wypowiedź ma cel”' },
+        { no: '„Metoda oparta na TPR i PBL, rekomendowana przez OECD i EEF”', yes: 'Odwołanie do metaanaliz. OECD i EEF nie rekomendują metody, opisują ramy kompetencji.' },
+        { no: 'Raport o postępach jako produkt w cenie karnetu', yes: 'Rozmowa i konsultacja z prowadzącym; przy Exams punktacja z każdej próby. Raport wraca, gdy powstanie arkusz obserwacji.' }
+      ],
+      qa: [
+        'Żadna siatka nie zostawia sierotki — sprawdzone na 360, 768, 900, 1024, 1152, 1280 i 1440 px.',
+        'Tekst na każdym nagłówku ze zdjęciem jest w pełnej bieli i przechodzi próg 4,5:1.',
+        'Koral nie występuje jako tekst na bieli w żadnym miejscu.',
+        'Pasek użytkowy przewija się, nawigacja zostaje przyklejona.',
+        'Zakotwiczenia #metoda, #formularz, #dojazd lądują pod nawigacją (scroll-margin-top 88px).',
+        '„O nas” i „Metoda” w stopce prowadzą pod różne adresy; „Kontakt” występuje raz.',
+        'Stare kotwice /exams#e8 i /exams#matura mają przekierowanie na nowe adresy.',
+        'Zakotwiczenie #kontakt na stopce nadal działa — stare materiały drukowane.',
+        'Formularz odrzuca zgłoszenie z wypełnionym polem firma_www — sprawdzone serwerowo, nie tylko w przeglądarce.',
+        'Zgłoszenie ze standardów ochrony małoletnich trafia na inny adres niż pozostałe tematy.',
+        'Polskie znaki ą ć ę ł ń ó ś ź ż renderują się we wszystkich nagłówkach, także na iOS.',
+        'Żadne zdanie z sekcji 8 nie wróciło do treści.',
+        'Ceny na sześciu podstronach zgadzają się z cennikiem i regulaminem.',
+        'Zdjęcia dekoracyjne mają alt="" i aria-hidden; zdjęcia treściowe mają opis po polsku.',
+        'Pod każdą galerią stoi zdanie o materiale ilustracyjnym.'
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

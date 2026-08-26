@@ -86,20 +86,36 @@ const metody = [
           <h2 class="tytul-1">Na czym się opieramy</h2>
         </div>
         <div class="stos">
+          {/* Poprzednia wersja twierdziła, że wymienione organizacje „wskazują
+              zgodnie, że uczenie przez działanie daje trwalsze efekty niż
+              nauczanie podające". Aneks naukowy odrzuca to wprost: efekty
+              zależą od wieku, celu i sposobu prowadzenia zajęć, a te
+              organizacje opisują ramy kompetencji, nie skuteczność metod. */}
           <p class="wiodacy">
-            Kierunek programu opieramy na rekomendacjach organizacji, które badają
-            skuteczność nauczania na dużych próbach — nie na pojedynczych
-            publikacjach ani na modzie. Wskazują one zgodnie, że uczenie przez
-            działanie i projekt daje trwalsze efekty niż nauczanie podające.
+            Program łączy podejścia, dla których istnieją dowody z badań:
+            uczenie słownictwa wspierane ruchem i gestem, nauczanie języka
+            oparte na zadaniach, ustrukturyzowana współpraca, informacja
+            zwrotna oraz rozwijanie kompetencji społeczno-emocjonalnych
+            i medialnych.
           </p>
           <p class="tekst-maly tekst-drugi">
-            Praktyczny skutek dla dziecka jest jeden: nie tłumaczy w głowie
-            z polskiego. Reaguje od razu, bo od pierwszego spotkania angielski
-            jest narzędziem do zrobienia czegoś.
+            Od pierwszego spotkania angielski jest narzędziem do zrobienia
+            czegoś, a nie przedmiotem do zaliczenia. Nie twierdzimy przy tym,
+            że nauka przez projekt zawsze daje trwalsze efekty niż nauczanie
+            podające, ani że ruch albo muzyka podnoszą inteligencję. Badania
+            pokazują efekty zależne od wieku, celu i sposobu prowadzenia
+            zajęć — i tak o tym mówimy.
           </p>
+          {/* Podpis pod sygnaturami jest obowiązkowy. Bez niego pasek nazw
+              czyta się jako rekomendacja metody przez te organizacje — a żadna
+              z nich takiej rekomendacji nie wystawiła. */}
           <ul class="zrodla">
             {zrodla.map((z) => <li class="zrodla__pozycja">{z}</li>)}
           </ul>
+          <p class="tekst-drobny tekst-drugi">
+            Kompetencje, które rozwijamy, wskazują jako istotne ramy programowe
+            tych organizacji.
+          </p>
         </div>
       </div>
     </div>
