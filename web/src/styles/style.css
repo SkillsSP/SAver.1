@@ -569,8 +569,17 @@ button {
   align-items: center;
 }
 
+/* Numer stojący obok głównego wezwania jest dopiskiem, nie drugim wezwaniem.
+   Do tej pory miał dokładnie tę samą wielkość co napis na przycisku — obie
+   deklaracje sięgały po `--text-maly` — więc jedyną różnicą było wypełnienie
+   tła. Na komputerze to za mało: rodzic wybiera tam formularz, a telefon ma
+   być informacją, że da się też zadzwonić.
+
+   Na telefonie numer nie traci przez to na dostępności: pierwszeństwo połączenia
+   niesie pasek akcji u dołu ekranu, a ten odnośnik i tak zachowuje 44 px
+   wysokości celu dotykowego. */
 .telefon-obok {
-  font-size: var(--text-maly);
+  font-size: var(--text-drobny);
   color: var(--tekst-drugi);
 }
 .telefon-obok a {
