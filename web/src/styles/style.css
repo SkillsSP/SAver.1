@@ -582,19 +582,40 @@ button {
   color: var(--bialy);
 }
 
-/* Plakietka „Unikat" i „Nowość" na ścieżce egzaminacyjnej. Kolorem jest slate,
-   nie koral — nie z powodu kontrastu (koral z grafitowym napisem daje 4,86:1
-   i przechodzi), tylko dlatego, że koral jest zarezerwowany na jeden przycisk
-   akcji w widoku. Plakietka w tym samym kolorze konkurowałaby z nim o uwagę.
-   Slate z bielą daje 5,48:1, czyli więcej niż wariant koralowy. */
+/* Plakietka „Unikat" i „Nowość".
+
+   Nie koral: koral jest zarezerwowany na jeden przycisk akcji w widoku,
+   a plakietka w tym samym kolorze konkurowałaby z nim o uwagę. Powodem nie
+   jest kontrast — koral z grafitowym napisem daje 4,86:1 i przechodzi.
+
+   Domyślnie kobalt, czyli kolor prowadzący marki. Pierwsza wersja tej zmiany
+   szła na slate i to był błąd: slate jest stonowanym szaroniebieskim, więc
+   wypełniona plakietka czytała się jak element wyłączony, a nie wyróżnik.
+   Kobalt daje przy okazji najwyższy kontrast z trzech wariantów — 5,89:1
+   wobec 5,48 dla slate i 4,86 dla korala.
+
+   Slate zostaje tam, gdzie należy do rejestru: na maturze. Teens Senior nie
+   używa kobaltu jako koloru prowadzącego, więc plakietka idzie tam za resztą
+   strony, a nie przeciwko niej. */
 .unikat {
-  background: var(--akcent-senior);
+  background: var(--kobalt-600);
   color: var(--bialy);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.6875rem;
   padding: 0.15rem 0.5rem;
 }
+.rejestr-senior .unikat {
+  background: var(--akcent-senior);
+}
+
+/* Reguły opisu pozycji w menu (`.panel__link span`, `.menu-mobilne__link span`)
+   łapały też plakietkę, bo ta jest zwykłym <span> w tym samym odnośniku. Napis
+   schodził wtedy na kolor tekstu drugorzędnego i dawał 1,26:1 na kobalcie —
+   praktycznie niewidoczny. Na koralu, przed zmianą koloru plakietek, było
+   2,26:1, czyli równie źle, tylko mniej rzucało się w oczy. Naprawione przez
+   wyłączenie plakietki z tamtych reguł, a nie przez podbicie wagi tutaj:
+   problem był w regule, która sięgała za daleko. */
 
 /* ==========================================================================
    KARTY — biała powierzchnia, włos, 14 px, bez cienia
@@ -850,7 +871,7 @@ button {
   font-size: var(--text-maly);
   font-weight: var(--waga-polgruba);
 }
-.panel__link span {
+.panel__link span:not(.plakietka) {
   font-size: var(--text-drobny);
   color: var(--tekst-drugi);
   line-height: 1.45;
