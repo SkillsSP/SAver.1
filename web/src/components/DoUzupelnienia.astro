@@ -5,18 +5,45 @@ interface Props {
 }
 
 const { czego = "Do uzupełnienia" } = Astro.props;
+
+/* ==========================================================================
+   WIDOCZNOŚĆ NOTY
+
+   Nota pokazuje się przy pracy nad stroną i ZNIKA w wersji wysyłanej na
+   serwer. Do tej pory znikała tylko w zamierzeniu: komponent renderował się
+   zawsze, a jedyną ochroną było zdanie w komentarzu „przed publikacją
+   wyszukajcie DoUzupelnienia i usuńcie". Nikt tego nie zrobił i dwanaście
+   notatek stało na żywej stronie — razem z dosłownym „src/lib/site.js"
+   w akapicie kierowanym do rodzica. Sprawdziłem to na skilful.pl, nie
+   w zbudowanym katalogu.
+
+   Instrukcja „pamiętaj usunąć przed publikacją" nie jest zabezpieczeniem,
+   tylko nadzieją. Teraz decyduje o tym budowanie, nie pamięć.
+
+   Podgląd not w wersji zbudowanej — gdy chcecie zobaczyć listę braków tak,
+   jak wygląda na gotowej stronie:
+
+     PUBLIC_POKAZ_NOTY=1 npm run build
+   ========================================================================== */
+const pokazuj =
+  import.meta.env.DEV || import.meta.env.PUBLIC_POKAZ_NOTY === "1";
 ---
 
-{/*
-  Nota redakcyjna. Zastępuje kwadratowe nawiasy rozsiane po treści: zamiast
-  „[kwota]” w zdaniu sprzedażowym rodzic widzi zwykły tekst, a Wy widzicie
-  wyraźnie oznaczony blok z listą tego, co trzeba wpisać.
+{
+  /*
+    Nota redakcyjna. Zastępuje kwadratowe nawiasy rozsiane po treści: zamiast
+    „[kwota]” w zdaniu sprzedażowym rodzic widzi zwykły tekst, a Wy widzicie
+    wyraźnie oznaczony blok z listą tego, co trzeba wpisać.
 
-  PRZED PUBLIKACJĄ: wyszukajcie w projekcie „DoUzupelnienia” — każde wystąpienie
-  to miejsce, które wymaga Waszej decyzji albo danych. Po uzupełnieniu treści
-  usuńcie komponent razem z importem.
-*/}
-<aside class="do-uzupelnienia">
-  <strong>{czego}</strong>
-  <slot />
-</aside>
+    Każde wystąpienie `DoUzupelnienia` w projekcie to miejsce wymagające
+    Waszej decyzji albo danych. Po uzupełnieniu treści usuńcie komponent
+    razem z importem — nie dlatego, że szkodzi, tylko żeby lista braków
+    pozostała prawdziwa.
+  */
+}
+{pokazuj && (
+  <aside class="do-uzupelnienia">
+    <strong>{czego}</strong>
+    <slot />
+  </aside>
+)}

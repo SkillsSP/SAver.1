@@ -21,6 +21,29 @@ interface Props {
 }
 
 const { tytul, opis, wstep, uwagaWstepna, sekcje } = Astro.props;
+
+/* ==========================================================================
+   CO ZOSTAJE NA ŻYWEJ STRONIE, A CO ZNIKA
+
+   Podział nie jest tu techniczny, tylko etyczny, więc wymaga uzasadnienia.
+
+   ZOSTAJE ostrzeżenie u góry, że dokument jest wersją roboczą przed przeglądem
+   prawnym. Kuszące jest schowanie go razem z resztą — wygląda nieprofesjonalnie.
+   Byłoby to jednak gorsze niż nieprofesjonalne: rodzic czytałby regulamin
+   i politykę prywatności w przekonaniu, że to dokumenty gotowe i sprawdzone
+   przez prawnika, a nie są. Ostrzeżenie zostaje i będzie zostawać, dopóki
+   przegląd się nie odbędzie.
+
+   ZNIKAJĄ notatki robocze przy poszczególnych punktach — „Do ustalenia"
+   i „Zapis podwyższonego ryzyka". To lista zadań dla Was i dla prawnika.
+   Rodzicowi nie mówi nic poza tym, że ktoś tu jeszcze pracuje, a przy okazji
+   wskazuje palcem, które zapisy są najsłabsze. To informacja dla Waszego
+   prawnika, nie dla drugiej strony umowy.
+
+   Podgląd wszystkiego w wersji zbudowanej: PUBLIC_POKAZ_NOTY=1 npm run build
+   ========================================================================== */
+const pokazNotatki =
+  import.meta.env.DEV || import.meta.env.PUBLIC_POKAZ_NOTY === "1";
 const liczbaRyzyk = sekcje.filter((s) => s.ryzyko).length;
 ---
 
@@ -75,16 +98,18 @@ const liczbaRyzyk = sekcje.filter((s) => s.ryzyko).length;
             <h2 class="tytul-3">{s.tytul}</h2>
             <div class="stos stos--ciasny">
               <p class="tekst-drugi">{s.tresc}</p>
-              {s.ryzyko && (
+              {pokazNotatki && s.ryzyko && (
                 <aside class="zapis-ryzyka">
                   <strong>Zapis podwyższonego ryzyka</strong>
                   <p>{s.ryzyko}</p>
                 </aside>
               )}
-              <aside class="do-uzupelnienia">
-                <strong>Do ustalenia</strong>
-                <p>{s.doUstalenia}</p>
-              </aside>
+              {pokazNotatki && s.doUstalenia && (
+                <aside class="do-uzupelnienia">
+                  <strong>Do ustalenia</strong>
+                  <p>{s.doUstalenia}</p>
+                </aside>
+              )}
             </div>
           </article>
         ))}
