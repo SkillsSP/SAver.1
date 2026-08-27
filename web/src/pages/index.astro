@@ -1,7 +1,6 @@
 ---
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
-import Zdjecie from "../components/Zdjecie.astro";
 import {
   url,
   grupyWiekowe,
@@ -78,7 +77,7 @@ const trzyKroki = [
 
 <Baza
   tytul="Angielski dla życia, nie tylko dla szkoły"
-  opis="Centrum kompetencji w Szczecinie dla dzieci i młodzieży od 5 do 19 lat. Zajęcia podstawowe po angielsku, fakultety oraz przygotowanie do egzaminu ósmoklasisty i matury — z angielskiego i z matematyki."
+  opis="Centrum kompetencji w Szczecinie dla dzieci i młodzieży 5–19 lat. Zajęcia po angielsku, fakultety oraz przygotowanie do egzaminu ósmoklasisty i matury."
 >
   {/* ── 1 ── HERO. Hasło, jedno zdanie, dwa przyciski. Bez grafiki wypełniającej. */}
   <section class="hero hero--foto" style="--foto-kadr: center 42%">
@@ -123,6 +122,8 @@ const trzyKroki = [
             <img
               class="kafel__kadr"
               src={url(`/foto/${k.plik}-800.webp`)}
+              srcset={`${url(`/foto/${k.plik}-800.webp`)} 800w, ${url(`/foto/${k.plik}-1600.webp`)} 1600w`}
+              sizes="(min-width: 68rem) 16rem, (min-width: 40rem) 33vw, 100vw"
               alt={k.podpis}
               loading="lazy"
               decoding="async"

@@ -1,7 +1,6 @@
 ---
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
-import Zdjecie from "../components/Zdjecie.astro";
 import {
   url,
   wielkoscGrupy,
@@ -89,7 +88,7 @@ const zasadyDlaDziecka = [
 <Baza
   aktywna="o-nas"
   tytul="Standardy Ochrony Małoletnich"
-  opis="Standardy Ochrony Małoletnich obowiązujące w Skills Academy w Szczecinie: weryfikacja osób pracujących z dziećmi, zasady bezpiecznego kontaktu, wizerunek, procedura zgłoszeń i telefony zaufania."
+  opis="Standardy Ochrony Małoletnich w Skills Academy w Szczecinie: weryfikacja osób pracujących z dziećmi, zasady kontaktu, procedura zgłoszeń i telefony zaufania."
 >
   <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 40%">
     <FotoNaglowka nazwa="life-bezpieczenstwo" />
@@ -107,17 +106,27 @@ const zasadyDlaDziecka = [
     </div>
   </section>
 
-  {/* ZDJĘCIE WIODĄCE — bezpieczeństwo ćwiczone, nie deklarowane */}
+  {/* Kadr domyka lukę, przez którą ta strona wyglądała jak dokument prawny,
+      a nie jak część programu: bezpieczeństwo jest u nas także tematem zajęć,
+      nie tylko procedurą w regulaminie. */}
   <section class="sekcja sekcja--bez-gory">
     <div class="szerokosc">
-      <Zdjecie
-        nazwa="bezpieczenstwo-pierwsza-pomoc"
-        alt="Policjant tłumaczy grupie dzieci zasady bezpiecznego przechodzenia przez jezdnię"
-        proporcje="21 / 9"
-        rozmiary="(min-width: 72rem) 68rem, 100vw"
-        pilne={true}
-        klasa="zdjecie--pas"
-      />
+      <figure class="kafel">
+        <img
+          class="kafel__kadr"
+          src={url("/foto/life-strazak-800.webp")}
+          srcset={`${url("/foto/life-strazak-800.webp")} 800w, ${url("/foto/life-strazak-1600.webp")} 1600w`}
+          sizes="(min-width: 68rem) 24rem, 100vw"
+          alt="Dzieci w strojach strażackich podczas zajęć o bezpieczeństwie"
+          loading="lazy"
+          decoding="async"
+          style="height: clamp(11rem, 20vw, 15.5rem)"
+        />
+        <figcaption class="kafel__podpis">
+          Bezpieczeństwo ćwiczymy na zajęciach, nie tylko opisujemy w regulaminie.
+          Zdjęcie ilustracyjne.
+        </figcaption>
+      </figure>
     </div>
   </section>
 

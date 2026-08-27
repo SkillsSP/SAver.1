@@ -16,7 +16,18 @@ interface Props {
 }
 
 const { tytul, opis, aktywna = "", senior = false } = Astro.props;
-const pelnyTytul = `${tytul} · ${firma.nazwa} ${firma.miasto}`;
+/* Tytuł strony w wynikach wyszukiwania jest ucinany mniej więcej po
+   sześćdziesięciu pięciu znakach. Domyślnie doklejamy nazwę i miasto, bo
+   przy centrum działającym w jednym mieście nazwa miasta w tytule realnie
+   pracuje na wyniki lokalne. Gdy tytuł podstrony jest długi, miasto wypada
+   jako pierwsze — zostaje w opisie strony, w danych strukturalnych i w treści,
+   więc sygnał lokalny nie znika, a tytuł przestaje się urywać w połowie. */
+const LIMIT_TYTULU = 65;
+const zNazwaIMiastem = `${tytul} · ${firma.nazwa} ${firma.miasto}`;
+const pelnyTytul =
+  zNazwaIMiastem.length <= LIMIT_TYTULU
+    ? zNazwaIMiastem
+    : `${tytul} · ${firma.nazwa}`;
 
 /* Adres kanoniczny tej strony — bez ukośnika na końcu, żeby wyszukiwarka nie
    widziała dwóch adresów tej samej treści. */

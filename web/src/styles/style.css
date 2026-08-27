@@ -284,6 +284,26 @@ button {
   border-radius: var(--radius-sm);
 }
 
+/* Pierścień fokusu na ciemnym tle.
+
+   Kobalt na kremowym daje 5,56:1, na białej karcie 5,89:1 — z zapasem powyżej
+   progu 3:1. Ale na graficie schodzi do 2,71:1, czyli poniżej, a na grafitowym
+   nagłówku matury stoją trzy przyciski przedmiotów. Dwa ciemne kolory blisko
+   siebie na kole barw nie dadzą kontrastu, więc na tych tłach pierścień idzie
+   w biel: 15,6:1 na graficie i 5,9:1 na kobalcie.
+
+   Reguła obejmuje też sekcje na kolorze marki i pasek akcji na telefonie —
+   wszędzie tam, gdzie tło jest ciemne, a element sterujący da się zaznaczyć
+   klawiaturą. */
+.naglowek-strony--senior :focus-visible,
+.sekcja--marka :focus-visible,
+.sekcja--grafit :focus-visible,
+.stopka--grafit :focus-visible,
+.pasek-akcji :focus-visible,
+.zgoda-cookies :focus-visible {
+  outline-color: var(--bialy);
+}
+
 .wizualnie-ukryte {
   position: absolute;
   width: 1px;
@@ -569,9 +589,12 @@ button {
   background: var(--tlo-tint-kobalt);
   color: var(--kobalt-700);
 }
+/* Koral-700, nie 600. Odcień 600 na koralowym tincie daje 3,79:1, czyli
+   poniżej progu — a paleta ma 700 zdefiniowany dokładnie po to, żeby koral
+   mógł nieść drobny tekst na jasnym tle. Tutaj wychodzi 4,57:1. */
 .plakietka--koral {
   background: var(--tlo-tint-koral);
-  color: var(--koral-600);
+  color: var(--koral-700);
 }
 .plakietka--slate {
   background: var(--tlo-tint-slate);
@@ -1830,7 +1853,12 @@ button {
   font-style: normal;
   overflow-wrap: anywhere;
 }
+/* Ten sam powód co w pasku użytkowym: telefon i adres w stopce to najczęściej
+   dotykane odnośniki na telefonie, a sam tekst dawał 17 px wysokości. */
 .stopka__dane a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
   color: var(--kobalt-600);
 }
 .stopka__dane a:hover {
@@ -2054,7 +2082,7 @@ button {
 .pasek-uzytkowy {
   background: var(--cloud-50);
   border-bottom: var(--wlos);
-  padding: var(--space-1) var(--space-3);
+  padding: 0.4375rem var(--space-3);
 }
 
 .pasek-uzytkowy__tresc {
@@ -2082,7 +2110,14 @@ button {
   flex-wrap: wrap;
 }
 
+/* Cel dotykowy musi mieć co najmniej 24 px wysokości — sam tekst 13 px daje
+   21 px i na telefonie trafienie w niego wymaga precyzji. Podnosimy wysokość
+   samego odnośnika, a nie odstęp paska: pasek zostaje przy 38 px, bo o jego
+   wysokość rozbija się wygląd całej góry strony. */
 .pasek-uzytkowy__kontakt a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
   font-size: var(--text-drobny);
   font-weight: var(--waga-polgruba);
   text-decoration: none;

@@ -58,6 +58,8 @@ const Element = jakoLink ? "a" : "span";
   style={`margin-left:${p.przesuniecie}px`}
 >
   <img
+    loading="eager"
+    decoding="async"
     src={url(plik)}
     alt=""
     aria-hidden="true"

@@ -3,7 +3,6 @@ import Baza from "../layouts/Baza.astro";
 import OdeslanieDoGrup from "../components/OdeslanieDoGrup.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
-import Zdjecie from "../components/Zdjecie.astro";
 import { url, fakultety } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 
@@ -15,7 +14,7 @@ const wybor = [
   {
     tytul: "Wybór",
     opis:
-      "Dziecko wybiera jeden. Drugi i trzeci są możliwe — liczą się wtedy jako kolejne programy.",
+      "Dziecko wybiera jeden. Drugi i trzeci są możliwe; liczą się wtedy jako kolejne programy.",
   },
   {
     tytul: "Pokaz na koniec",
@@ -55,26 +54,34 @@ const wybor = [
       <div class="siatka siatka--czworo-foto">
         {fakultety.map((f) => (
           <article class="karta karta--luzna karta--ze-zdjeciem">
-            <Zdjecie
-              nazwa={f.zdjecie}
+            <img
+              class="kafel__kadr zdjecie--w-karcie"
+              src={url(`/foto/${f.zdjecie}-800.webp`)}
+              srcset={`${url(`/foto/${f.zdjecie}-800.webp`)} 800w, ${url(`/foto/${f.zdjecie}-1600.webp`)} 1600w`}
+              sizes="(min-width: 68rem) 32rem, 100vw"
               alt={f.zdjecieAlt}
-              proporcje="16 / 9"
-              rozmiary="(min-width: 56rem) 30rem, 100vw"
-              klasa="zdjecie--w-karcie"
+              loading="lazy"
+              decoding="async"
             />
             <h2 class="tytul-3">{f.nazwa}</h2>
             <p class="tekst-drugi tekst-maly">{f.wiodace}</p>
-            <p class="tekst-drobny">{f.szczegol}: do ustalenia przed startem naboru.</p>
+            <p class="tekst-drobny">
+              Prowadzi <strong>{f.prowadzi}</strong> · jeden program, od 200 zł miesięcznie
+            </p>
           </article>
         ))}
       </div>
 
+      <p class="nota-ilustracyjna">
+        Zdjęcia ilustracyjne — po starcie zastępujemy je materiałem z własnych
+        zajęć.
+      </p>
+
       <div style="margin-top: var(--space-4); max-width: var(--szerokosc-tekstu);">
-        <DoUzupelnienia czego="Zawartość fakultetów">
-          Dla każdego z czterech fakultetów dopiszcie zakres, materiały i wiek
-          uczestników oraz dzień i godzinę zajęć. Rodzic wybierający fakultet
-          porównuje właśnie te trzy rzeczy. Bez nich karty wyglądają jak deklaracja
-          zamiaru, a nie oferta.
+        <DoUzupelnienia czego="Zakres i terminy fakultetów">
+          Nazwiska prowadzących i cena już są. Do wpisania zostaje zakres,
+          materiały i wiek uczestników oraz dzień i godzina zajęć — rodzic
+          wybierający fakultet porównuje właśnie te trzy rzeczy.
         </DoUzupelnienia>
       </div>
     </div>
@@ -113,7 +120,7 @@ const wybor = [
         <div class="stos">
           <h2 class="tytul-3">Zasady organizacyjne</h2>
           <ul class="lista-znaczona">
-            <li>Fakultet liczy się jako jeden program — można go wziąć bez zajęć podstawowych</li>
+            <li>Fakultet liczy się jako jeden program, więc można go wziąć bez zajęć podstawowych</li>
             <li>Grupa rusza przy pięciu zapisanych osobach, górna granica to osiem</li>
             <li>Materiały i sprzęt zapewnia centrum</li>
             <li>

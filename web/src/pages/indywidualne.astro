@@ -3,7 +3,6 @@ import Baza from "../layouts/Baza.astro";
 import OdeslanieDoGrup from "../components/OdeslanieDoGrup.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
-import Zdjecie from "../components/Zdjecie.astro";
 import { url } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 
@@ -62,17 +61,27 @@ const jakZaczynamy = [
     </div>
   </section>
 
-  {/* ZDJĘCIE WIODĄCE — jeden dorosły, jedno dziecko, spokojne otoczenie */}
+  {/* Poprzedni kadr przedstawiał terapię logopedyczną i został wycofany:
+      marka mówi o kompetencjach, nie o korygowaniu deficytów, a zajęcia
+      jeden na jeden nie są zajęciami terapeutycznymi. */}
   <section class="sekcja sekcja--bez-gory">
     <div class="szerokosc">
-      <Zdjecie
-        nazwa="indywidualne-glowne"
-        alt="Prowadząca pracuje indywidualnie z chłopcem przy stole"
-        proporcje="21 / 9"
-        rozmiary="(min-width: 72rem) 68rem, 100vw"
-        pilne={true}
-        klasa="zdjecie--pas"
-      />
+      <figure class="kafel">
+        <img
+          class="kafel__kadr"
+          src={url("/foto/music-1-800.webp")}
+          srcset={`${url("/foto/music-1-800.webp")} 800w, ${url("/foto/music-1-1600.webp")} 1600w`}
+          sizes="(min-width: 68rem) 24rem, 100vw"
+          alt="Dziecko gra na gitarze podczas indywidualnych zajęć"
+          loading="lazy"
+          decoding="async"
+          style="height: clamp(12.5rem, 20vw, 16.25rem)"
+        />
+        <figcaption class="kafel__podpis">
+          Zajęcia jeden na jeden prowadzimy w sali z przeszkleniem, zgodnie ze
+          standardami ochrony małoletnich. Zdjęcie ilustracyjne.
+        </figcaption>
+      </figure>
     </div>
   </section>
 

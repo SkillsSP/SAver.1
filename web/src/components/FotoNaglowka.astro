@@ -20,6 +20,10 @@ import { url } from "../lib/site.js";
 
    Zdjęcia w nagłówkach ładujemy pilnie: to pierwszy kadr, jaki rodzic widzi,
    i jedyny obraz nad linią zgięcia. Wszystko poniżej wchodzi leniwie.
+
+   Podajemy oba rozmiary. Nagłówek zajmuje pełną szerokość okna, więc telefon
+   bez tego pobierałby plik przygotowany na duży ekran — przy zdjęciu, które
+   ładuje się priorytetowo, to najdroższy możliwy błąd na łączu komórkowym.
    ========================================================================== */
 
 interface Props {
@@ -35,6 +39,8 @@ const { nazwa, klasa = "naglowek-strony__foto" } = Astro.props;
 <img
   class={klasa}
   src={url(`/foto/${nazwa}-1600.webp`)}
+  srcset={`${url(`/foto/${nazwa}-800.webp`)} 800w, ${url(`/foto/${nazwa}-1600.webp`)} 1600w`}
+  sizes="100vw"
   alt=""
   aria-hidden="true"
   loading="eager"

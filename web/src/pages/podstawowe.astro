@@ -3,7 +3,6 @@ import Baza from "../layouts/Baza.astro";
 import OdeslanieDoGrup from "../components/OdeslanieDoGrup.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
-import Zdjecie from "../components/Zdjecie.astro";
 import { url, wielkoscGrupy } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 
@@ -99,14 +98,7 @@ const lifeSkills = [
   <section class="sekcja">
     <div class="szerokosc">
       <div class="siatka siatka--2">
-        <article class="karta karta--luzna karta--ze-zdjeciem">
-          <Zdjecie
-            nazwa="podstawowe-useful"
-            alt="Dziewczynki w okularach ochronnych pracują przy warsztacie stolarskim"
-            proporcje="16 / 9"
-            rozmiary="(min-width: 56rem) 30rem, 100vw"
-            klasa="zdjecie--w-karcie"
-          />
+        <article class="karta karta--luzna">
           <span class="plakietka plakietka--kobalt">Filar I</span>
           <h2 class="tytul-3">Useful Skills</h2>
           <p class="tekst-drugi tekst-maly">
@@ -120,14 +112,7 @@ const lifeSkills = [
           </ul>
         </article>
 
-        <article class="karta karta--luzna karta--ze-zdjeciem">
-          <Zdjecie
-            nazwa="podstawowe-life"
-            alt="Dzieci ćwiczą pierwszą pomoc na fantomach podczas zajęć"
-            proporcje="16 / 9"
-            rozmiary="(min-width: 56rem) 30rem, 100vw"
-            klasa="zdjecie--w-karcie"
-          />
+        <article class="karta karta--luzna">
           <span class="plakietka plakietka--kobalt">Filar II</span>
           <h2 class="tytul-3">Life Skills</h2>
           <p class="tekst-drugi tekst-maly">
@@ -170,6 +155,8 @@ const lifeSkills = [
             <img
               class="kafel__kadr zdjecie--w-karcie"
               src={url(`/foto/${k.plik}-800.webp`)}
+              srcset={`${url(`/foto/${k.plik}-800.webp`)} 800w, ${url(`/foto/${k.plik}-1600.webp`)} 1600w`}
+              sizes="(min-width: 68rem) 16rem, (min-width: 40rem) 33vw, 100vw"
               alt={k.podpis}
               loading="lazy"
               decoding="async"

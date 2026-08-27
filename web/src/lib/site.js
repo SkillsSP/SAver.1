@@ -200,34 +200,34 @@ export const fakultety = [
     nazwa: "Music Skills",
     wiodace:
       "Rytm, głos i wspólne granie. Dziecko nie uczy się nut na wejściu — najpierw gra, potem rozumie, co zagrało.",
-    szczegol: "Zakres i instrumenty",
-    zdjecie: "fakultet-music",
-    zdjecieAlt: "Grupa dzieci śpiewa razem podczas zajęć",
+    prowadzi: "Natalia Marczewska",
+    zdjecie: "music-2",
+    zdjecieAlt: "Dziecko gra na instrumencie podczas zajęć",
   },
   {
     nazwa: "Art Skills",
     wiodace:
       "Rysunek, kolaż, praca przestrzenna. Zadanie zawsze ma cel wykraczający poza samą technikę.",
-    szczegol: "Techniki i materiały",
-    zdjecie: "fakultet-art",
-    zdjecieAlt: "Chłopiec lepi figurki z gliny przy stole z innymi dziećmi",
+    prowadzi: "Natalia Marczewska",
+    zdjecie: "art-1",
+    zdjecieAlt: "Dzieci pracują nad pracą plastyczną przy wspólnym stole",
   },
   {
     nazwa: "Acting Skills",
     wiodace:
       "Scena, głos i obecność przed grupą. Dziecko ćwiczy mówienie do innych " +
       "w sytuacji, w której ma to sens — bo gra rolę, a nie odpowiada przy tablicy.",
-    szczegol: "Formy pracy i pokaz końcowy",
-    zdjecie: "fakultet-acting",
+    prowadzi: "Karolina Dumała",
+    zdjecie: "acting-1",
     zdjecieAlt: "Dzieci odgrywają scenkę teatralną w sali",
   },
   {
     nazwa: "Motion Skills",
     wiodace:
       "Ruch, koordynacja i praca zespołowa. Dla dzieci, które nie usiedzą — i dobrze.",
-    szczegol: "Rodzaj aktywności i przestrzeń",
-    zdjecie: "fakultet-motion",
-    zdjecieAlt: "Dzieci rozciągają kolorową chustę animacyjną we wspólnej zabawie ruchowej",
+    prowadzi: "Karolina Dumała",
+    zdjecie: "motion-4",
+    zdjecieAlt: "Dzieci ćwiczą razem podczas zajęć ruchowych",
   },
 ];
 
