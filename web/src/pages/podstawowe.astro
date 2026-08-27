@@ -26,6 +26,48 @@ const przebieg = [
       "Co zadziałało, co nie. Prowadzący zbiera obserwacje i omówi je z Wami na konsultacji.",
   },
 ];
+
+/* Sześć obszarów Life Skills. Podpis obrazu opisuje kadr, tytuł nazywa
+   kompetencję — to dwie różne rzeczy i nie mogą się powielać, bo czytnik
+   ekranu przeczytałby wtedy to samo dwa razy. */
+const lifeSkills = [
+  {
+    plik: "life-pierwsza-pomoc",
+    podpis: "Dzieci ćwiczą pierwszą pomoc na fantomach",
+    tytul: "Pierwsza pomoc",
+    zdanie: "Ćwiczenie na fantomie, schemat postępowania, numer alarmowy.",
+  },
+  {
+    plik: "life-bezpieczenstwo",
+    podpis: "Policjant tłumaczy dzieciom zasady przechodzenia przez jezdnię",
+    tytul: "Bezpieczeństwo w mieście",
+    zdanie: "Droga do domu, obcy dorosły, ruch drogowy.",
+  },
+  {
+    plik: "life-warsztat",
+    podpis: "Dziecko pracuje przy warsztacie stolarskim",
+    tytul: "Praca ręczna",
+    zdanie: "Narzędzia, miara, dokończony przedmiot na koniec misji.",
+  },
+  {
+    plik: "cooking-2",
+    podpis: "Dzieci przygotowują posiłek przy wspólnym stole",
+    tytul: "Kuchnia i samodzielność",
+    zdanie: "Przepis po angielsku, podział zadań, posiłek do zjedzenia razem.",
+  },
+  {
+    plik: "life-wolontariat",
+    podpis: "Dzieci segregują dary podczas zbiórki",
+    tytul: "Empatia i pomaganie",
+    zdanie: "Zbiórka, rozmowa o potrzebach innych, konkretne działanie.",
+  },
+  {
+    plik: "life-globus",
+    podpis: "Dzieci pochylone nad globusem",
+    tytul: "Świat i źródła",
+    zdanie: "Skąd wiem, że to prawda — fakt, opinia, źródło.",
+  },
+];
 ---
 
 <Baza
@@ -50,20 +92,6 @@ const przebieg = [
           <li>Obie ścieżki obowiązkowe</li>
         </ul>
       </div>
-    </div>
-  </section>
-
-  {/* ZDJĘCIE WIODĄCE — dzieci przy zadaniu, nie przy ławkach */}
-  <section class="sekcja sekcja--bez-gory">
-    <div class="szerokosc">
-      <Zdjecie
-        nazwa="podstawowe-glowne"
-        alt="Dzieci pracują w drużynie nad wspólnym zadaniem technicznym"
-        proporcje="21 / 9"
-        rozmiary="(min-width: 72rem) 68rem, 100vw"
-        pilne={true}
-        klasa="zdjecie--pas"
-      />
     </div>
   </section>
 
@@ -119,6 +147,42 @@ const przebieg = [
         <strong>poza</strong> zajęciami podstawowymi. To osobna oferta,
         kupowana obok, na tych samych zasadach dla uczestnika zajęć i dla kogoś
         z zewnątrz. <a class="link-w-zdaniu" href={url("/exams")}>Zobaczcie Exams</a>.
+      </p>
+    </div>
+  </section>
+
+  {/* LIFE SKILLS W PRAKTYCE. Sześć kart zamiast listy — Life Skills brzmią
+       abstrakcyjnie, dopóki nie widać, co dziecko faktycznie robi. */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Filar II w praktyce</span>
+        <h2 class="tytul-1">Life Skills — co dziecko robi naprawdę</h2>
+        <p class="wiodacy">
+          Kompetencje życiowe ćwiczymy na tym samym materiale i w tej samej
+          grupie, bez osobnej lekcji „o wartościach”.
+        </p>
+      </div>
+
+      <div class="siatka siatka--wiele">
+        {lifeSkills.map((k) => (
+          <article class="karta karta--ze-zdjeciem">
+            <img
+              class="kafel__kadr zdjecie--w-karcie"
+              src={url(`/foto/${k.plik}-800.webp`)}
+              alt={k.podpis}
+              loading="lazy"
+              decoding="async"
+            />
+            <h3 class="tytul-4">{k.tytul}</h3>
+            <p class="tekst-maly tekst-drugi">{k.zdanie}</p>
+          </article>
+        ))}
+      </div>
+
+      <p class="nota-ilustracyjna">
+        Zdjęcia ilustracyjne — po starcie zastępujemy je materiałem z własnych
+        zajęć.
       </p>
     </div>
   </section>

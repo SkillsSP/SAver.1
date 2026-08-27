@@ -1,5 +1,6 @@
 ---
 import Naglowek from "../components/Naglowek.astro";
+import PasekUzytkowy from "../components/PasekUzytkowy.astro";
 import Stopka from "../components/Stopka.astro";
 import PasekAkcji from "../components/PasekAkcji.astro";
 import ZgodaCookies from "../components/ZgodaCookies.astro";
@@ -76,6 +77,10 @@ const znacznik = {
 
   <body class={senior ? "rejestr-senior" : undefined}>
     <a class="pomin-do-tresci" href="#tresc">Przejdź do treści</a>
+    {/* Kolejność jest istotna: pasek użytkowy PRZED nagłówkiem i poza nim.
+        Nagłówek jest przyklejony do góry okna — pasek w jego wnętrzu
+        przykleiłby się razem z nim i zabierał wysokość na każdym ekranie. */}
+    <PasekUzytkowy />
     <Naglowek aktywna={aktywna} ctaSenior={senior} />
     <main id="tresc">
       <slot />

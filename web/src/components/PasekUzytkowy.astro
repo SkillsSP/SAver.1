@@ -1,0 +1,39 @@
+---
+import { url, firma, telefonHref, telefonTekst } from "../lib/site.js";
+
+/* ==========================================================================
+   PASEK UŻYTKOWY — nad nawigacją, na każdej podstronie
+
+   Musi stać jako RODZEŃSTWO nagłówka, przed nim — nie w jego środku. Nagłówek
+   jest przyklejony do góry okna; pasek włożony do jego wnętrza przykleiłby się
+   razem z nim i zabierał wysokość na każdym ekranie, także wtedy, gdy nikt na
+   niego nie patrzy. Tak jak jest teraz, przewija się i znika, a przyklejona
+   zostaje sama nawigacja.
+
+   ETYKIETA. Odnośnik brzmi „Kontakt", nie „Kontakt i dojazd" — dojazdu nie
+   obiecujemy, dopóki nie ma adresu. Dłuższa wersja wraca razem z podpisaniem
+   umowy na lokal.
+
+   Na telefonie pasek zawija się na dwa wiersze i to jest zamierzone. Nic nie
+   znika i nie skracamy numeru do wersalikowego „ZADZWOŃ" — marka nie używa
+   wersalików w treści.
+   ========================================================================== */
+
+const tel = telefonHref();
+---
+
+<div class="pasek-uzytkowy">
+  <div class="pasek-uzytkowy__tresc">
+    <p class="pasek-uzytkowy__haslo">
+      {firma.podtytul} · {firma.miasto}
+    </p>
+    <div class="pasek-uzytkowy__kontakt">
+      <a href={url("/kontakt")}>Kontakt</a>
+      {tel && (
+        <a class="pasek-uzytkowy__telefon" href={tel}>
+          {telefonTekst()}
+        </a>
+      )}
+    </div>
+  </div>
+</div>

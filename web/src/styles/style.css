@@ -2155,8 +2155,15 @@ button {
    czterech elementach i 2+1 przy trzech.
 
    Minimum kolumny dobieramy tak, żeby kolumna o jeden za dużo się NIE ZMIEŚCIŁA.
-   Warunek: n · min + (n−1) · gap ≤ szerokość kontenera.
-   Kontener ma 71,25rem (1140 px), odstęp siatki 1,5rem (24 px).
+   Warunek: n · min + (n−1) · gap ≤ dostępne wnętrze kontenera.
+
+   UWAGA NA LICZBĘ. Kontener ma 71,25rem (1140 px), ale ma też własne odstępy
+   boczne, więc treści zostaje 1092 px — i to jest liczba do rachunku. Pomyłka
+   o te 48 px wystarczyła, żeby siatka ośmioelementowa stanęła w trzech
+   kolumnach zamiast czterech. Odstęp siatki to 1,5rem (24 px).
+
+   Przy 1092 px maksymalne minimum wynosi: 348 px dla trzech kolumn, 255 px dla
+   czterech, 199 px dla pięciu.
 
      dwa elementy   min 23,75rem (380 px) → 3 kolumny wymagają 1188 px, nie wchodzą
      cztery         min 23,75rem (380 px) → 3 kolumny wymagają 1188 px, nie wchodzą
@@ -2188,6 +2195,14 @@ button {
 }
 .siatka--wiele {
   grid-template-columns: repeat(auto-fit, minmax(min(17.5rem, 100%), 1fr));
+}
+
+/* Osiem elementów. Minimum 15,5rem (248 px) wpuszcza cztery kolumny
+   (4 · 248 + 3 · 24 = 1064 ≤ 1092), a piątej już nie (1336 px), więc osiem
+   kafli staje 4+4. Wariant --wiele dałby tu 3+3+2: też bez sierotki, ale
+   rozbity ostatni rząd wygląda na przypadek, a nie na układ. */
+.siatka--osiem {
+  grid-template-columns: repeat(auto-fit, minmax(min(15.5rem, 100%), 1fr));
 }
 
 /* Trzy elementy. `auto-fit` z żadnym minimum tego nie rozwiąże: między
@@ -2281,4 +2296,69 @@ button {
 }
 .prog__odniesienie s {
   text-decoration-thickness: 1px;
+}
+
+/* ==========================================================================
+   KAFLE TEMATYCZNE
+
+   Podpis stoi POD kadrem, nigdy na nim. Napis na zdjęciu wymagałby
+   przyciemnienia albo obwódki, a identyfikacja jest płaska — jedno i drugie
+   rozmontowałoby ją w miejscu, gdzie zdjęć jest najwięcej.
+
+   Podpis nazywa obszar kompetencji, a nie wydarzenie. To nie jest zalecenie
+   redakcyjne: pod każdą galerią stoi zdanie o materiale ilustracyjnym, bo bez
+   niego kafle czytają się jako zdjęcia z naszych zajęć. Usunięcie tego zdania
+   zamienia ilustrację w twierdzenie o faktach.
+   ========================================================================== */
+
+.kafel {
+  display: block;
+  background: var(--tlo-karty);
+  border: var(--wlos);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.kafel__kadr {
+  display: block;
+  width: 100%;
+  height: 12.5rem;
+  object-fit: cover;
+  background: var(--tlo-tint-kobalt);
+}
+
+.kafel__podpis {
+  display: block;
+  padding: var(--space-1) var(--space-2) var(--space-2);
+  font-size: var(--text-drobny);
+  line-height: var(--interlinia-srednia);
+  color: var(--tekst-drugi);
+}
+
+/* Zdanie pod galerią. Osobna klasa, żeby dało się je znaleźć jednym
+   wyszukaniem przy każdym przeglądzie treści. */
+.nota-ilustracyjna {
+  margin-top: var(--space-2);
+  font-size: var(--text-drobny);
+  color: var(--tekst-drugi);
+}
+
+/* ==========================================================================
+   KROKI NUMEROWANE — „trzy kroki do pierwszych zajęć"
+
+   Numer jest kobaltowy i duży, bo to on prowadzi wzrok przez sekwencję.
+   Na ścieżce maturalnej numery idą na graficie — rejestr Teens Senior nie
+   używa kobaltu jako koloru prowadzącego.
+   ========================================================================== */
+
+.krok__numer {
+  font-family: var(--font-medrzec);
+  font-size: var(--text-h2);
+  font-weight: var(--waga-gruba);
+  line-height: 1;
+  color: var(--kobalt-600);
+  letter-spacing: -0.02em;
+}
+.rejestr-senior .krok__numer {
+  color: var(--akcent-senior);
 }

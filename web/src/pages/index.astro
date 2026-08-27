@@ -39,6 +39,41 @@ const przebiegMisji = [
     opis: "Każda drużyna tłumaczy swój tok rozumowania. Ćwiczenie argumentacji.",
   },
 ];
+
+/* Osiem obszarów kompetencji. Kolejność jest zamierzona: zaczynamy od tego,
+   co najmniej oczywiste w szkole językowej (elektronika), a kończymy na
+   pracy ręcznej — po drodze scena, kuchnia, ruch, muzyka, plastyka i rozmowa. */
+const kafle = [
+  { plik: "life-dron", podpis: "Elektronika i robotyka" },
+  { plik: "acting-2", podpis: "Scena i wystąpienia" },
+  { plik: "cooking-1", podpis: "Kuchnia i praca w drużynie" },
+  { plik: "motion-1", podpis: "Ruch i drużyna" },
+  { plik: "music-3", podpis: "Muzyka i głos" },
+  { plik: "art-2", podpis: "Rysunek i praca ręczna" },
+  { plik: "life-grupa", podpis: "Rozmowa w małej grupie" },
+  { plik: "life-warsztat", podpis: "Narzędzia i własny przedmiot" },
+];
+
+const trzyKroki = [
+  {
+    numer: "01",
+    tytul: "Rozmowa i dobór grupy",
+    opis:
+      "Pytamy o wiek, o to, co dziecko już umie i czego się boi. Czasem powiemy, że lepiej zadziała inna ścieżka niż ta, po którą przyszliście.",
+  },
+  {
+    numer: "02",
+    tytul: "Zajęcia próbne",
+    opis:
+      "Dziecko wchodzi do grupy na normalnych zasadach — nie na pokazową lekcję dla rodziców. Po spotkaniu mówimy, co widzieliśmy.",
+  },
+  {
+    numer: "03",
+    tytul: "Zapis i karnet",
+    opis:
+      `Wybieracie liczbę programów. Zasady płatności i rezygnacji są w <a class="link-w-zdaniu" href="${"/regulamin"}">regulaminie</a>, nie w rozmowie telefonicznej.`,
+  },
+];
 ---
 
 <Baza
@@ -77,30 +112,53 @@ const przebiegMisji = [
     </div>
   </section>
 
-  {/* ── 1b ── PAS ZDJĘĆ. Trzy ujęcia zamiast opisu: dziecko przy zadaniu,
-       praca w grupie i fakultet. Rodzic ogląda, zanim zacznie czytać. */}
+  {/* ── 1b ── KAFLE TEMATYCZNE. Osiem obszarów kompetencji naraz — rodzic
+       widzi zakres, zanim zacznie czytać. Podpis nazywa obszar, nigdy
+       wydarzenie: to zdjęcia ilustracyjne i zdanie pod galerią musi zostać. */}
   <section class="sekcja sekcja--bez-gory">
     <div class="szerokosc">
-      <div class="pas-zdjec">
-        <Zdjecie
-          nazwa="podstawowe-glowne"
-          alt="Dzieci pracują w drużynie nad wspólnym zadaniem technicznym"
-          proporcje="4 / 3"
-          rozmiary="(min-width: 56rem) 22rem, 100vw"
-          pilne={true}
-        />
-        <Zdjecie
-          nazwa="dzieci-w-dzialaniu"
-          alt="Dzieci pochylone nad globusem podczas zajęć"
-          proporcje="4 / 3"
-          rozmiary="(min-width: 56rem) 22rem, 100vw"
-        />
-        <Zdjecie
-          nazwa="fakultet-acting"
-          alt="Dzieci odgrywają scenkę teatralną w sali"
-          proporcje="4 / 3"
-          rozmiary="(min-width: 56rem) 22rem, 100vw"
-        />
+      <div class="siatka siatka--osiem">
+        {kafle.map((k) => (
+          <figure class="kafel">
+            <img
+              class="kafel__kadr"
+              src={url(`/foto/${k.plik}-800.webp`)}
+              alt={k.podpis}
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="kafel__podpis">{k.podpis}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <p class="nota-ilustracyjna">
+        Zdjęcia ilustracyjne — po starcie zastępujemy je materiałem z własnych
+        zajęć.
+      </p>
+    </div>
+  </section>
+
+  {/* ── 1c ── TRZY KROKI. Odpowiedź na pytanie „co się stanie, jak zadzwonię”,
+       którego strona wcześniej nie obsługiwała wprost. */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Jak zaczynamy</span>
+        <h2 class="tytul-1">Trzy kroki do pierwszych zajęć</h2>
+        <p class="wiodacy">
+          Decyzję o zapisie podejmujecie po zajęciach próbnych, nie przed.
+          Dalej prowadzimy Was my.
+        </p>
+      </div>
+
+      <div class="siatka siatka--troje">
+        {trzyKroki.map((k) => (
+          <article class="karta karta--luzna">
+            <p class="krok__numer">{k.numer}</p>
+            <h3 class="tytul-4">{k.tytul}</h3>
+            <p class="tekst-maly tekst-drugi" set:html={k.opis} />
+          </article>
+        ))}
       </div>
     </div>
   </section>
