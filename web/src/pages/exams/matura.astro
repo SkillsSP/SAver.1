@@ -201,7 +201,7 @@ const schemat = [
   </section>
 
   {/* SCHEMAT */}
-  <section class="sekcja">
+  <section class="sekcja sekcja--slate">
     <div class="szerokosc">
       <div class="siatka--wiodaca">
         <div class="stos stos--ciasny">
@@ -226,8 +226,17 @@ const schemat = [
     </div>
   </section>
 
-  {/* WYNIKI */}
-  <section class="sekcja sekcja--slate">
+  {/* WYNIKI — bez tła, celowo.
+
+      Zamykające wezwanie poniżej jest w wersji dla ucznia, a ta zawsze idzie
+      na tle slate. Gdy ta sekcja też była slate, obie zlewały się w jeden szary
+      blok długi na dwa ekrany i granica między „nie mamy jeszcze wyników"
+      a „zacznijcie od arkusza" znikała. Zmierzone na telefonie: identyczne
+      rgb(237, 239, 242) w dwóch sąsiednich sekcjach.
+
+      Tło przejęła sekcja „Jak pracujemy" wyżej, więc cała strona przeplata
+      się teraz równo: zwykłe, slate, zwykłe, slate, zwykłe, slate. */}
+  <section class="sekcja">
     <div class="szerokosc">
       <div class="siatka--wiodaca">
         <div class="stos stos--ciasny">

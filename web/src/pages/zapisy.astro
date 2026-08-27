@@ -85,7 +85,7 @@ const poWyslaniu = [
 
             <div class="pole">
               <label for="telefon">
-                Telefon
+                Telefon{" "}
                 <span class="pole__wskazowka">Oddzwaniamy, żeby ustalić termin.</span>
               </label>
               <input
@@ -100,7 +100,7 @@ const poWyslaniu = [
 
             <div class="pole">
               <label for="email">
-                E-mail
+                E-mail{" "}
                 <span class="pole__wskazowka">Opcjonalnie — jeśli wolicie kontakt pisemny.</span>
               </label>
               <input type="email" id="email" name="email" autocomplete="email" />
@@ -110,8 +110,8 @@ const poWyslaniu = [
               <input type="checkbox" id="zgoda" name="zgoda" required />
               <label for="zgoda">
                 Wyrażam zgodę na kontakt w sprawie zajęć próbnych i przetwarzanie
-                podanych danych. Szczegóły w
-                <a href={url("/klauzula-rodo")}>klauzuli informacyjnej</a> i
+                podanych danych. Szczegóły w{" "}
+                <a href={url("/klauzula-rodo")}>klauzuli informacyjnej</a> i{" "}
                 <a href={url("/polityka-prywatnosci")}>polityce prywatności</a>.
               </label>
             </div>

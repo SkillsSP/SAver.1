@@ -1480,7 +1480,12 @@ button {
   font-size: var(--text-maly);
   font-weight: var(--waga-polgruba);
 }
+/* Wskazówka pod etykietą pola, nie obok niej. Bez tego składa się z etykietą
+   w jeden wiersz i czyta jako „TelefonOddzwaniamy, żeby ustalić termin" —
+   dwa zdania sklejone w miejscu, w którym rodzic szuka instrukcji. */
 .pole__wskazowka {
+  display: block;
+  margin-top: 0.125rem;
   font-size: var(--text-drobny);
   color: var(--tekst-drugi);
   font-weight: var(--waga-zwykla);
@@ -2734,5 +2739,51 @@ button {
      tak, żeby cel urósł, a rytm listy został. */
   .stopka__linki {
     gap: 0;
+  }
+}
+
+/* ==========================================================================
+   TELEFON — POPRAWKI PO PRZEGLĄDZIE NA ŻYWYM SPRZĘCIE
+   ========================================================================== */
+
+/* PASEK UŻYTKOWY znika na wąskich ekranach.
+
+   Na telefonie zawijał się na dwa wiersze i czytał jak fragment, który komuś
+   został — szara belka nad logotypem, zanim jeszcze widać markę. Przy tym
+   wszystko, co niósł, stoi na telefonie gdzie indziej: hasło powtarza zdanie
+   pod nagłówkiem strony głównej, numer telefonu jest w pasku akcji przyklejonym
+   do dołu ekranu, a „Kontakt" siedzi w menu.
+
+   Zysk jest podwójny: znika belka i wraca około 90 px wysokości na samej górze
+   każdej podstrony — dokładnie tam, gdzie rodzic decyduje, czy czytać dalej.
+
+   Gdyby hasło miało jednak zostać, wystarczy zamienić `display: none` poniżej
+   na ukrycie samych odnośników kontaktowych — pasek zwinie się wtedy do
+   jednego wiersza. */
+@media (max-width: 47.99rem) {
+  .pasek-uzytkowy {
+    display: none;
+  }
+}
+
+/* GALERIA KAFLI w dwóch kolumnach na telefonie.
+
+   Osiem zdjęć jedno pod drugim dawało na telefonie pas długi na kilka ekranów;
+   rodzic przewijał go, zamiast czytać. W dwóch kolumnach cała galeria mieści
+   się w mniej więcej dwóch ekranach i widać ją jako całość — a o to w tej
+   sekcji chodzi: pokazać zakres, nie pojedyncze zajęcia.
+
+   Kadr schodzi z 12,5 do 8,5 rem, bo przy połowie szerokości wysoki kafel
+   robi się nienaturalnie pionowy. */
+@media (max-width: 47.99rem) {
+  .siatka--osiem {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+  .siatka--osiem .kafel__kadr {
+    height: 8.5rem;
+  }
+  .siatka--osiem .kafel__podpis {
+    padding: var(--space-1) var(--space-1) var(--space-2);
   }
 }

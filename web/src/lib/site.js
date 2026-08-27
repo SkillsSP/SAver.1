@@ -16,6 +16,11 @@ export const firma = {
   nazwa: "Skills Academy",
   podtytul: "Centrum Kompetencji Przyszłości dla Dzieci",
   miasto: "Szczecin",
+  /* Forma miejscownika, do zdań „zajęcia prowadzimy w Szczecinie". Polskiej
+     odmiany nie da się wyliczyć z mianownika, a doklejanie końcówki w szablonie
+     działa tylko dla tej jednej nazwy — „Kraków" + „ie" daje „Krakówie".
+     Dlatego stoi tu wprost. */
+  miastoWMiejscowniku: "Szczecinie",
   /* Zapis nazwy, adresu i telefonu musi brzmieć znak w znak tak samo jak w
      wizytówce Google — rozjazd osłabia widoczność w wynikach lokalnych. */
   ulica: null,

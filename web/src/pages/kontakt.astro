@@ -91,7 +91,7 @@ const daneFirmy = [
         <h1 class="tytul-1">Napiszcie albo zadzwońcie</h1>
         <p class="hero__zdanie">
           Odpowiadamy w ciągu jednego dnia roboczego. Jeśli chcecie od razu
-          umówić bezpłatne zajęcia próbne,
+          umówić bezpłatne zajęcia próbne,{" "}
           <a href={url("/zapisy")}>przejdźcie do zapisów</a> — tam formularz
           pyta o dziecko, a nie o sprawę.
         </p>
@@ -179,7 +179,7 @@ const daneFirmy = [
 
             <div class="pole">
               <label for="telefon">
-                Telefon
+                Telefon{" "}
                 <span class="pole__wskazowka">Wystarczy jedno: telefon albo e-mail.</span>
               </label>
               <input type="tel" id="telefon" name="telefon" autocomplete="tel" inputmode="tel" />
@@ -206,8 +206,8 @@ const daneFirmy = [
               <input type="checkbox" id="zgoda" name="zgoda" required />
               <label for="zgoda">
                 Wyrażam zgodę na kontakt w sprawie zgłoszenia i przetwarzanie
-                podanych danych. Szczegóły w
-                <a href={url("/klauzula-rodo")}>klauzuli informacyjnej</a> i
+                podanych danych. Szczegóły w{" "}
+                <a href={url("/klauzula-rodo")}>klauzuli informacyjnej</a> i{" "}
                 <a href={url("/polityka-prywatnosci")}>polityce prywatności</a>.
               </label>
             </div>
@@ -271,7 +271,7 @@ const daneFirmy = [
             <span class="plakietka plakietka--kobalt">Ochrona małoletnich</span>
             <h2 class="tytul-3">Zgłoszenie dotyczące dziecka</h2>
             <p class="tekst-maly tekst-drugi">
-              Za standardy ochrony małoletnich odpowiada
+              Za standardy ochrony małoletnich odpowiada{" "}
               <strong>{ochronaMaloletnich.imie}</strong>. Zgłoszenie można
               złożyć anonimowo — przez formularz obok, wybierając ten temat,
               albo wprost na adres poniżej.
@@ -313,7 +313,7 @@ const daneFirmy = [
           <article class="karta karta--luzna" id="dojazd">
             <h2 class="tytul-3">Gdzie jesteśmy</h2>
             <p class="tekst-maly tekst-drugi">
-              Zajęcia prowadzimy stacjonarnie w {firma.miasto}. Adres, godziny
+              Zajęcia prowadzimy stacjonarnie w {firma.miastoWMiejscowniku}. Adres, godziny
               otwarcia biura i dojazd podamy razem z uruchomieniem zapisów, gdy
               umowa na lokal będzie podpisana.
             </p>
