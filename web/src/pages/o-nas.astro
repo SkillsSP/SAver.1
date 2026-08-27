@@ -2,7 +2,7 @@
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
-import { url, firma, wielkoscGrupy } from "../lib/site.js";
+import { url, firma, wielkoscGrupyTekst, zespol } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 ---
 
@@ -26,26 +26,54 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
     </div>
   </section>
 
-  {/* KIM JESTEŚMY */}
+  {/* KTO PROWADZI ZAJĘCIA */}
   <section class="sekcja">
     <div class="szerokosc">
       <div class="naglowek-sekcji">
         <span class="nadtytul">Zespół</span>
-        <h2 class="tytul-1">Kim jesteśmy</h2>
+        <h2 class="tytul-1">Kto prowadzi zajęcia</h2>
+        <p class="wiodacy">
+          Trzy osoby. Każda uczy angielskiego, każda prowadzi też zajęcia
+          jeden na jeden. Poniżej widać, kto odpowiada za co.
+        </p>
       </div>
 
-      <DoUzupelnienia czego="Sylwetki założycielek">
-        To najważniejsza sekcja w całym serwisie, dopóki nie macie opinii
-        i wyników. Dla każdej osoby: imię i nazwisko, wykształcenie,
-        doświadczenie, jedno zdanie o tym, dlaczego akurat ta praca.
-        Zdjęcia własne — nie stockowe.
-        <br /><br />
-        Osobno i wprost: która z założycielek prowadzi matematykę i jakie ma
-        doświadczenie egzaminacyjne. To jedyna oferta w Szczecinie, gdzie
-        przygotowanie do matury z angielskiego i z matematyki prowadzi ten sam
-        zespół — ale bez nazwiska jest to tylko zdanie w reklamie. Ta sama notka
-        powinna wrócić na obu stronach matematyki.
-      </DoUzupelnienia>
+      <div class="zespol">
+        {zespol.map((o) => (
+          <article class="osoba">
+            <h3 class="osoba__imie">
+              {o.imie}
+              <span class="osoba__rola">{o.rola}</span>
+            </h3>
+            <p class="osoba__przedmioty">{o.przedmioty}</p>
+            <p class="osoba__kwalifikacje">
+              {o.kwalifikacje ?? "Wykształcenie i doświadczenie — do uzupełnienia."}
+            </p>
+          </article>
+        ))}
+      </div>
+
+      {/* Mocniejsze niż puste kółka na portrety. Zapowiedź „wkrótce" starzeje
+          się na stronie szybciej niż samo zdjęcie, więc jej tu nie ma. */}
+      <p class="tekst-maly tekst-drugi" style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">
+        Zdjęć zespołu jeszcze nie publikujemy. Wolimy pokazać własne twarze, gdy
+        centrum ruszy, niż wstawić zdjęcia z banku, które nie przedstawiają
+        nikogo z nas.
+      </p>
+
+      <div style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">
+        <DoUzupelnienia czego="Kwalifikacje trzech osób">
+          Dla każdej osoby jedno pole: wykształcenie, lata doświadczenia,
+          uprawnienia egzaminacyjne. To jedyny brak na tej podstronie i zarazem
+          jej najważniejsze zdanie — w edukacji premium nazwisko bez
+          kwalifikacji nie jest jeszcze dowodem.
+          <br /><br />
+          Warto też rozstrzygnąć obsadę historii: prowadzi ją jedna osoba, więc
+          przy chorobie nie ma zastępstwa, a to przedmiot sprzedawany pod
+          konkretny termin egzaminu. Matematykę prowadzą dwie osoby, angielski
+          wszystkie trzy.
+        </DoUzupelnienia>
+      </div>
     </div>
   </section>
 
@@ -74,9 +102,81 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
             Przygotowanie do egzaminów prowadzimy osobno i mówimy o nim innym
             tonem, bo tam liczy się wynik. Nie udajemy, że matura jest przygodą.
           </p>
+          <DoUzupelnienia czego="Historia założycielska">
+            Dlaczego powstało centrum, skąd pomysł na Useful &amp; Life Skills,
+            co Was do tego doprowadziło. Tego nie da się napisać za Was — a w tej
+            kategorii jest to najmocniejszy element strony „O nas”, mocniejszy
+            niż lista kwalifikacji. Jeden akapit wystarczy, trzy to maksimum.
+          </DoUzupelnienia>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* WARUNKI ZAJĘĆ — zobowiązania, nie opis lokalu.
+
+      Poprzednia wersja mówiła „Sale są przystosowane do pracy w ruchu”, czyli
+      opisywała przestrzeń, której umowa nie jest jeszcze podpisana. To samo
+      dotyczyło pustego pola na zdjęcie sali: zapowiedź bez terminu starzeje się
+      na stronie szybciej niż samo zdjęcie. Jedno i drugie zamienione na to, co
+      faktycznie zależy od nas i obowiązuje od pierwszego dnia zajęć. */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Warunki</span>
+          <h2 class="tytul-1">Na co się umawiamy</h2>
+        </div>
+        <div class="stos">
+          <p class="wiodacy">
+            Zajęcia prowadzimy stacjonarnie w {firma.miasto}ie. Adres podamy
+            razem z uruchomieniem zapisów — do tego czasu nie chcemy opisywać
+            miejsca, którego nie możecie jeszcze obejrzeć. To natomiast zależy
+            od nas i obowiązuje od pierwszego dnia:
+          </p>
+          <ul class="lista-znaczona">
+            <li>Grupy {wielkoscGrupyTekst} osób, żeby prowadzący widział każde dziecko</li>
+            <li>Sala do pracy w ruchu, nie do siedzenia w ławkach — tego wymaga metoda</li>
+            <li>
+              Zajęcia jeden na jeden w sali z przeszkleniem, zgodnie ze
+              <a class="link-w-zdaniu" href={url("/bezpieczenstwo")}>standardami ochrony małoletnich</a>
+            </li>
+            <li>Apteczka w każdej sali i osoba z aktualnym kursem pierwszej pomocy na każdej zmianie</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* METODA — skrót z kotwicą. Pełna wersja stoi na /metoda i tam zostaje;
+      tutaj jest tyle, ile rodzic potrzebuje, zanim zdecyduje, czy czytać dalej. */}
+  <section class="sekcja sekcja--karta sekcja--wlos" id="metoda">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Metoda</span>
+          <h2 class="tytul-1">Metoda, nie intuicja</h2>
+        </div>
+        <div class="stos">
+          <p class="wiodacy">
+            Program łączy podejścia, dla których istnieją dowody z badań:
+            uczenie słownictwa wspierane ruchem i gestem, nauczanie języka
+            oparte na zadaniach, ustrukturyzowana współpraca, informacja
+            zwrotna oraz rozwijanie kompetencji społeczno-emocjonalnych
+            i medialnych.
+          </p>
+          {/* Zastrzeżenie stoi tu celowo. Rodzic analityczny rozpoznaje, że
+              znamy granice własnych twierdzeń; rodzic, który tego nie czyta,
+              nic nie traci. */}
+          <p class="tekst-drugi tekst-maly">
+            Nie twierdzimy, że nauka przez projekt zawsze daje trwalsze efekty
+            niż nauczanie podające, ani że ruch albo muzyka podnoszą
+            inteligencję. Badania pokazują efekty zależne od wieku, celu
+            i sposobu prowadzenia zajęć — i tak o tym mówimy.
+          </p>
           <p>
             <a class="link-w-zdaniu" href={url("/metoda")}>
-              Przeczytajcie o metodzie i podziale na grupy wiekowe
+              Pełny opis metody i podziału na grupy wiekowe
             </a>
           </p>
         </div>
@@ -84,50 +184,51 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
     </div>
   </section>
 
-  {/* LOKAL */}
+  {/* CZEGO JESZCZE NIE MAMY. Przyznanie się do braku dowodu wynikowego buduje
+      więcej zaufania niż jego pozorowanie — a rodzic i tak o to zapyta. */}
   <section class="sekcja">
     <div class="szerokosc">
-      <div class="siatka--boczna">
-        <div class="stos">
-          <div class="naglowek-sekcji" style="margin-bottom: 0;">
-            <span class="nadtytul">Miejsce</span>
-            <h2 class="tytul-1">Lokal i przestrzeń zajęć</h2>
-          </div>
-          <p class="wiodacy">
-            Zajęcia prowadzimy stacjonarnie w {firma.miasto}ie. Sale są
-            przystosowane do pracy w ruchu, a nie do siedzenia w ławkach — bo
-            metoda tego wymaga. Zajęcia indywidualne odbywają się w sali
-            z przeszkleniem, zgodnie ze
-            <a class="link-w-zdaniu" href={url("/bezpieczenstwo")}>standardami ochrony małoletnich</a>.
-          </p>
-          <ul class="lista-znaczona">
-            <li>Grupy do {wielkoscGrupy} osób, żeby prowadzący widział każde dziecko</li>
-            <li>Apteczka w każdej sali</li>
-            <li>Osoba z aktualnym kursem pierwszej pomocy na każdej zmianie</li>
-          </ul>
-        </div>
-
-        <div class="miejsce-na-zdjecie">
-          <strong>Miejsce na zdjęcie sali</strong>
-          Rodzic chce zobaczyć salę, zanim do niej przyjedzie. Jedno poziome
-          zdjęcie własne, w tej samej tonacji co pozostałe.
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* BEZPIECZEŃSTWO — wejście z „O nas”, nie tylko ze stopki */}
-  <section class="sekcja sekcja--tint">
-    <div class="szerokosc">
-      <div class="odeslanie" style="background: var(--tlo-karty);">
-        <p class="odeslanie__tekst">
-          <strong>Standardy Ochrony Małoletnich</strong>
-          Publikujemy je w całości — kto może pracować z dziećmi, jak wygląda
-          odbiór dziecka, co się dzieje, kiedy ktoś zgłosi krzywdzenie.
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Uczciwie</span>
+        <h2 class="tytul-1">Czego jeszcze nie mamy</h2>
+        <p class="wiodacy">
+          Zaczynamy i nie udajemy, że jest inaczej. Trzy rzeczy, których na tej
+          stronie nie znajdziecie, i to, co dajemy w zamian.
         </p>
-        <a class="przycisk przycisk--obrys" href={url("/bezpieczenstwo")}>
-          Przeczytaj standardy bezpieczeństwa
-        </a>
+      </div>
+
+      <div class="siatka siatka--troje">
+        <article class="karta karta--luzna">
+          <h3 class="tytul-4">Opinii rodziców</h3>
+          <p class="tekst-maly tekst-drugi">
+            Nie mamy ani jednej, bo nie mieliśmy jeszcze uczestników. Nie
+            kupujemy ich i nie piszemy sami.
+          </p>
+        </article>
+        <article class="karta karta--luzna">
+          <h3 class="tytul-4">Wyników i statystyk</h3>
+          <p class="tekst-maly tekst-drugi">
+            Żadnych średnich poprawy ani zdawalności. Podamy je po pierwszym
+            roczniku, jeśli będą policzone rzetelnie — nie wcześniej.
+          </p>
+        </article>
+        <article class="karta karta--luzna">
+          <h3 class="tytul-4">Własnych zdjęć</h3>
+          <p class="tekst-maly tekst-drugi">
+            Zdjęcia na stronie są ilustracyjne i tak są podpisane. Wymienimy je
+            na własne, gdy zaczną się zajęcia.
+          </p>
+        </article>
+      </div>
+
+      <div class="odeslanie" style="background: var(--tlo-karty); margin-top: var(--space-4);">
+        <p class="odeslanie__tekst">
+          <strong>Co dajemy w zamian</strong>
+          Jawne standardy ochrony małoletnich, cennik bez dopisków drobnym
+          drukiem i pierwsze spotkanie bez opłaty. Dowód proceduralny zamiast
+          wynikowego — dopóki wynikowego uczciwie mieć nie możemy.
+        </p>
+        <a class="przycisk przycisk--obrys" href={url("/cennik")}>Zobaczcie cennik</a>
       </div>
     </div>
   </section>

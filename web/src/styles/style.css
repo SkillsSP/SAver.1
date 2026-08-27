@@ -2362,3 +2362,67 @@ button {
 .rejestr-senior .krok__numer {
   color: var(--akcent-senior);
 }
+
+/* ==========================================================================
+   ZESPÓŁ — wiersze w jednej karcie
+
+   Trzy osoby to najgorsza liczba dla siatki `auto-fit`: przy każdym minimum
+   kolumny istnieje szerokość, na której wychodzi 2+1 i trzecia osoba zostaje
+   sama pod spodem. Ten sam powód, dla którego progi cenowe są wierszami.
+
+   Nazwisko i rola z lewej, przedmioty z prawej. Na wąskim ekranie kolumny
+   składają się jedna pod drugą, bo lista przedmiotów jest długa i przy dwóch
+   kolumnach zeszłaby poniżej czytelnej szerokości.
+   ========================================================================== */
+
+.zespol {
+  display: grid;
+  background: var(--tlo-karty);
+  border: var(--wlos);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.osoba {
+  display: grid;
+  gap: var(--space-1) var(--space-4);
+  grid-template-columns: minmax(0, 1fr);
+  padding: var(--space-3) var(--space-4);
+  border-top: var(--wlos);
+}
+.osoba:first-child {
+  border-top: 0;
+}
+
+@media (min-width: 52rem) {
+  .osoba {
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+  }
+}
+
+.osoba__imie {
+  font-size: var(--text-h4);
+  font-weight: var(--waga-polgruba);
+}
+.osoba__rola {
+  display: block;
+  font-size: var(--text-drobny);
+  font-weight: var(--waga-zwykla);
+  color: var(--tekst-drugi);
+  margin-top: var(--space-05);
+}
+.osoba__przedmioty {
+  font-size: var(--text-maly);
+  line-height: var(--interlinia-tekst);
+  color: var(--tekst-drugi);
+}
+
+/* Pole kwalifikacji. Puste jest widoczne celowo — to jedyny brak na tej
+   podstronie i zarazem jej najważniejsze zdanie. */
+.osoba__kwalifikacje {
+  grid-column: 1 / -1;
+  font-size: var(--text-drobny);
+  color: var(--tekst-drugi);
+  padding-top: var(--space-1);
+  border-top: 1px dashed rgba(26, 34, 48, 0.18);
+}

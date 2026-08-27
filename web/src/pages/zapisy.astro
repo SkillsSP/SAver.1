@@ -7,7 +7,6 @@ import {
   telefonHref,
   telefonTekst,
   emailTekst,
-  adresTekst,
   grupyWiekowe,
 } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
@@ -179,10 +178,20 @@ const poWyslaniu = [
           </DoUzupelnienia>
         </div>
 
-        {/* KONTAKT BEZPOŚREDNI */}
+        {/* KARTY OBOK FORMULARZA
+
+            Pełne dane kontaktowe i formularz do spraw innych niż zapis stoją
+            na osobnej podstronie. Powielanie ich tutaj rozmywałoby jedyną
+            intencję tej strony, którą jest umówienie zajęć próbnych. Adres,
+            godziny i mapa są zdjęte do podpisania umowy na lokal — puste pole
+            w ich miejscu wyglądałoby jak błąd wdrożenia. */}
         <div class="stos">
           <div class="karta karta--luzna">
-            <h2 class="tytul-3">Kontakt bezpośredni</h2>
+            <h2 class="tytul-3">Wolicie zadzwonić?</h2>
+            <p class="tekst-maly tekst-drugi">
+              Telefon jest najszybszą drogą. Jeśli nie odbieramy, jesteśmy na
+              zajęciach — oddzwonimy tego samego dnia.
+            </p>
             <ul class="lista-rozdzielona">
               <li>
                 <span class="etykieta">Telefon</span>
@@ -200,23 +209,29 @@ const poWyslaniu = [
                   )}
                 </span>
               </li>
-              <li>
-                <span class="etykieta">Adres</span>
-                <span class="wartosc">{adresTekst()}</span>
-              </li>
-              <li>
-                <span class="etykieta">Biuro czynne</span>
-                <span class="wartosc">{firma.godzinyBiura ?? "godziny w uzupełnieniu"}</span>
-              </li>
             </ul>
+            <p class="tekst-drobny">
+              <a class="link-w-zdaniu" href={url("/kontakt")}>
+                Sprawa inna niż zapis? Napiszcie przez formularz kontaktowy
+              </a>
+            </p>
           </div>
 
-          <div class="miejsce-na-zdjecie">
-            <strong>Mapa dojazdu</strong>
-            Pojawi się tu po ustaleniu adresu lokalu. Bez adresu, telefonu i mapy
-            nie da się też uruchomić wizytówki Google — a to główne źródło ruchu
-            dla centrum w jednym mieście.
-          </div>
+          {/* Podpis mówi o spotkaniu próbnym, nie o naszej sali — to zdjęcie
+              ilustracyjne i nie może twierdzić, że przedstawia nasze zajęcia. */}
+          <figure class="kafel">
+            <img
+              class="kafel__kadr"
+              src={url("/foto/motion-3-800.webp")}
+              alt="Dzieci w trakcie wspólnej zabawy ruchowej"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="kafel__podpis">
+              Pierwsze spotkanie to pełne zajęcia w grupie, nie pokazowa lekcja.
+              Zdjęcie ilustracyjne.
+            </figcaption>
+          </figure>
 
           <div class="karta">
             <h3 class="tytul-4">Bezpieczeństwo dziecka</h3>
