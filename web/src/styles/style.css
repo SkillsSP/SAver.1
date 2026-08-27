@@ -582,9 +582,14 @@ button {
   color: var(--bialy);
 }
 
+/* Plakietka „Unikat" i „Nowość" na ścieżce egzaminacyjnej. Kolorem jest slate,
+   nie koral — nie z powodu kontrastu (koral z grafitowym napisem daje 4,86:1
+   i przechodzi), tylko dlatego, że koral jest zarezerwowany na jeden przycisk
+   akcji w widoku. Plakietka w tym samym kolorze konkurowałaby z nim o uwagę.
+   Slate z bielą daje 5,48:1, czyli więcej niż wariant koralowy. */
 .unikat {
-  background: var(--akcja);
-  color: var(--tekst-na-akcji);
+  background: var(--akcent-senior);
+  color: var(--bialy);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.6875rem;
@@ -1919,7 +1924,19 @@ button {
 }
 
 /* Warstwa 1 — grafit. Wyrównuje jasność między jasnymi i ciemnymi kadrami,
-   dzięki czemu ta sama receptura działa na każdym zdjęciu. */
+   dzięki czemu ta sama receptura działa na każdym zdjęciu.
+
+   KRYCIE PODNIESIONE Z 34% NA 50% PO POMIARZE. Paczka podawała 34%, ale przy
+   tej wartości pięć z trzynastu nagłówków nie przechodziło progu 4,5:1 —
+   najgorszy był life-robotyka na zajęciach podstawowych z wynikiem 4,04:1.
+   Zawiniły kadry z jasną ścianą albo niebem; mierzone jest najjaśniejsze
+   pole kadru, bo to na nie może trafić tekst.
+
+   Podniesienie grafitu okazało się lepsze niż podniesienie kobaltu, choć
+   naprawiało ten sam problem. Kobalt 76% dawał 4,73:1 przy 15,8% widoczności
+   zdjęcia; grafit 50% daje 4,87:1 przy 20,0%. Więcej kontrastu i więcej
+   fotografii naraz — bo to grafit jest tu warstwą od jasności, a kobalt od
+   koloru marki, i problem był problemem jasności. */
 .hero--foto::before,
 .naglowek-strony--foto::before {
   content: "";
@@ -1927,7 +1944,7 @@ button {
   inset: 0;
   z-index: -2;
   background: var(--grafit-900);
-  opacity: 0.34;
+  opacity: 0.5;
 }
 
 /* Warstwa 2 — kobalt. Kolor prowadzący marki zostaje na swoim miejscu. */
@@ -1942,9 +1959,10 @@ button {
 }
 
 /* Rejestr cichy — strony formalne. Zdjęcie ledwo się przebija, bo to
-   dokumenty, nie oferta. */
+   dokumenty, nie oferta. Grafit podniesiony z 30% na 45% z tego samego powodu
+   co wyżej: kadr art-2 jest bardzo jasny i dawał 4,35:1. Teraz 4,93:1. */
 .naglowek-strony--cichy::before {
-  opacity: 0.3;
+  opacity: 0.45;
 }
 .naglowek-strony--cichy::after {
   opacity: 0.72;

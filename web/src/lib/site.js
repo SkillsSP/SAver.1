@@ -116,10 +116,10 @@ export const menuProgram = [
 export const menuExams = [
   {
     etykieta: "Egzamin ósmoklasisty",
-    href: "/exams/e8",
+    href: "/exams/egzamin-osmoklasisty",
     pozycje: [
-      { href: "/exams/e8#angielski", nazwa: "Angielski" },
-      { href: "/exams/e8#matematyka", nazwa: "Matematyka", unikat: true },
+      { href: "/exams/egzamin-osmoklasisty#angielski", nazwa: "Angielski" },
+      { href: "/exams/egzamin-osmoklasisty#matematyka", nazwa: "Matematyka", unikat: true },
     ],
   },
   {
@@ -136,6 +136,15 @@ export const menuExams = [
         nazwa: "Matematyka",
         dopisek: "podstawowy",
         unikat: true,
+      },
+      {
+        href: "/exams/matura#historia",
+        nazwa: "Historia",
+        /* Historia nie ma poziomu podstawowego — to przedmiot dodatkowy,
+           zdawany wyłącznie na rozszerzeniu. */
+        dopisek: "rozszerzony",
+        unikat: true,
+        etykietaUnikatu: "Nowość",
       },
     ],
   },
@@ -173,7 +182,7 @@ export const grupyWiekowe = [
     nazwa: "Teens Junior · ósmoklasista",
     opis: "Zajęcia podstawowe plus przygotowanie do egzaminu.",
     notatkaMetoda: "Bez maskotek. Tematy bliskie realnym wyborom nastolatka.",
-    href: "/exams/e8",
+    href: "/exams/egzamin-osmoklasisty",
   },
   {
     lata: "16–19",

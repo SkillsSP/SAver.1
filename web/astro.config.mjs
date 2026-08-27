@@ -12,6 +12,19 @@ export default defineConfig({
   site: "https://skilful.pl",
   base: "/",
   trailingSlash: "ignore",
+
+  /* Stary adres ścieżki ósmoklasisty. Mógł trafić do materiałów drukowanych
+     i do wiadomości wysłanych przed zmianą, więc musi prowadzić do nowego —
+     inaczej rodzic z ulotki ląduje na stronie błędu. Astro generuje dla
+     takiego wpisu stronę przekierowującą, co przy serwisie statycznym jest
+     jedynym dostępnym mechanizmem.
+
+     Kotwic `/exams#e8` i `/exams#matura` nie da się tu obsłużyć: fragment
+     adresu po krzyżyku nigdy nie dociera do serwera. Przenosi je skrypt
+     na stronie rozdzielającej Exams. */
+  redirects: {
+    "/exams/e8": "/exams/egzamin-osmoklasisty",
+  },
   build: {
     format: "directory",
   },

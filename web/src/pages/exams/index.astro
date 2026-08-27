@@ -2,6 +2,7 @@
 import Baza from "../../layouts/Baza.astro";
 import OdeslanieDoGrup from "../../components/OdeslanieDoGrup.astro";
 import ZapisCta from "../../components/ZapisCta.astro";
+import FotoNaglowka from "../../components/FotoNaglowka.astro";
 import { url } from "../../lib/site.js";
 
 /* Ten sam schemat pracy dla każdego przedmiotu i poziomu — dlatego opisujemy
@@ -32,7 +33,11 @@ const schemat = [
   tytul="Exams — przygotowanie do egzaminu ósmoklasisty i matury"
   opis="Osobna ścieżka przygotowania egzaminacyjnego z angielskiego i z matematyki. Punktem odniesienia jest arkusz CKE i wynik. Szczecin."
 >
-  <section class="naglowek-strony">
+  {/* Strona rozdzielająca zostaje kobaltowa. Grafit należy wyłącznie do
+      matury — ósmoklasista to Teens Junior, a rejestr grafitowy jest w systemie
+      zarezerwowany dla Teens Senior. */}
+  <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 45%">
+    <FotoNaglowka nazwa="life-grupa" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">Exams</span>
@@ -56,7 +61,7 @@ const schemat = [
       </p>
 
       <div class="siatka siatka--2" style="margin-top: var(--space-5);">
-        <a class="karta karta--luzna" href={url("/exams/e8")}>
+        <a class="karta karta--luzna" href={url("/exams/egzamin-osmoklasisty")}>
           <span class="plakietka plakietka--kobalt">13–15 lat · Teens Junior</span>
           <h2 class="tytul-3">Egzamin ósmoklasisty</h2>
           <p class="tekst-drugi tekst-maly">
@@ -80,6 +85,7 @@ const schemat = [
           <ul class="lista-znaczona">
             <li>Angielski — podstawowy i rozszerzony</li>
             <li>Matematyka — podstawowy <span class="plakietka unikat">Unikat</span></li>
+            <li>Historia — rozszerzona <span class="plakietka unikat">Nowość</span></li>
           </ul>
           <span class="wiek__strzalka" style="color: var(--slate-600);">Zobacz szczegóły →</span>
         </a>
@@ -143,3 +149,22 @@ const schemat = [
     przycisk="Zapisz się na konsultację"
   />
 </Baza>
+
+<script>
+  /* Przeniesienie starych kotwic na nowe adresy.
+
+     Do sierpnia 2026 ścieżki egzaminacyjne były sekcjami tej strony, pod
+     adresami /exams#e8 i /exams#matura. Oba mogły trafić do materiałów
+     drukowanych i do wysłanych wiadomości. Przekierowanie serwera ich nie
+     obsłuży: fragment adresu po krzyżyku nigdy nie opuszcza przeglądarki.
+
+     Podmiana leci przez `replace`, nie `assign` — inaczej przycisk „wstecz”
+     wracałby na tę stronę, ta znów przenosiłaby dalej i odwiedzający zostałby
+     uwięziony w pętli. */
+  const mapa = {
+    "#e8": "/exams/egzamin-osmoklasisty",
+    "#matura": "/exams/matura",
+  };
+  const cel = mapa[window.location.hash];
+  if (cel) window.location.replace(cel);
+</script>

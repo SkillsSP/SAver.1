@@ -1,6 +1,7 @@
 ---
 import Baza from "../../layouts/Baza.astro";
 import DoUzupelnienia from "../../components/DoUzupelnienia.astro";
+import FotoNaglowka from "../../components/FotoNaglowka.astro";
 import ZapisCta from "../../components/ZapisCta.astro";
 import { url } from "../../lib/site.js";
 
@@ -34,23 +35,34 @@ const schemat = [
 <Baza
   aktywna="exams"
   senior={true}
-  tytul="Matura z angielskiego i matematyki"
-  opis="Przygotowanie do matury z angielskiego (podstawowy i rozszerzony) oraz z matematyki (podstawowy). Arkusze CKE, progi punktowe, harmonogram do maja. Szczecin."
+  tytul="Matura z angielskiego, matematyki i historii"
+  opis="Przygotowanie do matury z angielskiego (podstawowy i rozszerzony), matematyki (podstawowy) i historii (rozszerzony). Arkusze CKE, progi punktowe, harmonogram do maja. Szczecin."
 >
-  <section class="naglowek-strony naglowek-strony--senior">
+  {/* Jedyny nagłówek w serwisie na samym graficie, bez warstwy kobaltu.
+      Grafit należy do matury, nie do całego Exams: ósmoklasista to Teens
+      Junior, a system rezerwuje ten rejestr dla Teens Senior. */}
+  <section
+    class="naglowek-strony naglowek-strony--foto naglowek-strony--senior"
+    style="--foto-kadr: center 55%"
+  >
+    <FotoNaglowka nazwa="exam-1" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">Teens Senior · 16–19 lat</span>
         <h1 class="tytul-1 tytul--medrzec">Konkretny plan na maturę</h1>
         <p class="hero__zdanie">
           Angielski na poziomie podstawowym i rozszerzonym, matematyka na
-          poziomie podstawowym. Ta ścieżka ma inny rejestr niż reszta centrum:
-          plan, arkusze, progi punktowe. Bez misji i bez metafor.
+          poziomie podstawowym, historia na rozszerzonym. Ta ścieżka ma inny
+          rejestr niż reszta centrum: plan, arkusze, progi punktowe. Bez misji
+          i bez metafor.
         </p>
         <div class="przyciski" style="margin-top: var(--space-2);">
           <a class="przycisk przycisk--duch" href="#angielski">Angielski</a>
           <a class="przycisk przycisk--duch" href="#matematyka">
             Matematyka <span class="plakietka unikat">Unikat</span>
+          </a>
+          <a class="przycisk przycisk--duch" href="#historia">
+            Historia <span class="plakietka unikat">Nowość</span>
           </a>
         </div>
       </div>
@@ -121,12 +133,64 @@ const schemat = [
             Rozszerzonej matematyki nie prowadzimy. Wolimy to powiedzieć wprost
             niż przyjąć ucznia, któremu nie zdołalibyśmy pomóc na tym poziomie.
           </p>
-          <DoUzupelnienia czego="Prowadząca matematykę">
-            Imię, nazwisko, wykształcenie i doświadczenie egzaminacyjne
-            założycielki prowadzącej matematykę, z odesłaniem do „O nas”.
-            To jedyne miejsce w Szczecinie, gdzie przygotowanie do matury
-            z angielskiego i z matematyki prowadzi ten sam zespół — ale bez
-            nazwiska jest to tylko zdanie w reklamie.
+          <p class="tekst-maly tekst-drugi">
+            Maturalną matematykę prowadzi <strong>Karolina Dumała</strong>, która
+            uczy też angielskiego na tej samej ścieżce.
+            <a class="link-w-zdaniu" href={url("/o-nas")}>Poznajcie zespół</a>.
+          </p>
+          <DoUzupelnienia czego="Kwalifikacje prowadzącej">
+            Do wpisania wykształcenie, lata doświadczenia i ewentualne
+            uprawnienia egzaminatora. Nazwisko już jest — ale to kwalifikacje
+            zamieniają „ten sam zespół uczy angielskiego i matematyki”
+            z hasła reklamowego w sprawdzalny fakt.
+          </DoUzupelnienia>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* HISTORIA — czwarty przedmiot, wyłącznie rozszerzona */}
+  <section class="sekcja" id="historia">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul nadtytul--slate">Przedmiot</span>
+          <h2 class="tytul-1 tytul--medrzec">
+            Historia <span class="plakietka unikat">Nowość</span>
+          </h2>
+          <p class="plakietka plakietka--slate" style="justify-self: start;">
+            Wyłącznie poziom rozszerzony
+          </p>
+        </div>
+        <div class="stos">
+          {/* Argument sprzedażowy jest tu inny niż przy matematyce i musi taki
+              zostać. Matematyka jest obowiązkowa, więc mówimy o przekroczeniu
+              progu. Historia jest wyborem, więc mówimy o punktach na konkretny
+              kierunek. Zdanie „przygotowujemy też do matematyki i historii”
+              gubi sens drugiego przedmiotu. */}
+          <p class="wiodacy">
+            Historia nie ma poziomu podstawowego — zdaje się ją jako przedmiot
+            dodatkowy i liczy do rekrutacji. Dlatego nie pracujemy tu na progu
+            zdawalności, tylko na liczbie punktów potrzebnej na konkretny
+            kierunek: prawo, historię, stosunki międzynarodowe i pozostałe
+            kierunki humanistyczne.
+          </p>
+          <ul class="lista-znaczona">
+            <li>Praca na źródłach i zadaniach z arkuszy CKE, nie na streszczeniach</li>
+            <li>Osobny blok ćwiczeń na wypracowanie historyczne — to tam rozstrzyga się wynik</li>
+            <li>Diagnoza na wejściu pokazuje, ile punktów dzieli ucznia od progu wybranego kierunku</li>
+          </ul>
+          <p class="tekst-maly tekst-drugi">
+            Historię prowadzi <strong>Kamil Dumała</strong>, który uczy też
+            angielskiego i matematyki na ścieżce ósmoklasisty.
+            <a class="link-w-zdaniu" href={url("/o-nas")}>Poznajcie zespół</a>.
+          </p>
+          <DoUzupelnienia czego="Forma zajęć i kwalifikacje">
+            Do wpisania: częstotliwość spotkań, forma pracy nad wypracowaniem
+            oraz wykształcenie i doświadczenie egzaminacyjne prowadzącego.
+            Warto też rozstrzygnąć obsadę — historię prowadzi jedna osoba, więc
+            przy chorobie nie ma zastępstwa, a to przedmiot sprzedawany pod
+            konkretny termin egzaminu. Matematykę prowadzą dwie osoby.
           </DoUzupelnienia>
         </div>
       </div>

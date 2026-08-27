@@ -1,0 +1,43 @@
+---
+import { url } from "../lib/site.js";
+
+/* ==========================================================================
+   ZDJĘCIE W TLE NAGŁÓWKA
+
+   Renderuje sam obraz. Klasy `--foto` i punkt kadrowania ustawia sekcja, która
+   ten komponent zawiera — bo to ona ma warstwy krycia i to na niej wiszą
+   reguły z arkusza:
+
+     <section class="naglowek-strony naglowek-strony--foto"
+              style="--foto-kadr: center 50%">
+       <FotoNaglowka nazwa="life-robotyka" />
+       <div class="naglowek-strony__tresc"> … </div>
+     </section>
+
+   Opis alternatywny jest pusty ŚWIADOMIE i tak ma zostać. Zdjęcie jest
+   dekoracją tła, a całą treść nagłówka niesie tekst obok. Czytnik ekranu ma je
+   pominąć, nie odczytywać — stąd również `aria-hidden`.
+
+   Zdjęcia w nagłówkach ładujemy pilnie: to pierwszy kadr, jaki rodzic widzi,
+   i jedyny obraz nad linią zgięcia. Wszystko poniżej wchodzi leniwie.
+   ========================================================================== */
+
+interface Props {
+  /** Nazwa kadru bez rozmiaru i rozszerzenia, np. „life-robotyka". */
+  nazwa: string;
+  /** Baner strony głównej używa własnej klasy, podstrony domyślnej. */
+  klasa?: "naglowek-strony__foto" | "hero__foto";
+}
+
+const { nazwa, klasa = "naglowek-strony__foto" } = Astro.props;
+---
+
+<img
+  class={klasa}
+  src={url(`/foto/${nazwa}-1600.webp`)}
+  alt=""
+  aria-hidden="true"
+  loading="eager"
+  fetchpriority="high"
+  decoding="async"
+/>

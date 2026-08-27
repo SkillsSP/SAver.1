@@ -65,7 +65,9 @@ const tel = telefonHref();
                 <a class="panel__link" href={url(poz.href)}>
                   <strong>
                     {poz.nazwa}
-                    {poz.unikat && <span class="plakietka unikat">Unikat</span>}
+                    {poz.unikat && (
+                      <span class="plakietka unikat">{poz.etykietaUnikatu ?? "Unikat"}</span>
+                    )}
                   </strong>
                   {poz.dopisek && <span>{poz.dopisek}</span>}
                 </a>
@@ -150,7 +152,9 @@ const tel = telefonHref();
             {grupa.pozycje.map((poz) => (
               <a href={url(poz.href)}>
                 {grupa.etykieta === "Matura" ? "Matura" : "E8"} · {poz.nazwa}
-                {poz.unikat && <span class="plakietka unikat">Unikat</span>}
+                {poz.unikat && (
+                      <span class="plakietka unikat">{poz.etykietaUnikatu ?? "Unikat"}</span>
+                    )}
               </a>
             ))}
           </>
