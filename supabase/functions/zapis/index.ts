@@ -250,13 +250,80 @@ globalThis.addEventListener("unhandledrejection", (zdarzenie) => {
   zdarzenie.preventDefault();
 });
 
+/* --------------------------------------------------------------------------
+   OCHRONA PRZED AUTOMATAMI
+
+   Wszystko poniżej działa PO STRONIE SERWERA i to jest cały sens. Makieta
+   sprawdzała pułapki w przeglądarce, ale automat nie musi otwierać strony —
+   wystarczy, że wyśle żądanie wprost tutaj. Kontrola w przeglądarce chroni
+   przed przypadkiem, kontrola w tym miejscu przed zamiarem.
+
+   Świadomie bez CAPTCHY: przepisywanie znaków z obrazka odbija rodziców na
+   telefonie i jest barierą dla osób z dysleksją oraz słabym wzrokiem. Gdyby
+   spam mimo tego przechodził, następnym krokiem jest Cloudflare Turnstile —
+   działa bez klikania w obrazki i nie wysyła danych do Google.
+   -------------------------------------------------------------------------- */
+
+/** Najkrótszy czas, w jakim człowiek wypełni formularz. */
+const MINIMALNY_CZAS_MS = 3000;
+
+/* Znacznik czasu przychodzi z przeglądarki, więc automat może go podmienić.
+   Traktujemy go jako sygnał, nie jako dowód. Podpisanie znacznika kluczem
+   serwera wymagałoby osobnego zapytania po token przy każdym otwarciu strony;
+   przy tej skali to koszt bez pokrycia, a prawdziwą barierą jest i tak limit
+   zgłoszeń niżej. */
+function czasWypelniania(dane: Record<string, unknown>): number | null {
+  const t = Number(oczysc(dane.otwarto, 20));
+  if (!Number.isFinite(t) || t <= 0) return null;
+  const roznica = Date.now() - t;
+  return roznica >= 0 ? roznica : null;
+}
+
+/* Wiadomość z trzema odnośnikami i więcej to niemal zawsze spam. Nie odrzucamy
+   jej po cichu — oznaczamy w temacie, żeby trafiła do ręcznego przejrzenia,
+   a nie do kosza. Rodzic potrafi wkleić odnośnik do rozkładu albo do arkusza. */
+function liczbaOdnosnikow(tekst: string): number {
+  const dopasowania = tekst.match(/(?:https?:)?\/\/|www\./gi);
+  return dopasowania ? dopasowania.length : 0;
+}
+
+/* Limit zgłoszeń z jednego adresu. Funkcje brzegowe są bezstanowe i każda
+   instancja ma własną mapę, więc to ogranicza seryjne wysyłki z jednej sesji,
+   ale nie zastąpi licznika w bazie. Piszę to wprost, zamiast udawać, że limit
+   jest twardy: gdy spam stanie się realnym problemem, tu wchodzi tabela
+   w Postgresie albo Turnstile. */
+const historia = new Map<string, number[]>();
+const LIMIT_NA_GODZINE = 3;
+const GODZINA_MS = 60 * 60 * 1000;
+
+function przekroczonyLimit(adres: string): boolean {
+  const teraz = Date.now();
+  const wpisy = (historia.get(adres) ?? []).filter((t) => teraz - t < GODZINA_MS);
+  wpisy.push(teraz);
+  historia.set(adres, wpisy);
+  /* Mapa żyje tylko tyle, co instancja, ale i tak ją sprzątamy — przy większym
+     ruchu trzymałaby inaczej tysiące adresów bez potrzeby. */
+  if (historia.size > 500) {
+    for (const [k, v] of historia) {
+      if (v.every((t) => teraz - t >= GODZINA_MS)) historia.delete(k);
+    }
+  }
+  return wpisy.length > LIMIT_NA_GODZINE;
+}
+
+const NAZWY_SPRAW: Record<string, string> = {
+  oferta: "Pytanie o zajęcia",
+  rozmowa: "Prośba o rozmowę",
+  formalna: "Sprawa formalna",
+  ochrona: "Zgłoszenie ze standardów ochrony małoletnich",
+};
+
 Deno.serve(async (request: Request) => {
   const cors = naglowkiCors(request.headers.get("origin"));
 
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: cors });
   }
-
   if (request.method !== "POST") {
     return odpowiedz(405, { blad: "Dozwolona jest wyłącznie metoda POST." }, cors);
   }
@@ -271,53 +338,129 @@ Deno.serve(async (request: Request) => {
     return odpowiedz(400, { blad: "Nie udało się odczytać formularza." }, cors);
   }
 
-  /* Pułapka na roboty: pole „firma" jest ukryte przed człowiekiem, więc
-     wypełnia je wyłącznie automat. Odpowiadamy sukcesem, żeby nie podpowiadać
-     mu, że został rozpoznany — ale nic nie wysyłamy. */
-  if (oczysc(dane.firma)) {
+  /* Pułapka: pole „firma_www" jest wyprowadzone poza ekran, ma tabindex -1
+     i aria-hidden, więc człowiek go nie zobaczy i nie dojdzie do niego
+     tabulatorem. Automat wypełnia wszystkie pola. Odpowiadamy sukcesem, żeby
+     nie podpowiadać mu, że został rozpoznany — ale nic nie wysyłamy. Nazwa
+     brzmi wiarygodnie celowo: „honeypot" albo „bot" automaty rozpoznają.
+     Stara nazwa „firma" zostaje obsłużona, bo mogła zostać w pamięci
+     podręcznej przeglądarki po poprzedniej wersji strony. */
+  if (oczysc(dane.firma_www) || oczysc(dane.firma)) {
+    console.warn("Zgłoszenie odrzucone: wypełniona pułapka.");
     return odpowiedz(200, { ok: true }, cors);
   }
 
-  const imieDziecka = oczysc(dane.imie_dziecka);
-  const wiekDziecka = oczysc(dane.wiek_dziecka, 40);
+  const czas = czasWypelniania(dane);
+  if (czas !== null && czas < MINIMALNY_CZAS_MS) {
+    console.warn("Zgłoszenie odrzucone: wypełnione w " + czas + " ms.");
+    return odpowiedz(200, { ok: true }, cors);
+  }
+
+  const adres =
+    request.headers.get("cf-connecting-ip") ??
+    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+    "nieznany";
+  if (przekroczonyLimit(adres)) {
+    console.warn("Zgłoszenie odrzucone: przekroczony limit z jednego adresu.");
+    return odpowiedz(429, {
+      blad: "Za dużo zgłoszeń w krótkim czasie. Prosimy spróbować później albo zadzwonić.",
+    }, cors);
+  }
+
+  /* Który formularz przysłał zgłoszenie. Zapisy pytają o dziecko, kontakt
+     o sprawę — mają inne pola obowiązkowe i inny temat wiadomości. */
+  const rodzaj = oczysc(dane.rodzaj, 20) === "kontakt" ? "kontakt" : "zapis";
+
   const telefon = oczysc(dane.telefon, 40);
   const email = oczysc(dane.email, 120);
-  const zgoda =
-    dane.zgoda === "on" || dane.zgoda === true || dane.zgoda === "true";
-
-  const braki: string[] = [];
-  if (!imieDziecka) braki.push("imię dziecka");
-  if (!wiekDziecka) braki.push("wiek dziecka");
-  if (!telefon) braki.push("telefon");
-  if (!zgoda) braki.push("zgoda na kontakt");
-  if (braki.length) {
-    return odpowiedz(400, { blad: `Brakuje pól: ${braki.join(", ")}.` }, cors);
-  }
+  const zgoda = dane.zgoda === "on" || dane.zgoda === true || dane.zgoda === "true";
 
   const haslo = Deno.env.get("SMTP_HASLO");
   const uzytkownik = Deno.env.get("SMTP_USER") ?? "kontakt@skilful.pl";
-
   if (!haslo) {
-    return odpowiedz(
-      503,
-      {
-        blad:
-          "Formularz nie jest jeszcze podłączony do skrzynki. Prosimy o kontakt telefoniczny.",
-        niepodlaczony: true,
-      },
-      cors,
-    );
+    return odpowiedz(503, {
+      blad: "Formularz nie jest jeszcze podłączony do skrzynki. Prosimy o kontakt telefoniczny.",
+      niepodlaczony: true,
+    }, cors);
   }
 
-  const tresc = [
-    ["Imię dziecka", imieDziecka],
-    ["Wiek", wiekDziecka],
-    ["Telefon", telefon],
-    ["E-mail", email || "nie podano"],
-    ["Zgoda na kontakt", "tak"],
-  ]
-    .map(([k, v]) => `${k}: ${v}`)
-    .join("\n");
+  let temat: string;
+  let wiersze: [string, string][];
+  let doKogo = Deno.env.get("MAIL_DO") ?? uzytkownik;
+
+  if (rodzaj === "kontakt") {
+    const imie = oczysc(dane.imie);
+    const tresc = oczysc(dane.tresc, 4000);
+    const sprawa = oczysc(dane.temat, 40);
+
+    const braki: string[] = [];
+    if (!imie) braki.push("imię i nazwisko");
+    if (!tresc) braki.push("treść wiadomości");
+    if (!zgoda) braki.push("zgoda na kontakt");
+    if (braki.length) {
+      return odpowiedz(400, { blad: "Brakuje pól: " + braki.join(", ") + "." }, cors);
+    }
+    /* Telefon i e-mail są osobno opcjonalne, ale bez żadnego z nich nie ma jak
+       odpowiedzieć. Ta sama kontrola stoi w przeglądarce; tutaj jest powtórzona,
+       bo tamtą da się ominąć jednym żądaniem. */
+    if (!telefon && !email) {
+      return odpowiedz(400, {
+        blad: "Wystarczy jedno z dwóch: telefon albo e-mail — ale przynajmniej jedno.",
+      }, cors);
+    }
+
+    const nazwaSprawy = NAZWY_SPRAW[sprawa] ?? "Wiadomość ze strony";
+
+    /* Zgłoszenie ze standardów ochrony małoletnich ma trafić do osoby
+       odpowiedzialnej, a nie do biura — to wymóg ustawowy, nie preferencja.
+       Dopóki MAIL_OCHRONA nie jest ustawiony, idzie na adres ogólny: lepiej
+       żeby dotarło gdziekolwiek niż nigdzie. Brak osobnej skrzynki zostaje
+       pozycją do zamknięcia i jest o tym wpis w dzienniku. */
+    if (sprawa === "ochrona") {
+      const osobny = Deno.env.get("MAIL_OCHRONA");
+      if (osobny) doKogo = osobny;
+      else console.warn("MAIL_OCHRONA nieustawiony — zgłoszenie idzie na adres ogólny.");
+    }
+
+    const odnosniki = liczbaOdnosnikow(tresc);
+    temat = (odnosniki >= 3 ? "[DO SPRAWDZENIA] " : "") + nazwaSprawy + " — " + imie;
+
+    wiersze = [
+      ["Sprawa", nazwaSprawy],
+      ["Imię i nazwisko", imie],
+      ["Telefon", telefon || "nie podano"],
+      ["E-mail", email || "nie podano"],
+      ["Zgoda na kontakt", "tak"],
+      ["Treść", String.fromCharCode(10) + tresc],
+    ];
+    if (odnosniki >= 3) {
+      wiersze.push([
+        "Uwaga",
+        "wiadomość zawiera " + odnosniki + " odnośników — sprawdźcie, zanim klikniecie",
+      ]);
+    }
+  } else {
+    const imieDziecka = oczysc(dane.imie_dziecka);
+    const wiekDziecka = oczysc(dane.wiek_dziecka, 40);
+
+    const braki: string[] = [];
+    if (!imieDziecka) braki.push("imię dziecka");
+    if (!wiekDziecka) braki.push("wiek dziecka");
+    if (!telefon) braki.push("telefon");
+    if (!zgoda) braki.push("zgoda na kontakt");
+    if (braki.length) {
+      return odpowiedz(400, { blad: "Brakuje pól: " + braki.join(", ") + "." }, cors);
+    }
+
+    temat = "Zapis na zajęcia próbne — " + imieDziecka + ", " + wiekDziecka;
+    wiersze = [
+      ["Imię dziecka", imieDziecka],
+      ["Wiek", wiekDziecka],
+      ["Telefon", telefon],
+      ["E-mail", email || "nie podano"],
+      ["Zgoda na kontakt", "tak"],
+    ];
+  }
 
   try {
     await wyslij({
@@ -325,20 +468,18 @@ Deno.serve(async (request: Request) => {
       port: Number(Deno.env.get("SMTP_PORT") ?? "465"),
       uzytkownik,
       haslo,
-      doKogo: Deno.env.get("MAIL_DO") ?? uzytkownik,
+      doKogo,
       odpowiedzDo: email && wygladaJakEmail(email) ? email : undefined,
-      temat: `Zapis na zajęcia próbne — ${imieDziecka}, ${wiekDziecka}`,
-      tresc,
+      temat,
+      tresc: wiersze.map(([k, v]) => k + ": " + v).join(String.fromCharCode(10)),
     });
   } catch (e) {
-    /* Szczegóły zostają w logach — rodzicowi nic nie powiedzą, a nam wskażą,
-       czy odrzucono hasło, czy zerwano połączenie. */
+    /* Szczegóły zostają w dzienniku — piszącemu nic nie powiedzą, a nam
+       wskażą, czy odrzucono hasło, czy zerwano połączenie. */
     console.error("Wysyłka SMTP nie powiodła się:", e);
-    return odpowiedz(
-      502,
-      { blad: "Nie udało się wysłać zgłoszenia. Prosimy spróbować telefonicznie." },
-      cors,
-    );
+    return odpowiedz(502, {
+      blad: "Nie udało się wysłać zgłoszenia. Prosimy spróbować telefonicznie.",
+    }, cors);
   }
 
   return odpowiedz(200, { ok: true }, cors);

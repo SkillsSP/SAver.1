@@ -22,10 +22,10 @@ const zapisTekst = senior ? "Zapisz się na konsultację" : "Wolę zapisać się
   {tel ? (
     <>
       <a class="przycisk przycisk--akcja przycisk--pelny" href={tel}>Zadzwoń teraz</a>
-      <a class="pasek-akcji__drugi" href={url("/kontakt")}>{zapisTekst}</a>
+      <a class="pasek-akcji__drugi" href={url("/zapisy")}>{zapisTekst}</a>
     </>
   ) : (
-    <a class="przycisk przycisk--akcja przycisk--pelny" href={url("/kontakt")}>
+    <a class="przycisk przycisk--akcja przycisk--pelny" href={url("/zapisy")}>
       {senior ? "Zapisz się na konsultację" : "Umów zajęcia próbne"}
     </a>
   )}

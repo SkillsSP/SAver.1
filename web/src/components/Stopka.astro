@@ -13,7 +13,11 @@ const tel = telefonHref();
 const rok = new Date().getFullYear();
 ---
 
-<footer class="stopka">
+{/* Kotwica `#kontakt` zostaje na stopce mimo powstania osobnej podstrony.
+    Adres `/#kontakt` mógł trafić do materiałów drukowanych i do wysłanych
+    wiadomości; usunięcie identyfikatora zamieniłoby te odnośniki w skok
+    donikąd. Kosztuje jeden atrybut, więc nie ma powodu tego ruszać. */}
+<footer class="stopka" id="kontakt">
   <div class="szerokosc">
     <div class="stopka__siatka">
       <div class="stopka__marka">
@@ -43,6 +47,8 @@ const rok = new Date().getFullYear();
           <li><a href={url("/fakultety")}>Fakultety</a></li>
           <li><a href={url("/indywidualne")}>Zajęcia indywidualne</a></li>
           <li><a href={url("/exams")}>Exams</a></li>
+          <li><a href={url("/exams/egzamin-osmoklasisty")}>Exams · egzamin ósmoklasisty</a></li>
+          <li><a href={url("/exams/matura")}>Exams · matura</a></li>
           <li><a href={url("/cennik")}>Cennik</a></li>
         </ul>
       </div>
@@ -54,6 +60,8 @@ const rok = new Date().getFullYear();
           <li><a href={url("/metoda")}>Metoda</a></li>
           <li><a href={url("/metoda#grupy")}>Podział na grupy wiekowe</a></li>
           <li><a href={url("/bezpieczenstwo")}>Bezpieczeństwo</a></li>
+          <li><a href={url("/kontakt")}>Kontakt</a></li>
+          <li><a href={url("/zapisy")}>Zapisy na zajęcia próbne</a></li>
         </ul>
       </div>
 

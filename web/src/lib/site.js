@@ -24,6 +24,11 @@ export const firma = {
   telefonZapis: "+48 508 069 007",
   email: "kontakt@skilful.pl",
   nip: null,
+  regon: null,
+  /* Nazwa administratora danych osobowych. Musi brzmieć identycznie tutaj,
+     w regulaminie, w polityce prywatności i w klauzuli RODO — rozjazd między
+     tymi czterema miejscami jest pierwszą rzeczą, którą wychwytuje kontrola. */
+  administratorDanych: null,
   godzinyBiura: null,
   mapaOsadzenie: null,
   /* Kanał zgłoszeń dotyczących bezpieczeństwa dziecka — patrz `ochronaMaloletnich`

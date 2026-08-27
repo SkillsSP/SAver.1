@@ -95,7 +95,7 @@ const tel = telefonHref();
     </nav>
 
     <div class="pasek__akcje">
-      <a class="przycisk przycisk--obrys pasek__cta-desktop" href={url("/kontakt")}>
+      <a class="przycisk przycisk--obrys pasek__cta-desktop" href={url("/zapisy")}>
         {ctaTekst}
       </a>
       <button
@@ -168,7 +168,7 @@ const tel = telefonHref();
 
     <div class="stos stos--ciasny" style="margin-top: var(--space-3);">
       {tel && <a class="przycisk przycisk--akcja przycisk--pelny" href={tel}>Zadzwoń teraz</a>}
-      <a class="przycisk przycisk--obrys przycisk--pelny" href={url("/kontakt")}>{ctaTekst}</a>
+      <a class="przycisk przycisk--obrys przycisk--pelny" href={url("/zapisy")}>{ctaTekst}</a>
       {!tel && (
         <p class="tekst-drobny">
           Numer telefonu uzupełnijcie w <code>src/lib/site.js</code> — pojawi się tu i w pasku akcji.

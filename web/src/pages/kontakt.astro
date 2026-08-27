@@ -1,52 +1,148 @@
 ---
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import FotoNaglowka from "../components/FotoNaglowka.astro";
 import {
   url,
   firma,
   telefonHref,
   telefonTekst,
   emailTekst,
-  adresTekst,
-  grupyWiekowe,
+  ochronaMaloletnich,
 } from "../lib/site.js";
+
+/* ==========================================================================
+   KONTAKT
+
+   Do sierpnia 2026 pozycja „Kontakt” stała w pasku nawigacji, ale prowadziła
+   do zakotwiczenia w stopce, a wszystkie przyciski kontaktowe na formularz
+   zapisu. Zapisy obsługują jedną intencję — „chcę umówić zajęcia próbne”.
+   Ta strona obsługuje cztery pozostałe: pytanie o ofertę, prośbę o rozmowę bez
+   zapisu, sprawę formalną i zgłoszenie ze standardów ochrony małoletnich.
+
+   Czwarta ścieżka jest wymagana ustawowo i nie może kończyć się formularzem
+   zapisowym ani prowadzić przez osoby prowadzące zajęcia.
+
+   LOKAL. Do podpisania umowy wszystko, co dotyczy adresu, jest ZDJĘTE ze
+   strony, a nie wstawione jako pusty nawias. Pusty nawias w miejscu adresu
+   wygląda jak błąd wdrożenia; brak sekcji nie wygląda na nic. Ukryte są:
+   karta „przyjdźcie do biura”, sekcja z adresem, godzinami, dojazdem
+   i parkingiem, mapa oraz godziny w nagłówku. Miasto i tryb zajęć zostają —
+   to nie jest informacja o lokalu.
+   ========================================================================== */
 
 const tel = telefonHref();
 const endpoint = firma.formularzEndpoint;
 
-const poWyslaniu = [
-  "Oddzwaniamy i pytamy o kilka rzeczy o dziecku.",
-  "Proponujemy grupę i termin zajęć próbnych.",
-  "Dziecko bierze udział w pełnym spotkaniu, Wy patrzycie z boku. Potem rozmawiamy — bez presji.",
+/* Wybór tematu zmienia dwie rzeczy: podpowiedź pod polem i przykład w polu
+   treści. Trzyma je jedna tablica, żeby nie rozjechały się przy edycji. */
+const tematy = [
+  {
+    id: "oferta",
+    etykieta: "Pytanie o zajęcia, termin albo cenę",
+    podpowiedz:
+      "Odpowiadamy konkretnie — jeśli czegoś jeszcze nie wiemy, mówimy wprost, kiedy będzie wiadomo.",
+    przyklad: "np. Córka ma 9 lat, szukamy zajęć w środy po 16:00.",
+  },
+  {
+    id: "rozmowa",
+    etykieta: "Prośba o rozmowę — bez zapisu",
+    podpowiedz:
+      "Oddzwonimy w dogodnej porze. Nie namawiamy na zapis w trakcie tej rozmowy.",
+    przyklad:
+      "np. Proszę o telefon po 17:00, chcę najpierw dopytać o metodę.",
+  },
+  {
+    id: "formalna",
+    etykieta: "Sprawa formalna: faktura, rezygnacja, dane",
+    podpowiedz:
+      "Sprawy formalne prowadzi biuro, nie osoba prowadząca zajęcia.",
+    przyklad: "np. Proszę o fakturę za wrzesień na dane firmy.",
+  },
+  {
+    id: "ochrona",
+    etykieta: "Zgłoszenie ze standardów ochrony małoletnich",
+    podpowiedz: `Zgłoszenie kierujemy do osoby odpowiedzialnej — ${ochronaMaloletnich.imie}. Dane kontaktowe są w karcie obok, możecie też napisać wprost do niej.`,
+    przyklad:
+      "Opiszcie sytuację własnymi słowami — data i miejsce pomagają, ale nie są warunkiem.",
+  },
+];
+
+/* Cztery pozycje, siatka 2×2. Puste pola zostają jako `null`, a nie jako
+   nawias w treści — komponent noty redakcyjnej mówi, czego brakuje. */
+const daneFirmy = [
+  { etykieta: "Nazwa", wartosc: firma.nazwa },
+  { etykieta: "NIP", wartosc: firma.nip },
+  { etykieta: "REGON", wartosc: firma.regon ?? null },
+  { etykieta: "Administrator danych", wartosc: firma.administratorDanych ?? null },
 ];
 ---
 
 <Baza
   aktywna="kontakt"
-  tytul="Kontakt i zapisy"
-  opis="Umówcie bezpłatne zajęcia próbne w Skills Academy w Szczecinie. Telefon, e-mail, adres i formularz zgłoszenia."
+  tytul="Kontakt"
+  opis="Telefon, e-mail i formularz kontaktowy Skills Academy w Szczecinie. Osobna ścieżka zgłoszeń ze standardów ochrony małoletnich."
 >
-  <section class="naglowek-strony">
+  <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 45%">
+    <FotoNaglowka nazwa="motion-3" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">Kontakt</span>
-        <h1 class="tytul-1">Umówcie bezpłatne zajęcia próbne</h1>
+        <h1 class="tytul-1">Napiszcie albo zadzwońcie</h1>
         <p class="hero__zdanie">
-          Zostawcie kontakt, a my odezwiemy się i wspólnie wybierzemy termin. Zajęcia próbne nie zobowiązują do zapisu.
+          Odpowiadamy w ciągu jednego dnia roboczego. Jeśli chcecie od razu
+          umówić bezpłatne zajęcia próbne,
+          <a href={url("/zapisy")}>przejdźcie do zapisów</a> — tam formularz
+          pyta o dziecko, a nie o sprawę.
         </p>
       </div>
     </div>
   </section>
 
+  {/* TRZY DROGI KONTAKTU. Czwarta — „przyjdźcie do biura” — wraca razem
+      z adresem, po podpisaniu umowy na lokal. */}
   <section class="sekcja">
     <div class="szerokosc">
+      <div class="siatka siatka--troje">
+        <a class="droga-kontaktu" href={tel ?? "#formularz"}>
+          <span class="droga-kontaktu__etykieta">Telefon</span>
+          <span class="droga-kontaktu__wartosc droga-kontaktu__wartosc--telefon">
+            {telefonTekst()}
+          </span>
+          <span class="droga-kontaktu__opis">
+            Najszybsza droga. Jeśli nie odbieramy, jesteśmy na zajęciach —
+            oddzwonimy tego samego dnia.
+          </span>
+        </a>
+
+        <a class="droga-kontaktu" href={`mailto:${firma.email}`}>
+          <span class="droga-kontaktu__etykieta">E-mail</span>
+          <span class="droga-kontaktu__wartosc">{emailTekst()}</span>
+          <span class="droga-kontaktu__opis">
+            Dobre na sprawy formalne i na wszystko, co wymaga załącznika.
+          </span>
+        </a>
+
+        <a class="droga-kontaktu" href="#formularz">
+          <span class="droga-kontaktu__etykieta">Formularz</span>
+          <span class="droga-kontaktu__wartosc">Napiszcie do nas</span>
+          <span class="droga-kontaktu__opis">
+            Wybieracie temat, my kierujemy sprawę do właściwej osoby.
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* FORMULARZ + KARTA ZGŁOSZEŃ */}
+  <section class="sekcja sekcja--karta sekcja--wlos" id="formularz">
+    <div class="szerokosc">
       <div class="siatka--boczna">
-        {/* FORMULARZ — cztery pola, telefon obowiązkowy */}
         <div class="stos">
           <div class="naglowek-sekcji" style="margin-bottom: 0;">
-            <h2 class="tytul-2">Formularz zgłoszenia</h2>
+            <h2 class="tytul-2">Formularz kontaktowy</h2>
             <p class="tekst-maly tekst-drugi">
-              Cztery pola. Oddzwaniamy — to najszybsza droga do ustalenia terminu.
+              Zacznijcie od tematu — reszta pól dopasuje się do sprawy.
             </p>
           </div>
 
@@ -57,75 +153,83 @@ const poWyslaniu = [
             data-telefon={tel ?? ""}
             data-telefon-tekst={tel ? telefonTekst() : ""}
           >
+            {/* Rodzaj formularza rozstrzyga po stronie serwera, na który adres
+                trafi zgłoszenie. Bez tego pola funkcja nie odróżniłaby sprawy
+                formalnej od zgłoszenia ze standardów. */}
+            <input type="hidden" name="rodzaj" value="kontakt" />
+
             <div class="pole">
-              <label for="dziecko">Imię dziecka</label>
-              <input
-                type="text"
-                id="dziecko"
-                name="imie_dziecka"
-                autocomplete="off"
-                required
-              />
+              <label for="temat">W jakiej sprawie</label>
+              <select id="temat" name="temat" required data-temat>
+                {tematy.map((t) => (
+                  <option value={t.id} data-podpowiedz={t.podpowiedz} data-przyklad={t.przyklad}>
+                    {t.etykieta}
+                  </option>
+                ))}
+              </select>
+              <span class="pole__wskazowka" data-podpowiedz-tematu>
+                {tematy[0].podpowiedz}
+              </span>
             </div>
 
             <div class="pole">
-              <label for="wiek">Wiek dziecka</label>
-              <select id="wiek" name="wiek_dziecka" required>
-                <option value="">Wybierzcie…</option>
-                {grupyWiekowe.map((g) => (
-                  <option value={g.lata}>{g.lata} lat</option>
-                ))}
-              </select>
+              <label for="imie">Imię i nazwisko</label>
+              <input type="text" id="imie" name="imie" autocomplete="name" required />
             </div>
 
             <div class="pole">
               <label for="telefon">
                 Telefon
-                <span class="pole__wskazowka">Oddzwaniamy, żeby ustalić termin.</span>
+                <span class="pole__wskazowka">Wystarczy jedno: telefon albo e-mail.</span>
               </label>
-              <input
-                type="tel"
-                id="telefon"
-                name="telefon"
-                autocomplete="tel"
-                inputmode="tel"
-                required
-              />
+              <input type="tel" id="telefon" name="telefon" autocomplete="tel" inputmode="tel" />
             </div>
 
             <div class="pole">
-              <label for="email">
-                E-mail
-                <span class="pole__wskazowka">Opcjonalnie — jeśli wolicie kontakt pisemny.</span>
-              </label>
+              <label for="email">E-mail</label>
               <input type="email" id="email" name="email" autocomplete="email" />
+            </div>
+
+            <div class="pole">
+              <label for="tresc">Treść wiadomości</label>
+              <textarea
+                id="tresc"
+                name="tresc"
+                rows="5"
+                required
+                placeholder={tematy[0].przyklad}
+                data-tresc
+              ></textarea>
             </div>
 
             <div class="zgoda">
               <input type="checkbox" id="zgoda" name="zgoda" required />
               <label for="zgoda">
-                Wyrażam zgodę na kontakt w sprawie zajęć próbnych i przetwarzanie
+                Wyrażam zgodę na kontakt w sprawie zgłoszenia i przetwarzanie
                 podanych danych. Szczegóły w
                 <a href={url("/klauzula-rodo")}>klauzuli informacyjnej</a> i
                 <a href={url("/polityka-prywatnosci")}>polityce prywatności</a>.
               </label>
             </div>
 
-            {/* Pułapka na roboty. Ukryta przed człowiekiem i przed czytnikiem
-                ekranu, bez atrybutu required — wypełni ją tylko automat. */}
+            {/* Pułapka na roboty. Nie ukrywamy jej przez `display: none` ani
+                `visibility: hidden` — nowsze automaty to wykrywają i pomijają.
+                Nazwa musi wyglądać wiarygodnie, stąd „firma_www”, a nie „bot”. */}
             <div class="pulapka" aria-hidden="true">
-              <label for="firma">Nazwa firmy</label>
-              <input type="text" id="firma" name="firma" tabindex="-1" autocomplete="off" />
+              <label for="firma_www">Adres strony firmy</label>
+              <input type="text" id="firma_www" name="firma_www" tabindex="-1" autocomplete="off" />
             </div>
+
+            {/* Znacznik czasu otwarcia formularza. Wypełnienie poniżej trzech
+                sekund nie jest pracą ręczną. Wartość wpisuje skrypt, żeby nie
+                pochodziła z pamięci podręcznej strony. */}
+            <input type="hidden" name="otwarto" value="" data-otwarto />
 
             {endpoint ? (
               <button type="submit" class="przycisk przycisk--akcja przycisk--pelny">
-                Wyślij zgłoszenie
+                Wyślij wiadomość
               </button>
             ) : (
-              /* Bez adresu odbiorczego przycisk zostaje wyłączony. Formularz,
-                 który po kliknięciu przeładowuje stronę i gubi wpisane dane,
-                 jest gorszy od formularza, który uczciwie mówi, że nie działa. */
               <>
                 <button
                   type="submit"
@@ -133,7 +237,7 @@ const poWyslaniu = [
                   disabled
                   aria-describedby="formularz-nieczynny"
                 >
-                  Wyślij zgłoszenie
+                  Wyślij wiadomość
                 </button>
                 <p class="komunikat-formularza" id="formularz-nieczynny">
                   Formularz nie jest jeszcze podłączony do skrzynki.
@@ -146,8 +250,6 @@ const poWyslaniu = [
               </>
             )}
 
-            {/* Komunikat po wysłaniu. `aria-live` sprawia, że czytnik ekranu
-                przeczyta go od razu, bez przenoszenia fokusu. */}
             <p class="komunikat-formularza" data-status hidden aria-live="polite"></p>
 
             <noscript>
@@ -161,127 +263,163 @@ const poWyslaniu = [
               </p>
             </noscript>
           </form>
-
-          <DoUzupelnienia czego="Podłączenie skrzynki">
-            Formularz wysyła zgłoszenie do funkcji <code>/api/zapis</code>, która
-            przepisuje je na skrzynkę i niczego nie zapisuje. Żeby ruszyła,
-            w panelu Cloudflare trzeba dodać dwie wartości:
-            <code>RESEND_API_KEY</code> jako sekret i <code>MAIL_DO</code>
-            z adresem odbiorcy. Do tego czasu rodzic dostaje komunikat, że
-            formularz czeka na podłączenie — nie błąd i nie ciszę. Po ustawieniu
-            wyślijcie jedno prawdziwe zgłoszenie i sprawdźcie, czy doszło.
-          </DoUzupelnienia>
         </div>
 
-        {/* KONTAKT BEZPOŚREDNI */}
+        {/* KARTY OBOK */}
         <div class="stos">
-          <div class="karta karta--luzna">
-            <h2 class="tytul-3">Kontakt bezpośredni</h2>
+          <article class="karta karta--luzna">
+            <span class="plakietka plakietka--kobalt">Ochrona małoletnich</span>
+            <h2 class="tytul-3">Zgłoszenie dotyczące dziecka</h2>
+            <p class="tekst-maly tekst-drugi">
+              Za standardy ochrony małoletnich odpowiada
+              <strong>{ochronaMaloletnich.imie}</strong>. Zgłoszenie można
+              złożyć anonimowo — przez formularz obok, wybierając ten temat,
+              albo wprost na adres poniżej.
+            </p>
             <ul class="lista-rozdzielona">
-              <li>
-                <span class="etykieta">Telefon</span>
-                <span class="wartosc">
-                  {tel ? <a class="link-w-zdaniu" href={tel}>{telefonTekst()}</a> : telefonTekst()}
-                </span>
-              </li>
               <li>
                 <span class="etykieta">E-mail</span>
                 <span class="wartosc">
-                  {firma.email ? (
-                    <a class="link-w-zdaniu" href={`mailto:${firma.email}`}>{emailTekst()}</a>
-                  ) : (
-                    emailTekst()
-                  )}
+                  <a class="link-w-zdaniu" href={`mailto:${ochronaMaloletnich.email}`}>
+                    {ochronaMaloletnich.email}
+                  </a>
                 </span>
               </li>
               <li>
-                <span class="etykieta">Adres</span>
-                <span class="wartosc">{adresTekst()}</span>
-              </li>
-              <li>
-                <span class="etykieta">Biuro czynne</span>
-                <span class="wartosc">{firma.godzinyBiura ?? "godziny w uzupełnieniu"}</span>
+                <span class="etykieta">Telefon</span>
+                <span class="wartosc">
+                  {ochronaMaloletnich.telefon ?? telefonTekst()}
+                </span>
               </li>
             </ul>
-          </div>
-
-          <div class="miejsce-na-zdjecie">
-            <strong>Mapa dojazdu</strong>
-            Pojawi się tu po ustaleniu adresu lokalu. Bez adresu, telefonu i mapy
-            nie da się też uruchomić wizytówki Google — a to główne źródło ruchu
-            dla centrum w jednym mieście.
-          </div>
-
-          <div class="karta">
-            <h3 class="tytul-4">Bezpieczeństwo dziecka</h3>
-            <p class="tekst-maly tekst-drugi">
-              Zanim zapiszecie dziecko, warto przeczytać, kto u nas pracuje
-              z dziećmi i na jakich zasadach.
+            <p class="tekst-drobny">
+              <a class="link-w-zdaniu" href={url("/bezpieczenstwo")}>
+                Pełne standardy ochrony małoletnich
+              </a>
             </p>
-            <a class="link-w-zdaniu" href={url("/bezpieczenstwo")}>
-              Standardy Ochrony Małoletnich
-            </a>
-          </div>
+          </article>
+
+          {!ochronaMaloletnich.adresBezposredni && (
+            <DoUzupelnienia czego="Osobny adres do zgłoszeń">
+              Adres i numer prowadzą na razie do skrzynki i telefonu centrum.
+              Ustawa wymaga ścieżki omijającej biuro oraz osoby prowadzące
+              zajęcia — zgłoszenie może dotyczyć kogoś z zespołu, więc wspólna
+              skrzynka czyni ją pozorną. Do założenia: adres wyłącznie dla osoby
+              odpowiedzialnej i jej numer bezpośredni.
+            </DoUzupelnienia>
+          )}
+
+          {/* Miasto i tryb zajęć zostają — to nie jest informacja o lokalu. */}
+          <article class="karta karta--luzna" id="dojazd">
+            <h2 class="tytul-3">Gdzie jesteśmy</h2>
+            <p class="tekst-maly tekst-drugi">
+              Zajęcia prowadzimy stacjonarnie w {firma.miasto}. Adres, godziny
+              otwarcia biura i dojazd podamy razem z uruchomieniem zapisów, gdy
+              umowa na lokal będzie podpisana.
+            </p>
+          </article>
         </div>
       </div>
     </div>
   </section>
 
-  {/* CO SIĘ DZIEJE PO WYSŁANIU */}
-  <section class="sekcja sekcja--karta sekcja--wlos">
+  {/* DANE FIRMY */}
+  <section class="sekcja">
     <div class="szerokosc">
-      <div class="siatka--wiodaca">
-        <div class="stos stos--ciasny">
-          <span class="nadtytul">Dalej</span>
-          <h2 class="tytul-1">Co się dzieje po zgłoszeniu</h2>
-        </div>
-        <ol class="kroki">
-          {poWyslaniu.map((tresc) => (
-            <li class="kroki__krok">
-              <div class="kroki__tresc">
-                <p style="font-size: var(--text-bazowy); color: var(--tekst-glowny);">{tresc}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Dane</span>
+        <h2 class="tytul-1">Dane firmy</h2>
+        <p class="wiodacy">
+          Te same dane figurują w regulaminie, polityce prywatności i klauzuli
+          informacyjnej. Jedno brzmienie, cztery miejsca.
+        </p>
+      </div>
+
+      <div class="siatka siatka--czworo">
+        {daneFirmy.map((d) => (
+          <article class="karta">
+            <span class="etykieta">{d.etykieta}</span>
+            <p class="tekst-wiodacy" style="font-weight: var(--waga-polgruba);">
+              {d.wartosc ?? "do uzupełnienia"}
+            </p>
+          </article>
+        ))}
+      </div>
+
+      <div style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">
+        <DoUzupelnienia czego="Dane rejestrowe">
+          Do wpisania NIP, REGON i nazwa administratora danych. Muszą brzmieć
+          identycznie w czterech miejscach: tutaj, w regulaminie, w polityce
+          prywatności i w klauzuli RODO. Rozjazd między nimi jest pierwszą
+          rzeczą, którą wychwytuje kontrola.
+        </DoUzupelnienia>
       </div>
     </div>
   </section>
 </Baza>
 
 <script>
-  /* Wysyłka zgłoszenia bez przeładowania strony.
+  /* ------------------------------------------------------------------
+     Wybór tematu przestawia podpowiedź i przykład w polu treści.
+     ------------------------------------------------------------------ */
+  const wybor = document.querySelector("[data-temat]");
+  const podpowiedz = document.querySelector("[data-podpowiedz-tematu]");
+  const tresc = document.querySelector("[data-tresc]");
 
-     Formularz ma poprawny `action` i `method`, więc gdyby ten skrypt się nie
-     wykonał, przeglądarka wysłałaby go klasycznie — funkcja przyjmuje oba
-     formaty. Skrypt służy tylko temu, żeby rodzic zobaczył odpowiedź na
-     miejscu, zamiast trafiać na surową odpowiedź serwera. */
+  if (wybor && podpowiedz && tresc) {
+    const odswiez = () => {
+      const opcja = wybor.options[wybor.selectedIndex];
+      podpowiedz.textContent = opcja.dataset.podpowiedz ?? "";
+      tresc.placeholder = opcja.dataset.przyklad ?? "";
+    };
+    wybor.addEventListener("change", odswiez);
+    odswiez();
+  }
+
+  /* ------------------------------------------------------------------
+     Znacznik czasu otwarcia. Wpisujemy go skryptem, a nie w kodzie strony,
+     bo strona jest statyczna i wartość wpisana przy budowaniu byłaby
+     godzinami stara dla każdego odwiedzającego.
+     ------------------------------------------------------------------ */
+  const otwarto = document.querySelector("[data-otwarto]");
+  if (otwarto) otwarto.value = String(Date.now());
+
+  /* ------------------------------------------------------------------
+     Wysyłka bez przeładowania strony.
+     ------------------------------------------------------------------ */
   const formularz = document.querySelector(".formularz");
   const status = formularz?.querySelector("[data-status]");
 
-  if (formularz && status) {
+  if (formularz && status && formularz.getAttribute("action")) {
     const przycisk = formularz.querySelector('button[type="submit"]');
-    const napisPrzycisku = przycisk?.textContent ?? "";
+    const napis = przycisk?.textContent ?? "";
     const tel = formularz.dataset.telefon;
     const telTekst = formularz.dataset.telefonTekst;
 
-    /** Dokleja prośbę o telefon, o ile numer jest już znany. */
-    function zProsbaOTelefon(tresc) {
-      status.textContent = tresc;
+    function zProsbaOTelefon(t) {
+      status.textContent = t;
       if (!tel) return;
       status.append(" Prosimy o telefon: ");
-      const odnosnik = document.createElement("a");
-      odnosnik.href = tel;
-      odnosnik.textContent = telTekst;
-      status.append(odnosnik, ".");
-    }
-
-    function pokaz(rodzaj) {
-      status.hidden = false;
-      status.dataset.rodzaj = rodzaj;
+      const a = document.createElement("a");
+      a.href = tel;
+      a.textContent = telTekst;
+      status.append(a, ".");
     }
 
     formularz.addEventListener("submit", async (zdarzenie) => {
+      /* Telefon i e-mail są osobno opcjonalne, ale przynajmniej jedno musi
+         być wypełnione. Przeglądarka tego nie wyrazi atrybutem `required`,
+         więc sprawdzamy ręcznie — a serwer powtarza tę kontrolę u siebie. */
+      const telefon = formularz.telefon.value.trim();
+      const email = formularz.email.value.trim();
+      if (!telefon && !email) {
+        zdarzenie.preventDefault();
+        formularz.telefon.setCustomValidity("Wystarczy jedno z dwóch: telefon albo e-mail.");
+        formularz.telefon.reportValidity();
+        return;
+      }
+      formularz.telefon.setCustomValidity("");
+
       if (!formularz.reportValidity()) return;
       zdarzenie.preventDefault();
 
@@ -291,34 +429,36 @@ const poWyslaniu = [
       status.textContent = "";
 
       try {
-        const odpowiedz = await fetch(formularz.action, {
+        const odp = await fetch(formularz.action, {
           method: "POST",
           headers: { accept: "application/json" },
           body: new FormData(formularz),
         });
-        const tresc = await odpowiedz.json().catch(() => ({}));
+        const dane = await odp.json().catch(() => ({}));
 
-        if (odpowiedz.ok) {
+        if (odp.ok) {
           status.textContent =
-            "Dziękujemy. Zgłoszenie do nas dotarło — odezwiemy się telefonicznie.";
-          pokaz("sukces");
+            "Dziękujemy. Wiadomość do nas dotarła — odpowiemy w ciągu jednego dnia roboczego.";
+          status.dataset.rodzaj = "sukces";
+          status.hidden = false;
           formularz.reset();
-          /* Zdarzenie leci do analityki tylko wtedy, gdy odwiedzający zgodził
-             się na ciasteczka — bramkę trzyma window.saTrack. */
-          window.saTrack?.("zapis_formularz");
+          if (otwarto) otwarto.value = String(Date.now());
+          const o = wybor?.options[wybor.selectedIndex];
+          if (podpowiedz && o) podpowiedz.textContent = o.dataset.podpowiedz ?? "";
+          window.saTrack?.("wiadomosc_formularz");
           return;
         }
 
-        zProsbaOTelefon(
-          tresc.blad || "Nie udało się wysłać zgłoszenia."
-        );
-        pokaz("blad");
+        zProsbaOTelefon(dane.blad || "Nie udało się wysłać wiadomości.");
+        status.dataset.rodzaj = "blad";
+        status.hidden = false;
       } catch {
-        zProsbaOTelefon("Brak połączenia z siecią — zgłoszenie nie wyszło.");
-        pokaz("blad");
+        zProsbaOTelefon("Brak połączenia z siecią — wiadomość nie wyszła.");
+        status.dataset.rodzaj = "blad";
+        status.hidden = false;
       } finally {
         przycisk.disabled = false;
-        przycisk.textContent = napisPrzycisku;
+        przycisk.textContent = napis;
       }
     });
   }
