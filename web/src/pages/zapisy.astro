@@ -123,6 +123,15 @@ const poWyslaniu = [
               <input type="text" id="firma_www" name="firma_www" tabindex="-1" autocomplete="off" />
             </div>
 
+            {/* Znacznik czasu otwarcia formularza. Wypełnienie poniżej trzech
+                sekund nie jest pracą ręczną. Wartość wpisuje skrypt, żeby nie
+                pochodziła z pamięci podręcznej strony.
+
+                Do tej pory pole stało wyłącznie na stronie kontaktu, więc
+                pułapka czasowa nie działała tutaj w ogóle — zgłoszenie
+                z zapisów zawsze przechodziło ją bez sprawdzenia. */}
+            <input type="hidden" name="otwarto" value="" data-otwarto />
+
             {endpoint ? (
               <button type="submit" class="przycisk przycisk--akcja przycisk--pelny">
                 Wyślij zgłoszenie
@@ -304,6 +313,12 @@ const poWyslaniu = [
       status.dataset.rodzaj = rodzaj;
     }
 
+    /* Znacznik czasu wpisujemy skryptem, a nie w kodzie strony: strona jest
+       statyczna, więc wartość wpisana przy budowaniu byłaby dla każdego
+       odwiedzającego stara o wiele godzin. */
+    const otwarto = document.querySelector("[data-otwarto]");
+    if (otwarto) otwarto.value = String(Date.now());
+
     formularz.addEventListener("submit", async (zdarzenie) => {
       if (!formularz.reportValidity()) return;
       zdarzenie.preventDefault();
@@ -326,6 +341,10 @@ const poWyslaniu = [
             "Dziękujemy. Zgłoszenie do nas dotarło — odezwiemy się telefonicznie.";
           pokaz("sukces");
           formularz.reset();
+          /* Po wyczyszczeniu formularza licznik startuje od nowa — inaczej
+             drugie zgłoszenie z tej samej karty niosłoby czas otwarcia
+             sprzed pierwszego. */
+          if (otwarto) otwarto.value = String(Date.now());
           /* Zdarzenie leci do analityki tylko wtedy, gdy odwiedzający zgodził
              się na ciasteczka — bramkę trzyma window.saTrack. */
           window.saTrack?.("zapis_formularz");

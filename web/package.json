@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "audyt": "node narzedzia/audyt.mjs",
-    "test:mobilny": "node narzedzia/test-mobilny.mjs"
+    "test:mobilny": "node narzedzia/test-mobilny.mjs",
+    "test:bezpieczenstwa": "node narzedzia/test-bezpieczenstwa.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

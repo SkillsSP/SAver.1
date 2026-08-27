@@ -471,6 +471,18 @@ export const analityka = {
      sekcja 7 polityki prywatności. */
   pytamyMimoBrakuObowiazku: true,
   src: "https://cloud.umami.is/script.js",
+
+  /* Adresy, pod które wczytany skrypt SAM wysyła odczyty. To nie to samo co
+     `src` i właśnie na tym się przejechałem: Umami ładuje się z cloud.umami.is,
+     a dane odsyła na gateway.umami.is. Polityka bezpieczeństwa treści
+     wypisana tylko z `src` blokowała każdy odczyt, i to po cichu — strona
+     wyglądała normalnie, a statystyki po prostu nie przychodziły.
+
+     Po zmianie dostawcy trzeba tu zajrzeć. Sprawdzenie zajmuje chwilę:
+     otwórzcie stronę z narzędziami deweloperskimi, zakładka Sieć, i zobaczcie,
+     pod jaki adres leci zapytanie po wyrażeniu zgody. */
+  polaczenia: ["https://gateway.umami.is"],
+
   atrybuty: { "data-website-id": "6b54cbf7-f3d7-47ee-801f-004df9f45085" },
 };
 

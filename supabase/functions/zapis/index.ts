@@ -356,6 +356,23 @@ Deno.serve(async (request: Request) => {
     return odpowiedz(200, { ok: true }, cors);
   }
 
+  /* Brak znacznika czasu NIE jest przepustką — a przez pewien czas nią był.
+     Warunek wyżej pomija sprawdzenie, gdy `czas` jest pusty, więc wystarczyło
+     wysłać zgłoszenie wprost pod adres funkcji, bez pola `otwarto`, żeby
+     pułapka czasowa w ogóle się nie odezwała. Formularz zapisów w dodatku
+     tego pola nie miał, więc nie działała tam nigdy.
+
+     Nie odrzucamy takiego zgłoszenia i to jest świadome. Znacznik wpisuje
+     skrypt, więc odwiedzający z wyłączonym JavaScriptem wysyła formularz
+     zwyczajną metodą POST i jego zgłoszenie też przychodzi bez tej wartości.
+     Odrzucenie kosztowałoby nas rodzica, a przepuszczenie kosztuje jedną
+     wiadomość więcej do przejrzenia. Dlatego oznaczamy, zamiast wyrzucać —
+     tak samo jak przy wiadomościach naszpikowanych odnośnikami. */
+  const bezZnacznika = czas === null;
+  if (bezZnacznika) {
+    console.warn("Zgłoszenie bez znacznika czasu — oznaczone do sprawdzenia.");
+  }
+
   const adres =
     request.headers.get("cf-connecting-ip") ??
     request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
@@ -423,7 +440,8 @@ Deno.serve(async (request: Request) => {
     }
 
     const odnosniki = liczbaOdnosnikow(tresc);
-    temat = (odnosniki >= 3 ? "[DO SPRAWDZENIA] " : "") + nazwaSprawy + " — " + imie;
+    const podejrzane = odnosniki >= 3 || bezZnacznika;
+    temat = (podejrzane ? "[DO SPRAWDZENIA] " : "") + nazwaSprawy + " — " + imie;
 
     wiersze = [
       ["Sprawa", nazwaSprawy],
@@ -439,6 +457,13 @@ Deno.serve(async (request: Request) => {
         "wiadomość zawiera " + odnosniki + " odnośników — sprawdźcie, zanim klikniecie",
       ]);
     }
+    if (bezZnacznika) {
+      wiersze.push([
+        "Uwaga",
+        "wiadomość przyszła bez znacznika czasu — albo wysłano ją z wyłączonym " +
+        "JavaScriptem, albo z pominięciem strony",
+      ]);
+    }
   } else {
     const imieDziecka = oczysc(dane.imie_dziecka);
     const wiekDziecka = oczysc(dane.wiek_dziecka, 40);
@@ -452,7 +477,8 @@ Deno.serve(async (request: Request) => {
       return odpowiedz(400, { blad: "Brakuje pól: " + braki.join(", ") + "." }, cors);
     }
 
-    temat = "Zapis na zajęcia próbne — " + imieDziecka + ", " + wiekDziecka;
+    temat = (bezZnacznika ? "[DO SPRAWDZENIA] " : "") +
+      "Zapis na zajęcia próbne — " + imieDziecka + ", " + wiekDziecka;
     wiersze = [
       ["Imię dziecka", imieDziecka],
       ["Wiek", wiekDziecka],
@@ -460,6 +486,13 @@ Deno.serve(async (request: Request) => {
       ["E-mail", email || "nie podano"],
       ["Zgoda na kontakt", "tak"],
     ];
+    if (bezZnacznika) {
+      wiersze.push([
+        "Uwaga",
+        "zgłoszenie przyszło bez znacznika czasu — albo wysłano je z wyłączonym " +
+        "JavaScriptem, albo z pominięciem strony",
+      ]);
+    }
   }
 
   try {

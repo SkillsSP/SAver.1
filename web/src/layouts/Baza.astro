@@ -5,7 +5,7 @@ import Stopka from "../components/Stopka.astro";
 import PasekAkcji from "../components/PasekAkcji.astro";
 import ZgodaCookies from "../components/ZgodaCookies.astro";
 import NaGore from "../components/NaGore.astro";
-import { firma, url } from "../lib/site.js";
+import { firma, url, analityka } from "../lib/site.js";
 import "../styles/style.css";
 
 interface Props {
@@ -77,6 +77,65 @@ const znacznik = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {/* POLITYKA BEZPIECZEŃSTWA TREŚCI
+
+        Mówi przeglądarce, skąd wolno wczytywać zasoby. Gdyby ktoś wstrzyknął
+        na stronę obcy skrypt — przez cudzy pakiet, przejęte konto w repozytorium
+        albo błąd w kodzie — przeglądarka odmówi jego wczytania, bo adres nie
+        stoi na tej liście.
+
+        Normalnie taką politykę wysyła serwer w nagłówku odpowiedzi. GitHub
+        Pages nie pozwala ustawiać własnych nagłówków, więc zostaje znacznik
+        w kodzie strony. Działa tak samo, z dwoma wyjątkami: nie obsługuje
+        `frame-ancestors` ani `report-uri`. Pierwszy zastępujemy niżej,
+        drugiego i tak nie mamy gdzie zbierać.
+
+        `'unsafe-inline'` przy skryptach jest tu konieczne i nie udaję, że nie:
+        Astro umieszcza kod komponentów wprost w stronie, a bez własnego serwera
+        nie da się nadać im jednorazowego identyfikatora. Adres analityki bierze
+        się z jednego miejsca w site.js, więc po zmianie dostawcy polityka
+        zmienia się razem z nim i nie trzeba pamiętać o dwóch plikach. */}
+    <meta
+      http-equiv="Content-Security-Policy"
+      content={[
+        "default-src 'self'",
+        `script-src 'self' 'unsafe-inline' ${new URL(analityka.src).origin}`,
+        `connect-src 'self' ${[
+          new URL(analityka.src).origin,
+          ...(analityka.polaczenia ?? []),
+          new URL(firma.formularzEndpoint).origin,
+        ].join(" ")}`,
+        "style-src 'self' 'unsafe-inline'",
+        "img-src 'self' data:",
+        "font-src 'self'",
+        /* Strona nie ma osadzanych ramek ani wtyczek — zamykamy oba na głucho. */
+        "frame-src 'none'",
+        "object-src 'none'",
+        /* Formularze wolno wysyłać wyłącznie do nas i pod adres funkcji. */
+        `form-action 'self' ${new URL(firma.formularzEndpoint).origin}`,
+        /* Nikt nie może osadzić naszej strony w swojej ramce i podstawić pod
+           nią własnych przycisków. */
+        "base-uri 'self'",
+        "upgrade-insecure-requests",
+      ].join("; ")}
+    />
+    {/* Zabezpieczenia przed osadzeniem strony w cudzej ramce TU NIE MA i nie
+        da się jej dołożyć. `frame-ancestors` działa wyłącznie w nagłówku HTTP,
+        a `X-Frame-Options` w znaczniku przeglądarka jawnie odrzuca — sprawdziłem
+        i wypisuje o tym ostrzeżenie w konsoli na każdej podstronie. GitHub Pages
+        nie pozwala ustawiać własnych nagłówków, więc jedyną drogą jest zmiana
+        gospodarza na takiego, który to potrafi.
+
+        Ryzyko jest realne, ale niewielkie: strona nie ma panelu logowania ani
+        żadnej akcji, którą dałoby się wywołać jednym kliknięciem w podstawionym
+        miejscu. Najgorsze, co ktoś może zrobić, to pokazać naszą treść w swojej
+        ramce — nieprzyjemne, lecz bez szkody dla odwiedzającego. */}
+    {/* Przeglądarka nie zgaduje typu pliku wbrew temu, co podał serwer. */}
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    {/* Do obcych serwisów nie wysyłamy pełnego adresu podstrony, z której
+        ktoś wyszedł — sama domena wystarczy. */}
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>{pelnyTytul}</title>
     <meta name="description" content={opis} />
     {/* Strona istnieje pod swoim adresem, ale nie ma jej w nawigacji ani
