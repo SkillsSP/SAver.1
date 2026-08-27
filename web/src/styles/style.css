@@ -225,6 +225,13 @@ html {
   /* Bez tej deklaracji iOS i Android w trybie ciemnym renderują pola input
      i select na ciemnym tle — wpisywany tekst potrafi zniknąć. */
   color-scheme: light;
+  /* iOS Safari po obróceniu telefonu do poziomu sam powiększa tekst w wąskich
+     kolumnach, żeby „lepiej wypełnić" ekran. Efekt jest taki, że po obrocie
+     akapit i nagłówek rosną w różnym stopniu i cała typografia się rozjeżdża.
+     Wartość `100%` wyłącza tę korektę, nie odbierając nikomu możliwości
+     powiększenia strony gestem — to dwie różne rzeczy. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   scroll-behavior: smooth;
   /* kotwice nie chowają się pod przyklejonym paskiem */
   scroll-padding-top: calc(var(--wysokosc-paska) + var(--space-2));
@@ -238,6 +245,12 @@ body {
   font-size: var(--text-bazowy);
   line-height: var(--interlinia-tekst);
   -webkit-font-smoothing: antialiased;
+  /* Domyślnie Chrome na Androidzie miga po dotknięciu jasnoniebieskim
+     prostokątem — kolorem spoza palety, obok każdego odnośnika. Zastępujemy
+     go przygaszonym kobaltem. Nie usuwamy go do zera: potwierdzenie dotknięcia
+     musi zostać, bo bez niego nie widać, czy telefon w ogóle zarejestrował
+     dotyk. */
+  -webkit-tap-highlight-color: rgba(30, 95, 204, 0.16);
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
@@ -912,6 +925,10 @@ button {
   display: grid;
   grid-template-rows: auto 1fr;
   overflow-y: auto;
+  /* Bez tego dojechanie do końca listy w menu zaczyna przewijać stronę pod
+     spodem, a na iOS dodatkowo odbija całą warstwę. Menu ma być ślepym
+     zaułkiem dla przewijania — wychodzi się z niego przyciskiem. */
+  overscroll-behavior: contain;
 }
 .menu-mobilne[hidden] {
   display: none;
@@ -1571,7 +1588,15 @@ button {
   z-index: 80;
   display: flex;
   justify-content: center;
-  padding: var(--space-2);
+  /* Zapas u dołu na pasek gestów iPhone'a, tak samo jak w pasku akcji.
+     Przy obecnym znaczniku viewport iOS sam odsuwa stronę od paska i env()
+     zwraca zero, więc dziś to nic nie zmienia. Zostaje mimo to, żeby baner
+     nie wjechał pod pasek w dniu, w którym ktoś doda `viewport-fit=cover` —
+     przycisk odmowy zgody jest ostatnią rzeczą, jaką wolno przykryć. */
+  padding: var(--space-2) var(--space-2)
+    calc(var(--space-2) + env(safe-area-inset-bottom, 0px));
+  /* Przewijanie wewnątrz banera nie ma przeciągać strony pod spodem. */
+  overscroll-behavior: contain;
   pointer-events: none;
   /* Bez wypełnienia `both` — i to jest świadome. Przy `both` element przed
      startem animacji ma krycie zero, więc gdyby animacja z jakiegokolwiek
@@ -2651,4 +2676,54 @@ button {
 }
 .artykul h2:first-child {
   margin-top: 0;
+}
+
+/* ==========================================================================
+   CELE DOTYKOWE NA EKRANIE DOTYKOWYM
+
+   WCAG 2.2 wymaga 24 px i tyle mają te odnośniki w wersji podstawowej. Apple
+   podaje 44 px, Google 48 — i te liczby nie biorą się z ostrożności, tylko
+   z szerokości opuszka kciuka, który na telefonie zasłania to, w co celuje.
+   Numer telefonu w górnym pasku jest u nas najkrótszą drogą do zapisania
+   dziecka, więc akurat on nie może wymagać precyzji.
+
+   Reguła działa wyłącznie przy `pointer: coarse`, czyli tam, gdzie wskaźnikiem
+   jest palec. Na komputerze z myszą wysokość zostaje bez zmian, bo powiększanie
+   odnośników w gęstym pasku rozpycha go bez powodu.
+
+   MIEJSCE W PLIKU JEST CZĘŚCIĄ DZIAŁANIA. Zapytanie o media nie podnosi wagi
+   selektora, więc blok o tej samej wadze co `.pasek-uzytkowy__kontakt a` musi
+   stać PO nim, nie przed. Postawiony wcześniej wygląda poprawnie i nie robi
+   nic — tak było przy pierwszym podejściu. Stąd koniec arkusza.
+   ========================================================================== */
+@media (pointer: coarse) {
+  .pasek-uzytkowy__kontakt a,
+  .stopka__dane a,
+  .stopka__zgody,
+  .stopka__linki a,
+  .okruszki a,
+  /* Numer przy wezwaniu „albo zadzwońcie" miał 18 px wysokości — mniej niż
+     wymagane przez WCAG 24 i o wiele mniej, niż potrzebuje kciuk. Stoi obok
+     głównego przycisku, więc chybienie trafia w tamten. */
+  .telefon-obok a,
+  /* Drugi odnośnik w pasku akcji na telefonie. Pasek urośnie o kilkanaście
+     pikseli i to jest właściwa cena: dwa cele leżą tu jeden pod drugim,
+     a górny prowadzi do połączenia telefonicznego. */
+  .pasek-akcji__drugi {
+    min-height: var(--cel-dotyku);
+  }
+
+  /* Odnośnik z numerem ma być celem, a nie rozstrzelonym wierszem tekstu —
+     wyrównujemy go w pionie do zdania, w którym stoi. */
+  .telefon-obok a {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Odnośniki w stopce stoją jeden pod drugim, więc samo podniesienie
+     wysokości zrobiłoby z listy drabinę z dziurami. Wyrównujemy odstęp
+     tak, żeby cel urósł, a rytm listy został. */
+  .stopka__linki {
+    gap: 0;
+  }
 }

@@ -7,7 +7,9 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "audyt": "node narzedzia/audyt.mjs",
+    "test:mobilny": "node narzedzia/test-mobilny.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -15,5 +17,8 @@
   },
   "engines": {
     "node": ">=22.20.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
   }
 }

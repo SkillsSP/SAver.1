@@ -56,6 +56,9 @@
       zaplanowane = false;
       const widoczny = window.scrollY > prog();
       if (widoczny === !przycisk.hidden) return;
+      /* Pasek mierzymy w chwili pokazywania przycisku, a nie raz przy
+         wczytaniu strony. Powód jest opisany przy `ustawWysokoscPaska`. */
+      if (widoczny) ustawWysokoscPaska();
       przycisk.hidden = !widoczny;
     }
     function przyPrzewijaniu() {
@@ -65,7 +68,23 @@
     }
 
     /* Pasek akcji stoi tylko na wąskich ekranach i zmienia wysokość razem
-       z długością napisu, więc mierzymy go, zamiast wpisywać liczbę. */
+       z długością napisu, więc mierzymy go, zamiast wpisywać liczbę.
+
+       Pomiar musi być powtarzany, a nie jednorazowy — i to nie jest ostrożność
+       na wyrost, tylko naprawa błędu. Dopóki baner zgód stoi otwarty, arkusz
+       ukrywa pasek akcji, więc przy pierwszej wizycie na telefonie pomiar
+       wykonany po wczytaniu zwracał zero. Rodzic wybierał zgodę, pasek się
+       pokazywał, a zmienna zostawała na zerze — i strzałka powrotu na górę
+       lądowała wtedy WEWNĄTRZ paska akcji, na dodatek pod nim, bo ma niższą
+       warstwę. Przycisk był na pierwszej wizycie niewidoczny i nieklikalny.
+
+       Rozwiązanie jest najprostsze z możliwych: mierzymy w chwili, w której
+       wynik jest potrzebny, czyli tuż przed pokazaniem przycisku. Wtedy pasek
+       ma już swój ostateczny stan i pomiar nie może być nieaktualny.
+
+       `ResizeObserver` też by tu zadziałał, ale wymagałby obserwatora żyjącego
+       przez cały czas wizyty po to, żeby odczytać jedną liczbę raz. Pomiar
+       w chwili pokazania przycisku daje ten sam wynik bez tego kosztu. */
     function ustawWysokoscPaska() {
       const h = pasekAkcji ? pasekAkcji.getBoundingClientRect().height : 0;
       document.documentElement.style.setProperty("--wysokosc-paska-akcji", `${Math.round(h)}px`);
@@ -76,6 +95,15 @@
       ustawWysokoscPaska();
       przyPrzewijaniu();
     });
+
+    /* Przypadek rzadki, ale możliwy: rodzic rozstrzyga zgodę, gdy przycisk już
+       stoi na ekranie. Pasek akcji wtedy się pojawia i przycisk musi się nad
+       niego podnieść. Pomiar po klatce, bo w chwili zdarzenia arkusz jeszcze
+       nie przeliczył układu i pasek nadal ma zerową wysokość. */
+    window.addEventListener("sa-consent", () => {
+      requestAnimationFrame(ustawWysokoscPaska);
+    });
+
     ustawWysokoscPaska();
     odswiez();
 
