@@ -26,17 +26,10 @@ export const firma = {
   nip: null,
   godzinyBiura: null,
   mapaOsadzenie: null,
-  /* Adres do zgłoszeń dotyczących bezpieczeństwa dziecka. Ustawa wymaga
-     wskazania kanału zgłoszeń w standardach ochrony małoletnich.
-
-     Na razie ten sam adres co ogólny — decyzja świadoma i tymczasowa. Warto
-     ją zmienić, zanim ruszą zajęcia: na `kontakt@` przychodzą zapytania
-     o cennik i terminy, więc czyta ją zwykle kilka osób. Zgłoszenie o krzywdzeniu
-     dziecka trafia wtedy do tej samej skrzynki co pytanie o wolne miejsca.
-     Osobny adres czytany wyłącznie przez osobę odpowiedzialną za standardy
-     ochrony małoletnich zawęża krąg odbiorców do tych, którzy mają prawo
-     takie zgłoszenie przeczytać. */
-  emailZgloszenia: "kontakt@skilful.pl",
+  /* Kanał zgłoszeń dotyczących bezpieczeństwa dziecka — patrz `ochronaMaloletnich`
+     niżej. Ustawa wymaga wskazania konkretnej osoby, nie adresu ogólnego,
+     dlatego to pole nie jest już zwykłym adresem firmowym. */
+  emailZgloszenia: null,
   /* Adres, pod który formularz zapisu wysyła zgłoszenie. Są dwie gotowe drogi
      i obie przepisują zgłoszenie na skrzynkę, nie zapisując go nigdzie:
 
@@ -232,6 +225,37 @@ export const fakultety = [
     zdjecieAlt: "Dzieci rozciągają kolorową chustę animacyjną we wspólnej zabawie ruchowej",
   },
 ];
+
+/* --------------------------------------------------------------------------
+   OSOBA ODPOWIEDZIALNA ZA STANDARDY OCHRONY MAŁOLETNICH
+
+   Ustawa wymaga wskazania konkretnej osoby wraz z danymi kontaktowymi, a nie
+   adresu ogólnego. Ta ścieżka musi omijać biuro i osoby prowadzące zajęcia:
+   zgłoszenie może dotyczyć kogoś z zespołu, więc adres wspólny czyniłby ją
+   pozorną.
+
+   POZYCJA OTWARTA — ADRES JEST TYMCZASOWY. Stoi tu `kontakt@skilful.pl`, czyli
+   skrzynka ogólna centrum. To rozwiązanie na teraz, ale wymogu ustawowego nie
+   spełnia: skrzynkę ogólną czyta biuro, a zgłoszenie może dotyczyć kogoś
+   z zespołu. Dopóki adres jest wspólny, ścieżka jest formalnie wskazana, lecz
+   praktycznie pozorna.
+
+   Dlatego treść na stronie NIE twierdzi, że zgłoszenie omija biuro — bo nie
+   omija. Zdanie o bezpośredniości wraca dopiero razem z osobnym adresem.
+
+   Do uzupełnienia przed pierwszymi zajęciami: adres wyłącznie dla osoby
+   odpowiedzialnej, najlepiej w domenie centrum, oraz jej telefon bezpośredni.
+   Numer centrum go nie zastąpi, bo prowadzi do biura.
+   -------------------------------------------------------------------------- */
+export const ochronaMaloletnich = {
+  imie: "Karolina Dumała",
+  /* Prawda mówi, czy adres należy wyłącznie do tej osoby. Steruje brzmieniem
+     na stronie: przy `false` nie obiecujemy bezpośredniości. */
+  adresBezposredni: false,
+  funkcja: "osoba odpowiedzialna za standardy ochrony małoletnich",
+  email: "kontakt@skilful.pl",
+  telefon: null,
+};
 
 /* --------------------------------------------------------------------------
    ZESPÓŁ

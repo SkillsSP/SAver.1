@@ -2,7 +2,14 @@
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import Zdjecie from "../components/Zdjecie.astro";
-import { url, wielkoscGrupy, firma, telefonHref, telefonTekst } from "../lib/site.js";
+import {
+  url,
+  wielkoscGrupy,
+  firma,
+  telefonHref,
+  telefonTekst,
+  ochronaMaloletnich,
+} from "../lib/site.js";
 
 const tel = telefonHref();
 
@@ -262,19 +269,38 @@ const zasadyDlaDziecka = [
         </p>
       </div>
 
-      <div class="siatka siatka--3">
+      <div class="siatka siatka--troje">
+        {/* Ścieżka zgłoszeń musi omijać biuro i osoby prowadzące zajęcia:
+            zgłoszenie może dotyczyć kogoś z zespołu, więc adres wspólny
+            czyniłby ją pozorną. Dlatego stoi tu adres bezpośredni osoby
+            odpowiedzialnej, a nie numer i skrzynka centrum. */}
         <article class="karta karta--luzna">
           <span class="plakietka plakietka--kobalt">W centrum</span>
-          <h3 class="tytul-4">Bezpośrednio do nas</h3>
+          <h3 class="tytul-4">Do osoby odpowiedzialnej</h3>
+          <p class="tekst-maly tekst-drugi">
+            Za standardy ochrony małoletnich odpowiada
+            <strong>{ochronaMaloletnich.imie}</strong>.
+            {ochronaMaloletnich.adresBezposredni
+              ? " Zgłoszenie trafia wprost do niej — nie przez biuro i nie przez osoby prowadzące zajęcia."
+              : " Zgłoszenie można też złożyć anonimowo albo skorzystać z numerów niezależnych od centrum, wymienionych obok."}
+          </p>
           <ul class="lista-rozdzielona">
             <li>
-              <span class="etykieta">E-mail do zgłoszeń</span>
-              <span class="wartosc">{firma.emailZgloszenia ?? "adres w uzupełnieniu"}</span>
+              <span class="etykieta">E-mail</span>
+              <span class="wartosc">
+                <a class="link-w-zdaniu" href={`mailto:${ochronaMaloletnich.email}`}>
+                  {ochronaMaloletnich.email}
+                </a>
+              </span>
             </li>
             <li>
               <span class="etykieta">Telefon</span>
               <span class="wartosc">
-                {tel ? <a class="link-w-zdaniu" href={tel}>{telefonTekst()}</a> : telefonTekst()}
+                {ochronaMaloletnich.telefon
+                  ? ochronaMaloletnich.telefon
+                  : tel
+                    ? <a class="link-w-zdaniu" href={tel}>{telefonTekst()}</a>
+                    : telefonTekst()}
               </span>
             </li>
           </ul>

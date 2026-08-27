@@ -13,7 +13,8 @@ const wybor = [
   },
   {
     tytul: "Wybór",
-    opis: "Jeden fakultet w karnecie. Drugi możliwy za dopłatą, jeśli są miejsca.",
+    opis:
+      "Dziecko wybiera jeden. Drugi i trzeci są możliwe — liczą się wtedy jako kolejne programy.",
   },
   {
     tytul: "Pokaz na koniec",
@@ -25,7 +26,7 @@ const wybor = [
 <Baza
   aktywna="program"
   tytul="Fakultety — Music, Art, Acting i Motion Skills"
-  opis="Jedna dziedzina, którą dziecko wybiera samo. Fakultet dokładany do zajęć podstawowych w Skills Academy w Szczecinie."
+  opis="Music, Art, Acting i Motion Skills. Jedna dziedzina, którą dziecko wybiera samo — jako dodatek do zajęć podstawowych albo samodzielnie. Skills Academy w Szczecinie."
 >
   <section class="naglowek-strony">
     <div class="szerokosc">
@@ -33,8 +34,10 @@ const wybor = [
         <span class="nadtytul nadtytul--na-marce">Program</span>
         <h1 class="tytul-1">Jedna dziedzina, którą dziecko wybiera samo</h1>
         <p class="hero__zdanie">
-          Fakultet dokładacie do zajęć podstawowych. Prowadzimy go po angielsku,
-          ale język schodzi tu na drugi plan. Liczy się to, co dziecko robi.
+          Fakultet możecie dołożyć do zajęć podstawowych albo wziąć samodzielnie
+          — cena zależy od liczby programów, nie od tego, które wybierzecie.
+          Prowadzimy go po angielsku, ale język schodzi tu na drugi plan. Liczy
+          się to, co dziecko robi.
         </p>
       </div>
     </div>
@@ -43,7 +46,11 @@ const wybor = [
   {/* CZTERY FAKULTETY — cztery karty na jednej stronie, nie cztery podstrony */}
   <section class="sekcja">
     <div class="szerokosc">
-      <div class="siatka siatka--2">
+      {/* Cztery karty ze zdjęciem — wariant szerszy, bo kadr potrzebuje
+          miejsca. Wcześniej stała tu siatka dwuelementowa o minimum 320 px,
+          przez co od 1152 px wchodziła trzecia kolumna i czwarta karta
+          zostawała sama pod spodem. */}
+      <div class="siatka siatka--czworo-foto">
         {fakultety.map((f) => (
           <article class="karta karta--luzna karta--ze-zdjeciem">
             <Zdjecie
@@ -104,16 +111,20 @@ const wybor = [
         <div class="stos">
           <h2 class="tytul-3">Zasady organizacyjne</h2>
           <ul class="lista-znaczona">
-            <li>Fakultet wymaga zapisu na zajęcia podstawowe</li>
-            <li>Grupa rusza przy ustalonej minimalnej liczbie osób</li>
+            <li>Fakultet liczy się jako jeden program — można go wziąć bez zajęć podstawowych</li>
+            <li>Grupa rusza przy pięciu zapisanych osobach, górna granica to osiem</li>
             <li>Materiały i sprzęt zapewnia centrum</li>
-            <li>Drugi fakultet możliwy za dopłatą, <a class="link-w-zdaniu" href={url("/cennik")}>zobaczcie cennik</a></li>
+            <li>
+              Drugi i trzeci fakultet to kolejne programy w tej samej cenie
+              progowej, <a class="link-w-zdaniu" href={url("/cennik")}>zobaczcie cennik</a>
+            </li>
           </ul>
         </div>
         <DoUzupelnienia czego="Organizacja">
-          Do wpisania: minimalna liczba osób, przy której grupa rusza, długość
-          i częstotliwość spotkania, termin graniczny bezpłatnej zmiany fakultetu
-          oraz sylwetki prowadzących poszczególne fakultety.
+          Do wpisania: długość i częstotliwość spotkania, termin graniczny
+          bezpłatnej zmiany fakultetu oraz kwalifikacje prowadzących. Nazwiska
+          już są — Acting i Motion prowadzi Karolina Dumała, Music i Art
+          Natalia Marczewska.
         </DoUzupelnienia>
       </div>
     </div>

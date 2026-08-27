@@ -2190,6 +2190,23 @@ button {
   grid-template-columns: repeat(auto-fit, minmax(min(17.5rem, 100%), 1fr));
 }
 
+/* Trzy elementy. `auto-fit` z żadnym minimum tego nie rozwiąże: między
+   szerokością, na której mieszczą się dwie kolumny, a tą, na której mieszczą
+   się trzy, zawsze wypada pasmo z układem 2+1. Zmierzone na produkcji —
+   poprzednia siatka trójkowa dawała sierotkę od 700 do około 1000 px.
+
+   Dlatego nie liczymy tu kolumn automatycznie, tylko ustalamy je wprost:
+   jedna albo trzy, nigdy dwie. Próg 62rem to szerokość, przy której trzy
+   kolumny mają jeszcze po ponad 340 px i karta pozostaje czytelna. */
+.siatka--troje {
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 62rem) {
+  .siatka--troje {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 /* ==========================================================================
    PROGI — trzy pozycje jako wiersze w jednej karcie
 
