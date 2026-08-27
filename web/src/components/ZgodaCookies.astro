@@ -56,8 +56,13 @@ import { url } from "../lib/site.js";
        nie ładuje i strona nie wysyła ani jednego zapytania na zewnątrz.
 
          'umami'      — plan bezpłatny na cloud.umami.is albo własny serwer.
-                        Bez ciasteczek, serwery w Unii. To jest rekomendacja.
-         'plausible'  — płatny, też bez ciasteczek, serwery w Unii.
+                        Bez ciasteczek. UWAGA: lokalizacja serwerów zależy od
+                        wariantu — usługa w chmurze stoi poza Unią, wersja
+                        postawiona u siebie tam, gdzie ją postawicie. Trzeba to
+                        sprawdzić i wpisać do polityki prywatności, bo od tego
+                        zależy, czy dochodzi przekazanie danych poza Unię.
+         'plausible'  — płatny, bez ciasteczek, serwery deklarowane w Unii.
+                        Droższy, ale zdejmuje pytanie o transfer.
          'cloudflare' — działa TYLKO gdy strona stoi za Cloudflare. Serwis stoi
                         na GitHub Pages, więc na dziś ten wariant odpada.
          'ga4'        — Google Analytics. Używa ciasteczek i wysyła dane poza
