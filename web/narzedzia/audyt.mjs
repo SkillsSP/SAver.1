@@ -192,6 +192,11 @@ const wzorceZakazane = {
   "TODO": "notatka robocza",
   "rdzeń": "termin wycofany ze słownika marki",
   "Rdzeń": "termin wycofany ze słownika marki",
+  /* Dolna granica liczebności grupy jest warunkiem jej uruchomienia, więc
+     zapis „do ośmiu" ją przemilcza. Wykryte w audycie: sześć podstron nadal
+     tak mówiło, mimo że cennik i „O nas" były już poprawione. */
+  "do 8 osób": "liczebność bez dolnej granicy — powinno być „5–8"",
+  "do ośmiu": "liczebność bez dolnej granicy — powinno być „5–8"",
 };
 for (const s of realne) {
   const tekst = bezZnacznikow(s.tresc);

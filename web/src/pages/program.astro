@@ -2,7 +2,7 @@
 import Baza from "../layouts/Baza.astro";
 import OdeslanieDoGrup from "../components/OdeslanieDoGrup.astro";
 import ZapisCta from "../components/ZapisCta.astro";
-import { url, menuProgram, wielkoscGrupy, firma } from "../lib/site.js";
+import { url, menuProgram, wielkoscGrupyTekst, firma } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 ---
 
@@ -24,7 +24,7 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
         </p>
         <ul class="naglowek-strony__meta">
           <li>Wiek 5–19 lat</li>
-          <li>Grupy do {wielkoscGrupy} osób</li>
+          <li>Grupy {wielkoscGrupyTekst} osób</li>
           <li>{firma.miasto}, zajęcia stacjonarne</li>
         </ul>
       </div>

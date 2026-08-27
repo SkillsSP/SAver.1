@@ -5,7 +5,7 @@ import {
   url,
   grupyWiekowe,
   zrodla,
-  wielkoscGrupy,
+  wielkoscGrupyTekst,
   telefonHref,
   telefonTekst,
   firma,
@@ -104,7 +104,7 @@ const trzyKroki = [
         </div>
         <ul class="hero__fakty">
           <li class="hero__fakt">{firma.miasto}, zajęcia stacjonarne</li>
-          <li class="hero__fakt">Grupy do {wielkoscGrupy} osób</li>
+          <li class="hero__fakt">Grupy {wielkoscGrupyTekst} osób</li>
           <li class="hero__fakt">Zajęcia podstawowe w całości po angielsku</li>
         </ul>
       </div>
@@ -386,7 +386,7 @@ const trzyKroki = [
             </li>
             <li>
               <span class="etykieta">Wielkość grupy</span>
-              <span class="wartosc">Do {wielkoscGrupy} osób</span>
+              <span class="wartosc">{wielkoscGrupyTekst} osób</span>
             </li>
             <li>
               <span class="etykieta">Nabór</span>

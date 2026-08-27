@@ -301,9 +301,7 @@ button {
    wszędzie tam, gdzie tło jest ciemne, a element sterujący da się zaznaczyć
    klawiaturą. */
 .naglowek-strony--senior :focus-visible,
-.sekcja--marka :focus-visible,
-.sekcja--grafit :focus-visible,
-.stopka--grafit :focus-visible,
+.sekcja--slate :focus-visible,
 .pasek-akcji :focus-visible,
 .zgoda-cookies :focus-visible {
   outline-color: var(--bialy);
@@ -675,15 +673,15 @@ button {
 /* ==========================================================================
    SIATKI
    ========================================================================== */
+/* Warianty dobierane liczbą elementów — z policzoną arytmetyką — stoją
+   w osobnej sekcji „SIATKI — REGUŁA PARZYSTOŚCI" niżej w tym pliku. Są tam,
+   a nie tutaj, bo muszą nadpisywać warianty podstawowe. */
 .siatka {
   display: grid;
   gap: var(--space-3);
 }
 .siatka--2 {
   grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
-}
-.siatka--3 {
-  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
 }
 /* dwie kolumny o różnej wadze — tekst prowadzący + treść */
 .siatka--wiodaca {
@@ -1370,66 +1368,8 @@ button {
 /* ==========================================================================
    CENNIK
    ========================================================================== */
-.cena {
-  display: grid;
-  gap: var(--space-2);
-  padding: var(--space-4);
-  background: var(--tlo-karty);
-  border: var(--wlos);
-  border-radius: var(--radius-xl);
-  align-content: start;
-}
-.cena--wyrozniona {
-  border-color: var(--akcja);
-}
 
-.cena__kwota {
-  font-family: var(--font-odkrywca);
-  font-size: clamp(1.75rem, 1.5rem + 1vw, 2.25rem);
-  font-weight: var(--waga-naglowka);
-  line-height: 1.1;
-}
-.cena__kwota small {
-  font-family: var(--font-medrzec);
-  font-size: var(--text-maly);
-  font-weight: var(--waga-srednia);
-  color: var(--tekst-drugi);
-}
 
-.pozycja-cennika {
-  display: grid;
-  min-height: 1.5rem;
-  gap: var(--space-1);
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: baseline;
-  padding-block: var(--space-3);
-  border-top: var(--wlos);
-}
-.pozycja-cennika:first-child {
-  border-top: none;
-}
-.pozycja-cennika__nazwa {
-  display: grid;
-  gap: var(--space-05);
-}
-.pozycja-cennika__nazwa strong {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  flex-wrap: wrap;
-  font-size: var(--text-h4);
-  font-weight: var(--waga-polgruba);
-}
-.pozycja-cennika__nazwa span {
-  font-size: var(--text-drobny);
-  color: var(--tekst-drugi);
-}
-.pozycja-cennika__kwota {
-  font-family: var(--font-odkrywca);
-  font-size: var(--text-h3);
-  font-weight: var(--waga-naglowka);
-  white-space: nowrap;
-}
 
 /* ==========================================================================
    PYTANIA I ODPOWIEDZI
@@ -1496,82 +1436,6 @@ button {
   font-size: var(--text-h4);
   font-weight: var(--waga-polgruba);
   margin-bottom: var(--space-05);
-}
-
-/* ==========================================================================
-   MIEJSCE NA ZDJĘCIE — świadomie puste, dopóki nie ma własnych zdjęć
-   ========================================================================== */
-.miejsce-na-zdjecie {
-  display: grid;
-  place-content: center;
-  gap: var(--space-1);
-  text-align: center;
-  padding: var(--space-5) var(--space-3);
-  min-height: 14rem;
-  background: var(--tlo-tint-kobalt);
-  border: 1px dashed rgba(26, 34, 48, 0.22);
-  border-radius: var(--radius-lg);
-  color: var(--tekst-drugi);
-  font-size: var(--text-drobny);
-}
-.miejsce-na-zdjecie strong {
-  font-size: var(--text-maly);
-  font-weight: var(--waga-polgruba);
-  color: var(--tekst-glowny);
-}
-
-/* ==========================================================================
-   ZDJĘCIA
-
-   Kadr ustala komponent przez zmienną --proporcje, więc wysokość jest znana
-   przed pobraniem pliku i układ nie skacze podczas ładowania.
-   ========================================================================== */
-.zdjecie {
-  margin: 0;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  background: var(--tlo-tint-kobalt); /* tło na czas ładowania, zamiast bieli */
-}
-.zdjecie img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: var(--proporcje, 3 / 2);
-  object-fit: cover;
-}
-
-/* Pas przez całą szerokość kolumny — zdjęcie wiodące podstrony. Na wąskim
-   ekranie kadr 21/9 zostawiłby pasek wysokości kciuka, więc go pogłębiamy. */
-@media (max-width: 47.99rem) {
-  .zdjecie--pas img {
-    aspect-ratio: 3 / 2;
-  }
-}
-
-/* Zdjęcie wewnątrz karty siada pod jej górną krawędź: karta ma własny
-   wewnętrzny odstęp (--space-4 w wariancie luźnym), który tu odejmujemy,
-   żeby kadr dotykał brzegu. Odstęp pod zdjęciem daje już `gap` karty. */
-.karta--ze-zdjeciem {
-  padding-top: 0;
-  overflow: hidden;
-}
-.karta--ze-zdjeciem .zdjecie--w-karcie {
-  margin-inline: calc(var(--space-4) * -1);
-  margin-block: 0;
-  border-radius: 0;
-}
-
-/* Trzy ujęcia obok siebie na stronie głównej, jedno pod drugim na telefonie. */
-.pas-zdjec {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: var(--space-2);
-}
-
-/* Sekcja domykająca się do poprzedniej — używana pod nagłówkiem podstrony,
-   żeby zdjęcie wiodące nie odjeżdżało od tytułu. */
-.sekcja--bez-gory {
-  padding-top: 0;
 }
 
 /* ==========================================================================
@@ -2198,13 +2062,6 @@ button {
 }
 
 /* Wiersz godzin: nazwa z lewej, wartość z prawej. */
-.godziny__wiersz {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-2);
-  font-size: var(--text-bazowy);
-  line-height: var(--interlinia-tekst);
-}
 
 /* Zakotwiczenia muszą zejść pod przyklejoną nawigację, inaczej po kliknięciu
    nagłówek sekcji chowa się za paskiem. */
@@ -2737,7 +2594,15 @@ button {
 .okruszki__lista li:last-child::after {
   content: "";
 }
+/* Ten sam wymóg co w pasku użytkowym i stopce: cel dotykowy ma mieć co
+   najmniej 24 px wysokości. Sam tekst 13 px daje 17 px, a okruszki na
+   telefonie stoją blisko siebie, więc pomyłka jest tu łatwiejsza niż gdzie
+   indziej. Podnosimy wysokość odnośnika, nie odstęp listy — rząd okruszków
+   ma zostać niski, bo to nawigacja pomocnicza, nie główna. */
 .okruszki a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
   color: inherit;
   text-decoration: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.45);
