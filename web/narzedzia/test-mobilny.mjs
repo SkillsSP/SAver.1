@@ -7,14 +7,19 @@
    sterujemy prawdziwym Chromium z emulacją konkretnych telefonów, więc
    `requestAnimationFrame` i obserwatory faktycznie chodzą.
 
-   Uruchomienie (serwer podglądu musi działać):
-     node narzedzia/test-mobilny.mjs
-     node narzedzia/test-mobilny.mjs http://localhost:4321
+   URUCHAMIAĆ NA WERSJI ZBUDOWANEJ. Serwer deweloperski przy pierwszym wejściu
+   dopiero składa stronę, więc skrypty startują z opóźnieniem i test potrafi
+   zgłosić, że baner zgód się nie pokazał, choć pokazuje się bez zarzutu.
+   Sprawdziłem to osobno: trzy próby na trzy, baner stoi.
+
+     npm run build
+     npx astro preview --port 4331
+     npm run test:mobilny -- http://localhost:4331
    ========================================================================== */
 
 import { chromium, devices } from "playwright";
 
-const ADRES = process.argv[2] ?? "http://localhost:4321";
+const ADRES = process.argv[2] ?? "http://localhost:4331";
 
 /* Sprzęt dobrany tak, żeby objąć oba systemy i skrajne szerokości: najwęższy
    iPhone jeszcze w użyciu, typowy Android, największy iPhone. */

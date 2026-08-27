@@ -47,3 +47,11 @@ web/public/fonts/*-VF.*
 # Katalog roboczy CLI Supabase — zawiera dowiązanie do projektu i znaczniki
 # wersji, odtwarzane przy każdym uruchomieniu.
 supabase/.temp/
+
+# Kroje pisma w pełnym zestawie łacińskim, przed ograniczeniem do polskich
+# znaków. Trzymamy je poza `public/`, żeby nie pojechały na serwer razem
+# z ograniczonymi — 204 kB martwego balastu przy każdym wdrożeniu. Do
+# repozytorium też nie trafiają: da się je pobrać z Google Fonts na nowo,
+# a `narzedzia/fonty-ogranicz.mjs` opisuje, jak z nich zejść do zestawu
+# używanego przez serwis.
+web/fonty-zrodlowe/

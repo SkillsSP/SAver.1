@@ -39,7 +39,7 @@ const { nazwa, klasa = "naglowek-strony__foto" } = Astro.props;
 <img
   class={klasa}
   src={url(`/foto/${nazwa}-1600.webp`)}
-  srcset={`${url(`/foto/${nazwa}-800.webp`)} 800w, ${url(`/foto/${nazwa}-1600.webp`)} 1600w`}
+  srcset={`${url(`/foto/${nazwa}-800.webp`)} 800w, ${url(`/foto/${nazwa}-1200.webp`)} 1200w, ${url(`/foto/${nazwa}-1600.webp`)} 1600w`}
   sizes="100vw"
   alt=""
   aria-hidden="true"

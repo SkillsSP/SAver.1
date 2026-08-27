@@ -3,7 +3,7 @@
 
    Pliki źródłowe w ../zdjęcia/ to materiał aparatowy — pojedyncze ujęcie waży
    od 1 do 25 MB, cały katalog 629 MB. Do serwisu idzie WebP w dwóch
-   szerokościach (800 i 1600 px), co schodzi do ok. 60–200 kB na plik.
+   szerokościach (800, 1200 i 1600 px), co schodzi do ok. 35–200 kB na plik.
 
    Wybór jest ręczny, nie hurtowy. Powody odrzuceń są opisane przy każdym
    pominiętym ujęciu na dole pliku — chodzi o to, żeby przy następnej zmianie
@@ -19,7 +19,11 @@ import path from "node:path";
 
 const ZRODLO = path.resolve("../zdjęcia");
 const CEL = path.resolve("public/zdjecia");
-const SZEROKOSCI = [800, 1600];
+/* Trzy szerokości, nie dwie. Między 800 a 1600 jest luka, przez którą
+   telefony o gęstym ekranie przepłacają: kafel pokazywany na 340 px logicznych
+   potrzebuje około 1020 px fizycznych, więc bierze 1600 zamiast 800. Zmierzone
+   na stronie głównej: 1064 kB, z czego 810 kB to same zdjęcia. */
+const SZEROKOSCI = [800, 1200, 1600];
 const JAKOSC = 78;
 
 /* Klucz = nazwa pliku wyjściowego, wartość = ścieżka źródłowa i opis alternatywny.
