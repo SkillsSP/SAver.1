@@ -1,0 +1,117 @@
+---
+import Baza from "../layouts/Baza.astro";
+import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import FotoNaglowka from "../components/FotoNaglowka.astro";
+import { url, poradnik } from "../lib/site.js";
+
+/* ==========================================================================
+   PORADNIK — lista wpisów
+
+   Sekcja jest gotowa, ale niewidoczna, dopóki nie ma ani jednego wpisu.
+   Pusta lista artykułów wygląda na porzucony projekt, a to szkodzi bardziej
+   niż brak sekcji — rodzic czyta z niej, że centrum coś zaczęło i zarzuciło.
+
+   Widoczność nie ma tu osobnego przełącznika i to jest celowe: warunkiem jest
+   istnienie treści, a nie czyjaś decyzja. Pierwszy wpis w tablicy `poradnik`
+   w src/lib/site.js otwiera sekcję sam.
+
+   Wpisy renderują się z tej samej tablicy co ich strony, więc lista i treść
+   nie mogą się rozjechać.
+   ========================================================================== */
+
+const wpisy = [...poradnik].sort((a, b) => (a.data < b.data ? 1 : -1));
+const widoczny = wpisy.length > 0;
+
+/* Data w formacie czytelnym dla człowieka; w znaczniku strony zostaje zapis
+   maszynowy, bo tego oczekuje wyszukiwarka. */
+const dataPolska = (iso) =>
+  new Date(iso).toLocaleDateString("pl-PL", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+---
+
+<Baza
+  aktywna="poradnik"
+  tytul="Poradnik dla rodziców"
+  opis="Egzaminy, nauka języka i rozwój dziecka — odpowiedzi na pytania, które rodzice zadają najczęściej. Skills Academy w Szczecinie."
+  bezIndeksowania={!widoczny}
+>
+  <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 45%">
+    <FotoNaglowka nazwa="life-globus" />
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Poradnik</span>
+        <h1 class="tytul-1">Odpowiedzi, zanim zaczniecie szukać szkoły</h1>
+        <p class="hero__zdanie">
+          Piszemy o egzaminach, nauce języka i rozwoju dziecka. Bez chwalenia
+          się metodą — o tym jest reszta serwisu.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {widoczny ? (
+    <section class="sekcja">
+      <div class="szerokosc">
+        <div class="siatka siatka--wiele">
+          {wpisy.map((w) => (
+            <article class="karta karta--ze-zdjeciem">
+              {w.kadr && (
+                <img
+                  class="kafel__kadr zdjecie--w-karcie"
+                  src={url(`/foto/${w.kadr}-800.webp`)}
+                  srcset={`${url(`/foto/${w.kadr}-800.webp`)} 800w, ${url(`/foto/${w.kadr}-1600.webp`)} 1600w`}
+                  sizes="(min-width: 68rem) 22rem, 100vw"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+              <time class="etykieta" datetime={w.data}>{dataPolska(w.data)}</time>
+              <h2 class="tytul-4">
+                <a class="link-w-zdaniu" href={url(`/poradnik/${w.slug}`)}>{w.tytul}</a>
+              </h2>
+              <p class="tekst-maly tekst-drugi">{w.opis}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class="sekcja">
+      <div class="szerokosc">
+        <div class="siatka--wiodaca">
+          <div class="stos stos--ciasny">
+            <span class="nadtytul">W przygotowaniu</span>
+            <h2 class="tytul-1">Pierwsze teksty powstają</h2>
+          </div>
+          <div class="stos">
+            <p class="wiodacy">
+              Ta sekcja pojawi się w nawigacji razem z pierwszym wpisem.
+            </p>
+
+            <DoUzupelnienia czego="Pierwsze trzy teksty">
+              Dopiszcie wpisy do tablicy <code>poradnik</code> w
+              <code>src/lib/site.js</code>. Sekcja otworzy się sama — nie ma
+              tu osobnego przełącznika, bo warunkiem jest treść, a nie decyzja.
+              <br /><br />
+              Tematy, które w wyszukiwaniu lokalnym pracują najmocniej, bo
+              rodzic wpisuje je, zanim zacznie szukać szkoły: struktura
+              egzaminu ósmoklasisty z angielskiego, progi punktowe na maturze
+              rozszerzonej z historii oraz to, ile słów realnie potrzebuje
+              dziecko w wieku wczesnoszkolnym.
+              <br /><br />
+              Granica jest jedna i ta sama co na stronach ofertowych:
+              w poradniku nie piszemy o skuteczności własnej metody. Tekst ma
+              odpowiadać na pytanie rodzica, nie sprzedawać zajęć — sprzedaje
+              go rzetelność, nie wtrącone wezwanie.
+            </DoUzupelnienia>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+</Baza>

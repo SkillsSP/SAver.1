@@ -2610,3 +2610,45 @@ button {
 .naglowek-strony--foto .okruszki {
   color: var(--bialy);
 }
+
+/* ==========================================================================
+   TERMINARZ
+
+   Wiersz zajęć korzysta z tego samego wzorca co progi cenowe: nazwa i opis
+   z lewej, wartość z prawej. Godzina stoi tam, gdzie w cenniku stoi kwota —
+   rodzic skanuje obie tabele tym samym ruchem oka.
+   ========================================================================== */
+
+.terminarz__dzien + .terminarz__dzien {
+  margin-top: var(--space-4);
+}
+
+.terminarz__nazwa-dnia {
+  margin-bottom: var(--space-1);
+  /* Nazwy dni trzymamy w danych małą literą, żeby dały się porównywać
+     bez zgadywania; wielką literę dokłada widok. */
+  text-transform: capitalize;
+}
+
+/* ==========================================================================
+   ARTYKUŁ PORADNIKA
+
+   Wąska kolumna. Tekst ciągły powyżej mniej więcej siedemdziesięciu znaków
+   w wierszu czyta się gorzej, bo oko gubi początek następnej linii — dlatego
+   artykuł nie idzie na pełną szerokość kontenera, mimo że miejsce jest.
+   ========================================================================== */
+
+.artykul {
+  max-width: var(--szerokosc-tekstu);
+}
+.artykul p {
+  margin-bottom: var(--space-2);
+  line-height: var(--interlinia-tekst);
+}
+.artykul h2 {
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-1);
+}
+.artykul h2:first-child {
+  margin-top: 0;
+}

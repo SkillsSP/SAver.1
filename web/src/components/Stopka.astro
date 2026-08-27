@@ -8,10 +8,17 @@ import {
   telefonTekst,
   emailTekst,
   adresTekst,
+  terminarz,
+  poradnik,
 } from "../lib/site.js";
 
 const tel = telefonHref();
 const rok = new Date().getFullYear();
+
+/* Ten sam warunek co w nagłówku i na stronach — jedno źródło prawdy o tym,
+   czy sekcja w ogóle istnieje dla odwiedzającego. */
+const pokazTerminarz = terminarz.pokazuj && terminarz.dni.length > 0;
+const pokazPoradnik = poradnik.length > 0;
 ---
 
 {/* Kotwica `#kontakt` zostaje na stopce mimo powstania osobnej podstrony.
@@ -52,6 +59,9 @@ const rok = new Date().getFullYear();
           <li><a href={url("/exams/egzamin-osmoklasisty")}>Exams · egzamin ósmoklasisty</a></li>
           <li><a href={url("/exams/matura")}>Exams · matura</a></li>
           <li><a href={url("/cennik")}>Cennik</a></li>
+          {pokazTerminarz && (
+            <li><a href={url("/terminarz")}>Terminarz zajęć</a></li>
+          )}
         </ul>
       </div>
 
@@ -64,6 +74,9 @@ const rok = new Date().getFullYear();
           <li><a href={url("/bezpieczenstwo")}>Bezpieczeństwo</a></li>
           <li><a href={url("/kontakt")}>Kontakt</a></li>
           <li><a href={url("/zapisy")}>Zapisy na zajęcia próbne</a></li>
+          {pokazPoradnik && (
+            <li><a href={url("/poradnik")}>Poradnik dla rodziców</a></li>
+          )}
         </ul>
       </div>
 

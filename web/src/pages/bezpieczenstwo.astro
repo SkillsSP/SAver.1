@@ -8,6 +8,7 @@ import {
   telefonHref,
   telefonTekst,
   ochronaMaloletnich,
+  ubezpieczenie,
 } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 
@@ -35,7 +36,7 @@ const odbior = [
 const zgloszenie = [
   {
     tytul: "Przyjęcie zgłoszenia tego samego dnia",
-    opis: "Zgłoszenie przyjmuje osoba odpowiedzialna za standardy. W razie jej nieobecności zastępuje ją wyznaczony zastępca.",
+    opis: `Zgłoszenie przyjmuje ${ochronaMaloletnich.imie}, osoba odpowiedzialna za standardy. W razie jej nieobecności zastępuje ją ${ochronaMaloletnich.zastepca}. Dostęp do skrzynki zgłoszeniowej mają wyłącznie te dwie osoby.`,
   },
   {
     tytul: "Zabezpieczenie dziecka",
@@ -137,8 +138,7 @@ const zasadyDlaDziecka = [
         i skróconej, napisanej językiem zrozumiałym dla dziecka. Obie są poniżej.
         Przed publikacją treść musi przejść przegląd prawny, a Wy musicie
         uzupełnić: numer i datę wersji dokumentu, datę następnego przeglądu,
-        imię, nazwisko i funkcję osoby odpowiedzialnej za standardy wraz
-        z zastępcą, wiek samodzielnego wyjścia, liczbę dni na usunięcie
+        wiek samodzielnego wyjścia, liczbę dni na usunięcie
         materiałów po wycofaniu zgody wizerunkowej, częstotliwość przeglądu
         apteczek oraz adres e-mail do zgłoszeń.
       </DoUzupelnienia>
@@ -290,7 +290,8 @@ const zasadyDlaDziecka = [
           <h3 class="tytul-4">Do osoby odpowiedzialnej</h3>
           <p class="tekst-maly tekst-drugi">
             Za standardy ochrony małoletnich odpowiada
-            <strong>{ochronaMaloletnich.imie}</strong>.
+            <strong>{ochronaMaloletnich.imie}</strong>, a w czasie jej
+            nieobecności zastępuje ją <strong>{ochronaMaloletnich.zastepca}</strong>.
             {ochronaMaloletnich.adresBezposredni
               ? " Zgłoszenie trafia wprost do niej — nie przez biuro i nie przez osoby prowadzące zajęcia."
               : " Zgłoszenie można też złożyć anonimowo albo skorzystać z numerów niezależnych od centrum, wymienionych obok."}
@@ -363,6 +364,51 @@ const zasadyDlaDziecka = [
             zastępniki na odnośniki. Do czasu wgrania lepiej pokazywać „plik
             w przygotowaniu" niż odnośnik prowadzący donikąd.
           </DoUzupelnienia>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* UBEZPIECZENIE. Rodzice o to pytają, a mało która placówka pisze o tym
+       na stronie. Dopóki polisy nie ma, zdanie stoi w czasie przyszłym —
+       przestawienie `ubezpieczenie.wykupione` w site.js zamienia je na fakt.
+       Skrót w drugą stronę byłby zwykłą nieprawdą w miejscu, w którym rodzic
+       pyta o bezpieczeństwo dziecka. */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Ubezpieczenie</span>
+          <h2 class="tytul-1">
+            {ubezpieczenie.wykupione ? "Placówka jest ubezpieczona" : "Polisa przed pierwszymi zajęciami"}
+          </h2>
+        </div>
+        <div class="stos">
+          {ubezpieczenie.wykupione ? (
+            <p class="wiodacy">
+              Centrum ma wykupioną polisę odpowiedzialności cywilnej,
+              obejmującą zajęcia prowadzone w naszej siedzibie. Zakres ochrony
+              pokazujemy do wglądu na życzenie, przed podpisaniem umowy.
+            </p>
+          ) : (
+            <>
+              <p class="wiodacy">
+                Polisę odpowiedzialności cywilnej placówki wykupimy przed
+                pierwszymi zajęciami — to warunek uruchomienia naboru, nie
+                deklaracja na przyszłość.
+              </p>
+              <p class="tekst-drugi">
+                Dopóki umowa z ubezpieczycielem nie jest zawarta, nie napiszemy
+                tutaj, że centrum jest ubezpieczone. Kiedy będzie, w tym
+                miejscu pojawi się zakres ochrony, a dokument pokażemy do
+                wglądu przed podpisaniem umowy z Państwem.
+              </p>
+            </>
+          )}
+          <p class="tekst-drobny">
+            Ubezpieczenie następstw nieszczęśliwych wypadków dziecka pozostaje
+            po stronie rodziców — najczęściej pokrywa je polisa szkolna.
+          </p>
         </div>
       </div>
     </div>

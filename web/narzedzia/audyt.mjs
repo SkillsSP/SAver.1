@@ -198,13 +198,34 @@ const wzorceZakazane = {
   "do 8 osób": "liczebność bez dolnej granicy, powinno być 5-8",
   "do ośmiu": "liczebność bez dolnej granicy, powinno być 5-8",
 };
+
+/* Terminy wycofane ze słownika marki — patrz CLAUDE.md. Tu potrzebna jest
+   granica wyrazu, a nie zwykłe zawieranie: fragment „rdzeni" siedzi w środku
+   słowa „potwierdzenie" i bez granicy zgłaszałby trzy strony, na których nic
+   złego nie ma. Dlatego ta lista chodzi po wyrażeniach regularnych. */
+const wzorceZakazaneRegex = [
+  [/(^|[^a-ząćęłńóśźż])[Rr]dze(ń|nia|niowi|niem|niu|nie)(?![a-ząćęłńóśźż])/,
+   "termin wycofany, ma być „zajęcia podstawowe”"],
+];
 for (const s of realne) {
   const tekst = bezZnacznikow(s.tresc);
   for (const [wzor, powod] of Object.entries(wzorceZakazane)) {
     if (tekst.includes(wzor)) blad("treść", `${s.adres} — „${wzor}" (${powod})`);
   }
+  for (const [wzor, powod] of wzorceZakazaneRegex) {
+    const trafienie = tekst.match(wzor);
+    if (trafienie) blad("treść", `${s.adres} — „${trafienie[0].trim()}" (${powod})`);
+  }
   if (tekst.includes("508 069 007")) kontakt.telefon++;
   if (tekst.includes("kontakt@skilful.pl")) kontakt.email++;
+  /* Klamry, które nie zostały rozwinięte. Wpisanie \{zmienna.pole\} do zwykłego
+     łańcucha znaków zamiast do szablonu daje kod widoczny gołym okiem
+     w gotowej stronie i niczego nie wywala po drodze — build przechodzi,
+     a rodzic czyta nazwę zmiennej. Dlatego szukamy tego tutaj. */
+  const klamry = tekst.match(/\{[a-z][A-Za-z0-9_]*\.[A-Za-z0-9_]+\}/g) ?? [];
+  for (const k of new Set(klamry))
+    blad("treść", `${s.adres} — nierozwinięta klamra ${k} (łańcuch zamiast szablonu)`);
+
   /* Cudzysłowy proste w polskim tekście. */
   const proste = (tekst.match(/(?<=\s)"[a-ząćęłńóśźż]/gi) ?? []).length;
   if (proste) ostrzez("typografia", `${s.adres} — ${proste} × cudzysłów prosty zamiast „…"`);
@@ -272,8 +293,14 @@ for (const s of realne) {
   const a = s.adres.replace(/\/$/, "") || "/";
   const formalna = ["/regulamin", "/polityka-prywatnosci", "/klauzula-rodo"].includes(a);
   const czterysta = a === "/404";
-  if (!formalna && !czterysta && !wMapie.includes(a))
+  /* Strona poza mapą jest błędem tylko wtedy, gdy sama siebie uważa za gotową.
+     Terminarz i poradnik czekają na treść i proszą wyszukiwarki o pominięcie —
+     ich nieobecność w mapie jest zamierzona i musi się z tym zgadzać. */
+  const ukryta = /<meta name="robots" content="noindex/.test(s.tresc);
+  if (!formalna && !czterysta && !ukryta && !wMapie.includes(a))
     blad("mapa serwisu", `${a} nie występuje w mapie`);
+  if (ukryta && wMapie.includes(a))
+    blad("mapa serwisu", `${a} prosi o pominięcie, a mimo to stoi w mapie`);
   if ((formalna || czterysta) && wMapie.includes(a))
     blad("mapa serwisu", `${a} nie powinno być w mapie`);
 }

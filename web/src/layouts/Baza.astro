@@ -14,13 +14,23 @@ interface Props {
   pytania?: { pytanie: string; odpowiedz: string }[];
   /** Ścieżka okruszków: kolejne poziomy od strony głównej do bieżącej. */
   okruszki?: { nazwa: string; href?: string }[];
+  /** Strona gotowa, ale jeszcze niepublikowana — prosimy wyszukiwarki o pominięcie. */
+  bezIndeksowania?: boolean;
   opis: string;
   aktywna?: string;
   /** Rejestr Teens Senior: slate, wyłącznie Lexend, bez Quicksand. */
   senior?: boolean;
 }
 
-const { tytul, opis, aktywna = "", senior = false, pytania, okruszki } = Astro.props;
+const {
+  tytul,
+  opis,
+  aktywna = "",
+  senior = false,
+  pytania,
+  okruszki,
+  bezIndeksowania = false,
+} = Astro.props;
 /* Tytuł strony w wynikach wyszukiwania jest ucinany mniej więcej po
    sześćdziesięciu pięciu znakach. Domyślnie doklejamy nazwę i miasto, bo
    przy centrum działającym w jednym mieście nazwa miasta w tytule realnie
@@ -69,6 +79,11 @@ const znacznik = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pelnyTytul}</title>
     <meta name="description" content={opis} />
+    {/* Strona istnieje pod swoim adresem, ale nie ma jej w nawigacji ani
+        w mapie serwisu i prosimy wyszukiwarki o pominięcie. Tak wygląda
+        podstrona gotowa, lecz czekająca na dane — można ją obejrzeć
+        i pokazać do sprawdzenia, nie publikując. */}
+    {bezIndeksowania && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={kanoniczny} />
 
     <link rel="manifest" href={url("/site.webmanifest")} />

@@ -1,6 +1,13 @@
 ---
 import Marka from "./Marka.astro";
-import { url, menuProgram, menuExams, telefonHref } from "../lib/site.js";
+import {
+  url,
+  menuProgram,
+  menuExams,
+  telefonHref,
+  terminarz,
+  poradnik,
+} from "../lib/site.js";
 
 interface Props {
   /** Która pozycja paska jest aktywna: program | exams | cennik | o-nas | kontakt */
@@ -10,6 +17,12 @@ interface Props {
 }
 
 const { aktywna = "", ctaSenior = false } = Astro.props;
+
+/* Terminarz i poradnik wchodzą do menu dopiero wtedy, gdy mają co pokazać.
+   Warunek jest ten sam co na samych stronach, więc nawigacja nie może
+   zaprowadzić do sekcji „w przygotowaniu" — nie da się ich rozjechać. */
+const pokazTerminarz = terminarz.pokazuj && terminarz.dni.length > 0;
+const pokazPoradnik = poradnik.length > 0;
 const ctaTekst = ctaSenior ? "Zapisz się na konsultację" : "Umów zajęcia próbne";
 const tel = telefonHref();
 ---
@@ -40,6 +53,12 @@ const tel = telefonHref();
               <span>{poz.opis}</span>
             </a>
           ))}
+          {pokazTerminarz && (
+            <a class="panel__link" href={url("/terminarz")}>
+              <strong>Terminarz</strong>
+              <span>Dni i godziny zajęć w tym roku szkolnym.</span>
+            </a>
+          )}
         </div>
       </div>
 
@@ -87,6 +106,13 @@ const tel = telefonHref();
         href={url("/o-nas")}
         aria-current={aktywna === "o-nas" ? "page" : undefined}>O nas</a
       >
+      {pokazPoradnik && (
+        <a
+          class="pasek__pozycja"
+          href={url("/poradnik")}
+          aria-current={aktywna === "poradnik" ? "page" : undefined}>Poradnik</a
+        >
+      )}
       <a
         class="pasek__pozycja"
         href={url("/kontakt")}
@@ -135,6 +161,7 @@ const tel = telefonHref();
       </button>
       <div class="akordeon__tresc" id="akordeon-program" hidden>
         {menuProgram.map((poz) => <a href={url(poz.href)}>{poz.nazwa}</a>)}
+        {pokazTerminarz && <a href={url("/terminarz")}>Terminarz</a>}
       </div>
     </div>
 
@@ -164,6 +191,9 @@ const tel = telefonHref();
 
     <a class="menu-mobilne__link" href={url("/cennik")}>Cennik</a>
     <a class="menu-mobilne__link" href={url("/o-nas")}>O nas</a>
+    {pokazPoradnik && (
+      <a class="menu-mobilne__link" href={url("/poradnik")}>Poradnik</a>
+    )}
     <a class="menu-mobilne__link" href={url("/kontakt")}>Kontakt</a>
 
     <div class="stos stos--ciasny" style="margin-top: var(--space-3);">

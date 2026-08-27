@@ -15,6 +15,9 @@
     "/exams", "/exams/egzamin-osmoklasisty", "/exams/matura",
     "/cennik", "/zapisy", "/kontakt", "/o-nas", "/metoda",
     "/bezpieczenstwo", "/regulamin", "/polityka-prywatnosci", "/klauzula-rodo",
+    /* Ukryte przed wyszukiwarkami, ale nie przed audytem — mają działać
+       zanim je odsłonimy, a nie dopiero potem. */
+    "/terminarz", "/poradnik",
   ];
   const SZEROKOSCI = [360, 768, 1024, 1280];
 

@@ -9,10 +9,77 @@ import {
   telefonHref,
   telefonTekst,
   firma,
+  rokSzkolny,
+  ubezpieczenie,
+  terminarz,
+  grupaMin,
+  grupaMax,
 } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 const tel = telefonHref();
+const pokazTerminarz = terminarz.pokazuj && terminarz.dni.length > 0;
+
+/* --------------------------------------------------------------------------
+   PYTANIA OGÓLNE
+
+   Dobór jest tu ważniejszy niż liczba. Odpowiadamy wyłącznie na to, co wiemy
+   na pewno dziś — wielkość grupy, język zajęć, wiek, przebieg zajęć próbnych,
+   sposób rozliczenia, ubezpieczenie, weryfikacja prowadzących. Świadomie NIE
+   ma tu pytań o adres, godziny i liczbę wolnych miejsc: odpowiedź, która za
+   miesiąc przestanie być prawdziwa, kosztuje więcej niż jej brak, a te dane
+   wciąż czekają na umowę na lokal.
+
+   Te same pytania trafiają do danych strukturalnych (FAQPage) przez warstwę
+   `Baza`, więc mogą pokazać się w wyniku wyszukiwania rozwinięte. Dlatego
+   każda odpowiedź musi bronić się wyjęta z kontekstu strony.
+   -------------------------------------------------------------------------- */
+const pytania = [
+  {
+    pytanie: "Od jakiego wieku przyjmujecie dzieci?",
+    odpowiedz:
+      "Od 5 do 19 lat. Grupy dobieramy według wieku i tego, co dziecko już umie — sam rocznik bywa mylący, dlatego przed zapisem rozmawiamy. Zajęcia próbne odbywają się w grupie, do której dziecko faktycznie trafiłoby na stałe.",
+  },
+  {
+    pytanie: "Ile dzieci jest w grupie?",
+    odpowiedz: `Od ${grupaMin} do ${grupaMax}. Dolna granica jest tu równie ważna jak górna: poniżej ${grupaMin} osób nie ma z kim negocjować ani rozwiązywać zadania zespołowo, a na tym stoją zajęcia podstawowe. Jeśli grupa nie zbierze się do ${grupaMin} osób, proponujemy inny termin albo zwracamy wpłatę.`,
+  },
+  {
+    pytanie: "Czy dziecko musi znać angielski, żeby przyjść?",
+    odpowiedz:
+      "Nie. Zajęcia podstawowe prowadzimy w całości po angielsku, ale są tak zbudowane, żeby dziecko rozumiało z kontekstu, gestu i działania — nie z tłumaczenia. Przez pierwsze tygodnie dziecko może przede wszystkim słuchać i to jest w porządku.",
+  },
+  {
+    pytanie: "Jak wyglądają zajęcia próbne?",
+    odpowiedz:
+      "Są bezpłatne i nie zobowiązują do niczego. Dziecko bierze udział na normalnych zasadach, w docelowej grupie, a Państwo patrzą z boku. Po zajęciach rozmawiamy o tym, co widzieliśmy. Nie prosimy o decyzję tego samego dnia.",
+  },
+  {
+    pytanie: "Kiedy ruszają zajęcia?",
+    odpowiedz: `Start we ${rokSzkolny.startOdmiana}, w roku szkolnym ${rokSzkolny.etykieta}. Rozliczenie obejmuje dziesięć rat miesięcznych, od września do czerwca. Dni i godziny podamy przed uruchomieniem zapisów.`,
+  },
+  {
+    pytanie: "Jak wygląda płatność i czy mogę zrezygnować w trakcie roku?",
+    odpowiedz:
+      "Przelewem, raz w miesiącu, przez dziesięć miesięcy. Rezygnacja z ważnego powodu jest możliwa w każdej chwili — miesiąc zgłoszenia jest wtedy ostatnim płatnym, pozostałych rat nie naliczamy. Nie pobieramy wpisowego.",
+  },
+  {
+    pytanie: "Czy placówka jest ubezpieczona?",
+    odpowiedz: ubezpieczenie.wykupione
+      ? `Tak. Mamy wykupioną polisę — ${ubezpieczenie.zakres} — obejmującą zajęcia prowadzone w centrum. Zakres ochrony przedstawiamy na życzenie.`
+      : `Polisę — ${ubezpieczenie.zakres} — wykupimy przed pierwszymi zajęciami i napiszemy to tutaj wprost, razem z zakresem ochrony. Dopóki tego nie zrobimy, nie twierdzimy, że placówka jest już ubezpieczona.`,
+  },
+  {
+    pytanie: "Kto prowadzi zajęcia i czy sprawdzacie te osoby?",
+    odpowiedz:
+      "Każda osoba pracująca z dziećmi jest sprawdzana w Rejestrze Sprawców Przestępstw na Tle Seksualnym oraz przedstawia zaświadczenie z Krajowego Rejestru Karnego i oświadczenie o państwach zamieszkania — zanim wejdzie na pierwsze zajęcia. Wynika to z ustawy, a całą procedurę opisujemy na stronie Bezpieczeństwo.",
+  },
+  {
+    pytanie: "Co, jeśli dziecko opuści zajęcia?",
+    odpowiedz:
+      "Rata jest stała i nie zależy od liczby spotkań w danym miesiącu. Pojedynczą nieobecność zgłoszoną z wyprzedzeniem odrabiamy w innej grupie tego samego poziomu.",
+  },
+];
 
 /* Przebieg jednej misji — Detective Mission rozpisana na kroki. Zamiast
    czterech kafli z nazwami misji pokazujemy jedną, od środka. */
@@ -78,6 +145,7 @@ const trzyKroki = [
 <Baza
   tytul="Angielski dla życia, nie tylko dla szkoły"
   opis="Centrum kompetencji w Szczecinie dla dzieci i młodzieży 5–19 lat. Zajęcia po angielsku, fakultety oraz przygotowanie do egzaminu ósmoklasisty i matury."
+  pytania={pytania}
 >
   {/* ── 1 ── HERO. Hasło, jedno zdanie, dwa przyciski. Bez grafiki wypełniającej. */}
   <section class="hero hero--foto" style="--foto-kadr: center 42%">
@@ -106,6 +174,7 @@ const trzyKroki = [
           <li class="hero__fakt">{firma.miasto}, zajęcia stacjonarne</li>
           <li class="hero__fakt">Grupy {wielkoscGrupyTekst} osób</li>
           <li class="hero__fakt">Zajęcia podstawowe w całości po angielsku</li>
+          <li class="hero__fakt">Start: {rokSzkolny.start}</li>
         </ul>
       </div>
     </div>
@@ -382,24 +451,46 @@ const trzyKroki = [
             </li>
             <li>
               <span class="etykieta">Kiedy</span>
-              <span class="wartosc">Popołudniami — dni i godziny w uzupełnieniu</span>
+              <span class="wartosc">
+                {pokazTerminarz ? (
+                  <>Popołudniami — <a href={url("/terminarz")}>zobacz terminarz</a></>
+                ) : (
+                  "Popołudniami — dni i godziny w uzupełnieniu"
+                )}
+              </span>
             </li>
             <li>
               <span class="etykieta">Wielkość grupy</span>
               <span class="wartosc">{wielkoscGrupyTekst} osób</span>
             </li>
             <li>
-              <span class="etykieta">Nabór</span>
-              <span class="wartosc">Termin startu w uzupełnieniu</span>
+              <span class="etykieta">Start</span>
+              <span class="wartosc">
+                {rokSzkolny.start} — rok szkolny {rokSzkolny.etykieta}
+              </span>
+            </li>
+            <li>
+              <span class="etykieta">Ubezpieczenie</span>
+              {/* Czas przyszły, dopóki polisy nie ma. Zdanie zmieni się samo
+                  po przestawieniu `ubezpieczenie.wykupione` w site.js. */}
+              <span class="wartosc">
+                {ubezpieczenie.wykupione
+                  ? "Wykupione — odpowiedzialność cywilna placówki"
+                  : "Odpowiedzialność cywilna placówki — przed pierwszymi zajęciami"}
+              </span>
             </li>
           </ul>
 
-          <DoUzupelnienia czego="Powód, żeby napisać dziś">
-            Bez terminu startu, liczby wolnych miejsc i daty zamknięcia naboru
-            zajęcia próbne są przyjemną możliwością, a nie decyzją do podjęcia
-            w tym tygodniu. Uzupełnijcie trzy pola powyżej w
-            <code>src/lib/site.js</code> oraz datę naboru — to najtańsza zmiana
-            o największym wpływie na liczbę zgłoszeń.
+          <DoUzupelnienia czego="Adres, godziny i data zamknięcia naboru">
+            Termin startu już tu stoi. Zostają trzy rzeczy, które zamieniają
+            „kiedyś się zapiszemy" w „napiszmy dziś": adres lokalu
+            (<code>firma.ulica</code>), grafik (<code>terminarz.dni</code> wraz
+            z przełącznikiem <code>terminarz.pokazuj</code>) oraz data
+            zamknięcia naboru. Wszystkie w <code>src/lib/site.js</code>.
+            <br /><br />
+            Po zawarciu polisy przestawcie <code>ubezpieczenie.wykupione</code>
+            na <code>true</code> — zdanie wyżej i odpowiedź w pytaniach zmienią
+            się z zobowiązania na fakt same.
           </DoUzupelnienia>
         </div>
 
@@ -422,6 +513,36 @@ const trzyKroki = [
             Zobacz pełny cennik
           </a>
           <p class="tekst-drobny">Wszystkie stawki razem z zakresem zajęć, bez gwiazdek.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 7 ── PYTANIA. Rozwijane, bo rodzic szuka jednej odpowiedzi, a nie
+       czyta całości. Domyślnie zamknięte — otwarta lista dziewięciu pytań
+       wygląda jak regulamin i odstrasza. Te same treści idą do danych
+       strukturalnych, więc mogą trafić wprost do wyniku wyszukiwania. */}
+  <section class="sekcja" id="pytania">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Pytania</span>
+          <h2 class="tytul-1">Co rodzice pytają najczęściej</h2>
+        </div>
+        <div class="stos">
+          <div class="pytania">
+            {pytania.map((p) => (
+              <details>
+                <summary>{p.pytanie}</summary>
+                <p class="pytania__odpowiedz">{p.odpowiedz}</p>
+              </details>
+            ))}
+          </div>
+          <p class="tekst-drobny">
+            Nie ma tu odpowiedzi na Wasze pytanie? Zadzwońcie albo napiszcie —
+            a jeśli czegoś jeszcze nie wiemy, powiemy wprost, kiedy będzie
+            wiadomo.
+          </p>
         </div>
       </div>
     </div>

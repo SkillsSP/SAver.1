@@ -1,0 +1,95 @@
+---
+import Baza from "../../layouts/Baza.astro";
+import FotoNaglowka from "../../components/FotoNaglowka.astro";
+import Okruszki from "../../components/Okruszki.astro";
+import ZapisCta from "../../components/ZapisCta.astro";
+import { url, poradnik, firma } from "../../lib/site.js";
+
+/* ==========================================================================
+   PORADNIK — pojedynczy wpis
+
+   Adresy powstają z tablicy `poradnik` w src/lib/site.js. Gdy tablica jest
+   pusta, nie powstaje żadna strona — nie ma więc adresów prowadzących donikąd
+   ani pustych szkieletów w zbudowanym serwisie.
+
+   Znacznik `Article` daje wyszukiwarce datę i autora, przez co wpis może
+   pokazać się w wynikach jako artykuł, a nie zwykła podstrona. Autorem jest
+   centrum, nie osoba — dopóki teksty nie są podpisywane nazwiskiem, wskazanie
+   konkretnej osoby byłoby zmyśleniem.
+   ========================================================================== */
+
+export function getStaticPaths() {
+  return poradnik.map((wpis) => ({
+    params: { slug: wpis.slug },
+    props: { wpis },
+  }));
+}
+
+const { wpis } = Astro.props;
+
+const dataPolska = new Date(wpis.data).toLocaleDateString("pl-PL", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+const znacznik = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: wpis.tytul,
+  description: wpis.opis,
+  datePublished: wpis.data,
+  author: { "@type": "Organization", name: firma.nazwa },
+  publisher: { "@type": "Organization", name: firma.nazwa },
+  mainEntityOfPage: new URL(url(`/poradnik/${wpis.slug}`), Astro.site).href,
+};
+---
+
+<Baza
+  aktywna="poradnik"
+  tytul={wpis.tytul}
+  opis={wpis.opis}
+  okruszki={[{ nazwa: "Poradnik", href: "/poradnik" }, { nazwa: wpis.tytul }]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(znacznik)} />
+
+  <section
+    class="naglowek-strony naglowek-strony--foto"
+    style="--foto-kadr: center 45%"
+  >
+    <FotoNaglowka nazwa={wpis.kadr ?? "life-globus"} />
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <Okruszki sciezka={[{ nazwa: "Poradnik", href: "/poradnik" }, { nazwa: wpis.tytul }]} />
+        <h1 class="tytul-1">{wpis.tytul}</h1>
+        <p class="hero__zdanie">{wpis.opis}</p>
+        <ul class="naglowek-strony__meta">
+          <li><time datetime={wpis.data}>{dataPolska}</time></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* Wąska kolumna, nie pełna szerokość: tekst ciągły czyta się źle powyżej
+      mniej więcej siedemdziesięciu znaków w wierszu. */}
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="artykul">
+        {wpis.tresc.map((czesc) => (
+          <>
+            {czesc.naglowek && <h2 class="tytul-3">{czesc.naglowek}</h2>}
+            {czesc.akapity.map((a) => (
+              <p set:html={a} />
+            ))}
+          </>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ZapisCta
+    tytul="Macie pytanie, na które ten tekst nie odpowiada?"
+    tresc="Napiszcie albo zadzwońcie. Odpowiadamy konkretnie, a jeśli czegoś nie wiemy, mówimy wprost, kiedy będzie wiadomo."
+    przycisk="Zadaj pytanie"
+  />
+</Baza>

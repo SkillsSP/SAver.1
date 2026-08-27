@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
+import { terminarz, poradnik } from "./src/lib/site.js";
 
 // Statyczny serwis wizytówkowy pod własną domeną skilful.pl.
 //
@@ -31,10 +32,17 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Dokumenty formalne nie mają czego szukać w wynikach wyszukiwania.
-      filter: (strona) =>
-        !["polityka-prywatnosci", "regulamin", "klauzula-rodo"].some((s) =>
-          strona.includes(`/${s}`)
-        ),
+      /* Poza dokumentami formalnymi wypadają z mapy strony gotowe, ale
+         jeszcze nieopublikowane — terminarz bez ustalonego grafiku i poradnik
+         bez wpisów. Ich widoczność przełącza się w src/lib/site.js; ta lista
+         musi się z tamtymi przełącznikami zgadzać, bo adres w mapie serwisu
+         przy stronie proszącej o pominięcie jest sygnałem sprzecznym. */
+      filter: (strona) => {
+        const wykluczone = ["polityka-prywatnosci", "regulamin", "klauzula-rodo"];
+        if (!terminarz.pokazuj || terminarz.dni.length === 0) wykluczone.push("terminarz");
+        if (poradnik.length === 0) wykluczone.push("poradnik");
+        return !wykluczone.some((s) => strona.includes(`/${s}`));
+      },
     }),
   ],
 });

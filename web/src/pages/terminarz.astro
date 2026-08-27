@@ -1,0 +1,147 @@
+---
+import Baza from "../layouts/Baza.astro";
+import DoUzupelnienia from "../components/DoUzupelnienia.astro";
+import FotoNaglowka from "../components/FotoNaglowka.astro";
+import ZapisCta from "../components/ZapisCta.astro";
+import {
+  url,
+  terminarz,
+  dniTygodnia,
+  rokSzkolny,
+  wielkoscGrupyTekst,
+  telefonHref,
+  telefonTekst,
+} from "../lib/site.js";
+
+/* ==========================================================================
+   TERMINARZ ZAJĘĆ
+
+   Strona jest gotowa i działa, ale pozostaje niewidoczna, dopóki grafik nie
+   będzie ustalony — przełącznik `terminarz.pokazuj` w src/lib/site.js.
+
+   Ukrycie oznacza trzy rzeczy naraz: brak pozycji w nawigacji i w stopce, brak
+   adresu w mapie serwisu oraz prośba do wyszukiwarek o pominięcie strony. Sam
+   adres działa, więc można ją obejrzeć przed publikacją i pokazać komuś do
+   sprawdzenia.
+
+   Widoczność wymaga OBU warunków: przełącznika i niepustych godzin. Sam
+   przełącznik pokazałby pustą tabelę, czyli dokładnie to, przed czym cała ta
+   konstrukcja ma chronić.
+   ========================================================================== */
+
+const widoczny = terminarz.pokazuj && terminarz.dni.length > 0;
+const tel = telefonHref();
+
+/* Grupujemy po dniach w kolejności tygodnia, a w obrębie dnia po godzinie
+   rozpoczęcia. Porównanie tekstowe wystarcza, bo godziny są zapisane
+   dwucyfrowo — „09:00" stoi przed „16:00" bez zamiany na liczby. */
+const wgDni = dniTygodnia
+  .map((dzien) => ({
+    dzien,
+    zajecia: terminarz.dni
+      .filter((z) => z.dzien === dzien)
+      .sort((a, b) => a.od.localeCompare(b.od)),
+  }))
+  .filter((d) => d.zajecia.length > 0);
+---
+
+<Baza
+  aktywna="program"
+  tytul={`Terminarz zajęć ${rokSzkolny.etykieta}`}
+  opis={`Dni i godziny zajęć w Skills Academy w Szczecinie w roku szkolnym ${rokSzkolny.etykieta}. Grupy ${wielkoscGrupyTekst} osób, zajęcia popołudniami.`}
+  bezIndeksowania={!widoczny}
+>
+  <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 45%">
+    <FotoNaglowka nazwa="life-grupa" />
+    <div class="szerokosc">
+      <div class="naglowek-strony__tresc">
+        <span class="nadtytul nadtytul--na-marce">Terminarz</span>
+        <h1 class="tytul-1">Dni i godziny zajęć</h1>
+        <p class="hero__zdanie">
+          Rok szkolny {rokSzkolny.etykieta}. Zajęcia odbywają się popołudniami,
+          w grupach {wielkoscGrupyTekst} osób.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {widoczny ? (
+    <section class="sekcja">
+      <div class="szerokosc">
+        {wgDni.map((d) => (
+          <div class="terminarz__dzien">
+            <h2 class="tytul-3 terminarz__nazwa-dnia">{d.dzien}</h2>
+            <div class="progi">
+              {d.zajecia.map((z) => (
+                <div class="prog">
+                  <span class="prog__nazwa">{z.program}</span>
+                  <span class="prog__opis">
+                    {z.grupa}
+                    {z.prowadzi ? ` · prowadzi ${z.prowadzi}` : ""}
+                  </span>
+                  <span class="prog__kwota">
+                    {z.od}<small> – {z.do}</small>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <p class="tekst-maly tekst-drugi" style="margin-top: var(--space-4); max-width: var(--szerokosc-tekstu);">
+          Nie podajemy przy terminach liczby wolnych miejsc. Liczba, której nie
+          da się aktualizować co tydzień, wprowadza w błąd bardziej, niż pomaga
+          — o dostępność pytajcie telefonicznie, odpowiemy stanem na dziś.
+        </p>
+      </div>
+    </section>
+  ) : (
+    <section class="sekcja">
+      <div class="szerokosc">
+        <div class="siatka--wiodaca">
+          <div class="stos stos--ciasny">
+            <span class="nadtytul">W przygotowaniu</span>
+            <h2 class="tytul-1">Grafik powstaje</h2>
+          </div>
+          <div class="stos">
+            <p class="wiodacy">
+              Dni i godziny ustalamy razem z podpisaniem umowy na lokal. Podamy
+              je tutaj przed uruchomieniem zapisów na rok {rokSzkolny.etykieta}.
+            </p>
+            <p class="tekst-drugi">
+              Jeśli chcecie mieć pewność, że dowiecie się pierwsi — zostawcie
+              kontakt, a odezwiemy się, gdy grafik będzie gotowy.
+            </p>
+            <div class="przyciski">
+              <a class="przycisk przycisk--akcja" href={url("/kontakt")}>
+                Zostawcie kontakt
+              </a>
+              {tel && (
+                <span class="telefon-obok">
+                  albo zadzwońcie: <a href={tel}>{telefonTekst()}</a>
+                </span>
+              )}
+            </div>
+
+            <DoUzupelnienia czego="Grafik zajęć">
+              Wypełnijcie tablicę <code>terminarz.dni</code> w
+              <code>src/lib/site.js</code> — jeden wiersz na zajęcia: dzień,
+              godzina od i do, program, grupa wiekowa i prowadzący. Potem
+              przestawcie <code>terminarz.pokazuj</code> na <code>true</code>,
+              a strona pojawi się w nawigacji, w stopce i w mapie serwisu.
+              <br /><br />
+              Do czasu wypełnienia godzin przełącznik sam niczego nie pokaże —
+              strona sprawdza jedno i drugie, żeby nie dało się opublikować
+              pustej tabeli.
+            </DoUzupelnienia>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <ZapisCta
+    tytul="Nie wiecie, która grupa dla Waszego dziecka?"
+    tresc="Wiek to pierwsza wskazówka, ale nie jedyna. Zadzwońcie albo napiszcie — dobierzemy grupę po krótkiej rozmowie o tym, co dziecko już umie."
+  />
+</Baza>

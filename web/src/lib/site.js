@@ -254,6 +254,17 @@ export const fakultety = [
    -------------------------------------------------------------------------- */
 export const ochronaMaloletnich = {
   imie: "Karolina Dumała",
+  /* Ustawa wymaga wskazania zastępcy na czas nieobecności osoby
+     odpowiedzialnej. Dostęp do skrzynki `kontakt@` mają wyłącznie te dwie
+     osoby, więc zgłoszenie nie przechodzi przez cały zespół — to istotne przy
+     ścieżce, która ma omijać osoby prowadzące zajęcia.
+
+     Ograniczenie pozostaje jedno i trzeba je znać: zgłoszenie dotyczące
+     którejkolwiek z tych dwóch osób trafia do skrzynki, którą ona sama czyta.
+     Dlatego na stronie stoją obok numery niezależne od centrum — telefon
+     zaufania i Rzecznik Praw Dziecka. Docelowo osobny adres wyłącznie dla
+     osoby odpowiedzialnej rozwiązuje to w całości. */
+  zastepca: "Natalia Marczewska",
   /* Prawda mówi, czy adres należy wyłącznie do tej osoby. Steruje brzmieniem
      na stronie: przy `false` nie obiecujemy bezpośredniości. */
   adresBezposredni: false,
@@ -306,6 +317,111 @@ export const zespol = [
    historię prowadzi jedna osoba, więc przy chorobie nie ma zastępstwa — a to
    przedmiot sprzedawany pod konkretny termin egzaminu. Matematykę prowadzą
    dwie osoby, angielski trzy. */
+
+/* --------------------------------------------------------------------------
+   TERMINARZ ZAJĘĆ
+
+   Trzecia rzecz, o którą rodzic pyta po adresie i cenie: „czy jest grupa
+   w środy po szesnastej dla dziewięciolatka". Bez odpowiedzi musi zadzwonić,
+   a większość nie zadzwoni.
+
+   PRZEŁĄCZNIK `pokazuj`. Dopóki jest `false`, podstrona terminarza nie
+   pojawia się w nawigacji, w stopce ani w mapie serwisu i prosi wyszukiwarki
+   o pominięcie jej. Sam adres działa, więc można ją obejrzeć przed
+   publikacją. Włączenie to jedna wartość — pod warunkiem, że `dni` nie są
+   puste; przełącznik bez godzin pokazałby pustą tabelę, więc strona sprawdza
+   jedno i drugie.
+
+   ZAPIS GODZIN. `od` i `do` w formacie 24-godzinnym, żeby dało się je
+   porównywać i sortować bez zgadywania. Etykieta na stronie powstaje z nich
+   automatycznie.
+
+   Przykład wypełnionego wiersza — do skopiowania, gdy grafik będzie ustalony:
+
+     { dzien: "wtorek", od: "16:00", do: "16:45",
+       program: "Useful & Life Skills", grupa: "8–10 lat", prowadzi: "Kamil Dumała" }
+
+   Wolne miejsca celowo NIE są tu trzymane. Liczba, która nie jest
+   aktualizowana co tydzień, szkodzi bardziej niż jej brak — „zostały 2 miejsca"
+   sprzed miesiąca jest gorsze od milczenia.
+   -------------------------------------------------------------------------- */
+export const terminarz = {
+  pokazuj: false,
+  dni: [],
+};
+
+/** Kolejność dni w tygodniu — do sortowania i nagłówków tabeli. */
+export const dniTygodnia = [
+  "poniedziałek",
+  "wtorek",
+  "środa",
+  "czwartek",
+  "piątek",
+  "sobota",
+];
+
+/* --------------------------------------------------------------------------
+   PORADNIK
+
+   Miejsce na treści, których rodzic szuka, zanim zacznie szukać szkoły —
+   „jak wygląda egzamin ósmoklasisty z angielskiego", „ile słów powinien znać
+   ośmiolatek". W wyszukiwaniu lokalnym to najtańsza droga do rodziców, którzy
+   jeszcze nie wiedzą, że nas potrzebują.
+
+   Ta sama zasada co przy terminarzu: dopóki nie ma ani jednego wpisu, sekcja
+   jest ukryta. Pusta lista artykułów wygląda na porzucony projekt, a to gorsze
+   niż jej brak.
+
+   CZEGO NIE PISAĆ. Tekstów o skuteczności metody — obowiązują te same granice
+   co na stronach ofertowych, opisane w aneksie naukowym. Poradnik ma odpowiadać
+   na pytania o egzamin, wiek i naukę w ogóle, a nie chwalić centrum.
+
+   Kształt wpisu:
+
+     { slug: "egzamin-osmoklasisty-angielski",
+       tytul: "Jak wygląda egzamin ósmoklasisty z angielskiego",
+       opis: "Struktura arkusza, punktacja i to, co realnie decyduje o wyniku.",
+       data: "2026-09-15",
+       kadr: "life-globus",
+       tresc: [ { naglowek: "…", akapity: ["…"] } ] }
+   -------------------------------------------------------------------------- */
+export const poradnik = [];
+
+/* --------------------------------------------------------------------------
+   ROK SZKOLNY I START
+
+   Rodzic szukający zajęć w kwietniu musi wiedzieć, czy planuje na najbliższy
+   wrzesień, czy na kolejny. Brak tej informacji jest kosztowny: bez niej
+   przegląda ofertę, nie wiedząc, czy w ogóle go dotyczy.
+   -------------------------------------------------------------------------- */
+export const rokSzkolny = {
+  etykieta: "2026/2027",
+  start: "wrzesień 2026",
+  /* Forma miejscownika do zdań typu „start we wrześniu 2026". Polska
+     odmiana nie daje się wyliczyć z mianownika, więc stoi tu wprost —
+     inaczej w tekście lądowałoby „start we wrzesień 2026". */
+  startOdmiana: "wrześniu 2026",
+  /* Kurs obejmuje dziesięć rat od września do czerwca — patrz cennik. */
+  pierwszaRata: "wrzesień",
+  ostatniaRata: "czerwiec",
+};
+
+/* --------------------------------------------------------------------------
+   UBEZPIECZENIE ODPOWIEDZIALNOŚCI CYWILNEJ
+
+   Rodzice w tej branży o to pytają, a mało która placówka pisze to na stronie.
+   Dopóki `wykupione` jest `false`, strona mówi o tym w czasie przyszłym, jako
+   o zobowiązaniu przed pierwszymi zajęciami — bo tak jest naprawdę. Po zawarciu
+   polisy przestawcie na `true`, a zdanie samo zmieni się na fakt dokonany.
+
+   Nie ma tu miejsca na skrót: napisanie „placówka jest ubezpieczona", zanim
+   polisa istnieje, byłoby zwykłą nieprawdą w miejscu, w którym rodzic pyta
+   o bezpieczeństwo dziecka.
+   -------------------------------------------------------------------------- */
+export const ubezpieczenie = {
+  wykupione: false,
+  zakres: "odpowiedzialność cywilna placówki",
+};
 
 /* --------------------------------------------------------------------------
    ANALITYKA
