@@ -36,7 +36,7 @@ const odbior = [
 const zgloszenie = [
   {
     tytul: "Przyjęcie zgłoszenia tego samego dnia",
-    opis: `Zgłoszenie przyjmuje ${ochronaMaloletnich.imie}, osoba odpowiedzialna za standardy. W razie jej nieobecności zastępuje ją ${ochronaMaloletnich.zastepca}. Dostęp do skrzynki zgłoszeniowej mają wyłącznie te dwie osoby.`,
+    opis: `Zgłoszenie przyjmuje ${ochronaMaloletnich.imie}, osoba odpowiedzialna za standardy. W razie jej nieobecności zastępuje ją ${ochronaMaloletnich.zastepca}. Do skrzynki, na którą przychodzą zgłoszenia, mają dostęp wyłącznie te dwie osoby — nikt inny z centrum jej nie czyta.`,
   },
   {
     tytul: "Zabezpieczenie dziecka",
@@ -281,10 +281,21 @@ const zasadyDlaDziecka = [
       </div>
 
       <div class="siatka siatka--troje">
-        {/* Ścieżka zgłoszeń musi omijać biuro i osoby prowadzące zajęcia:
-            zgłoszenie może dotyczyć kogoś z zespołu, więc adres wspólny
-            czyniłby ją pozorną. Dlatego stoi tu adres bezpośredni osoby
-            odpowiedzialnej, a nie numer i skrzynka centrum. */}
+        {/* STAN NA DZIŚ: adresu bezpośredniego NIE MA. Zgłoszenia idą na wspólny
+            `kontakt@skilful.pl`, do którego dostęp mają dwie osoby — Karolina
+            i Natalia, czyli osoba odpowiedzialna za standardy i jej zastępczyni.
+
+            To jest słabość i trzeba ją nazwać po imieniu: zgłoszenie dotyczące
+            jednej z nich trafia do skrzynki, którą ta osoba czyta. Dlatego
+            `ochronaMaloletnich.adresBezposredni` stoi na `false`, a zdanie
+            niżej NIE obiecuje, że zgłoszenie omija biuro — mówi zamiast tego
+            o anonimowości i o numerach niezależnych od centrum, które stoją
+            w sąsiednich kartach. Tamta droga jest tu prawdziwym zabezpieczeniem,
+            nie ozdobnikiem.
+
+            Po założeniu osobnej skrzynki czytanej przez jedną osobę wpiszcie
+            ją w `ochronaMaloletnich.email` i przestawcie `adresBezposredni`
+            na `true` — zdanie zmieni się samo. */}
         <article class="karta karta--luzna">
           <span class="plakietka plakietka--kobalt">W centrum</span>
           <h3 class="tytul-4">Do osoby odpowiedzialnej</h3>
