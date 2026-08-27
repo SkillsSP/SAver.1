@@ -1,5 +1,14 @@
 ---
-import { url } from "../lib/site.js";
+import { url, analityka } from "../lib/site.js";
+
+/* Konfiguracja wchodzi do skryptu przez `define:vars`, więc w kodzie strony
+   ląduje wyłącznie adres tego dostawcy, którego faktycznie używamy. Google
+   traktujemy osobno: ciasteczka i transfer poza Unię wykluczają uruchamianie
+   bez zgody, więc wymuszamy to tutaj, a nie zostawiamy do ustawienia ręcznego. */
+const konfiguracja = {
+  ...analityka,
+  bezCiasteczek: analityka.nazwa === "ga4" ? false : analityka.bezCiasteczek,
+};
 ---
 
 {/*
@@ -7,7 +16,7 @@ import { url } from "../lib/site.js";
 
   Odtworzone z makiet „Zgoda cookies" i „Analityka — wdrożenie". Zasada jest
   jedna i nienegocjowalna: żaden skrypt analityczny nie ładuje się przed
-  zgodą. Konfiguracja siedzi w jednym miejscu (stała ANALYTICS poniżej),
+  zgodą. Konfiguracja siedzi w jednym miejscu (obiekt `analityka` w site.js),
   a dopóki `provider` jest `null`, bramka nie robi nic — baner działa, wybór
   jest zapamiętywany, ale nie ma czego uruchamiać.
 
@@ -46,100 +55,45 @@ import { url } from "../lib/site.js";
   </div>
 </div>
 
-<script is:inline>
+<script is:inline define:vars={{ konfiguracja }}>
   (function () {
     var KLUCZ = "sa-cookie-consent";
-
-    /* ── Konfiguracja analityki ──────────────────────────────────────────
-
-       Ustawcie `provider` i wklejcie identyfikator. Dopóki jest `null`, nic się
-       nie ładuje i strona nie wysyła ani jednego zapytania na zewnątrz.
-
-         'umami'      — plan bezpłatny na cloud.umami.is albo własny serwer.
-                        Bez ciasteczek. UWAGA: lokalizacja serwerów zależy od
-                        wariantu — usługa w chmurze stoi poza Unią, wersja
-                        postawiona u siebie tam, gdzie ją postawicie. Trzeba to
-                        sprawdzić i wpisać do polityki prywatności, bo od tego
-                        zależy, czy dochodzi przekazanie danych poza Unię.
-         'plausible'  — płatny, bez ciasteczek, serwery deklarowane w Unii.
-                        Droższy, ale zdejmuje pytanie o transfer.
-         'cloudflare' — działa TYLKO gdy strona stoi za Cloudflare. Serwis stoi
-                        na GitHub Pages, więc na dziś ten wariant odpada.
-         'ga4'        — Google Analytics. Używa ciasteczek i wysyła dane poza
-                        Unię, więc chodzi wyłącznie po zgodzie.
-
-       ── DLACZEGO `bezCiasteczek` MA ZNACZENIE ──────────────────────────────
-
-       Narzędzie, które nic nie zapisuje na urządzeniu, nie wymaga zgody
-       z banera — przepis o ciasteczkach dotyczy zapisu i odczytu na
-       urządzeniu, a nie samego liczenia odsłon. Trzymanie takiego narzędzia
-       za banerem oznacza, że liczy tylko tych, którzy klikną „akceptuję",
-       czyli zwykle mniejszość. Dane stają się wtedy bezużyteczne: nie da się
-       na nich stwierdzić, czy formularz działa, bo nie wiadomo, ilu ludzi go
-       w ogóle zobaczyło.
-
-       To NIE znaczy, że nie ma żadnych obowiązków. Adres IP jest daną osobową
-       także przy narzędziu bez ciasteczek, więc potrzebna jest podstawa
-       przetwarzania i wzmianka w polityce prywatności — jedno i drugie jest
-       opisane w sekcji o analityce na /polityka-prywatnosci. Zgoda z banera
-       nie jest do tego potrzebna, informacja tak. */
-    var ANALYTICS = {
-      provider: "umami",
-      bezCiasteczek: true,
-      umamiSrc: "https://cloud.umami.is/script.js",
-      umamiWebsiteId: "6b54cbf7-f3d7-47ee-801f-004df9f45085",
-      plausibleDomena: "",
-      cloudflareToken: "",
-      ga4Id: "",
-    };
-
-    /* Google zawsze za zgodą, niezależnie od ustawienia powyżej — ciasteczka
-       i transfer poza Unię wykluczają inne traktowanie. */
-    if (ANALYTICS.provider === "ga4") ANALYTICS.bezCiasteczek = false;
 
     var baner = document.querySelector("[data-zgoda]");
     if (!baner) return;
     var zaladowane = false;
 
     /* Ładuje skrypt analityki. Przy narzędziu bez ciasteczek wywoływane od
-       razu, przy Google — dopiero po zgodzie. */
+       razu, przy Google — dopiero po zgodzie. Adres i atrybuty pochodzą
+       z konfiguracji, więc ta funkcja nie zna żadnego dostawcy z nazwy. */
     function zaladujAnalitykę() {
-      if (zaladowane || !ANALYTICS.provider) return;
+      if (zaladowane || !konfiguracja.nazwa) return;
       zaladowane = true;
+
       var s = document.createElement("script");
       s.defer = true;
-      if (ANALYTICS.provider === "cloudflare") {
-        s.src = "https://static.cloudflareinsights.com/beacon.min.js";
-        s.setAttribute(
-          "data-cf-beacon",
-          JSON.stringify({ token: ANALYTICS.cloudflareToken })
-        );
-      } else if (ANALYTICS.provider === "umami") {
-        s.src = ANALYTICS.umamiSrc;
-        s.setAttribute("data-website-id", ANALYTICS.umamiWebsiteId);
-      } else if (ANALYTICS.provider === "plausible") {
-        s.src = "https://plausible.io/js/script.js";
-        s.setAttribute("data-domain", ANALYTICS.plausibleDomena);
-      } else if (ANALYTICS.provider === "ga4") {
+      s.src = konfiguracja.src;
+      var a = konfiguracja.atrybuty || {};
+      for (var k in a) if (Object.prototype.hasOwnProperty.call(a, k)) s.setAttribute(k, a[k]);
+
+      /* Google wymaga własnego rozruchu przed wczytaniem skryptu. Ten kawałek
+         trafia do strony wyłącznie wtedy, gdy Google jest wybrane. */
+      if (konfiguracja.nazwa === "ga4") {
         s.async = true;
-        s.src = "https://www.googletagmanager.com/gtag/js?id=" + ANALYTICS.ga4Id;
         window.dataLayer = window.dataLayer || [];
-        window.gtag = function () {
-          window.dataLayer.push(arguments);
-        };
+        window.gtag = function () { window.dataLayer.push(arguments); };
         window.gtag("js", new Date());
-        window.gtag("config", ANALYTICS.ga4Id, { anonymize_ip: true });
-      } else {
-        return;
+        window.gtag("config", konfiguracja.ga4Id, { anonymize_ip: true });
       }
+
       document.head.appendChild(s);
     }
 
     /* Czy analityka wolno działać. Narzędzie bez ciasteczek — tak, zawsze;
        narzędzie z ciasteczkami — dopiero po zgodzie „akceptuję wszystkie". */
     function analitykaDozwolona(poziom) {
-      if (!ANALYTICS.provider) return false;
-      return ANALYTICS.bezCiasteczek ? true : poziom === "all";
+      if (!konfiguracja.nazwa) return false;
+      return konfiguracja.bezCiasteczek ? true : poziom === "all";
     }
 
     /* Jedyny punkt, z którego wolno uruchamiać analitykę. */
@@ -186,7 +140,7 @@ import { url } from "../lib/site.js";
        pozornym, a baner, który nie zmienia niczego niezależnie od odpowiedzi,
        uczy ludzi klikać bez czytania. Informacja o analityce stoi w polityce
        prywatności, bo obowiązek informacyjny zostaje. */
-    var jestOCoPytac = ANALYTICS.provider && !ANALYTICS.bezCiasteczek;
+    var jestOCoPytac = konfiguracja.nazwa && !konfiguracja.bezCiasteczek;
 
     if (zapisane) oglos(zapisane);
     else if (jestOCoPytac) pokaz();

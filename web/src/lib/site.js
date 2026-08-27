@@ -308,6 +308,45 @@ export const zespol = [
    dwie osoby, angielski trzy. */
 
 /* --------------------------------------------------------------------------
+   ANALITYKA
+
+   Konfiguracja stoi tutaj, a nie w skrypcie na stronie, z jednego powodu:
+   dzięki temu w kodzie wysyłanym do przeglądarki ląduje wyłącznie adres tego
+   dostawcy, którego faktycznie używamy. Wcześniej wszystkie cztery warianty
+   siedziały w gałęziach jednego warunku, więc w źródle każdej podstrony stały
+   adresy Google, Plausible i Cloudflare — martwe, ale widoczne. Nic nie
+   ładowały, a mimo to ktoś zaglądający w źródło miał pełne prawo uznać, że
+   strona z nimi rozmawia. Przy serwisie, który o swojej powściągliwości mówi
+   wprost, to jest realny koszt.
+
+   `bezCiasteczek: true` znaczy, że narzędzie nie sięga do pamięci urządzenia
+   i wobec tego rusza bez pytania o zgodę — obowiązek informacyjny wypełnia
+   sekcja 7 polityki prywatności. Przy narzędziu z ciasteczkami ustawcie
+   `false`, a baner zgód wróci sam.
+
+   ZMIANA DOSTAWCY. Podmieniacie cały obiekt poniżej. Gotowe warianty:
+
+     Plausible (serwery deklarowane w Unii, płatny)
+       { nazwa: "plausible", bezCiasteczek: true,
+         src: "https://plausible.io/js/script.js",
+         atrybuty: { "data-domain": "skilful.pl" } }
+
+     Google Analytics (ciasteczka, transfer poza Unię — wymaga zgody)
+       { nazwa: "ga4", bezCiasteczek: false,
+         src: "https://www.googletagmanager.com/gtag/js?id=G-XXXX",
+         ga4Id: "G-XXXX" }
+
+   Wyłączenie: `nazwa: null`. Wtedy strona nie wysyła ani jednego zapytania
+   na zewnątrz.
+   -------------------------------------------------------------------------- */
+export const analityka = {
+  nazwa: "umami",
+  bezCiasteczek: true,
+  src: "https://cloud.umami.is/script.js",
+  atrybuty: { "data-website-id": "6b54cbf7-f3d7-47ee-801f-004df9f45085" },
+};
+
+/* --------------------------------------------------------------------------
    PROFILE W MEDIACH SPOŁECZNOŚCIOWYCH
 
    Wystarczy wkleić adres profilu — ikona pojawi się w stopce sama. Pozycje
