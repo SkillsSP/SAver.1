@@ -35,10 +35,11 @@ const konfiguracja = {
   <div class="zgoda-cookies__panel">
     <h2 class="zgoda-cookies__tytul">Pliki cookies</h2>
     <p class="zgoda-cookies__tresc">
-      Niezbędne pliki cookies utrzymują działanie strony i formularza zapisu.
-      Analityczne pomagają nam sprawdzić, które treści są dla rodziców
-      przydatne — używamy ich tylko z Waszą zgodą. Szczegóły w
-      <a href={url("/polityka-prywatnosci")}>polityce prywatności</a>.
+      Statystyki odwiedzin pomagają nam sprawdzić, których treści rodzice
+      faktycznie szukają. Narzędzie, którego używamy, nie zapisuje niczego na
+      Waszym urządzeniu i nie śledzi Was na innych stronach — prawo nie wymaga
+      tu zgody, ale wolimy zapytać. Jeśli odmówicie, licznik się nie uruchomi.
+      Szczegóły w <a href={url("/polityka-prywatnosci")}>polityce prywatności</a>.
     </p>
     <div class="zgoda-cookies__przyciski">
       <button type="button" class="przycisk przycisk--marka" data-zgoda-wszystkie>
@@ -93,7 +94,12 @@ const konfiguracja = {
        narzędzie z ciasteczkami — dopiero po zgodzie „akceptuję wszystkie". */
     function analitykaDozwolona(poziom) {
       if (!konfiguracja.nazwa) return false;
-      return konfiguracja.bezCiasteczek ? true : poziom === "all";
+      /* Gdy pytamy — decyduje odpowiedź, niezależnie od tego, czy narzędzie
+         używa ciasteczek. Skoro przycisk istnieje, musi działać. */
+      if (konfiguracja.pytamyMimoBrakuObowiazku || !konfiguracja.bezCiasteczek) {
+        return poziom === "all";
+      }
+      return true;
     }
 
     /* Jedyny punkt, z którego wolno uruchamiać analitykę. */
@@ -140,7 +146,9 @@ const konfiguracja = {
        pozornym, a baner, który nie zmienia niczego niezależnie od odpowiedzi,
        uczy ludzi klikać bez czytania. Informacja o analityce stoi w polityce
        prywatności, bo obowiązek informacyjny zostaje. */
-    var jestOCoPytac = konfiguracja.nazwa && !konfiguracja.bezCiasteczek;
+    var jestOCoPytac =
+      konfiguracja.nazwa &&
+      (konfiguracja.pytamyMimoBrakuObowiazku || !konfiguracja.bezCiasteczek);
 
     if (zapisane) oglos(zapisane);
     else if (jestOCoPytac) pokaz();

@@ -342,6 +342,18 @@ export const zespol = [
 export const analityka = {
   nazwa: "umami",
   bezCiasteczek: true,
+
+  /* Pytamy o zgodę, mimo że przy narzędziu bez ciasteczek nie musimy.
+
+     Decyzja właścicielska. Warunek jest jeden i trzeba go trzymać: skoro
+     pytamy, odpowiedź musi coś zmieniać. „Tylko niezbędne" naprawdę wyłącza
+     licznik — inaczej baner byłby teatrem, a przycisk, który nic nie robi,
+     jest gorszy od braku pytania.
+
+     Ustawienie na `false` chowa baner: przy narzędziu bez ciasteczek strona
+     nic wtedy nie zapisuje na urządzeniu, a obowiązek informacyjny wypełnia
+     sekcja 7 polityki prywatności. */
+  pytamyMimoBrakuObowiazku: true,
   src: "https://cloud.umami.is/script.js",
   atrybuty: { "data-website-id": "6b54cbf7-f3d7-47ee-801f-004df9f45085" },
 };
