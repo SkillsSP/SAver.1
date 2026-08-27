@@ -1,5 +1,6 @@
 ---
 import Marka from "./Marka.astro";
+import Spolecznosciowe from "./Spolecznosciowe.astro";
 import {
   firma,
   url,
@@ -35,6 +36,7 @@ const rok = new Date().getFullYear();
             <span>{emailTekst()}</span>
           )}
         </address>
+        <Spolecznosciowe />
         <p class="stopka__godziny">
           Biuro czynne {firma.godzinyBiura ?? "— godziny w uzupełnieniu"}
         </p>

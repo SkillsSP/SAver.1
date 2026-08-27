@@ -307,6 +307,28 @@ export const zespol = [
    przedmiot sprzedawany pod konkretny termin egzaminu. Matematykę prowadzą
    dwie osoby, angielski trzy. */
 
+/* --------------------------------------------------------------------------
+   PROFILE W MEDIACH SPOŁECZNOŚCIOWYCH
+
+   Wystarczy wkleić adres profilu — ikona pojawi się w stopce sama. Pozycje
+   z adresem `null` nie renderują się wcale: martwa ikona prowadząca donikąd
+   jest gorsza od jej braku, a „wkrótce" przy ikonie starzeje się na stronie
+   szybciej niż cokolwiek innego.
+
+   Kolejność w tablicy jest kolejnością na stronie. Facebook stoi pierwszy
+   świadomie: przy centrum dla dzieci to tam siedzą rodzice podejmujący
+   decyzję, a Instagram i pozostałe pracują raczej na rozpoznawalność.
+
+   Adres wpisujcie w pełnej postaci, razem z „https://" — bez tego
+   przeglądarka potraktuje go jako ścieżkę wewnątrz serwisu.
+   -------------------------------------------------------------------------- */
+export const spolecznosciowe = [
+  { klucz: "facebook", nazwa: "Facebook", adres: null },
+  { klucz: "instagram", nazwa: "Instagram", adres: null },
+  { klucz: "youtube", nazwa: "YouTube", adres: null },
+  { klucz: "tiktok", nazwa: "TikTok", adres: null },
+];
+
 /** Instytucje, na których opiera się program — pasek dowodu. */
 export const zrodla = ["OECD", "UNESCO", "UNICEF", "WHO", "EEF"];
 

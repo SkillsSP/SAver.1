@@ -1,0 +1,100 @@
+---
+/* ==========================================================================
+   POWRÓT NA GÓRĘ
+
+   Pojawia się dopiero po przewinięciu dwóch wysokości okna. Wcześniej nie ma
+   po co: droga na górę jest krótka, a przycisk zabierałby róg ekranu przez
+   cały czas czytania.
+
+   UMIEJSCOWIENIE. Prawy dolny róg to jedyne miejsce, gdzie na tej stronie nic
+   nie stoi na stałe — poza telefonem, na którym dół zajmuje pasek akcji
+   z wezwaniem do zapisu. Tam przycisk podnosi się ponad ten pasek, a jego
+   wysokość odczytujemy z faktycznego elementu, nie z liczby wpisanej na sztywno:
+   pasek zmienia wysokość razem z długością napisu na przycisku.
+
+   Baner zgód zajmuje dół ekranu tylko do pierwszej decyzji odwiedzającego,
+   a przycisk pojawia się dopiero po długim przewijaniu — te dwa elementy
+   praktycznie się nie spotykają. Gdyby jednak, baner ma wyższą warstwę
+   i przykryje przycisk, co jest właściwą kolejnością: zgoda przed wygodą.
+   ========================================================================== */
+---
+
+<button
+  type="button"
+  class="na-gore"
+  data-na-gore
+  hidden
+  aria-label="Wróć na górę strony"
+>
+  {/* Sam znak nic nie mówi czytnikowi ekranu — nazwę niesie aria-label. */}
+  <svg class="na-gore__strzalka" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path
+      d="M12 5.5 5.5 12M12 5.5 18.5 12M12 5.5V19"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</button>
+
+<script>
+  const przycisk = document.querySelector("[data-na-gore]");
+
+  if (przycisk) {
+    const pasekAkcji = document.querySelector(".pasek-akcji");
+
+    /* Próg dwóch wysokości okna, nie stała liczba pikseli: na telefonie 1500 px
+       to już środek strony, a na dużym monitorze wciąż jej początek. */
+    const prog = () => window.innerHeight * 2;
+
+    /* Odczyt pozycji przy każdym zdarzeniu przewijania wymuszałby przeliczenie
+       układu kilkadziesiąt razy na sekundę. Wystarczy raz na klatkę. */
+    let zaplanowane = false;
+    function odswiez() {
+      zaplanowane = false;
+      const widoczny = window.scrollY > prog();
+      if (widoczny === !przycisk.hidden) return;
+      przycisk.hidden = !widoczny;
+    }
+    function przyPrzewijaniu() {
+      if (zaplanowane) return;
+      zaplanowane = true;
+      requestAnimationFrame(odswiez);
+    }
+
+    /* Pasek akcji stoi tylko na wąskich ekranach i zmienia wysokość razem
+       z długością napisu, więc mierzymy go, zamiast wpisywać liczbę. */
+    function ustawWysokoscPaska() {
+      const h = pasekAkcji ? pasekAkcji.getBoundingClientRect().height : 0;
+      document.documentElement.style.setProperty("--wysokosc-paska-akcji", `${Math.round(h)}px`);
+    }
+
+    window.addEventListener("scroll", przyPrzewijaniu, { passive: true });
+    window.addEventListener("resize", () => {
+      ustawWysokoscPaska();
+      przyPrzewijaniu();
+    });
+    ustawWysokoscPaska();
+    odswiez();
+
+    przycisk.addEventListener("click", () => {
+      /* Płynne przewijanie tylko wtedy, gdy odwiedzający go nie wyłączył.
+         Przy włączonym ograniczeniu ruchu długa animacja przewijania potrafi
+         wywołać zawroty głowy — wtedy skaczemy od razu. */
+      const bezRuchu = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: bezRuchu ? "auto" : "smooth" });
+
+      /* Po powrocie na górę fokus musi trafić na początek strony, inaczej
+         czytający klawiaturą wraca wzrokiem na górę, a tabulatorem wciąż
+         wędruje od miejsca, w którym był. */
+      const cel = document.querySelector("main");
+      if (cel) {
+        cel.setAttribute("tabindex", "-1");
+        cel.focus({ preventScroll: true });
+        cel.removeAttribute("tabindex");
+      }
+    });
+  }
+</script>

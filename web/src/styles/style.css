@@ -1704,7 +1704,13 @@ button {
   justify-content: center;
   padding: var(--space-2);
   pointer-events: none;
-  animation: zgoda-wjazd 0.28s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  /* Bez wypełnienia `both` — i to jest świadome. Przy `both` element przed
+     startem animacji ma krycie zero, więc gdyby animacja z jakiegokolwiek
+     powodu nie ruszyła, baner zgód zostałby obecny w drzewie, ale niewidoczny.
+     Przy elemencie wymaganym prawem awaria musi kończyć się jego pokazaniem,
+     nie ukryciem. Bez wypełnienia stan spoczynkowy to stan widoczny, a animacja
+     tylko go poprzedza. */
+  animation: zgoda-wjazd 0.28s cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 .zgoda-cookies[hidden] {
   display: none;
@@ -2481,4 +2487,120 @@ button {
   color: var(--tekst-drugi);
   padding-top: var(--space-1);
   border-top: 1px dashed rgba(26, 34, 48, 0.18);
+}
+
+/* ==========================================================================
+   IKONY PROFILI SPOŁECZNOŚCIOWYCH
+
+   Znak jest jednokolorowy i dziedziczy kolor odnośnika: identyfikacja jest
+   płaska i nie dopuszcza gradientów, także w cudzych logotypach.
+
+   Pole dotyku ma 2,75rem (44 px), czyli więcej niż wymagane 24 px. Ikona bez
+   podpisu nie ma marginesu na pomyłkę — sąsiadujące znaki są od siebie
+   nieodróżnialne dla kciuka, więc dajemy im pełny cel zalecany, a nie
+   minimalny dopuszczalny.
+   ========================================================================== */
+
+.spolecznosciowe {
+  margin-top: var(--space-3);
+}
+
+.spolecznosciowe__tytul {
+  font-size: var(--text-nadtytul);
+  font-weight: var(--waga-polgruba);
+  letter-spacing: var(--trop-nadtytul);
+  text-transform: uppercase;
+  color: var(--tekst-drugi);
+  margin-bottom: var(--space-1);
+}
+
+.spolecznosciowe__lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-05);
+  list-style: none;
+  margin: 0;
+  /* Ikony wysuwamy o wewnętrzny odstęp w lewo, żeby pierwszy znak stał w tej
+     samej pionowej linii co tekst nad nim. Bez tego rząd wygląda na wcięty. */
+  margin-left: calc(var(--space-1) * -1);
+  padding: 0;
+}
+
+.spolecznosciowe__odnosnik {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cel-dotyku);
+  height: var(--cel-dotyku);
+  border-radius: var(--radius-md);
+  color: var(--kobalt-600);
+}
+
+.spolecznosciowe__odnosnik:hover {
+  color: var(--kobalt-700);
+  background: var(--tlo-tint-kobalt);
+}
+
+.spolecznosciowe__znak {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+  display: block;
+}
+
+/* ==========================================================================
+   POWRÓT NA GÓRĘ
+
+   Warstwa 70 — pod banerem zgód (80) i pod paskiem akcji (90). Kolejność jest
+   zamierzona: gdy trzy elementy zejdą się w tym samym rogu, zgoda i wezwanie
+   do kontaktu są ważniejsze od wygody przewijania.
+   ========================================================================== */
+
+.na-gore {
+  position: fixed;
+  right: var(--space-2);
+  /* Na telefonie pasek akcji zajmuje dół ekranu. Jego wysokość wpisuje skrypt,
+     bo zmienia się razem z długością napisu na przycisku. */
+  bottom: calc(
+    var(--space-2) + var(--wysokosc-paska-akcji, 0px) + env(safe-area-inset-bottom, 0px)
+  );
+  z-index: 70;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cel-dotyku);
+  height: var(--cel-dotyku);
+
+  background: var(--tlo-karty);
+  color: var(--kobalt-600);
+  border: var(--wlos);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  /* Jedyny cień w całym serwisie i jedyne dopuszczalne miejsce: przycisk
+     unosi się nad treścią, więc musi się od niej odciąć. Płaska identyfikacja
+     dotyczy powierzchni w układzie strony, nie elementu pływającego nad nim. */
+  box-shadow: 0 2px 10px rgba(26, 34, 48, 0.14);
+}
+
+.na-gore[hidden] {
+  display: none;
+}
+
+.na-gore:hover {
+  color: var(--kobalt-700);
+  border-color: rgba(30, 95, 204, 0.45);
+}
+
+.na-gore__strzalka {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: block;
+}
+
+/* Przy włączonym ograniczeniu ruchu przycisk pojawia się bez przejścia. */
+@media (prefers-reduced-motion: no-preference) {
+  .na-gore {
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
 }
