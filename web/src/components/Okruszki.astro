@@ -1,0 +1,36 @@
+---
+import { url } from "../lib/site.js";
+
+/* ==========================================================================
+   OKRUSZKI — widoczna ścieżka
+
+   Renderuje to samo, co znacznik danych strukturalnych w układzie strony.
+   Wyszukiwarka wymaga, żeby ścieżka ze znacznika była widoczna także dla
+   człowieka; gdyby istniała wyłącznie w znaczniku, wynik rozszerzony zostałby
+   odrzucony. Dlatego jeden obiekt zasila oba miejsca.
+
+   Ostatni element nie jest odnośnikiem — prowadziłby do strony, na której
+   odwiedzający już stoi. `aria-current` mówi to samo czytnikowi ekranu.
+   ========================================================================== */
+
+interface Props {
+  sciezka: { nazwa: string; href?: string }[];
+}
+
+const { sciezka } = Astro.props;
+const pelna = [{ nazwa: "Strona główna", href: "/" }, ...sciezka];
+---
+
+<nav class="okruszki" aria-label="Ścieżka nawigacji">
+  <ol class="okruszki__lista">
+    {pelna.map((o, i) => (
+      <li>
+        {o.href && i < pelna.length - 1 ? (
+          <a href={url(o.href)}>{o.nazwa}</a>
+        ) : (
+          <span aria-current="page">{o.nazwa}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>

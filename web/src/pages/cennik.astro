@@ -2,7 +2,7 @@
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
-import { url, wielkoscGrupyTekst } from "../lib/site.js";
+import { url, wielkoscGrupyTekst, firma } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 /* ==========================================================================
@@ -125,6 +125,46 @@ const pytania = [
       "Przelewem na konto centrum, raz w miesiącu, przez dziesięć miesięcy od września do czerwca. Fakturę wystawiamy na życzenie, także na firmę.",
   },
 ];
+/* Dane strukturalne oferty. Wyszukiwarka pokazuje przy takim kursie cenę
+   i walutę wprost w wyniku, więc rodzic widzi „od 200 zł", zanim kliknie.
+
+   Podajemy WYŁĄCZNIE progi grupowe: mają jedną, jednoznaczną cenę miesięczną.
+   Minigrupa z ceną ustalaną indywidualnie nie ma czego zadeklarować, a kurs
+   bez ceny w znaczniku bywa odrzucany razem z całą stroną.
+
+   `category` mówi, że to zajęcia stacjonarne — bez tego wyszukiwarka
+   traktuje kurs jako zdalny i pokazuje go poza obszarem lokalnym, czyli
+   dokładnie odwrotnie do tego, o co nam chodzi. */
+const znacznikOferty = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Zajęcia w Skills Academy",
+  description:
+    "Zajęcia po angielsku dla dzieci i młodzieży 5–19 lat: Useful & Life Skills oraz fakultety Music, Art, Acting i Motion Skills.",
+  provider: {
+    "@type": "EducationalOrganization",
+    name: firma.nazwa,
+    url: "https://skilful.pl/",
+  },
+  hasCourseInstance: progi.map((p) => ({
+    "@type": "CourseInstance",
+    name: p.nazwa,
+    courseMode: "onsite",
+    courseWorkload: p.wariant,
+    location: {
+      "@type": "Place",
+      address: { "@type": "PostalAddress", addressLocality: firma.miasto, addressCountry: "PL" },
+    },
+    offers: {
+      "@type": "Offer",
+      price: p.kwota.replace(/[^\d]/g, ""),
+      priceCurrency: "PLN",
+      category: "Zajęcia stacjonarne",
+      availability: "https://schema.org/InStock",
+      url: "https://skilful.pl/cennik",
+    },
+  })),
+};
 ---
 
 <Baza
@@ -132,7 +172,10 @@ const pytania = [
   tytul="Cennik 2026/2027"
   opis="Cena zależy od liczby programów: od 200 zł miesięcznie. Grupy 5–8 osób, dziesięć rat od września do czerwca, pierwsze zajęcia bezpłatne. Szczecin."
   pytania={pytania}
+  okruszki={[{ nazwa: "Cennik" }]}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(znacznikOferty)} />
+
   <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 40%">
     <FotoNaglowka nazwa="motion-5" />
     <div class="szerokosc">

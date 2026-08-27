@@ -51,25 +51,53 @@ import { url } from "../lib/site.js";
     var KLUCZ = "sa-cookie-consent";
 
     /* ── Konfiguracja analityki ──────────────────────────────────────────
-       Wdrożenie: ustawcie `provider` i wklejcie identyfikator. Do tego czasu
-       nic się nie ładuje. Warianty bezpłatne:
-         'cloudflare' — Cloudflare Web Analytics, bez cookies, token z panelu
-         'umami'      — Umami (własny serwer albo plan bezpłatny), skrypt + id
-         'ga4'        — Google Analytics 4, identyfikator G-XXXXXXX
-       Rekomendacja z dokumentu wdrożeniowego: na start 'cloudflare'. */
+
+       Ustawcie `provider` i wklejcie identyfikator. Dopóki jest `null`, nic się
+       nie ładuje i strona nie wysyła ani jednego zapytania na zewnątrz.
+
+         'umami'      — plan bezpłatny na cloud.umami.is albo własny serwer.
+                        Bez ciasteczek, serwery w Unii. To jest rekomendacja.
+         'plausible'  — płatny, też bez ciasteczek, serwery w Unii.
+         'cloudflare' — działa TYLKO gdy strona stoi za Cloudflare. Serwis stoi
+                        na GitHub Pages, więc na dziś ten wariant odpada.
+         'ga4'        — Google Analytics. Używa ciasteczek i wysyła dane poza
+                        Unię, więc chodzi wyłącznie po zgodzie.
+
+       ── DLACZEGO `bezCiasteczek` MA ZNACZENIE ──────────────────────────────
+
+       Narzędzie, które nic nie zapisuje na urządzeniu, nie wymaga zgody
+       z banera — przepis o ciasteczkach dotyczy zapisu i odczytu na
+       urządzeniu, a nie samego liczenia odsłon. Trzymanie takiego narzędzia
+       za banerem oznacza, że liczy tylko tych, którzy klikną „akceptuję",
+       czyli zwykle mniejszość. Dane stają się wtedy bezużyteczne: nie da się
+       na nich stwierdzić, czy formularz działa, bo nie wiadomo, ilu ludzi go
+       w ogóle zobaczyło.
+
+       To NIE znaczy, że nie ma żadnych obowiązków. Adres IP jest daną osobową
+       także przy narzędziu bez ciasteczek, więc potrzebna jest podstawa
+       przetwarzania i wzmianka w polityce prywatności — jedno i drugie jest
+       opisane w sekcji o analityce na /polityka-prywatnosci. Zgoda z banera
+       nie jest do tego potrzebna, informacja tak. */
     var ANALYTICS = {
       provider: null,
-      cloudflareToken: "",
+      bezCiasteczek: true,
       umamiSrc: "",
       umamiWebsiteId: "",
+      plausibleDomena: "",
+      cloudflareToken: "",
       ga4Id: "",
     };
+
+    /* Google zawsze za zgodą, niezależnie od ustawienia powyżej — ciasteczka
+       i transfer poza Unię wykluczają inne traktowanie. */
+    if (ANALYTICS.provider === "ga4") ANALYTICS.bezCiasteczek = false;
 
     var baner = document.querySelector("[data-zgoda]");
     if (!baner) return;
     var zaladowane = false;
 
-    /* Ładuje skrypt dopiero po zgodzie. Bez zgody nie robi nic. */
+    /* Ładuje skrypt analityki. Przy narzędziu bez ciasteczek wywoływane od
+       razu, przy Google — dopiero po zgodzie. */
     function zaladujAnalitykę() {
       if (zaladowane || !ANALYTICS.provider) return;
       zaladowane = true;
@@ -84,6 +112,9 @@ import { url } from "../lib/site.js";
       } else if (ANALYTICS.provider === "umami") {
         s.src = ANALYTICS.umamiSrc;
         s.setAttribute("data-website-id", ANALYTICS.umamiWebsiteId);
+      } else if (ANALYTICS.provider === "plausible") {
+        s.src = "https://plausible.io/js/script.js";
+        s.setAttribute("data-domain", ANALYTICS.plausibleDomena);
       } else if (ANALYTICS.provider === "ga4") {
         s.async = true;
         s.src = "https://www.googletagmanager.com/gtag/js?id=" + ANALYTICS.ga4Id;
@@ -99,17 +130,26 @@ import { url } from "../lib/site.js";
       document.head.appendChild(s);
     }
 
+    /* Czy analityka wolno działać. Narzędzie bez ciasteczek — tak, zawsze;
+       narzędzie z ciasteczkami — dopiero po zgodzie „akceptuję wszystkie". */
+    function analitykaDozwolona(poziom) {
+      if (!ANALYTICS.provider) return false;
+      return ANALYTICS.bezCiasteczek ? true : poziom === "all";
+    }
+
     /* Jedyny punkt, z którego wolno uruchamiać analitykę. */
     function oglos(poziom) {
-      window.saConsent = { level: poziom, analytics: poziom === "all" };
-      /* Jeden punkt zgłaszania celów. Bez zgody zdarzenia są pomijane, więc
-         reszta strony może wołać saTrack bez sprawdzania warunków. */
+      var wolno = analitykaDozwolona(poziom);
+      window.saConsent = { level: poziom, analytics: wolno };
+      /* Jeden punkt zgłaszania celów, żeby reszta strony mogła wołać saTrack
+         bez sprawdzania warunków. */
       window.saTrack = function (nazwa, dane) {
         if (!window.saConsent || !window.saConsent.analytics) return;
         if (window.umami && window.umami.track) window.umami.track(nazwa, dane);
+        else if (window.plausible) window.plausible(nazwa, { props: dane });
         else if (window.gtag) window.gtag("event", nazwa, dane || {});
       };
-      if (window.saConsent.analytics) zaladujAnalitykę();
+      if (wolno) zaladujAnalitykę();
       window.dispatchEvent(
         new CustomEvent("sa-consent", { detail: window.saConsent })
       );
@@ -134,8 +174,18 @@ import { url } from "../lib/site.js";
     try {
       zapisane = localStorage.getItem(KLUCZ);
     } catch (e) {}
+
+    /* Baner pokazujemy tylko wtedy, gdy jest o co pytać. Przy narzędziu bez
+       ciasteczek strona nie zapisuje na urządzeniu niczego poza tym, co jest
+       niezbędne do jej działania — pytanie o zgodę byłoby wtedy pytaniem
+       pozornym, a baner, który nie zmienia niczego niezależnie od odpowiedzi,
+       uczy ludzi klikać bez czytania. Informacja o analityce stoi w polityce
+       prywatności, bo obowiązek informacyjny zostaje. */
+    var jestOCoPytac = ANALYTICS.provider && !ANALYTICS.bezCiasteczek;
+
     if (zapisane) oglos(zapisane);
-    else pokaz();
+    else if (jestOCoPytac) pokaz();
+    else oglos("necessary");
 
     baner
       .querySelector("[data-zgoda-wszystkie]")

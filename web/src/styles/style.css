@@ -2703,3 +2703,45 @@ button {
     display: block !important;
   }
 }
+
+/* ==========================================================================
+   OKRUSZKI
+
+   Widoczne wyłącznie na podstronach zagnieżdżonych, czyli dziś na dwóch
+   ścieżkach egzaminacyjnych. Na stronach pierwszego poziomu byłyby szumem:
+   „Strona główna › Cennik" nie mówi nic, czego nie mówi już pasek nawigacji.
+
+   Znacznik dla wyszukiwarki i ten rząd renderują się z tego samego obiektu,
+   więc nie mogą powiedzieć czegoś innego — rozjazd między nimi jest podstawą
+   do odrzucenia wyniku rozszerzonego.
+   ========================================================================== */
+
+.okruszki {
+  font-size: var(--text-drobny);
+  color: var(--tekst-na-marce-miekki);
+}
+.okruszki__lista {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-05);
+  list-style: none;
+  margin: 0 0 var(--space-1);
+  padding: 0;
+}
+.okruszki__lista li::after {
+  content: "›";
+  margin-left: var(--space-05);
+  opacity: 0.6;
+}
+.okruszki__lista li:last-child::after {
+  content: "";
+}
+.okruszki a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+}
+.naglowek-strony--foto .okruszki {
+  color: var(--bialy);
+}

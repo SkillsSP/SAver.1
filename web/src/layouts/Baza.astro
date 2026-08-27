@@ -12,13 +12,15 @@ interface Props {
   tytul: string;
   /** Pary pytanie–odpowiedź do danych strukturalnych. */
   pytania?: { pytanie: string; odpowiedz: string }[];
+  /** Ścieżka okruszków: kolejne poziomy od strony głównej do bieżącej. */
+  okruszki?: { nazwa: string; href?: string }[];
   opis: string;
   aktywna?: string;
   /** Rejestr Teens Senior: slate, wyłącznie Lexend, bez Quicksand. */
   senior?: boolean;
 }
 
-const { tytul, opis, aktywna = "", senior = false, pytania } = Astro.props;
+const { tytul, opis, aktywna = "", senior = false, pytania, okruszki } = Astro.props;
 /* Tytuł strony w wynikach wyszukiwania jest ucinany mniej więcej po
    sześćdziesięciu pięciu znakach. Domyślnie doklejamy nazwę i miasto, bo
    przy centrum działającym w jednym mieście nazwa miasta w tytule realnie
@@ -98,6 +100,29 @@ const znacznik = {
         zanim w cokolwiek kliknie. Wymóg: pytanie i odpowiedź muszą stać na
         stronie w widocznej treści, a nie wyłącznie w tym znaczniku — u nas
         pochodzą z tej samej tablicy, więc rozjechać się nie mogą. */}
+    {/* Okruszki dla wyszukiwarki. Pokazują w wynikach ścieżkę zamiast samego
+        adresu, więc widać, że matura należy do Exams, a nie jest luźną
+        podstroną. Wymóg: ta sama ścieżka musi być widoczna na stronie —
+        u nas renderuje ją ten sam obiekt, więc rozjechać się nie mogą. */}
+    {okruszki && okruszki.length > 0 && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { nazwa: "Strona główna", href: "/" },
+            ...okruszki,
+          ].map((o, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: o.nazwa,
+            ...(o.href ? { item: new URL(url(o.href), Astro.site).href } : {}),
+          })),
+        })}
+      />
+    )}
+
     {pytania && pytania.length > 0 && (
       <script
         type="application/ld+json"

@@ -3,6 +3,7 @@ import Baza from "../../layouts/Baza.astro";
 import OdeslanieDoGrup from "../../components/OdeslanieDoGrup.astro";
 import DoUzupelnienia from "../../components/DoUzupelnienia.astro";
 import FotoNaglowka from "../../components/FotoNaglowka.astro";
+import Okruszki from "../../components/Okruszki.astro";
 import ZapisCta from "../../components/ZapisCta.astro";
 import { url } from "../../lib/site.js";
 ---
@@ -13,6 +14,7 @@ import { url } from "../../lib/site.js";
 */}
 <Baza
   aktywna="exams"
+  okruszki={[{ nazwa: "Exams", href: "/exams" }, { nazwa: "Egzamin ósmoklasisty" }]}
   tytul="Egzamin ósmoklasisty — angielski i matematyka"
   opis="Przygotowanie do egzaminu ósmoklasisty z angielskiego i z matematyki w Szczecinie. Arkusze CKE, strategie zadań, oswojenie z formatem testu."
 >
@@ -21,6 +23,7 @@ import { url } from "../../lib/site.js";
     <FotoNaglowka nazwa="life-globus" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
+        <Okruszki sciezka={[{ nazwa: "Exams", href: "/exams" }, { nazwa: "Egzamin ósmoklasisty" }]} />
         <span class="nadtytul nadtytul--na-marce">Exams · klasy 7–8</span>
         <h1 class="tytul-1">Egzamin ósmoklasisty</h1>
         <p class="hero__zdanie">
