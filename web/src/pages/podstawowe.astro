@@ -5,6 +5,7 @@ import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
 import Zdjecie from "../components/Zdjecie.astro";
 import { url, wielkoscGrupy } from "../lib/site.js";
+import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 const przebieg = [
   {
@@ -32,7 +33,8 @@ const przebieg = [
   tytul="Zajęcia podstawowe — Useful Skills i Life Skills"
   opis="Dwa filary jednego spotkania: angielski w działaniu i kompetencje życiowe. Baza każdego karnetu w Skills Academy w Szczecinie, grupy do ośmiu osób."
 >
-  <section class="naglowek-strony">
+  <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 50%">
+    <FotoNaglowka nazwa="life-robotyka" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">Program</span>

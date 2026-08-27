@@ -3,6 +3,7 @@ import Baza from "../layouts/Baza.astro";
 import Zdjecie from "../components/Zdjecie.astro";
 import ZapisCta from "../components/ZapisCta.astro";
 import { url, grupyWiekowe, zrodla, wielkoscGrupy } from "../lib/site.js";
+import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 const metody = [
   {
@@ -25,7 +26,8 @@ const metody = [
   tytul="Metoda i podział na grupy wiekowe"
   opis="Jak uczymy w Skills Academy: reagowanie ciałem, nauka przez projekt i doświadczenie. Podział na grupy wiekowe od 5 do 19 lat wraz z uzasadnieniem rozwojowym."
 >
-  <section class="naglowek-strony">
+  <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 45%">
+    <FotoNaglowka nazwa="life-dron" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">O nas</span>

@@ -5,6 +5,7 @@ import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
 import Zdjecie from "../components/Zdjecie.astro";
 import { url, fakultety } from "../lib/site.js";
+import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 const wybor = [
   {
@@ -28,7 +29,8 @@ const wybor = [
   tytul="Fakultety — Music, Art, Acting i Motion Skills"
   opis="Music, Art, Acting i Motion Skills. Jedna dziedzina, którą dziecko wybiera samo — jako dodatek do zajęć podstawowych albo samodzielnie. Skills Academy w Szczecinie."
 >
-  <section class="naglowek-strony">
+  <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 40%">
+    <FotoNaglowka nazwa="life-przyjaciele" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">Program</span>

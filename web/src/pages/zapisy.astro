@@ -10,6 +10,7 @@ import {
   adresTekst,
   grupyWiekowe,
 } from "../lib/site.js";
+import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 const tel = telefonHref();
 const endpoint = firma.formularzEndpoint;
@@ -26,7 +27,8 @@ const poWyslaniu = [
   tytul="Zapisy na zajęcia próbne"
   opis="Umówcie bezpłatne zajęcia próbne w Skills Academy w Szczecinie. Jedno pełne spotkanie w grupie, bez zobowiązań."
 >
-  <section class="naglowek-strony">
+  <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 45%">
+    <FotoNaglowka nazwa="life-grupa" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">Zapisy</span>

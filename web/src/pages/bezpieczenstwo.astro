@@ -10,6 +10,7 @@ import {
   telefonTekst,
   ochronaMaloletnich,
 } from "../lib/site.js";
+import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 const tel = telefonHref();
 
@@ -90,7 +91,8 @@ const zasadyDlaDziecka = [
   tytul="Standardy Ochrony Małoletnich"
   opis="Standardy Ochrony Małoletnich obowiązujące w Skills Academy w Szczecinie: weryfikacja osób pracujących z dziećmi, zasady bezpiecznego kontaktu, wizerunek, procedura zgłoszeń i telefony zaufania."
 >
-  <section class="naglowek-strony">
+  <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 40%">
+    <FotoNaglowka nazwa="life-bezpieczenstwo" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">Bezpieczeństwo</span>

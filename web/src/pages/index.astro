@@ -11,6 +11,7 @@ import {
   telefonTekst,
   firma,
 } from "../lib/site.js";
+import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 const tel = telefonHref();
 
@@ -45,7 +46,8 @@ const przebiegMisji = [
   opis="Centrum kompetencji w Szczecinie dla dzieci i młodzieży od 5 do 19 lat. Zajęcia podstawowe po angielsku, fakultety oraz przygotowanie do egzaminu ósmoklasisty i matury — z angielskiego i z matematyki."
 >
   {/* ── 1 ── HERO. Hasło, jedno zdanie, dwa przyciski. Bez grafiki wypełniającej. */}
-  <section class="hero">
+  <section class="hero hero--foto" style="--foto-kadr: center 42%">
+    <FotoNaglowka nazwa="motion-2" klasa="hero__foto" />
     <div class="szerokosc">
       <div class="hero__tresc">
         <h1 class="tytul-display">Angielski dla życia,<br />nie tylko dla szkoły.</h1>

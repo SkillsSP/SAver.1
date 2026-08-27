@@ -3,6 +3,7 @@ import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
 import { url, firma, wielkoscGrupy } from "../lib/site.js";
+import FotoNaglowka from "../components/FotoNaglowka.astro";
 ---
 
 <Baza
@@ -10,7 +11,8 @@ import { url, firma, wielkoscGrupy } from "../lib/site.js";
   tytul="O nas"
   opis="Kim jesteśmy, dlaczego powstała Skills Academy i jak wygląda miejsce, w którym prowadzimy zajęcia. Centrum kompetencji w Szczecinie."
 >
-  <section class="naglowek-strony">
+  <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 40%">
+    <FotoNaglowka nazwa="life-przyjaciele" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">O nas</span>

@@ -5,6 +5,7 @@ import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
 import Zdjecie from "../components/Zdjecie.astro";
 import { url } from "../lib/site.js";
+import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 const kiedyMaSens = [
   {
@@ -47,7 +48,8 @@ const jakZaczynamy = [
   tytul="Zajęcia indywidualne 1:1"
   opis="Spotkania jeden na jeden dla dzieci i młodzieży w każdym wieku — od wsparcia w bieżącym materiale po przygotowanie do egzaminu ósmoklasisty i matury. Szczecin."
 >
-  <section class="naglowek-strony">
+  <section class="naglowek-strony naglowek-strony--foto" style="--foto-kadr: center 45%">
+    <FotoNaglowka nazwa="cooking-3" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">Program</span>

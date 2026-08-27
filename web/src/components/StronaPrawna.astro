@@ -1,6 +1,7 @@
 ---
 import Baza from "../layouts/Baza.astro";
 import { url } from "../lib/site.js";
+import FotoNaglowka from "./FotoNaglowka.astro";
 
 interface Sekcja {
   tytul: string;
@@ -30,7 +31,14 @@ const liczbaRyzyk = sekcje.filter((s) => s.ryzyko).length;
   z komponentem po przeglądzie prawnym.
 */}
 <Baza aktywna="" tytul={tytul} opis={opis}>
-  <section class="naglowek-strony">
+  {/* Rejestr cichy — zdjęcie ledwo się przebija, bo to dokumenty, nie
+      oferta. Ten sam kadr na trzech stronach formalnych jest zamierzony:
+      wspólny obraz wiąże je w jedną grupę. */}
+  <section
+    class="naglowek-strony naglowek-strony--foto naglowek-strony--cichy"
+    style="--foto-kadr: center 40%"
+  >
+    <FotoNaglowka nazwa="art-2" />
     <div class="szerokosc">
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">Formalności</span>
