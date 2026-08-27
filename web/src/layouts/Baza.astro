@@ -10,13 +10,15 @@ import "../styles/style.css";
 
 interface Props {
   tytul: string;
+  /** Pary pytanie–odpowiedź do danych strukturalnych. */
+  pytania?: { pytanie: string; odpowiedz: string }[];
   opis: string;
   aktywna?: string;
   /** Rejestr Teens Senior: slate, wyłącznie Lexend, bez Quicksand. */
   senior?: boolean;
 }
 
-const { tytul, opis, aktywna = "", senior = false } = Astro.props;
+const { tytul, opis, aktywna = "", senior = false, pytania } = Astro.props;
 /* Tytuł strony w wynikach wyszukiwania jest ucinany mniej więcej po
    sześćdziesięciu pięciu znakach. Domyślnie doklejamy nazwę i miasto, bo
    przy centrum działającym w jednym mieście nazwa miasta w tytule realnie
@@ -81,10 +83,35 @@ const znacznik = {
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pl_PL" />
     <meta property="og:url" content={kanoniczny} />
-    <meta property="og:image" content={new URL(url("/logo/skills-academy-logo-1200.png"), Astro.site).href} />
+    <meta property="og:image" content={new URL(url("/logo/skills-academy-udostepnianie.jpg"), Astro.site).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    {/* Opis obrazu dla osób, które w kanale mają wyłączone grafiki albo
+        korzystają z czytnika ekranu. */}
+    <meta property="og:image:alt" content="Skills Academy — centrum kompetencji w Szczecinie" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <script type="application/ld+json" set:html={JSON.stringify(znacznik)} />
+
+    {/* Dane strukturalne pytań i odpowiedzi. Wyszukiwarka potrafi pokazać je
+        wprost w wynikach, więc rodzic widzi odpowiedź o cenie i rezygnacji,
+        zanim w cokolwiek kliknie. Wymóg: pytanie i odpowiedź muszą stać na
+        stronie w widocznej treści, a nie wyłącznie w tym znaczniku — u nas
+        pochodzą z tej samej tablicy, więc rozjechać się nie mogą. */}
+    {pytania && pytania.length > 0 && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: pytania.map((p) => ({
+            "@type": "Question",
+            name: p.pytanie,
+            acceptedAnswer: { "@type": "Answer", text: p.odpowiedz },
+          })),
+        })}
+      />
+    )}
   </head>
 
   <body class={senior ? "rejestr-senior" : undefined}>

@@ -151,6 +151,11 @@
    Przed każdą podmianą kroju: sprawdźcie pokrycie polskich znaków w pliku,
    a nie na oko w podglądzie. Właśnie to przeoczenie kosztowało nas Fredokę.
 
+   FORMAT: WOFF2, nie TTF. Ten sam krój w TTF waży 76 kB, w WOFF2 — 28 kB.
+   Siedem odmian to różnica 537 kB wobec 203 kB, czyli trzy czwarte wagi
+   pierwszego wejścia na stronę. WOFF2 rozumie każda przeglądarka od 2016 roku,
+   więc wariant zapasowy w TTF byłby martwym balastem w repozytorium.
+
    UWAGA PRZY ZMIANIE ADRESU SERWISU: ścieżki poniżej są liczone od katalogu
    głównego domeny, bo `base` w astro.config.mjs wynosi '/'. Gdyby serwis
    trafił kiedyś pod adres z podkatalogiem, trzeba dopisać ten podkatalog jako
@@ -159,49 +164,49 @@
    ========================================================================== */
 @font-face {
   font-family: "Lexend";
-  src: url("/fonts/Lexend-Regular.ttf") format("truetype");
+  src: url("/fonts/Lexend-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Lexend";
-  src: url("/fonts/Lexend-Medium.ttf") format("truetype");
+  src: url("/fonts/Lexend-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Lexend";
-  src: url("/fonts/Lexend-SemiBold.ttf") format("truetype");
+  src: url("/fonts/Lexend-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Lexend";
-  src: url("/fonts/Lexend-Bold.ttf") format("truetype");
+  src: url("/fonts/Lexend-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Quicksand";
-  src: url("/fonts/Quicksand-Medium.ttf") format("truetype");
+  src: url("/fonts/Quicksand-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Quicksand";
-  src: url("/fonts/Quicksand-SemiBold.ttf") format("truetype");
+  src: url("/fonts/Quicksand-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Quicksand";
-  src: url("/fonts/Quicksand-Bold.ttf") format("truetype");
+  src: url("/fonts/Quicksand-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -2602,5 +2607,99 @@ button {
 @media (prefers-reduced-motion: no-preference) {
   .na-gore {
     transition: color 0.15s ease, border-color 0.15s ease;
+  }
+}
+
+/* ==========================================================================
+   DRUK
+
+   Regulamin, polityka prywatności i klauzula RODO to dokumenty, które rodzic
+   może chcieć wydrukować albo zapisać do pliku przed podpisaniem umowy. Bez
+   tych reguł drukarka wypluwa nawigację, stopkę, baner zgód i przyciski, a sam
+   tekst wychodzi na kolorowym tle.
+
+   Adresy odnośników wypisujemy w nawiasie: na papierze odnośnik bez adresu
+   jest tylko podkreślonym słowem.
+   ========================================================================== */
+
+@media print {
+  /* Elementy, które na papierze nie niosą nic poza zużytym tonerem. */
+  .pasek,
+  .pasek-uzytkowy,
+  .pasek-akcji,
+  .zgoda-cookies,
+  .na-gore,
+  .stopka__siatka,
+  .pomin-do-tresci,
+  .menu-mobilne,
+  .naglowek-strony__foto,
+  .hero__foto,
+  .do-uzupelnienia {
+    display: none !important;
+  }
+
+  /* Tło strony i warstwy krycia zjadałyby cały tusz. */
+  .naglowek-strony--foto::before,
+  .naglowek-strony--foto::after,
+  .hero--foto::before,
+  .hero--foto::after {
+    display: none !important;
+  }
+
+  html,
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .naglowek-strony,
+  .sekcja--karta,
+  .sekcja--tint,
+  .sekcja--slate,
+  .karta,
+  .progi,
+  .zespol {
+    background: #fff !important;
+    color: #000 !important;
+    border-color: #999 !important;
+  }
+
+  .naglowek-strony p,
+  .naglowek-strony li,
+  .naglowek-strony .nadtytul {
+    color: #000 !important;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+  /* Adres po treści odnośnika. Pomijamy kotwice i odnośniki nawigacyjne —
+     „(#formularz)" na papierze nie mówi nic. */
+  main a[href^="http"]::after,
+  main a[href^="/"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #444;
+  }
+  main a[href^="#"]::after {
+    content: "";
+  }
+
+  /* Sekcje nie mogą się urywać w połowie akapitu ani zaczynać od sierotki. */
+  h1, h2, h3, h4 {
+    break-after: avoid;
+  }
+  p, li, .prog, .osoba, details {
+    break-inside: avoid;
+  }
+  .sekcja {
+    padding-block: 1rem;
+  }
+
+  /* Odpowiedzi w rozwijanych pytaniach muszą być na wydruku widoczne —
+     inaczej rodzic drukuje same pytania. */
+  details > *:not(summary) {
+    display: block !important;
   }
 }
