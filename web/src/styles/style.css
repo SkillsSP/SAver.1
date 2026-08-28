@@ -2854,6 +2854,11 @@ button {
 .dane-firmy .lista-rozdzielona {
   margin: 0;
 }
+.dane-firmy__czekaja {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-drobny);
+  color: var(--tekst-drugi);
+}
 
 /* ==========================================================================
    KOTWICA CENOWA na stronach oferty

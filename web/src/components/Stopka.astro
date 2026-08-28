@@ -44,9 +44,13 @@ const pokazPoradnik = poradnik.length > 0;
           )}
         </address>
         <Spolecznosciowe />
-        <p class="stopka__godziny">
-          Biuro czynne {firma.godzinyBiura ?? "— godziny w uzupełnieniu"}
-        </p>
+        {/* Wiersz z godzinami pojawia się DOPIERO wtedy, gdy godziny są znane.
+            Wcześniej stało tu „Biuro czynne — godziny w uzupełnieniu", czyli
+            zdanie, które nie niesie żadnej informacji poza tą, że strona jest
+            niedokończona. Brak wiersza jest lepszy niż wiersz o braku. */}
+        {firma.godzinyBiura && (
+          <p class="stopka__godziny">Biuro czynne {firma.godzinyBiura}</p>
+        )}
       </div>
 
       <div>
@@ -99,7 +103,8 @@ const pokazPoradnik = poradnik.length > 0;
     <div class="stopka__dol">
       <span>
         © {rok} {firma.nazwa}
-        {firma.nip ? ` · NIP ${firma.nip}` : " · NIP w uzupełnieniu"}
+        {/* Ta sama zasada co przy godzinach: numer albo nic. */}
+        {firma.nip ? ` · NIP ${firma.nip}` : ""}
       </span>
       <span>{firma.miasto}, Polska</span>
     </div>

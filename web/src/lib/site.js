@@ -70,11 +70,11 @@ export function telefonHref() {
 
 /** Widoczny telefon albo neutralny zastępnik. */
 export function telefonTekst() {
-  return firma.telefon ?? "numer w uzupełnieniu";
+  return firma.telefon ?? "numer podamy wkrótce";
 }
 
 export function emailTekst() {
-  return firma.email ?? "adres w uzupełnieniu";
+  return firma.email ?? "adres podamy wkrótce";
 }
 
 export function adresTekst() {

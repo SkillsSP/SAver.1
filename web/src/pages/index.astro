@@ -421,7 +421,10 @@ const trzyKroki = [
               <span class="wartosc">
                 {firma.ulica
                   ? `${firma.ulica}, ${firma.miasto}`
-                  : `${firma.miasto} — adres w uzupełnieniu`}
+                  /* NIE PISAĆ „adres w uzupełnieniu". Puste pole czyta się jak
+                     niedokończona strona; termin czyta się jak plan. Rodzic
+                     dostaje tu informację, KIEDY pozna adres, a nie że go nie ma. */
+                  : `${firma.miasto} — adres podamy z uruchomieniem zapisów`}
               </span>
             </li>
             <li>
@@ -430,7 +433,7 @@ const trzyKroki = [
                 {pokazTerminarz ? (
                   <>Popołudniami — <a href={url("/terminarz")}>zobacz terminarz</a></>
                 ) : (
-                  "Popołudniami — dni i godziny w uzupełnieniu"
+                  "Popołudniami — dokładny grafik podamy z uruchomieniem zapisów"
                 )}
               </span>
             </li>

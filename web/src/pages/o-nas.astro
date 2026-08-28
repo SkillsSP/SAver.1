@@ -17,10 +17,18 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
       <div class="naglowek-strony__tresc">
         <span class="nadtytul nadtytul--na-marce">O nas</span>
         <h1 class="tytul-1">Centrum kompetencji, nie szkoła językowa</h1>
+        {/* NIE ZACZYNAĆ TU OD TEGO, CZEGO NIE MAMY. Poprzednie brzmienie
+            otwierało zdaniem „Zaczynamy bez opinii i bez zdjęć z zajęć" —
+            czyli uprzedzało zarzut, którego rodzic jeszcze nie postawił,
+            i to w najbardziej eksponowanym miejscu podstrony.
+
+            Ta sama zasada, którą zastosowaliśmy przy usuwaniu sekcji „Czego
+            jeszcze nie mamy": kiedy będą opinie i zdjęcia, po prostu się je
+            zamieści. Do tego czasu ogłaszanie braku zabiera miejsce zdaniu,
+            które faktycznie coś mówi. */}
         <p class="hero__zdanie">
-          Zaczynamy bez opinii i bez zdjęć z zajęć, więc jedynym dowodem, jaki
-          możemy Wam dziś dać, jesteśmy my sami: kto prowadzi zajęcia, dlaczego
-          to robi i na czym opiera swoją pracę.
+          Dowodem, jaki możemy Wam dziś dać, jesteśmy my sami: kto prowadzi
+          zajęcia, dlaczego to robi i na czym opiera swoją pracę.
         </p>
       </div>
     </div>
@@ -46,9 +54,18 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
               <span class="osoba__rola">{o.rola}</span>
             </h3>
             <p class="osoba__przedmioty">{o.przedmioty}</p>
-            <p class="osoba__kwalifikacje">
-              {o.kwalifikacje ?? "Wykształcenie i doświadczenie — do uzupełnienia."}
-            </p>
+            {/* Wiersz z kwalifikacjami pojawia się dopiero, gdy są wpisane.
+                Wcześniej stało tu „Wykształcenie i doświadczenie — do
+                uzupełnienia" przy każdej z trzech osób, czyli rodzic dostawał
+                trzy razy pod rząd informację o tym, czego nie wiemy, w miejscu,
+                w którym szuka powodu do zaufania.
+
+                Przypomnienie o uzupełnieniu nie znika — stoi w nocie
+                redakcyjnej niżej, widocznej przy pracy nad stroną i ukrytej
+                w wersji publicznej. */}
+            {o.kwalifikacje && (
+              <p class="osoba__kwalifikacje">{o.kwalifikacje}</p>
+            )}
           </article>
         ))}
       </div>

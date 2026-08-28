@@ -368,13 +368,23 @@ const daneFirmy = [
           stronie bezpieczeństwa, więc oko już go zna. */}
       <article class="karta dane-firmy">
         <ul class="lista-rozdzielona">
-          {daneFirmy.map((d) => (
+          {/* Pokazujemy wyłącznie pozycje, które mamy. Trzy wiersze z napisem
+              „do uzupełnienia" pod rząd wyglądały jak niedokończona strona,
+              a nie jak dane firmy — a to jest miejsce, w którym rodzic sprawdza,
+              czy ma do czynienia z zarejestrowanym podmiotem. Zdanie pod listą
+              mówi, kiedy reszta się pojawi; to jest informacja, a tamto nie było. */}
+          {daneFirmy.filter((d) => d.wartosc).map((d) => (
             <li>
               <span class="etykieta">{d.etykieta}</span>
-              <span class="wartosc">{d.wartosc ?? "do uzupełnienia"}</span>
+              <span class="wartosc">{d.wartosc}</span>
             </li>
           ))}
         </ul>
+        {daneFirmy.some((d) => !d.wartosc) && (
+          <p class="dane-firmy__czekaja">
+            Pozostałe dane rejestrowe uzupełnimy przed uruchomieniem zapisów.
+          </p>
+        )}
       </article>
 
       <div style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">

@@ -5,7 +5,9 @@ import DoUzupelnienia from "../../components/DoUzupelnienia.astro";
 import FotoNaglowka from "../../components/FotoNaglowka.astro";
 import Okruszki from "../../components/Okruszki.astro";
 import ZapisCta from "../../components/ZapisCta.astro";
-import { url, cenyOd} from "../../lib/site.js";
+import { url, cenyOd,
+  rokSzkolny,
+} from "../../lib/site.js";
 ---
 
 {/*
@@ -34,7 +36,9 @@ import { url, cenyOd} from "../../lib/site.js";
         <KotwicaCeny od={cenyOd.exams} jednostka="miesięcznie" />
         <ul class="naglowek-strony__meta">
           <li>Klasy 7–8</li>
-          <li>Start przygotowań — termin w uzupełnieniu</li>
+          {/* Rok szkolny bierzemy z danych, żeby nie stało tu „termin
+              w uzupełnieniu" — brak informacji zamieniony na tę, którą mamy. */}
+          <li>Start przygotowań — {rokSzkolny.start}</li>
         </ul>
         <div class="przyciski" style="margin-top: var(--space-2);">
           <a class="przycisk przycisk--duch" href="#angielski">Angielski</a>
