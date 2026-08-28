@@ -67,9 +67,30 @@ const Element = jakoLink ? "a" : "span";
     height={p.sygnet}
     style={`width:${p.sygnet}px;height:${p.sygnet}px;margin-right:${p.docisk}px;transform:translateY(${p.pion}px)`}
   />
-  {/* Litera „S" zostaje w kodzie, ale schowana wizualnie — czytnik ekranu
-      i wyszukiwarka dostają „Skills Academy", a nie „kills Academy". */}
-  <span class="marka__napis" style={`font-size:${p.tekst}px`}>
+  {/* Litera „S" zostaje w kodzie, ale schowana wizualnie, bo rysuje ją sygnet
+      obok. Dzięki temu wyszukiwarka i zaznaczenie tekstu dostają pełne
+      „Skills Academy", a nie „kills Academy".
+
+      ROLA I ETYKIETA SĄ TU KONIECZNE, mimo że sam tekst brzmi poprawnie.
+      Nazwa dostępna liczona przez przeglądarkę skleja wkłady kolejnych węzłów
+      spacją, więc ukryte „S" i sąsiadujące „kills Academy" dawały czytnikowi
+      ekranu „S kills Academy" — z przerwą po pierwszej literze. Widać to
+      wyłącznie w drzewie dostępności; `textContent` jest cały czas poprawny.
+
+      Sama etykieta nie wystarczy: działa na odnośniku w nagłówku, ale nie na
+      stopce, gdzie marka odnośnikiem nie jest — tam etykieta na zwykłym
+      elemencie jest pomijana. Stąd `role="img"`: znak marki JEST jednostką
+      graficzną, a nie zdaniem do przeczytania po literze, więc ta rola opisuje
+      go zgodnie z prawdą i sprawia, że etykieta działa w obu przypadkach.
+
+      Ukryte „S" zostaje bez `aria-hidden` — dzięki temu `textContent` nadal
+      daje pełne „Skills Academy" przy zaznaczaniu tekstu i dla wyszukiwarki. */}
+  <span
+    class="marka__napis"
+    style={`font-size:${p.tekst}px`}
+    role="img"
+    aria-label="Skills Academy"
+  >
     <span class="wizualnie-ukryte">S</span>kills Academy
   </span>
 </Element>
