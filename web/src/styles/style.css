@@ -3021,3 +3021,56 @@ button {
     color: var(--tlo-strony);
   }
 }
+
+/* ==========================================================================
+   DŁUGOŚĆ WIERSZA TEKSTU
+
+   Zmierzone na żywej stronie przed tą regułą: przy 1920 px drobny tekst pod
+   galerią zdjęć dochodził do 169 znaków w wierszu, akapity opisowe do 111,
+   punkty list do 133. Zalecany zakres dla tekstu ciągłego to 65–75 znaków —
+   powyżej tego oko gubi początek następnego wiersza i czytanie zamienia się
+   w wyszukiwanie miejsca, w którym się skończyło.
+
+   Wersja mobilna tego nie pokazywała, bo tam szerokość ogranicza sam ekran.
+   To jest usterka wyłącznie tabletu i monitora, i wyłącznie dlatego umknęła
+   wcześniejszym przeglądom.
+
+   Jednostka `ch` zamiast rem, bo ogranicza LICZBĘ ZNAKÓW, a nie piksele —
+   drobny tekst i tekst wiodący mają różne rozmiary, więc ta sama szerokość
+   w pikselach daje w nich zupełnie inną długość wiersza.
+
+   Reguła nie dotyka nagłówków (te mają być szerokie i tak są krótkie), list
+   rozdzielonych etykieta–wartość (tam szerokość niesie informację o podziale)
+   ani tekstu wyśrodkowanego w kartach, gdzie kontener i tak jest wąski —
+   `max-width` tylko ogranicza, nie rozpycha.
+   ========================================================================== */
+/* SKALIBROWANE POMIAREM, nie z podręcznika. Jednostka `ch` to szerokość
+   cyfry zero, a ta jest w tych krojach wyraźniej szersza od średniej litery:
+   68ch dawało w praktyce 80 znaków w wierszu. 60ch trafia w 70–72, czyli
+   w zalecany zakres. */
+.nota-ilustracyjna,
+.tekst-drobny,
+.tekst-maly,
+.tekst-drugi,
+.osoba__przedmioty,
+.kroki__krok,
+.lista-znaczona li,
+.sekcja li:not([class]),
+.sekcja p:not([class]),
+.stos > p:not([class]) {
+  max-width: 60ch;
+}
+
+/* Akapity wiodące niosą większy stopień pisma, więc przy tej samej liczbie
+   znaków są fizycznie szersze — i tak ma być. */
+.wiodacy {
+  max-width: 56ch;
+}
+
+/* Tekst pomocniczy w stopniu 15 px wychodził na 80 znaków — reszta klas
+   mieści się w 75 przy tej samej wartości, ta jedna nie, bo jej krój renderuje
+   cyfrę zero szerzej niż przeciętną literę. Mierzone dokładnie: liczba znaków
+   podzielona przez liczbę wierszy, które tekst faktycznie zajął. */
+.tekst-maly {
+  max-width: 54ch;
+}

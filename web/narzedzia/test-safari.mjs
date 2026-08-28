@@ -24,9 +24,24 @@
        na ciemnym tle i wpisywane znaki znikają. Pola dostały jawne kolory,
        a ten test pilnuje, żeby ktoś ich nie usunął.
 
+   URUCHAMIAĆ WYŁĄCZNIE NA ADRESIE HTTPS, czyli na żywej stronie.
+
+   Powód jest konkretny i kosztował mnie pół godziny szukania nieistniejącej
+   usterki. Nasza polityka bezpieczeństwa treści zawiera dyrektywę
+   `upgrade-insecure-requests`, która każe przeglądarce pobierać wszystkie
+   zasoby przez HTTPS. WebKit stosuje ją także na `localhost` — próbuje więc
+   pobrać arkusz stylów z `https://localhost:4331`, gdzie nie ma certyfikatu,
+   i strona wczytuje się BEZ STYLÓW. Test pokazuje wtedy pola formularza
+   w rozmiarze domyślnym i zgłasza usterkę, której nie ma.
+
+   Chromium tego nie robi, bo traktuje `localhost` jako źródło zaufane —
+   dlatego pozostałe testy działają lokalnie bez problemu.
+
+   Skrypt sprawdza to teraz sam i przerywa z wyjaśnieniem, zamiast zgłaszać
+   fałszywe błędy.
+
    URUCHOMIENIE:
-     npm run test:safari                       (na żywej stronie)
-     npm run test:safari -- http://localhost:4331   (na wersji zbudowanej)
+     npm run test:safari
 
    Wymaga jednorazowo: npx playwright install webkit
    ========================================================================== */
@@ -55,6 +70,36 @@ const kontrast = (a, b) =>
 
 const przegladarka = await webkit.launch();
 let sprawdzonych = 0;
+
+/* Zabezpieczenie przed fałszywym wynikiem — patrz nagłówek pliku. */
+{
+  const k = await przegladarka.newContext();
+  const s0 = await k.newPage();
+  await s0.goto(ADRES + "/", { waitUntil: "networkidle" });
+  const regul = await s0.evaluate(() => [...document.styleSheets]
+    .reduce((n, a) => { try { return n + a.cssRules.length; } catch { return n; } }, 0));
+  await k.close();
+  if (regul === 0) {
+    /* Komunikat składany z tablicy, a nie sklejany znakami ucieczki.
+       Przy sklejaniu łatwo wpisać prawdziwe łamanie wiersza w środek
+       łańcucha i wywalić plik — zdarzyło mi się to tu za pierwszym razem. */
+    console.error([
+      "",
+      "  PRZERWANE: arkusz stylów nie wczytał się w WebKicie.",
+      `  Adres: ${ADRES}`,
+      "",
+      "  Najczęstsza przyczyna: adres http zamiast https. Polityka",
+      "  bezpieczeństwa treści wymusza HTTPS, a WebKit stosuje to także",
+      "  na localhost — strona wczytuje się wtedy bez stylów, a test",
+      "  zgłasza usterki, których nie ma.",
+      "",
+      "  Uruchomcie go na https://skilful.pl.",
+      "",
+    ].join("\n"));
+    await przegladarka.close();
+    process.exit(2);
+  }
+}
 
 for (const tryb of ["light", "dark"]) {
   const kontekst = await przegladarka.newContext({
