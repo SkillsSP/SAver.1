@@ -138,8 +138,11 @@ const przegladarka = await chromium.launch();
       nie istnieje. Zwracało 1,00:1 dla dwunastu tekstów naraz.
       `offsetParent === null` łapie oba przypadki jednym warunkiem.
    ====================================================================== */
-{
-  const kontekst = await przegladarka.newContext();
+/* Kontrast sprawdzamy w OBU trybach. Paleta ciemna to osobny zestaw kolorów,
+   więc jasna zdana z wynikiem 0 nie mówi nic o ciemnej — a rodzic przegląda
+   stronę wieczorem, często z systemem ustawionym na ciemny. */
+for (const tryb of ["light", "dark"]) {
+  const kontekst = await przegladarka.newContext({ colorScheme: tryb });
   const strona = await kontekst.newPage();
   await strona.addInitScript(() => {
     try { localStorage.setItem("sa-cookie-consent", "necessary"); } catch (e) {}
@@ -217,7 +220,8 @@ const przegladarka = await chromium.launch();
       return { out, policzone };
     });
     licznik.tekstow += znalezione.policzone;
-    for (const x of [...new Set(znalezione.out)]) blad(`${adres} — kontrast ${x}`);
+    for (const x of [...new Set(znalezione.out)])
+      blad(`${adres} [${tryb === "dark" ? "ciemny" : "jasny"}] — kontrast ${x}`);
   }
   await kontekst.close();
 }

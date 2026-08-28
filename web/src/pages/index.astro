@@ -180,6 +180,45 @@ const trzyKroki = [
     </div>
   </section>
 
+  {/* ── 1b ── SELEKTOR WIEKU. Największy element strony, prowadzi wprost do oferty.
+
+       POŁOŻENIE. Stał wcześniej po galerii kafli i po „Trzech krokach", czyli
+       zaczynał się na 4,4 wysokości ekranu telefonu. To jest najlepsze narzędzie
+       nawigacyjne na tej stronie — pyta rodzica dokładnie o to, co ma w głowie,
+       i prowadzi wprost do właściwej oferty. Trzymanie go cztery ekrany w dół
+       oznaczało, że rodzic, który WIE, czego szuka, przewijał przez wszystko inne.
+
+       Galeria kafli idzie teraz zaraz po nim: rodzic, który chce najpierw
+       zobaczyć zakres, przewija jeden ekran więcej. Rodzic, który chce ofertę
+       dla ośmiolatka, ma ją od razu. */}
+  <section class="sekcja sekcja--karta sekcja--wlos" id="wiek">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Zacznijcie stąd</span>
+        <h2 class="tytul-1">Ile lat ma Wasze dziecko?</h2>
+        <p class="wiodacy">
+          Grupy dobieramy wiekiem. Sześciolatek i dziesięciolatek uczą się
+          zupełnie inaczej. Wybierzcie przedział, żeby zobaczyć, co dokładnie
+          dziecko robi na zajęciach.
+        </p>
+      </div>
+
+      <div class="wiek">
+        {grupyWiekowe.map((grupa) => (
+          <a
+            class={grupa.senior ? "wiek__karta wiek__karta--senior" : "wiek__karta"}
+            href={url(grupa.href)}
+          >
+            <span class="wiek__lata">{grupa.lata}</span>
+            <span class="wiek__nazwa">{grupa.nazwa}</span>
+            <span class="wiek__opis">{grupa.opis}</span>
+            <span class="wiek__strzalka">Zobacz ofertę →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
   {/* ── 1b ── KAFLE TEMATYCZNE. Osiem obszarów kompetencji naraz — rodzic
        widzi zakres, zanim zacznie czytać. Podpis nazywa obszar, nigdy
        wydarzenie: to zdjęcia ilustracyjne i zdanie pod galerią musi zostać. */}
@@ -215,8 +254,12 @@ const trzyKroki = [
        galeria kafli, te kroki i selektor wieku — leżały na tym samym tle
        strony i zlewały się w jeden ciąg bez granic. Na telefonie, gdzie widać
        naraz jeden ekran, rodzic nie miał po czym poznać, że zaczyna się nowa
-       myśl. */}
-  <section class="sekcja sekcja--karta sekcja--wlos">
+       myśl.
+
+       PO PRZENIESIENIU SELEKTORA tło wróciło do zwykłego: selektor wyżej jest
+       teraz kartą, galeria między nimi jest bez tła, więc te kroki muszą być
+       bez tła również — inaczej stykałyby się z sekcją o metodzie. */}
+  <section class="sekcja">
     <div class="szerokosc">
       <div class="naglowek-sekcji">
         <span class="nadtytul">Jak zaczynamy</span>
@@ -239,34 +282,6 @@ const trzyKroki = [
     </div>
   </section>
 
-  {/* ── 2 ── SELEKTOR WIEKU. Największy element strony, prowadzi wprost do oferty. */}
-  <section class="sekcja" id="wiek">
-    <div class="szerokosc">
-      <div class="naglowek-sekcji">
-        <span class="nadtytul">Zacznijcie stąd</span>
-        <h2 class="tytul-1">Ile lat ma Wasze dziecko?</h2>
-        <p class="wiodacy">
-          Grupy dobieramy wiekiem. Sześciolatek i dziesięciolatek uczą się
-          zupełnie inaczej. Wybierzcie przedział, żeby zobaczyć, co dokładnie
-          dziecko robi na zajęciach.
-        </p>
-      </div>
-
-      <div class="wiek">
-        {grupyWiekowe.map((grupa) => (
-          <a
-            class={grupa.senior ? "wiek__karta wiek__karta--senior" : "wiek__karta"}
-            href={url(grupa.href)}
-          >
-            <span class="wiek__lata">{grupa.lata}</span>
-            <span class="wiek__nazwa">{grupa.nazwa}</span>
-            <span class="wiek__opis">{grupa.opis}</span>
-            <span class="wiek__strzalka">Zobacz ofertę →</span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
 
 
   {/* ── 4 ── DOWÓD. Metoda w trzech zdaniach + pasek źródeł. Nie sześć definicji.

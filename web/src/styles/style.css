@@ -66,6 +66,32 @@
   --linia-na-marce: rgba(255, 255, 255, 0.28);
   --pierscien-fokus: var(--kobalt-600);
 
+  /* ==========================================================================
+     TRYB CIEMNY
+
+     DLACZEGO POWSTAŁ. Wcześniej stała tu deklaracja `color-scheme: light`,
+     która wyłączała tryb ciemny dla całej strony. Powód był dobry: iOS
+     i Android w trybie ciemnym renderują pola formularza tak, że wpisywany
+     tekst potrafi zniknąć. Rozwiązanie było jednak za szerokie — problem
+     dotyczył pól, a wyłączone zostało wszystko.
+
+     Powód zmiany jest zmierzony, nie teoretyczny. Zrzuty ekranu, które
+     przysłała właścicielka, mają w pasku stanu godziny 23:45, 00:03, 00:23
+     i 00:31. Tak wygląda pora, o której rodzic przegląda oferty dla dziecka —
+     po położeniu go spać. Pełnej jasności kremowego tła o północy nie da się
+     obronić wygodą utrzymania.
+
+     JAK TO DZIAŁA. Przedefiniowujemy wyłącznie ALIASY semantyczne, nie kolory
+     bazowe. Dzięki temu `--akcja` zostaje dokładnie tym koralem co w logo,
+     a `--bialy` zostaje bielą tam, gdzie napis leży na kolorze marki. Zmienia
+     się to, co jest tłem i co jest tekstem — czyli role, nie barwy.
+
+     CZEGO NIE ODWRACAMY. Koralowy przycisk akcji zostaje koralowy z grafitowym
+     napisem: 4,86:1 działa na obu tłach, a odwracanie go rozjechałoby markę
+     z drukiem i sygnetem. Nagłówki na kobalcie zostają białe z tego samego
+     powodu.
+     ========================================================================== */
+
   /* ---------- TYPOGRAFIA — płynne skalowanie rem ---------- */
   --font-medrzec: "Lexend", ui-sans-serif, system-ui, sans-serif;
   --font-odkrywca: "Quicksand", ui-sans-serif, system-ui, sans-serif;
@@ -222,9 +248,11 @@
 }
 
 html {
-  /* Bez tej deklaracji iOS i Android w trybie ciemnym renderują pola input
-     i select na ciemnym tle — wpisywany tekst potrafi zniknąć. */
-  color-scheme: light;
+  /* `light dark` zamiast `light`. Poprzednia wartość wyłączała tryb ciemny dla
+     całej strony, żeby obejść jeden problem: iOS i Android renderują wtedy pola
+     formularza tak, że wpisywany tekst potrafi zniknąć. Pola dostały własne,
+     jawne kolory w sekcji formularza, więc blokada nie jest już potrzebna. */
+  color-scheme: light dark;
   /* iOS Safari po obróceniu telefonu do poziomu sam powiększa tekst w wąskich
      kolumnach, żeby „lepiej wypełnić" ekran. Efekt jest taki, że po obrocie
      akapit i nagłówek rosną w różnym stopniu i cała typografia się rozjeżdża.
@@ -1601,7 +1629,7 @@ button {
   background: var(--tlo-tint-koral);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
   font-size: var(--text-drobny);
-  color: var(--grafit-900);
+  color: var(--tekst-glowny);
 }
 .do-uzupelnienia strong {
   font-weight: var(--waga-polgruba);
@@ -2003,7 +2031,9 @@ button {
   opacity: 0.74;
 }
 .naglowek-strony--senior {
-  background: var(--grafit-900);
+  /* Alias, nie kolor bazowy — inaczej ten nagłówek zostałby grafitowy także
+     w trybie ciemnym, gdzie grafit zlewa się z tłem strony. */
+  background: var(--tlo-grafit);
 }
 
 /* ==========================================================================
@@ -2016,7 +2046,8 @@ button {
    ========================================================================== */
 
 .pasek-uzytkowy {
-  background: var(--cloud-50);
+  /* Ten sam kolor co tło strony; rozdziela je włos pod spodem, nie barwa. */
+  background: var(--tlo-strony);
   border-bottom: var(--wlos);
   padding: 0.4375rem var(--space-3);
 }
@@ -2063,7 +2094,7 @@ button {
    progu. Grafit na kremowym — 13,2:1. Kobalt zostaje dla odnośnika
    treściowego, żeby dwa linki obok siebie nie ważyły tyle samo. */
 .pasek-uzytkowy__telefon {
-  color: var(--grafit-900);
+  color: var(--tekst-glowny);
 }
 
 /* ==========================================================================
@@ -2895,5 +2926,98 @@ button {
 @media (pointer: coarse) {
   .kotwica-ceny a {
     min-height: var(--cel-dotyku);
+  }
+}
+
+/* ==========================================================================
+   TRYB CIEMNY — przedefiniowanie ról
+
+   Trzy stany, nie dwa: system ustawiony na ciemny, system ustawiony na jasny
+   i brak ustawienia. Zapytanie o media obsługuje pierwszy; pozostałe zostają
+   przy palecie z `:root`.
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Powierzchnie — od najciemniejszej do najjaśniejszej, żeby karta na
+       stronie czytała się jako uniesiona, tak jak biała karta na kremie. */
+    --tlo-strony: #14181f;
+    --tlo-karty: #1c212b;
+    --tlo-tint-kobalt: #18263c;
+    --tlo-tint-koral: #2c1a15;
+    --tlo-tint-slate: #1f2530;
+    /* Sekcja „grafitowa" musi zostać CIEMNIEJSZA od strony, inaczej znika. */
+    --tlo-grafit: #0b0e13;
+
+    /* Marka zostaje kobaltowa, tylko o ton głębsza — biały napis daje na niej
+       5,3:1 zamiast 4,81:1, co przy ciemnym otoczeniu czyta się spokojniej. */
+    --tlo-marki: #1a53b4;
+    --tlo-marki-glebokie: #123f8c;
+
+    /* Tekst. Nie czysta biel — ta na ciemnym tle daje efekt jarzenia się
+       i męczy przy dłuższym czytaniu. */
+    --tekst-glowny: #e8ecf2;
+    --tekst-drugi: #a2acba;
+
+    /* Kobalt do odnośników musi się rozjaśnić: #1e5fcc na ciemnym tle daje
+       2,4:1, czyli jest nieczytelny. */
+    --kobalt-600: #7ba7f2;
+    --kobalt-700: #a6c4f8;
+    --koral-700: #f0917a;
+    /* Slate niesie tekst na plakietkach i w wariancie maturalnym. W wersji
+       jasnej to ciemny szaroniebieski; na ciemnym tle musi się odwrócić,
+       inaczej plakietka „Poziom podstawowy" daje 1,97:1. */
+    --slate-500: #9fb2c4;
+    --slate-600: #b3c3d2;
+    --akcent-senior: var(--slate-500);
+
+    --linia: rgba(255, 255, 255, 0.14);
+    --pierscien-fokus: #7ba7f2;
+
+    /* Cień jest na ciemnym tle niewidoczny — rolę uniesienia przejmuje
+       jaśniejsza powierzchnia karty. */
+    --cien-karty: none;
+  }
+
+  /* Zdjęcia w nagłówkach są przyciemniane nakładką liczoną pod jasne tło.
+     W trybie ciemnym ta sama nakładka zostawia zdjęcie zbyt jasnym względem
+     otoczenia, więc pogłębiamy ją o jedną dziesiątą. */
+  .naglowek-strony__foto::after,
+  .hero__foto::after {
+    opacity: 0.62;
+  }
+
+  /* POLA FORMULARZA — powód, dla którego tryb ciemny był wcześniej wyłączony.
+     Przeglądarka mobilna zostawiona sama sobie potrafi dać ciemny tekst na
+     ciemnym tle. Podajemy oba kolory jawnie, więc nie ma czego zgadywać. */
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  select,
+  textarea {
+    background: #10141a;
+    color: var(--tekst-glowny);
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: #7d8794;
+  }
+  /* Strzałka listy rozwijanej rysowana jest jako tło w kolorze grafitu —
+     na ciemnym polu staje się niewidoczna. */
+  select {
+    color-scheme: dark;
+  }
+
+  /* PLAKIETKA WYRÓŻNIAJĄCA. Kobalt pełni w tym arkuszu dwie role naraz: jest
+     kolorem odnośników i tłem tej plakietki. W trybie ciemnym te role się
+     rozchodzą — odnośnik musi się rozjaśnić, żeby był czytelny na ciemnym tle,
+     ale rozjaśnione tło plakietki przestaje nieść biały napis (2,18:1).
+
+     Rozwiązanie: tło zostaje jasne, a napis staje się ciemny. Plakietka jest
+     wtedy nawet bardziej widoczna niż w trybie jasnym, co jest w porządku —
+     ma zwracać uwagę. */
+  .unikat,
+  .rejestr-senior .unikat {
+    color: var(--tlo-strony);
   }
 }
