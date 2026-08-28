@@ -385,6 +385,93 @@ for (const tryb of ["light", "dark"]) {
 }
 
 /* ======================================================================
+   3b. POWIĘKSZENIE W PRZEGLĄDARCE (WCAG 1.4.4)
+
+   Symulujemy to, co robi użytkownik naciskający Ctrl + : powiększenie strony
+   zmniejsza widoczny obszar w pikselach CSS, więc 200% na monitorze 1280
+   odpowiada oknu 640 px.
+
+   UWAGA NA POZORNY BŁĄD. Kuszące jest symulowanie powiększenia przez
+   `html { font-size: 32px }` — i tak zrobiłem za pierwszym razem. To daje
+   wynik fałszywy: zapytania o media liczą `rem` względem POCZĄTKOWEGO
+   rozmiaru pisma, nie tego ustawionego przez arkusz strony, więc układ
+   zostaje komputerowy przy dwukrotnie większym tekście i wszystko się
+   rozjeżdża. Prawdziwa przeglądarka nigdy tak nie robi. Osiemnaście
+   zgłoszonych wtedy usterek nie istniało.
+   ====================================================================== */
+{
+  /* nazwa, szerokość okna w px CSS */
+  const POWIEKSZENIA = [
+    ["150%", 853], ["200%", 640], ["200% na szerokim", 960], ["400%", 320],
+  ];
+  for (const [nazwa, szer] of POWIEKSZENIA) {
+    const kontekst = await przegladarka.newContext({
+      viewport: { width: szer, height: 800 }, deviceScaleFactor: 2,
+    });
+    const strona = await kontekst.newPage();
+    await strona.addInitScript(() => {
+      try { localStorage.setItem("sa-cookie-consent", "necessary"); } catch (e) {}
+    });
+    for (const adres of STRONY) {
+      await strona.goto(ADRES + adres, { waitUntil: "domcontentloaded" });
+      const nadmiar = await strona.evaluate(() =>
+        document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      if (nadmiar > 1)
+        blad(`${adres} — przy powiększeniu ${nazwa} strona przewija się w bok o ${nadmiar}px`);
+    }
+    await kontekst.close();
+  }
+}
+
+/* ======================================================================
+   3c. TRYB WYSOKIEGO KONTRASTU (wymuszone kolory)
+
+   Windows w trybie wysokiego kontrastu zastępuje wszystkie kolory tła
+   kolorami systemowymi. Element, który niesie znaczenie WYŁĄCZNIE tłem —
+   plakietka, przycisk, pole formularza — traci wtedy kształt i zlewa się
+   z otoczeniem. Ratunkiem jest obrys: w normalnym trybie przezroczysty,
+   w wymuszonym przejmuje kolor systemowy.
+   ====================================================================== */
+{
+  const kontekst = await przegladarka.newContext({
+    forcedColors: "active", viewport: { width: 1280, height: 900 },
+  });
+  const strona = await kontekst.newPage();
+  await strona.addInitScript(() => {
+    try { localStorage.setItem("sa-cookie-consent", "necessary"); } catch (e) {}
+  });
+  for (const adres of STRONY) {
+    await strona.goto(ADRES + adres, { waitUntil: "domcontentloaded" });
+    const bezGranicy = await strona.evaluate(() => {
+      const out = [];
+      for (const el of document.querySelectorAll(
+        ".plakietka, .przycisk, .karta, input:not([type=hidden]), select, textarea")) {
+        /* Element bez pudełka nic nie pokazuje — pomijamy, żeby pola ukryte
+           nie zgłaszały się jako usterka. */
+        if (!el.offsetParent) continue;
+        /* Pułapka na roboty jest przycięta do zera i niewidoczna. */
+        if (el.closest(".pulapka, .wizualnie-ukryte")) continue;
+        /* Znaczniki wyboru i przełączniki rysuje sama przeglądarka i w trybie
+           wysokiego kontrastu robi to kolorami systemu. Autorski obrys jest
+           tam zbędny, a jego brak nie jest usterką — pierwsza wersja tego
+           sprawdzenia zgłaszała pole zgody na dwóch podstronach. */
+        if (el.type === "checkbox" || el.type === "radio") continue;
+        const cs = getComputedStyle(el);
+        const maGranice = parseFloat(cs.borderTopWidth) > 0 ||
+                          cs.outlineStyle !== "none" ||
+                          parseFloat(cs.borderBottomWidth) > 0;
+        if (!maGranice)
+          out.push(`${el.tagName.toLowerCase()}.${String(el.className).split(" ")[0]}`);
+      }
+      return [...new Set(out)];
+    });
+    for (const x of bezGranicy)
+      blad(`${adres} — ${x} bez granicy przy wymuszonych kolorach systemu`);
+  }
+  await kontekst.close();
+}
+
+/* ======================================================================
    4. ODSTĘPY W TEKŚCIE (WCAG 1.4.12)
 
    Osoby z dysleksją zwiększają odstępy własnym arkuszem. Układ nie może

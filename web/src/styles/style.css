@@ -629,6 +629,13 @@ button {
    PLAKIETKI I ZNACZNIKI
    ========================================================================== */
 .plakietka {
+  /* Przezroczysty obrys istnieje wyłącznie dla trybu wysokiego kontrastu
+     w systemie. Windows zastępuje tam wszystkie tła kolorem systemowym, więc
+     plakietka niosąca sam kolor tła traci kształt i czyta się jak zwykły
+     tekst wtrącony w nagłówek. Obrys jest w normalnym trybie niewidoczny,
+     a tam przejmuje kolor systemowy i przywraca granicę. */
+  border: 1px solid transparent;
+
   /* Plakietka ma się przenieść do następnego wiersza w CAŁOŚCI, a nie złamać
      w środku. Napis „Poza angielskim" na najwęższych telefonach dzielił się
      na dwa wiersze wewnątrz kolorowego tła i wyglądał jak usterka. */
