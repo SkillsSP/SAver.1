@@ -74,7 +74,10 @@ const daneFirmy = [
   { etykieta: "Nazwa", wartosc: firma.nazwa },
   { etykieta: "NIP", wartosc: firma.nip },
   { etykieta: "REGON", wartosc: firma.regon ?? null },
-  { etykieta: "Administrator danych", wartosc: firma.administratorDanych ?? null },
+  /* Etykieta skrócona z „Administrator danych": pełny termin łamał wiersz na
+     najwęższych telefonach, a w tej sekcji nie ma innych administratorów.
+     Pełne brzmienie stoi w klauzuli RODO, gdzie ma znaczenie prawne. */
+  { etykieta: "Administrator", wartosc: firma.administratorDanych ?? null },
 ];
 ---
 
@@ -350,16 +353,29 @@ const daneFirmy = [
         </p>
       </div>
 
-      <div class="siatka siatka--czworo">
-        {daneFirmy.map((d) => (
-          <article class="karta">
-            <span class="etykieta">{d.etykieta}</span>
-            <p class="tekst-wiodacy" style="font-weight: var(--waga-polgruba);">
-              {d.wartosc ?? "do uzupełnienia"}
-            </p>
-          </article>
-        ))}
-      </div>
+      {/* JEDEN KAFELEK ZAMIAST CZTERECH KART.
+
+          Wcześniej każda dana rejestrowa miała własną kartę w siatce. Cztery
+          krótkie fakty — nazwa, NIP, REGON, administrator — zajmowały przez to
+          na telefonie cztery pełne wiersze, jeden pod drugim, każdy z osobnym
+          obramowaniem i wypełnieniem. Dane rejestrowe nie są treścią, do której
+          się wraca; rodzic sprawdza je raz albo wcale, a przy sporze i tak
+          znajdzie je w regulaminie.
+
+          Lista rozdzielona daje ten sam komplet w jednym kafelku: etykieta
+          z lewej, wartość z prawej, włos między wierszami. Ten sam wzorzec
+          stoi w „Zanim zapytacie" na stronie głównej i przy zgłoszeniach na
+          stronie bezpieczeństwa, więc oko już go zna. */}
+      <article class="karta dane-firmy">
+        <ul class="lista-rozdzielona">
+          {daneFirmy.map((d) => (
+            <li>
+              <span class="etykieta">{d.etykieta}</span>
+              <span class="wartosc">{d.wartosc ?? "do uzupełnienia"}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
 
       <div style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">
         <DoUzupelnienia czego="Dane rejestrowe">
