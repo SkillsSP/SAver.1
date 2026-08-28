@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node narzedzia/typografia.mjs",
     "preview": "astro preview",
     "audyt": "node narzedzia/audyt.mjs",
     "test:mobilny": "node narzedzia/test-mobilny.mjs",
