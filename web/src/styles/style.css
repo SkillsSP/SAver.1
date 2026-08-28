@@ -2807,3 +2807,18 @@ button {
     padding: var(--space-1) var(--space-1) var(--space-2);
   }
 }
+
+/* Zdanie o lokalizacji pod drogami kontaktu. Nie karta, bo to jedno zdanie —
+   karta wokół jednego zdania wygląda jak pusty kontener. */
+.gdzie-jestesmy {
+  margin: var(--space-3) 0 0;
+  max-width: var(--szerokosc-tekstu);
+  font-size: var(--text-maly);
+  color: var(--tekst-drugi);
+  padding-left: var(--space-2);
+  border-left: 3px solid var(--kobalt-600);
+}
+.gdzie-jestesmy strong {
+  color: var(--tekst-glowny);
+  font-weight: var(--waga-polgruba);
+}

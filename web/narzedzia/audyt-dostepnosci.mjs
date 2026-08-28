@@ -34,7 +34,7 @@ const bledy = [];
 const uwagi = [];
 const blad = (co) => bledy.push(co);
 const uwaga = (co) => uwagi.push(co);
-const licznik = { stron: 0, naglowkow: 0, obrazkow: 0, pol: 0, przystankow: 0 };
+const licznik = { stron: 0, naglowkow: 0, obrazkow: 0, pol: 0, przystankow: 0, tekstow: 0 };
 
 const przegladarka = await chromium.launch();
 
@@ -116,6 +116,108 @@ const przegladarka = await chromium.launch();
     licznik.obrazkow += w.obrazkow;
     licznik.pol += w.pol;
     for (const p of w.problemy) blad(`${adres} — ${p}`);
+  }
+  await kontekst.close();
+}
+
+/* ======================================================================
+   1b. KONTRAST TEKSTU
+
+   Sprawdzamy każdą parę tekst–tło pod progami WCAG 1.4.3: 4,5:1 dla tekstu
+   zwykłego, 3:1 dla dużego (24 px albo 18,66 px półgrubego).
+
+   Dwie pułapki, w które sam wpadłem przy pisaniu tego sprawdzenia i które
+   dają fałszywe alarmy, jeśli się ich nie obejdzie:
+
+   1. Tło trzeba liczyć OD SAMEGO ELEMENTU w górę, nie od jego rodzica.
+      Plakietka „Unikat" ma własne tło; porównana z tłem sekcji wychodziła
+      na 1,15:1, choć na ekranie jest czytelna.
+
+   2. Element widoczny sam w sobie może mieć przodka z `display: none` —
+      tak jest z rozwijanym menu wersji komputerowej, które na telefonie
+      nie istnieje. Zwracało 1,00:1 dla dwunastu tekstów naraz.
+      `offsetParent === null` łapie oba przypadki jednym warunkiem.
+   ====================================================================== */
+{
+  const kontekst = await przegladarka.newContext();
+  const strona = await kontekst.newPage();
+  await strona.addInitScript(() => {
+    try { localStorage.setItem("sa-cookie-consent", "necessary"); } catch (e) {}
+  });
+
+  for (const adres of STRONY) {
+    await strona.goto(ADRES + adres, { waitUntil: "domcontentloaded" });
+    const znalezione = await strona.evaluate(() => {
+      const jasnosc = (c) => {
+        const s = c.map((v) => v / 255).map((v) =>
+          v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+        return 0.2126 * s[0] + 0.7152 * s[1] + 0.0722 * s[2];
+      };
+      const naBarwy = (s) => {
+        const m = s.match(/[\d.]+/g);
+        return m ? m.slice(0, 3).map(Number) : null;
+      };
+      /* Tło trzeba SKŁADAĆ, a nie brać pierwsze napotkane. Aktywna pozycja
+         menu ma własne tło `rgba(30, 95, 204, 0.08)` — osiem procent krycia
+         nad kremem, czyli w praktyce prawie krem. Wzięte dosłownie, jako
+         ciemny kobalt, dawało 1,51:1 dla tekstu, który na ekranie jest
+         doskonale czytelny. Zbieramy więc wszystkie warstwy od elementu w górę
+         i mieszamy je tak, jak robi to przeglądarka. */
+      const tloPod = (el) => {
+        const warstwy = [];
+        let t = el;
+        while (t) {
+          const c = getComputedStyle(t).backgroundColor;
+          const m = c && c.match(/[\d.]+/g);
+          if (m) {
+            const a = m.length > 3 ? Number(m[3]) : 1;
+            if (a > 0) {
+              warstwy.push({ rgb: m.slice(0, 3).map(Number), a });
+              if (a >= 1) break;
+            }
+          }
+          t = t.parentElement;
+        }
+        /* Pod wszystkim leży biel — gdyby żadna warstwa nie była pełna. */
+        let wynik = [255, 255, 255];
+        for (const w of warstwy.reverse())
+          wynik = wynik.map((tlo, i) => w.rgb[i] * w.a + tlo * (1 - w.a));
+        return `rgb(${wynik.map(Math.round).join(", ")})`;
+      };
+
+      const out = [];
+      let policzone = 0;
+      for (const el of document.querySelectorAll(
+        "p,li,h1,h2,h3,h4,h5,h6,span,a,strong,em,small,button,summary,td,th,label,figcaption")) {
+        const wlasnyTekst = [...el.childNodes]
+          .filter((n) => n.nodeType === 3).map((n) => n.textContent.trim()).join("");
+        if (!wlasnyTekst) continue;
+        /* Pusty offsetParent oznacza element bez pudełka: albo sam jest
+           ukryty, albo któryś z jego przodków. Pozycjonowanie stałe jest
+           tu wyjątkiem, bo ono też zeruje offsetParent. */
+        const cs = getComputedStyle(el);
+        if (el.offsetParent === null && cs.position !== "fixed") continue;
+        if (cs.visibility === "hidden" || cs.opacity === "0") continue;
+        if (el.closest(".wizualnie-ukryte, .pulapka, .pomin-do-tresci")) continue;
+        const r = el.getBoundingClientRect();
+        if (r.width < 2 || r.height < 2) continue;
+
+        const k1 = naBarwy(cs.color);
+        const k2 = naBarwy(tloPod(el));
+        if (!k1 || !k2) continue;
+        policzone++;
+        const stosunek = (Math.max(jasnosc(k1), jasnosc(k2)) + 0.05) /
+                         (Math.min(jasnosc(k1), jasnosc(k2)) + 0.05);
+        const px = parseFloat(cs.fontSize);
+        const duzy = px >= 24 || (px >= 18.66 && Number(cs.fontWeight) >= 700);
+        const prog = duzy ? 3 : 4.5;
+        if (stosunek < prog)
+          out.push(`${stosunek.toFixed(2)}:1 przy progu ${prog} (${Math.round(px)}px) — „${wlasnyTekst.slice(0, 34)}"`);
+      }
+      return { out, policzone };
+    });
+    licznik.tekstow += znalezione.policzone;
+    for (const x of [...new Set(znalezione.out)]) blad(`${adres} — kontrast ${x}`);
   }
   await kontekst.close();
 }
@@ -308,7 +410,8 @@ await przegladarka.close();
 
 console.log(`\n  Sprawdzono ${licznik.stron} stron: ${licznik.naglowkow} nagłówków,` +
   ` ${licznik.obrazkow} obrazków, ${licznik.pol} pól formularzy,` +
-  ` ${licznik.przystankow} przystanków tabulatora.`);
+  ` ${licznik.przystankow} przystanków tabulatora,` +
+  ` ${licznik.tekstow} par tekst–tło.`);
 console.log(`\n  BŁĘDY: ${bledy.length}`);
 for (const b of bledy) console.log(`   ✗ ${b}`);
 console.log(`\n  UWAGI: ${uwagi.length}`);

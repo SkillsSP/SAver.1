@@ -131,11 +131,35 @@ const daneFirmy = [
           </span>
         </a>
       </div>
+
+      {/* GDZIE JESTEŚMY — tuż pod drogami kontaktu, a nie na końcu strony.
+
+          Wcześniej ta karta stała w kolumnie obok formularza. Na komputerze
+          wyglądało to sensownie, bo obie kolumny widać naraz. Na telefonie
+          kolumna boczna zjeżdża POD formularz, więc pytanie „gdzie właściwie
+          jesteście" znajdowało odpowiedź dopiero 2700 px w dół, za formularzem
+          kontaktowym i kartą zgłoszeń. Zmierzone, nie oszacowane.
+
+          Rodzic, który sprawdza, czy centrum jest po jego stronie miasta,
+          zadaje to pytanie ZANIM cokolwiek napisze. Odpowiedź stoi teraz przy
+          telefonie i adresie e-mail, czyli tam, gdzie jej szuka. */}
+      <p class="gdzie-jestesmy" id="dojazd">
+        <strong>Gdzie jesteśmy:</strong> zajęcia prowadzimy stacjonarnie
+        w {firma.miastoWMiejscowniku}. Adres, godziny otwarcia biura i dojazd
+        podamy razem z uruchomieniem zapisów, gdy umowa na lokal będzie
+        podpisana.
+      </p>
     </div>
   </section>
 
-  {/* FORMULARZ + KARTA ZGŁOSZEŃ */}
-  <section class="sekcja sekcja--karta sekcja--wlos" id="formularz">
+  {/* FORMULARZ + KARTA ZGŁOSZEŃ
+
+      TŁO. Sekcja miała klasę `sekcja--karta`, czyli białe tło — a karty w jej
+      środku też są białe. Efekt był taki, że trzy różne bloki (formularz,
+      zgłoszenie dotyczące dziecka, dojazd) czytały się jako jedna biała płaszczyzna
+      bez granic. Sekcja idzie teraz na delikatny kobalt, więc białe karty
+      odcinają się od tła i widać, gdzie kończy się jedna sprawa, a zaczyna druga. */}
+  <section class="sekcja sekcja--tint" id="formularz">
     <div class="szerokosc">
       <div class="siatka--boczna">
         <div class="stos">
@@ -309,15 +333,6 @@ const daneFirmy = [
             </DoUzupelnienia>
           )}
 
-          {/* Miasto i tryb zajęć zostają — to nie jest informacja o lokalu. */}
-          <article class="karta karta--luzna" id="dojazd">
-            <h2 class="tytul-3">Gdzie jesteśmy</h2>
-            <p class="tekst-maly tekst-drugi">
-              Zajęcia prowadzimy stacjonarnie w {firma.miastoWMiejscowniku}. Adres, godziny
-              otwarcia biura i dojazd podamy razem z uruchomieniem zapisów, gdy
-              umowa na lokal będzie podpisana.
-            </p>
-          </article>
         </div>
       </div>
     </div>

@@ -52,15 +52,6 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
           </article>
         ))}
       </div>
-
-      {/* Mocniejsze niż puste kółka na portrety. Zapowiedź „wkrótce" starzeje
-          się na stronie szybciej niż samo zdjęcie, więc jej tu nie ma. */}
-      <p class="tekst-maly tekst-drugi" style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">
-        Zdjęć zespołu jeszcze nie publikujemy. Wolimy pokazać własne twarze, gdy
-        centrum ruszy, niż wstawić zdjęcia z banku, które nie przedstawiają
-        nikogo z nas.
-      </p>
-
       <div style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">
         <DoUzupelnienia czego="Kwalifikacje trzech osób">
           Dla każdej osoby jedno pole: wykształcenie, lata doświadczenia,
@@ -113,44 +104,22 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
     </div>
   </section>
 
-  {/* WARUNKI ZAJĘĆ — zobowiązania, nie opis lokalu.
 
-      Poprzednia wersja mówiła „Sale są przystosowane do pracy w ruchu”, czyli
-      opisywała przestrzeń, której umowa nie jest jeszcze podpisana. To samo
-      dotyczyło pustego pola na zdjęcie sali: zapowiedź bez terminu starzeje się
-      na stronie szybciej niż samo zdjęcie. Jedno i drugie zamienione na to, co
-      faktycznie zależy od nas i obowiązuje od pierwszego dnia zajęć. */}
-  <section class="sekcja">
-    <div class="szerokosc">
-      <div class="siatka--wiodaca">
-        <div class="stos stos--ciasny">
-          <span class="nadtytul">Warunki</span>
-          <h2 class="tytul-1">Na co się umawiamy</h2>
-        </div>
-        <div class="stos">
-          <p class="wiodacy">
-            Zajęcia prowadzimy stacjonarnie w {firma.miastoWMiejscowniku}. Adres podamy
-            razem z uruchomieniem zapisów — do tego czasu nie chcemy opisywać
-            miejsca, którego nie możecie jeszcze obejrzeć. To natomiast zależy
-            od nas i obowiązuje od pierwszego dnia:
-          </p>
-          <ul class="lista-znaczona">
-            <li>Grupy {wielkoscGrupyTekst} osób, żeby prowadzący widział każde dziecko</li>
-            <li>Sala do pracy w ruchu, nie do siedzenia w ławkach — tego wymaga metoda</li>
-            <li>
-              Zajęcia jeden na jeden w sali z przeszkleniem, zgodnie ze{" "}
-              <a class="link-w-zdaniu" href={url("/bezpieczenstwo")}>standardami ochrony małoletnich</a>
-            </li>
-            <li>Apteczka w każdej sali i osoba z aktualnym kursem pierwszej pomocy na każdej zmianie</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+  {/* METODA I JEJ ZAPLECZE. Sekcja przejęła miejsce po „Na co się umawiamy",
+      gdzie stały zobowiązania organizacyjne — te są opisane szerzej na stronie
+      Bezpieczeństwo i tam jest ich miejsce.
 
-  {/* METODA — skrót z kotwicą. Pełna wersja stoi na /metoda i tam zostaje;
-      tutaj jest tyle, ile rodzic potrzebuje, zanim zdecyduje, czy czytać dalej. */}
-  <section class="sekcja sekcja--karta sekcja--wlos" id="metoda">
+      Treść pochodzi z aneksu naukowego (07-metoda/aneks-naukowy-zrodla-metody.md)
+      i trzyma się jego zasady: rozdzielamy trzy rzeczy, których nie wolno mieszać
+      — dowód skuteczności z badań, ramy programowe i naszą własną deklarację
+      o tym, co dzieje się na zajęciach.
+
+      Liczby badań podajemy, bo zamieniają ogólnik w sprawdzalne twierdzenie.
+      Rodzic, który zechce sprawdzić, znajdzie te metaanalizy pod nazwiskami
+      z aneksu. Zastrzeżenie o granicach dowodu ZOSTAJE i nie wolno go usuwać
+      przy skracaniu — bez niego całość zamienia się w obietnicę skuteczności,
+      której nikt nie zbadał. Pełny opis metody stoi na /metoda. */}
+  <section class="sekcja" id="metoda">
     <div class="szerokosc">
       <div class="siatka--wiodaca">
         <div class="stos stos--ciasny">
@@ -164,6 +133,31 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
             oparte na zadaniach, ustrukturyzowana współpraca, informacja
             zwrotna oraz rozwijanie kompetencji społeczno-emocjonalnych
             i medialnych.
+          </p>
+          <ul class="lista-rozdzielona">
+            <li>
+              <span class="etykieta">Słownictwo przez ruch i gest</span>
+              <span class="wartosc">metaanaliza 52 badań</span>
+            </li>
+            <li>
+              <span class="etykieta">Nauczanie języka przez zadania</span>
+              <span class="wartosc">dwie metaanalizy</span>
+            </li>
+            <li>
+              <span class="etykieta">Współpraca w małych zespołach</span>
+              <span class="wartosc">metaanaliza 15 metaanaliz</span>
+            </li>
+            <li>
+              <span class="etykieta">Informacja zwrotna w trakcie nauki</span>
+              <span class="wartosc">metaanaliza 435 badań</span>
+            </li>
+          </ul>
+          <p class="tekst-drugi">
+            Żadne z tych badań nie sprawdzało jednak całego pakietu Skills
+            Academy — bo taki pakiet nie był badany. Sprawdzano poszczególne
+            składniki, z których go złożyliśmy. Dlatego skuteczność będziemy
+            oceniać także u siebie: mierząc postępy uczestników i to, czy
+            zajęcia faktycznie prowadzimy tak, jak opisujemy.
           </p>
           {/* Zastrzeżenie stoi tu celowo. Rodzic analityczny rozpoznaje, że
               znamy granice własnych twierdzeń; rodzic, który tego nie czyta,
@@ -184,54 +178,6 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
     </div>
   </section>
 
-  {/* CZEGO JESZCZE NIE MAMY. Przyznanie się do braku dowodu wynikowego buduje
-      więcej zaufania niż jego pozorowanie — a rodzic i tak o to zapyta. */}
-  <section class="sekcja">
-    <div class="szerokosc">
-      <div class="naglowek-sekcji">
-        <span class="nadtytul">Uczciwie</span>
-        <h2 class="tytul-1">Czego jeszcze nie mamy</h2>
-        <p class="wiodacy">
-          Zaczynamy i nie udajemy, że jest inaczej. Trzy rzeczy, których na tej
-          stronie nie znajdziecie, i to, co dajemy w zamian.
-        </p>
-      </div>
-
-      <div class="siatka siatka--troje">
-        <article class="karta karta--luzna">
-          <h3 class="tytul-4">Opinii rodziców</h3>
-          <p class="tekst-maly tekst-drugi">
-            Nie mamy ani jednej, bo nie mieliśmy jeszcze uczestników. Nie
-            kupujemy ich i nie piszemy sami.
-          </p>
-        </article>
-        <article class="karta karta--luzna">
-          <h3 class="tytul-4">Wyników i statystyk</h3>
-          <p class="tekst-maly tekst-drugi">
-            Żadnych średnich poprawy ani zdawalności. Podamy je po pierwszym
-            roczniku, jeśli będą policzone rzetelnie — nie wcześniej.
-          </p>
-        </article>
-        <article class="karta karta--luzna">
-          <h3 class="tytul-4">Własnych zdjęć</h3>
-          <p class="tekst-maly tekst-drugi">
-            Zdjęcia na stronie są ilustracyjne i tak są podpisane. Wymienimy je
-            na własne, gdy zaczną się zajęcia.
-          </p>
-        </article>
-      </div>
-
-      <div class="odeslanie" style="background: var(--tlo-karty); margin-top: var(--space-4);">
-        <p class="odeslanie__tekst">
-          <strong>Co dajemy w zamian</strong>
-          Jawne standardy ochrony małoletnich, cennik bez dopisków drobnym
-          drukiem i pierwsze spotkanie bez opłaty. Dowód proceduralny zamiast
-          wynikowego — dopóki wynikowego uczciwie mieć nie możemy.
-        </p>
-        <a class="przycisk przycisk--obrys" href={url("/cennik")}>Zobaczcie cennik</a>
-      </div>
-    </div>
-  </section>
 
   <ZapisCta
     tytul="Najlepiej poznać nas na zajęciach"

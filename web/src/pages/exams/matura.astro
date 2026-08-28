@@ -201,7 +201,7 @@ const schemat = [
   </section>
 
   {/* SCHEMAT */}
-  <section class="sekcja sekcja--slate">
+  <section class="sekcja sekcja--karta sekcja--wlos">
     <div class="szerokosc">
       <div class="siatka--wiodaca">
         <div class="stos stos--ciasny">
@@ -226,37 +226,6 @@ const schemat = [
     </div>
   </section>
 
-  {/* WYNIKI — bez tła, celowo.
-
-      Zamykające wezwanie poniżej jest w wersji dla ucznia, a ta zawsze idzie
-      na tle slate. Gdy ta sekcja też była slate, obie zlewały się w jeden szary
-      blok długi na dwa ekrany i granica między „nie mamy jeszcze wyników"
-      a „zacznijcie od arkusza" znikała. Zmierzone na telefonie: identyczne
-      rgb(237, 239, 242) w dwóch sąsiednich sekcjach.
-
-      Tło przejęła sekcja „Jak pracujemy" wyżej, więc cała strona przeplata
-      się teraz równo: zwykłe, slate, zwykłe, slate, zwykłe, slate. */}
-  <section class="sekcja">
-    <div class="szerokosc">
-      <div class="siatka--wiodaca">
-        <div class="stos stos--ciasny">
-          <span class="nadtytul nadtytul--slate">Wyniki</span>
-          <h2 class="tytul-1 tytul--medrzec">Publikujemy je po pierwszym roczniku</h2>
-        </div>
-        <div class="stos">
-          <p class="wiodacy">
-            Nie podajemy średnich, dopóki nie mamy ich z czego policzyć. Kiedy
-            pierwszy rocznik zda maturę, w tym miejscu pojawi się średni wynik,
-            poprawa względem arkusza wejściowego i liczba uczniów.
-          </p>
-          <p class="tekst-maly tekst-drugi">
-            Do tego czasu jedyne, co możemy pokazać, to sposób pracy i osoby,
-            które ją prowadzą. <a class="link-w-zdaniu" href={url("/o-nas")}>Poznajcie zespół</a>.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <ZapisCta
     senior={true}
