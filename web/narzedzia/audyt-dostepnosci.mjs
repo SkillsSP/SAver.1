@@ -227,6 +227,67 @@ for (const tryb of ["light", "dark"]) {
 }
 
 /* ======================================================================
+   1c. RYTM SEKCJI
+
+   Dwie sąsiednie sekcje o tym samym tle zlewają się w jedną płaszczyznę
+   i granica między dwiema myślami znika. Na telefonie, gdzie widać naraz
+   jeden ekran, nie ma po czym poznać, że zaczyna się nowa część.
+
+   PIERWSZA WERSJA TEGO SPRAWDZENIA PRZEPUŚCIŁA REGRESJĘ, bo porównywała
+   wyłącznie sekcje z ustawionym tłem, a dwie sekcje BEZ tła są tak samo
+   nie do odróżnienia jak dwie w tym samym kolorze. Teraz sekcja bez tła
+   dziedziczy kolor strony i wchodzi do porównania na równi z resztą.
+
+   Miarą jest L* z przestrzeni CIELAB, nie jasność względna: ta druga przy
+   ciemnych powierzchniach ściska wszystkie różnice do ułamków punktu
+   i wygląda na problem tam, gdzie oko widzi wyraźną granicę.
+
+   PRÓG WYNOSI 1,0 L*, NIE 3,0. Zacząłem od trzech, bo tyle podaje się jako
+   granicę zauważalności dla dużych płaszczyzn — i dostałem 45 zgłoszeń,
+   z których żadne nie było usterką. Ten projekt celowo operuje delikatnym
+   rytmem: krem strony i biała karta dzieli 2,3 L*, co widać doskonale, a co
+   przy progu trzech wychodziło jako wada. Szukamy tu duplikatów, nie niskiego
+   kontrastu — dwóch sekcji, których NIE DA SIĘ odróżnić, a nie takich, które
+   różnią się subtelnie z zamysłu.
+   ====================================================================== */
+{
+  for (const tryb of ["light", "dark"]) {
+    const kontekst = await przegladarka.newContext({ colorScheme: tryb });
+    const strona = await kontekst.newPage();
+    await strona.addInitScript(() => {
+      try { localStorage.setItem("sa-cookie-consent", "necessary"); } catch (e) {}
+    });
+    for (const adres of STRONY) {
+      await strona.goto(ADRES + adres, { waitUntil: "domcontentloaded" });
+      const pary = await strona.evaluate(() => {
+        const L = (rgb) => {
+          const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+          const Y = 0.2126 * f(rgb[0]) + 0.7152 * f(rgb[1]) + 0.0722 * f(rgb[2]);
+          return Y > 0.008856 ? 116 * Math.cbrt(Y) - 16 : 903.3 * Y;
+        };
+        const naBarwy = (s) => (s.match(/[\d.]+/g) ?? [0, 0, 0]).slice(0, 3).map(Number);
+        const tloStrony = getComputedStyle(document.body).backgroundColor;
+        const sek = [...document.querySelectorAll("main > section")].map((s) => {
+          let t = getComputedStyle(s).backgroundColor;
+          if (!t || t.startsWith("rgba(0, 0, 0, 0")) t = tloStrony;
+          return { L: L(naBarwy(t)),
+                   n: s.querySelector("h1,h2")?.textContent.trim().slice(0, 26) ?? "(bez nagłówka)" };
+        });
+        const out = [];
+        for (let i = 1; i < sek.length; i++) {
+          const d = Math.abs(sek[i].L - sek[i - 1].L);
+          if (d < 1) out.push(`„${sek[i - 1].n}" + „${sek[i].n}" — różnica ${d.toFixed(1)} L*`);
+        }
+        return out;
+      });
+      for (const x of pary)
+        blad(`${adres} [${tryb === "dark" ? "ciemny" : "jasny"}] — sekcje zlewają się: ${x}`);
+    }
+    await kontekst.close();
+  }
+}
+
+/* ======================================================================
    2. WĘDRÓWKA KLAWIATURĄ
    ====================================================================== */
 {

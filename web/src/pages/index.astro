@@ -256,10 +256,15 @@ const trzyKroki = [
        naraz jeden ekran, rodzic nie miał po czym poznać, że zaczyna się nowa
        myśl.
 
-       PO PRZENIESIENIU SELEKTORA tło wróciło do zwykłego: selektor wyżej jest
-       teraz kartą, galeria między nimi jest bez tła, więc te kroki muszą być
-       bez tła również — inaczej stykałyby się z sekcją o metodzie. */}
-  <section class="sekcja">
+       TŁO — POPRAWIONE PO REGRESJI. Przy przenoszeniu selektora wieku zdjąłem
+       stąd tło karty, żeby nie stykało się z sekcją o metodzie. Zapomniałem,
+       że galeria kafli wyżej też jest bez tła — więc te dwie sekcje znowu
+       zlały się w jedną płaszczyznę, czyli dokładnie w to, co właścicielka
+       zgłosiła jako trzecią uwagę.
+
+       Karta wraca. Z sekcją o metodzie nie koliduje, bo tamta jest kobaltowa,
+       a selektor wieku, też będący kartą, stoi PRZED galerią, nie zaraz obok. */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
     <div class="szerokosc">
       <div class="naglowek-sekcji">
         <span class="nadtytul">Jak zaczynamy</span>
