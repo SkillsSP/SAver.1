@@ -12,7 +12,8 @@
     "test:mobilny": "node narzedzia/test-mobilny.mjs",
     "test:bezpieczenstwa": "node narzedzia/test-bezpieczenstwa.mjs",
     "audyt:dostepnosc": "node narzedzia/audyt-dostepnosci.mjs",
-    "audyt:wydajnosc": "node narzedzia/audyt-wydajnosci.mjs"
+    "audyt:wydajnosc": "node narzedzia/audyt-wydajnosci.mjs",
+    "test:safari": "node narzedzia/test-safari.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
