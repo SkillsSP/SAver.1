@@ -209,8 +209,14 @@ const trzyKroki = [
   </section>
 
   {/* ── 1c ── TRZY KROKI. Odpowiedź na pytanie „co się stanie, jak zadzwonię”,
-       którego strona wcześniej nie obsługiwała wprost. */}
-  <section class="sekcja">
+       którego strona wcześniej nie obsługiwała wprost.
+
+       TŁO. Sekcja dostaje tło karty, bo bez niego trzy sekcje pod rząd —
+       galeria kafli, te kroki i selektor wieku — leżały na tym samym tle
+       strony i zlewały się w jeden ciąg bez granic. Na telefonie, gdzie widać
+       naraz jeden ekran, rodzic nie miał po czym poznać, że zaczyna się nowa
+       myśl. */}
+  <section class="sekcja sekcja--karta sekcja--wlos">
     <div class="szerokosc">
       <div class="naglowek-sekcji">
         <span class="nadtytul">Jak zaczynamy</span>
@@ -262,53 +268,13 @@ const trzyKroki = [
     </div>
   </section>
 
-  {/* ── 3 ── JEDNA MISJA OD ŚRODKA. Szeroka kolumna zamiast siatki kafli. */}
-  <section class="sekcja sekcja--karta sekcja--wlos">
-    <div class="szerokosc">
-      <div class="misja">
-        <div class="stos">
-          <span class="nadtytul">Jedna misja od środka</span>
-          <p class="misja__cytat">
-            Dziś jesteś detektywem. Masz jedną wskazówkę po angielsku
-            i dwadzieścia minut.
-          </p>
-          <p class="tekst-drugi">
-            Tak wygląda pojedyncze spotkanie w grupie ośmio- i dziewięciolatków.
-            Nikt nie zapowiada, że będzie „lekcja o czasie przeszłym”. Dziecko
-            dostaje zagadkę i musi ją rozwiązać — a jedynym dostępnym narzędziem
-            jest angielski.
-          </p>
-          <p class="tekst-drugi">
-            Efekt uboczny jest zamierzony: po trzech miesiącach dziecko pyta
-            o rzeczy po angielsku odruchowo, bo tak było szybciej niż po polsku.
-          </p>
-          <p>
-            <a class="link-w-zdaniu" href={url("/podstawowe")}>
-              Zobaczcie, jak zbudowane są zajęcia podstawowe
-            </a>
-          </p>
-        </div>
 
-        <div class="stos stos--ciasny">
-          <h2 class="tytul-3">Przebieg spotkania</h2>
-          <ol class="przebieg">
-            {przebiegMisji.map((krok) => (
-              <li class="przebieg__krok">
-                <span class="przebieg__czas">{krok.czas}</span>
-                <div class="przebieg__tresc">
-                  <strong>{krok.tytul}</strong>
-                  <p>{krok.opis}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
-    </div>
-  </section>
+  {/* ── 4 ── DOWÓD. Metoda w trzech zdaniach + pasek źródeł. Nie sześć definicji.
 
-  {/* ── 4 ── DOWÓD. Metoda w trzech zdaniach + pasek źródeł. Nie sześć definicji. */}
-  <section class="sekcja">
+       TŁO. Po usunięciu sekcji „Jedna misja od środka" ta trafiła bezpośrednio
+       pod selektor wieku, który tła nie ma. Delikatny kobalt oddziela je od
+       siebie i domyka przeplatanie na całej stronie. */}
+  <section class="sekcja sekcja--tint">
     <div class="szerokosc">
       <div class="siatka--wiodaca">
         <div class="stos stos--ciasny">
