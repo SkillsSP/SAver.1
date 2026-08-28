@@ -2746,23 +2746,43 @@ button {
    TELEFON — POPRAWKI PO PRZEGLĄDZIE NA ŻYWYM SPRZĘCIE
    ========================================================================== */
 
-/* PASEK UŻYTKOWY znika na wąskich ekranach.
+/* PASEK UŻYTKOWY — jeden wiersz zamiast dwóch.
 
-   Na telefonie zawijał się na dwa wiersze i czytał jak fragment, który komuś
-   został — szara belka nad logotypem, zanim jeszcze widać markę. Przy tym
-   wszystko, co niósł, stoi na telefonie gdzie indziej: hasło powtarza zdanie
-   pod nagłówkiem strony głównej, numer telefonu jest w pasku akcji przyklejonym
-   do dołu ekranu, a „Kontakt" siedzi w menu.
+   Zmierzone przed zmianą: pasek miał 110 px wysokości i zawsze łamał się na
+   dwa wiersze. Powód jest arytmetyczny, nie sprzętowy — zachowywał się tak
+   samo na iPhonie i na Androidzie. Hasło zajmuje 272–342 px, odnośniki
+   kontaktowe kolejne 142–155 px, razem 414–497 px, a na telefonie dostępne
+   jest 320–430 px. Nic się nie mieściło, więc przeglądarka łamała wiersz,
+   a rozstrzelenie na obie krawędzie zostawiało między nimi pustkę. Stąd
+   wrażenie fragmentu, który komuś został.
 
-   Zysk jest podwójny: znika belka i wraca około 90 px wysokości na samej górze
-   każdej podstrony — dokładnie tam, gdzie rodzic decyduje, czy czytać dalej.
+   Rozstrzygnięcie: na telefonie pasek niesie JEDNĄ rzecz i jest nią hasło.
+   Odnośniki kontaktowe schodzą, bo obie drogi, które otwierały, są na
+   telefonie dostępne bliżej: numer stoi w pasku akcji przyklejonym do dołu
+   ekranu, a „Kontakt" w menu pod hamburgerem. Zostawienie ich tutaj oznaczało
+   trzecie miejsce z tym samym numerem na jednym ekranie.
 
-   Gdyby hasło miało jednak zostać, wystarczy zamienić `display: none` poniżej
-   na ukrycie samych odnośników kontaktowych — pasek zwinie się wtedy do
-   jednego wiersza. */
+   Hasło zostaje, bo jako jedyne nie powtarza się nigdzie indziej na
+   podstronach innych niż główna — rodzic, który wszedł prosto na cennik,
+   dowiaduje się z niego, czym jest to miejsce i w jakim mieście.
+
+   Wysokość spada ze 110 do około 34 px. */
 @media (max-width: 47.99rem) {
   .pasek-uzytkowy {
+    padding: 0.375rem var(--space-2);
+  }
+  .pasek-uzytkowy__tresc {
+    justify-content: center;
+    gap: 0;
+  }
+  .pasek-uzytkowy__kontakt {
     display: none;
+  }
+  .pasek-uzytkowy__haslo {
+    text-align: center;
+    /* Gdyby hasło kiedyś urosło i nie zmieściło się w wierszu, ma się złamać
+       na dwa równe, a nie zostawić jedno słowo w drugim wierszu. */
+    text-wrap: balance;
   }
 }
 
