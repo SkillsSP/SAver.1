@@ -85,7 +85,7 @@ const tel = telefonHref();
                   <strong>
                     {poz.nazwa}
                     {poz.unikat && (
-                      <span class="plakietka unikat">{poz.etykietaUnikatu ?? "Unikat"}</span>
+                      <span class="plakietka unikat">{poz.etykietaUnikatu ?? "Poza angielskim"}</span>
                     )}
                   </strong>
                   {poz.dopisek && <span>{poz.dopisek}</span>}
@@ -180,7 +180,7 @@ const tel = telefonHref();
               <a href={url(poz.href)}>
                 {grupa.etykieta === "Matura" ? "Matura" : "E8"} · {poz.nazwa}
                 {poz.unikat && (
-                      <span class="plakietka unikat">{poz.etykietaUnikatu ?? "Unikat"}</span>
+                      <span class="plakietka unikat">{poz.etykietaUnikatu ?? "Poza angielskim"}</span>
                     )}
               </a>
             ))}

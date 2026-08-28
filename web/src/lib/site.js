@@ -393,6 +393,27 @@ export const dniTygodnia = [
 export const poradnik = [];
 
 /* --------------------------------------------------------------------------
+   CENY WEJŚCIOWE
+
+   Trzy kwoty, od których zaczyna się każda ze ścieżek. Stoją tutaj, a nie
+   w cenniku, z jednego powodu: pojawiają się teraz także na stronach oferty,
+   a cena wpisana w pięciu miejscach rozjeżdża się przy pierwszej podwyżce.
+   Tu zmienia się raz.
+
+   Pełne tabele progów zostają w cennik.astro — tam jest ich miejsce. Stamtąd
+   te trzy pozycje też sięgają po te wartości, więc nie da się już zmienić ceny
+   na cenniku, zapominając o reszcie serwisu.
+   -------------------------------------------------------------------------- */
+export const cenyOd = {
+  /* Jeden program tygodniowo, 45 minut. */
+  programy: "200 zł",
+  /* Przygotowanie egzaminacyjne — stała stawka miesięczna. */
+  exams: "350 zł",
+  /* Najkrótsze spotkanie jeden na jeden, 45 minut. */
+  indywidualne: "130 zł",
+};
+
+/* --------------------------------------------------------------------------
    ROK SZKOLNY I START
 
    Rodzic szukający zajęć w kwietniu musi wiedzieć, czy planuje na najbliższy

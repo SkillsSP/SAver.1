@@ -1,9 +1,10 @@
 ---
 import Baza from "../layouts/Baza.astro";
+import KotwicaCeny from "../components/KotwicaCeny.astro";
 import OdeslanieDoGrup from "../components/OdeslanieDoGrup.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
-import { url, wielkoscGrupyTekst } from "../lib/site.js";
+import { url, wielkoscGrupyTekst, cenyOd} from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 const przebieg = [
@@ -85,6 +86,7 @@ const lifeSkills = [
           — a przy okazji ćwiczy współpracę, wystąpienia i myślenie krytyczne.
           Fakultety i Exams dokładacie osobno.
         </p>
+        <KotwicaCeny od={cenyOd.programy} jednostka="miesięcznie" />
         <ul class="naglowek-strony__meta">
           <li>Wiek 5–15 lat</li>
           <li>Grupa {wielkoscGrupyTekst} osób</li>

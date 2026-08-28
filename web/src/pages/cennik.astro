@@ -2,7 +2,9 @@
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
-import { url, wielkoscGrupyTekst, firma } from "../lib/site.js";
+import { url, wielkoscGrupyTekst, firma,
+  cenyOd,
+} from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 /* ==========================================================================
@@ -29,7 +31,7 @@ const progi = [
   {
     nazwa: "Jeden program",
     opis: "Useful & Life Skills albo jeden fakultet tematyczny. Raz w tygodniu.",
-    kwota: "200 zł",
+    kwota: cenyOd.programy,
     okres: "/ mies.",
     wariant: "45 minut tygodniowo",
   },
@@ -63,14 +65,14 @@ const pozaKarnetem = [
   {
     nazwa: "Exams",
     opis: "Przygotowanie do egzaminu ósmoklasisty albo matury. Osobna oferta, poza zajęciami podstawowymi.",
-    kwota: "350 zł",
+    kwota: cenyOd.exams,
     okres: "/ mies.",
     wariant: "2 × 45 minut albo 1 × 90 minut tygodniowo",
   },
   {
     nazwa: "Zajęcia indywidualne · 45 minut",
     opis: "Jeden prowadzący, jedno dziecko.",
-    kwota: "130 zł",
+    kwota: cenyOd.indywidualne,
     okres: "/ spotkanie",
   },
   {

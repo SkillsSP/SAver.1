@@ -601,6 +601,10 @@ button {
    PLAKIETKI I ZNACZNIKI
    ========================================================================== */
 .plakietka {
+  /* Plakietka ma się przenieść do następnego wiersza w CAŁOŚCI, a nie złamać
+     w środku. Napis „Poza angielskim" na najwęższych telefonach dzielił się
+     na dwa wiersze wewnątrz kolorowego tła i wyglądał jak usterka. */
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: var(--space-05);
@@ -645,6 +649,15 @@ button {
    Slate zostaje tam, gdzie należy do rejestru: na maturze. Teens Senior nie
    używa kobaltu jako koloru prowadzącego, więc plakietka idzie tam za resztą
    strony, a nie przeciwko niej. */
+/* Nazwa klasy została z czasów, gdy plakietka mówiła „Unikat". Napis się
+   zmienił, klasa nie — zmiana nazwy dotknęłaby siedmiu plików i nic by nie
+   dała.
+
+   DLACZEGO NAPIS SIĘ ZMIENIŁ. „Unikat" znaczy „nikt inny tego nie ma" i jest
+   twierdzeniem o wyższości, którego nie da się udowodnić — trzeba by sprawdzić
+   wszystkie placówki w mieście. „Poza angielskim" mówi prawdę o NASZEJ ofercie:
+   to przedmiot spoza głównego nurtu tego, czego uczymy. Tak samo sprawdzalne
+   jak „Nowość" przy historii i tak samo bezpieczne. Nie wracać do „Unikatu". */
 .unikat {
   background: var(--kobalt-600);
   color: var(--bialy);
@@ -653,7 +666,16 @@ button {
   font-size: 0.6875rem;
   padding: 0.15rem 0.5rem;
 }
-.rejestr-senior .unikat {
+.rejestr-senior /* Nazwa klasy została z czasów, gdy plakietka mówiła „Unikat". Napis się
+   zmienił, klasa nie — zmiana nazwy dotknęłaby siedmiu plików i nic by nie
+   dała.
+
+   DLACZEGO NAPIS SIĘ ZMIENIŁ. „Unikat" znaczy „nikt inny tego nie ma" i jest
+   twierdzeniem o wyższości, którego nie da się udowodnić — trzeba by sprawdzić
+   wszystkie placówki w mieście. „Poza angielskim" mówi prawdę o NASZEJ ofercie:
+   to przedmiot spoza głównego nurtu tego, czego uczymy. Tak samo sprawdzalne
+   jak „Nowość" przy historii i tak samo bezpieczne. Nie wracać do „Unikatu". */
+.unikat {
   background: var(--akcent-senior);
 }
 
@@ -2831,4 +2853,42 @@ button {
 }
 .dane-firmy .lista-rozdzielona {
   margin: 0;
+}
+
+/* ==========================================================================
+   KOTWICA CENOWA na stronach oferty
+   ========================================================================== */
+.kotwica-ceny {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-maly);
+  color: var(--tekst-na-marce-miekki);
+}
+.kotwica-ceny__kwota {
+  font-family: var(--font-odkrywca);
+  font-size: var(--text-h4);
+  font-weight: var(--waga-polgruba);
+  color: var(--bialy);
+}
+.kotwica-ceny__dopisek::before {
+  content: "· ";
+}
+.kotwica-ceny a {
+  color: var(--bialy);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  /* Cel dotykowy — kotwica stoi w nagłówku, gdzie kciuk trafia najczęściej. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+}
+
+/* Na ekranach dotykowych odnośnik do cennika dostaje pełny cel. */
+@media (pointer: coarse) {
+  .kotwica-ceny a {
+    min-height: var(--cel-dotyku);
+  }
 }

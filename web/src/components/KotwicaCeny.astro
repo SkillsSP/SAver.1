@@ -1,0 +1,42 @@
+---
+import { url } from "../lib/site.js";
+
+interface Props {
+  /** Kwota wejściowa, np. „200 zł”. Bierzcie ją z `cenyOd` w site.js. */
+  od: string;
+  /** Za co ta kwota: „miesięcznie”, „za spotkanie”. */
+  jednostka: string;
+  /** Krótkie doprecyzowanie, gdy sama kwota wprowadzałaby w błąd. */
+  dopisek?: string;
+}
+
+const { od, jednostka, dopisek } = Astro.props;
+---
+
+{/* ==========================================================================
+    KOTWICA CENOWA
+
+    Jedno zdanie z kwotą wejściową, stawiane tuż pod zdaniem wprowadzającym
+    na każdej stronie oferty.
+
+    POWÓD. Zmierzone przed dodaniem: na pięciu stronach opisujących ofertę —
+    zajęcia podstawowe, indywidualne, Exams, matura, egzamin ósmoklasisty —
+    nie padała ANI JEDNA kwota. Zamiast niej stało „stawki znajdziecie
+    w cenniku". Rodzic czytał więc od pięciu do jedenastu ekranów o tym, co
+    dziecko będzie robić, z pytaniem „ile to kosztuje" otwartym przez cały
+    czas. Pytanie o cenę nie znika od tego, że się na nie nie odpowiada —
+    zabiera tylko uwagę wszystkiemu, co czyta się dalej.
+
+    Kwota jest wejściowa i tak podpisana: „od". Pełny cennik jest o jedno
+    dotknięcie dalej i to jemu zostawiamy progi, zniżki i warianty.
+
+    Wartości NIE wpisywać tutaj z ręki — biorą się z `cenyOd` w site.js, tego
+    samego miejsca, z którego czerpie cennik. Inaczej pierwsza podwyżka
+    rozjedzie pięć stron z szóstą.
+    ========================================================================== */}
+<p class="kotwica-ceny">
+  <span class="kotwica-ceny__kwota">od {od}</span>
+  <span class="kotwica-ceny__jednostka">{jednostka}</span>
+  {dopisek && <span class="kotwica-ceny__dopisek">{dopisek}</span>}
+  <a href={url("/cennik")}>Pełny cennik</a>
+</p>

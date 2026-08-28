@@ -1,9 +1,10 @@
 ---
 import Baza from "../layouts/Baza.astro";
+import KotwicaCeny from "../components/KotwicaCeny.astro";
 import OdeslanieDoGrup from "../components/OdeslanieDoGrup.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
-import { url } from "../lib/site.js";
+import { url, cenyOd} from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 
 const kiedyMaSens = [
@@ -57,6 +58,7 @@ const jakZaczynamy = [
           Spotkania 1:1 dla dzieci i młodzieży w każdym wieku — od wsparcia
           w bieżącym materiale po przygotowanie do egzaminu ósmoklasisty i matury.
         </p>
+        <KotwicaCeny od={cenyOd.indywidualne} jednostka="za spotkanie" dopisek="45 minut" />
       </div>
     </div>
   </section>

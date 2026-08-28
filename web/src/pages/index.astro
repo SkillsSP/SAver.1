@@ -347,7 +347,7 @@ const trzyKroki = [
           <ul class="lista-znaczona" style="margin-top: var(--space-1);">
             <li style="color: var(--tekst-na-marce-miekki);">Angielski — poziom A2+</li>
             <li style="color: var(--tekst-na-marce-miekki);">
-              Matematyka <span class="plakietka unikat">Unikat</span>
+              Matematyka <span class="plakietka unikat">Poza angielskim</span>
             </li>
           </ul>
           <a class="przycisk przycisk--duch" href={url("/exams/egzamin-osmoklasisty")} style="margin-top: var(--space-2); justify-self: start;">
@@ -368,7 +368,7 @@ const trzyKroki = [
               Angielski — podstawowy i rozszerzony
             </li>
             <li style="color: var(--tekst-na-marce-miekki);">
-              Matematyka — poziom podstawowy <span class="plakietka unikat">Unikat</span>
+              Matematyka — poziom podstawowy <span class="plakietka unikat">Poza angielskim</span>
             </li>
           </ul>
           <a class="przycisk przycisk--duch" href={url("/exams/matura")} style="margin-top: var(--space-2); justify-self: start;">
@@ -378,10 +378,19 @@ const trzyKroki = [
       </div>
 
       <p class="wiodacy" style="color: var(--tekst-na-marce-miekki); margin-top: var(--space-4); max-width: 46rem;">
-        To jedyne miejsce w Szczecinie, gdzie przygotowanie do matury
-        z angielskiego i z matematyki prowadzi ten sam zespół, w tym samym
-        budynku, w jednym grafiku. Matematykę prowadzi jedna z założycielek
-        centrum.
+        {/* NIE PISAĆ TU „jedyne miejsce w Szczecinie". Poprzednie brzmienie tak
+            właśnie zaczynało się i było twierdzeniem o wyższości, którego nie da
+            się udowodnić: wymagałoby sprawdzenia wszystkich placówek w mieście,
+            a te nie mają publicznego rejestru zakresu usług. Ustawa o
+            przeciwdziałaniu nieuczciwym praktykom rynkowym każe przedsiębiorcy
+            udowodnić takie twierdzenie, gdy zostanie zakwestionowane.
+
+            Obecne brzmienie mówi to samo z punktu widzenia rodzica — jeden zespół,
+            jeden budynek, jeden grafik zamiast dwóch dojazdów — ale mówi wyłącznie
+            o nas i broni się samo. */}
+        Angielski i matematykę prowadzi u nas ten sam zespół, w tym samym
+        budynku i w jednym grafiku — zamiast dwóch miejsc i dwóch dojazdów
+        w tygodniu. Matematykę prowadzi jedna z założycielek centrum.
       </p>
 
       <div style="margin-top: var(--space-4); max-width: var(--szerokosc-tekstu);">
