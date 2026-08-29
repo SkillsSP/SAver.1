@@ -1,5 +1,5 @@
 /* ==========================================================================
-   TYPOGRAFIA POLSKA — SIEROTKI
+   TYPOGRAFIA POLSKA — SIEROTKI I JEDNOSTKI
 
    Polska norma typograficzna zabrania zostawiania jednoliterowego wyrazu na
    końcu wiersza. Chodzi o spójniki i przyimki: „a", „i", „o", „u", „w", „z"
@@ -28,6 +28,13 @@
      · pojedynczych liter, które NIE są wyrazami: „A" w „Plan A", litera przed
        kropką albo nawiasem. Warunek wymaga spacji po obu stronach.
 
+   DRUGA REGUŁA: LICZBA I JEDNOSTKA. „200 zł" złamane po liczbie zmusza oko do
+   szukania waluty w następnym wierszu, a przy cenie jest to moment, w którym
+   rodzic akurat czyta uważnie. Tak samo „45 min", „19 lat", „2 godz".
+   Skrypt sprawdzający typografię (narzedzia/test-typografia.mjs) znalazł na
+   żywej stronie 24 takie miejsca — wszystkie w cenniku, w opisach wieku
+   i w długościach zajęć, czyli dokładnie tam, gdzie boli najbardziej.
+
    Uruchamiane automatycznie po `astro build` — patrz `scripts` w package.json.
    ========================================================================== */
 
@@ -45,6 +52,14 @@ const LITERY = "aiouwzAIOUWZ";
    granica wyrazu. Nie łapiemy „Plan A." ani „(w)" — tam nie ma spacji po. */
 const WZORZEC = new RegExp(`(^|[\\s(„"'—–-])([${LITERY}]) `, "g");
 
+/* Jednostki, które nie mają prawa oderwać się od swojej liczby. Lista jest
+   krótka i konkretna — wiązanie wszystkiego, co stoi po cyfrze, zamieniłoby
+   tekst w jeden nierozrywalny blok i popsułoby łamanie wierszy na telefonie. */
+const JEDNOSTKI = "zł|min|godz|godzin|godziny|h|lat|lata|roku|rok|osób|os|kl|%";
+/* Ukośniki są podwojone celowo: w szablonie znakowym `\d` znaczy po prostu
+   literę „d", więc wzorzec bez podwojenia nie łapałby ani jednej cyfry. */
+const WZORZEC_JEDNOSTKA = new RegExp(`(\\d) (${JEDNOSTKI})\\b`, "g");
+
 /* Znaczniki, w których treść jest kodem albo danymi, nie tekstem do czytania. */
 const POMIJANE = new Set(["script", "style", "pre", "code", "textarea"]);
 
@@ -53,6 +68,7 @@ function popraw(html) {
   let pozycja = 0;
   let pomijamy = 0;
   let zmian = 0;
+  let zmianJednostek = 0;
 
   /* Idziemy po znacznikach; wszystko między nimi to tekst. Prosty podział
      wystarcza, bo pracujemy na kodzie wygenerowanym przez Astro, a nie na
@@ -62,9 +78,13 @@ function popraw(html) {
   for (const zn of znaczniki) {
     const tekst = html.slice(pozycja, zn.index);
     if (pomijamy === 0 && tekst) {
-      const nowy = tekst.replace(WZORZEC, (_, przed, litera) => {
+      let nowy = tekst.replace(WZORZEC, (_, przed, litera) => {
         zmian++;
         return `${przed}${litera}${NIEROZDZIELAJACA}`;
+      });
+      nowy = nowy.replace(WZORZEC_JEDNOSTKA, (_, cyfra, jednostka) => {
+        zmianJednostek++;
+        return `${cyfra}${NIEROZDZIELAJACA}${jednostka}`;
       });
       wynik += nowy;
     } else {
@@ -80,7 +100,7 @@ function popraw(html) {
     pozycja = zn.index + zn[0].length;
   }
   wynik += html.slice(pozycja);
-  return { wynik, zmian };
+  return { wynik, zmian, zmianJednostek };
 }
 
 const pliki = [];
@@ -93,16 +113,18 @@ const pliki = [];
 })(KATALOG);
 
 let razem = 0;
+let razemJednostek = 0;
 for (const plik of pliki) {
   const przed = readFileSync(plik, "utf8");
-  const { wynik, zmian } = popraw(przed);
-  if (zmian) {
+  const { wynik, zmian, zmianJednostek } = popraw(przed);
+  if (zmian || zmianJednostek) {
     writeFileSync(plik, wynik, "utf8");
     razem += zmian;
+    razemJednostek += zmianJednostek;
   }
 }
 
 console.log(
-  `  Typografia: związano ${razem} jednoliterowych wyrazów` +
-  ` z następnym słowem w ${pliki.length} plikach.`,
+  `  Typografia: związano ${razem} jednoliterowych wyrazów z następnym słowem` +
+  ` i ${razemJednostek} liczb z jednostką, w ${pliki.length} plikach.`,
 );

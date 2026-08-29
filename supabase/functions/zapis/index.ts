@@ -287,28 +287,86 @@ function liczbaOdnosnikow(tekst: string): number {
   return dopasowania ? dopasowania.length : 0;
 }
 
-/* Limit zgłoszeń z jednego adresu. Funkcje brzegowe są bezstanowe i każda
-   instancja ma własną mapę, więc to ogranicza seryjne wysyłki z jednej sesji,
-   ale nie zastąpi licznika w bazie. Piszę to wprost, zamiast udawać, że limit
-   jest twardy: gdy spam stanie się realnym problemem, tu wchodzi tabela
-   w Postgresie albo Turnstile. */
-const historia = new Map<string, number[]>();
-const LIMIT_NA_GODZINE = 3;
-const GODZINA_MS = 60 * 60 * 1000;
+/* ===========================================================================
+   LIMIT ZGŁOSZEŃ Z JEDNEGO ADRESU — LICZONY W BAZIE
 
-function przekroczonyLimit(adres: string): boolean {
-  const teraz = Date.now();
-  const wpisy = (historia.get(adres) ?? []).filter((t) => teraz - t < GODZINA_MS);
-  wpisy.push(teraz);
-  historia.set(adres, wpisy);
-  /* Mapa żyje tylko tyle, co instancja, ale i tak ją sprzątamy — przy większym
-     ruchu trzymałaby inaczej tysiące adresów bez potrzeby. */
-  if (historia.size > 500) {
-    for (const [k, v] of historia) {
-      if (v.every((t) => teraz - t >= GODZINA_MS)) historia.delete(k);
-    }
+   Poprzednia wersja trzymała licznik w zwykłej mapie w pamięci funkcji.
+   W komentarzu stało nawet zastrzeżenie, że „nie zastąpi licznika w bazie" —
+   ale prawda była gorsza od zastrzeżenia. Napisany później skrypt prób
+   (narzedzia/test-odpornosc.mjs) wysłał dwadzieścia cztery zgłoszenia z jednego
+   adresu w ciągu minuty przy limicie ustawionym na trzy na godzinę.
+   Odrzuconych: ZERO. Każde zapytanie trafiało w świeżą instancję funkcji, więc
+   mapa za każdym razem była pusta. Limit nie działał słabiej — nie działał
+   w ogóle, przez trzy dni, w milczeniu.
+
+   Teraz liczy tabela w Postgresie, wspólna dla wszystkich instancji.
+
+   ADRESU NIE ZAPISUJEMY JAWNIE. Do bazy idzie skrót SHA-256 z solą. Do
+   liczenia zgłoszeń z tego samego źródła to wystarcza, a adres IP odwiedzającego
+   jest daną osobową, której nie potrzebujemy do niczego innego. Solą jest klucz
+   usługowy — i tak jest tajny, i tak jest w środowisku funkcji.
+
+   PRZY BŁĘDZIE BAZY PRZEPUSZCZAMY. Ta sama zasada, co przy braku znacznika
+   czasu: zablokowanie prawdziwego rodzica kosztuje więcej niż jedna wiadomość
+   spamu do przejrzenia. Gdy baza nie odpowiada, zgłoszenie idzie dalej,
+   a w dzienniku zostaje ostrzeżenie.
+   =========================================================================== */
+/* PRÓG. Dopóki licznik nie działał, jego wysokość nie miała znaczenia — stały
+   tam trzy zgłoszenia na godzinę i nikogo to nie dotykało. Od chwili, gdy
+   zaczął odrzucać naprawdę, ta liczba zaczęła decydować o tym, czy rodzic
+   dodzwoni się do formularza.
+
+   Rzecz w tym, że adres nie oznacza jednej rodziny. Polscy operatorzy komórkowi
+   dzielą jeden publiczny adres między wielu abonentów naraz, więc matka
+   wysyłająca zgłoszenie z telefonu może trafić na adres, z którego tego samego
+   dnia pisali już inni. Przy progu trzech odbiłaby się od limitu, którego nie
+   przekroczyła.
+
+   Osiem to kompromis: mieści zapisy kilkorga dzieci, poprawkę wysłaną drugi raz
+   i sąsiadów na tym samym adresie operatora, a jednocześnie sprowadza seryjną
+   wysyłkę z nieskończonej do ośmiu wiadomości na godzinę. Kto odbije się od
+   limitu, dostaje w odpowiedzi prośbę o telefon — i to jest wyjście, które
+   naprawdę działa. */
+const LIMIT_NA_GODZINE = 8;
+const CZAS_NA_LICZNIK_MS = 2500;
+
+async function skrotAdresu(adres: string, sol: string): Promise<string> {
+  const bajty = new TextEncoder().encode(adres + "|" + sol);
+  const skrot = await crypto.subtle.digest("SHA-256", bajty);
+  return [...new Uint8Array(skrot)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function przekroczonyLimit(adres: string): Promise<boolean> {
+  const url = Deno.env.get("SUPABASE_URL");
+  const klucz = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (!url || !klucz) {
+    console.warn("Licznik zgłoszeń: brak dostępu do bazy — przepuszczam.");
+    return false;
   }
-  return wpisy.length > LIMIT_NA_GODZINE;
+
+  const przerwij = AbortSignal.timeout(CZAS_NA_LICZNIK_MS);
+  try {
+    const skrot = await skrotAdresu(adres, klucz);
+    const odp = await fetch(`${url}/rest/v1/rpc/zglos_i_policz`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        apikey: klucz,
+        authorization: `Bearer ${klucz}`,
+      },
+      body: JSON.stringify({ p_skrot: skrot }),
+      signal: przerwij,
+    });
+    if (!odp.ok) {
+      console.warn(`Licznik zgłoszeń odpowiedział ${odp.status} — przepuszczam.`);
+      return false;
+    }
+    const ile = Number(await odp.json());
+    return Number.isFinite(ile) && ile > LIMIT_NA_GODZINE;
+  } catch (e) {
+    console.warn("Licznik zgłoszeń niedostępny — przepuszczam.", e);
+    return false;
+  }
 }
 
 const NAZWY_SPRAW: Record<string, string> = {
@@ -377,7 +435,7 @@ Deno.serve(async (request: Request) => {
     request.headers.get("cf-connecting-ip") ??
     request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
     "nieznany";
-  if (przekroczonyLimit(adres)) {
+  if (await przekroczonyLimit(adres)) {
     console.warn("Zgłoszenie odrzucone: przekroczony limit z jednego adresu.");
     return odpowiedz(429, {
       blad: "Za dużo zgłoszeń w krótkim czasie. Prosimy spróbować później albo zadzwonić.",

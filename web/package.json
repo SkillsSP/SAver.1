@@ -18,7 +18,9 @@
     "test:html": "html-validate \"dist/**/*.html\"",
     "test:pisownia": "node narzedzia/test-pisownia.mjs",
     "test:wyglad": "node narzedzia/test-wyglad.mjs",
-    "test:slaby": "node narzedzia/test-slaby-telefon.mjs"
+    "test:slaby": "node narzedzia/test-slaby-telefon.mjs",
+    "test:odpornosc": "node narzedzia/test-odpornosc.mjs",
+    "test:typografia": "node narzedzia/test-typografia.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
