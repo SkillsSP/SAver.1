@@ -57,16 +57,34 @@ const Element = jakoLink ? "a" : "span";
   href={jakoLink ? url("/") : undefined}
   style={`margin-left:${p.przesuniecie}px`}
 >
-  <img
-    loading="eager"
-    decoding="async"
-    src={url(plik)}
-    alt=""
-    aria-hidden="true"
-    width={p.sygnet}
-    height={p.sygnet}
-    style={`width:${p.sygnet}px;height:${p.sygnet}px;margin-right:${p.docisk}px;transform:translateY(${p.pion}px)`}
-  />
+  {/* SYGNET W DWÓCH WERSJACH, WYBIERANY PRZEZ PRZEGLĄDARKĘ.
+
+      Znak podstawowy jest grafitowy — na kremowym tle czyta się doskonale,
+      na ciemnym zamienia się w dziurę z pomarańczową kreską. Zobaczyłem to
+      dopiero na zrzucie ekranu; żadna liczba tego nie pokazuje, bo obrazek
+      nie ma kontrastu tekstu do zmierzenia.
+
+      Wersja w kontrze istniała w zestawie znaków od początku i komponent
+      umiał ją pokazać — tylko nikt jej nie włączał, bo do wyboru służył
+      atrybut ustawiany ręcznie, a tryb ciemny jest decyzją przeglądarki,
+      nie autora strony.
+
+      `picture` rozwiązuje to bez skryptu i bez podwójnego pobierania:
+      przeglądarka bierze JEDEN plik, ten pasujący do trybu, i przełącza go
+      sama, gdy odwiedzający zmieni ustawienie systemu w trakcie czytania. */}
+  <picture>
+    <source srcset={url(p.znakRewers)} media="(prefers-color-scheme: dark)" />
+    <img
+      loading="eager"
+      decoding="async"
+      src={url(plik)}
+      alt=""
+      aria-hidden="true"
+      width={p.sygnet}
+      height={p.sygnet}
+      style={`width:${p.sygnet}px;height:${p.sygnet}px;margin-right:${p.docisk}px;transform:translateY(${p.pion}px)`}
+    />
+  </picture>
   {/* Litera „S" zostaje w kodzie, ale schowana wizualnie, bo rysuje ją sygnet
       obok. Dzięki temu wyszukiwarka i zaznaczenie tekstu dostają pełne
       „Skills Academy", a nie „kills Academy".

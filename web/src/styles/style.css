@@ -1974,7 +1974,12 @@ button {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--kobalt-600);
+  /* ALIAS MARKI, nie kolor bazowy. Wcześniej stało tu `--kobalt-600`, czyli
+     ten sam token, którym maluje się odnośniki. W trybie ciemnym musiałem go
+     rozjaśnić, żeby odnośniki były czytalne — i razem z nimi rozjaśniła się
+     ta nakładka. Nagłówek zamiast wtapiać się w ciemną stronę zaczął z niej
+     świecić mlecznym błękitem. Widać to było wyłącznie na zrzucie ekranu. */
+  background: var(--tlo-marki);
   opacity: 0.6;
 }
 
@@ -2947,11 +2952,18 @@ button {
   :root {
     /* Powierzchnie — od najciemniejszej do najjaśniejszej, żeby karta na
        stronie czytała się jako uniesiona, tak jak biała karta na kremie. */
-    --tlo-strony: #14181f;
-    --tlo-karty: #1c212b;
-    --tlo-tint-kobalt: #18263c;
-    --tlo-tint-koral: #2c1a15;
-    --tlo-tint-slate: #1f2530;
+    /* Strona ciemniejsza, karta jaśniejsza — na zrzucie obie były zbyt
+       blisko siebie i całość czytała się jako jedna szara płaszczyzna. */
+    --tlo-strony: #101419;
+    --tlo-karty: #1e242f;
+    /* Tinty muszą leżeć MIĘDZY stroną a kartą, nie obok karty. Po
+       przyciemnieniu strony miały L* 15,0 i 14,6 przy karcie 14,1 — czyli
+       sekcja z tłem i karta na niej były nie do odróżnienia, a jedenaście
+       par sąsiednich sekcji zlało się w jedną płaszczyznę.
+       Drabina jasności: grafit 3,9 → strona 6,1 → tinty ok. 10 → karta 14,1. */
+    --tlo-tint-kobalt: #141c2c;
+    --tlo-tint-koral: #241611;
+    --tlo-tint-slate: #151b26;
     /* Sekcja „grafitowa" musi zostać CIEMNIEJSZA od strony, inaczej znika. */
     --tlo-grafit: #0b0e13;
 
@@ -2985,12 +2997,26 @@ button {
     --cien-karty: none;
   }
 
-  /* Zdjęcia w nagłówkach są przyciemniane nakładką liczoną pod jasne tło.
-     W trybie ciemnym ta sama nakładka zostawia zdjęcie zbyt jasnym względem
-     otoczenia, więc pogłębiamy ją o jedną dziesiątą. */
-  .naglowek-strony__foto::after,
-  .hero__foto::after {
-    opacity: 0.62;
+  /* PRZYCIEMNIENIE ZDJĘĆ W NAGŁÓWKACH.
+
+     Poprzednia wersja tej reguły celowała w `__foto::after`, czyli w otoczkę
+     obrazka — a nakładki leżą na `--foto::after`, czyli na SEKCJI. Selektor
+     nie pasował do niczego i reguła nie robiła nic przez cały czas.
+
+     Wartości dobrane pod ciemne otoczenie: warstwa grafitowa mocniejsza,
+     żeby zdjęcie zeszło do poziomu jasności reszty strony, a kobaltowa
+     nieco słabsza, bo przy ciemniejszym spodzie i tak wystarcza do nadania
+     nagłówkowi barwy marki. */
+  .hero--foto::before,
+  .naglowek-strony--foto::before {
+    opacity: 0.74;
+  }
+  .hero--foto::after,
+  .naglowek-strony--foto::after {
+    opacity: 0.52;
+  }
+  .naglowek-strony--senior.naglowek-strony--foto::before {
+    opacity: 0.86;
   }
 
   /* POLA FORMULARZA — powód, dla którego tryb ciemny był wcześniej wyłączony.
