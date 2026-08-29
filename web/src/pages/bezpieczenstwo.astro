@@ -55,15 +55,19 @@ const zgloszenie = [
 /* Numery ogólnopolskie, bezpłatne i czynne całą dobę. Podajemy je obok własnych
    danych kontaktowych, bo dziecko musi mieć drogę zgłoszenia niezależną od
    centrum — także wtedy, gdy podejrzenie dotyczy osoby stąd. */
+/* Numery zapisane ze spacjami NIEROZDZIELAJĄCYMI. Numer alarmowy złamany
+   na dwa wiersze — „800 12" na końcu jednego, „12 12" na początku drugiego —
+   jest w chwili, w której ktoś go potrzebuje, nieczytelny. Wykrył to walidator
+   kodu HTML; własne sprawdzenia tego nie obejmowały. */
 const telefonyZaufania = [
   {
     nazwa: "Telefon zaufania dla dzieci i młodzieży",
-    numer: "116 111",
+    numer: "116 111",
     opis: "Bezpłatny, czynny całą dobę",
   },
   {
     nazwa: "Rzecznik Praw Dziecka",
-    numer: "800 12 12 12",
+    numer: "800 12 12 12",
     opis: "Bezpłatny, czynny całą dobę",
   },
 ];
@@ -447,7 +451,7 @@ const zasadyDlaDziecka = [
             Możesz porozmawiać z kimś spoza centrum. To nic nie kosztuje.
           </p>
           <p class="numer-alarmowy">
-            <a href="tel:116111">116 111</a>
+            <a href="tel:116111">116 111</a>
           </p>
           <p class="tekst-drobny">
             Telefon Zaufania dla Dzieci i Młodzieży, czynny przez całą dobę

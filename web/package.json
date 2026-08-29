@@ -13,7 +13,9 @@
     "test:bezpieczenstwa": "node narzedzia/test-bezpieczenstwa.mjs",
     "audyt:dostepnosc": "node narzedzia/audyt-dostepnosci.mjs",
     "audyt:wydajnosc": "node narzedzia/audyt-wydajnosci.mjs",
-    "test:safari": "node narzedzia/test-safari.mjs"
+    "test:safari": "node narzedzia/test-safari.mjs",
+    "test:axe": "node narzedzia/test-axe.mjs",
+    "test:html": "html-validate \"dist/**/*.html\""
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -23,6 +25,9 @@
     "node": ">=22.20.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "axe-core": "^4.13.0",
+    "html-validate": "^11.10.0",
     "playwright": "^1.62.1"
   }
 }

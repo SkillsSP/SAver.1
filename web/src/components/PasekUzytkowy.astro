@@ -22,7 +22,23 @@ import { url, firma, telefonHref, telefonTekst } from "../lib/site.js";
 const tel = telefonHref();
 ---
 
-<div class="pasek-uzytkowy">
+{/* PUNKT ORIENTACYJNY. Do niedawna był to zwykły `div`, czyli treść leżąca
+    POZA wszystkimi obszarami strony. Osoba poruszająca się czytnikiem ekranu
+    przeskakuje między punktami orientacyjnymi — nagłówek, nawigacja, treść
+    główna, stopka — i taki fragment po prostu jej umyka.
+
+    Wykryła to biblioteka reguł axe-core, reguła `region`: cała treść ma
+    należeć do jakiegoś obszaru. Żadne z moich własnych sprawdzeń tego nie
+    obejmowało.
+
+    `aside` z nazwą, a nie `header`: obszaru nagłówkowego może być na stronie
+    tylko jeden i jest nim pasek z logotypem i menu. Ten stoi obok niego,
+    niesie treść uzupełniającą i taka jest jego rola.
+
+    Nie da się go włożyć do `header` — powód techniczny opisuje komentarz
+    wyżej: nawigacja jest przyklejona do góry okna, a element przyklejony
+    przestaje działać, gdy jego rodzic wyjedzie poza ekran. */}
+<aside class="pasek-uzytkowy" aria-label="Skrót do kontaktu">
   <div class="pasek-uzytkowy__tresc">
     <p class="pasek-uzytkowy__haslo">
       {firma.podtytul} · {firma.miasto}
@@ -36,4 +52,4 @@ const tel = telefonHref();
       )}
     </div>
   </div>
-</div>
+</aside>

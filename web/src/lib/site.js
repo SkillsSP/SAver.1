@@ -70,7 +70,16 @@ export function telefonHref() {
 
 /** Widoczny telefon albo neutralny zastępnik. */
 export function telefonTekst() {
-  return firma.telefon ?? "numer podamy wkrótce";
+  /* Spacje w numerze są NIEROZDZIELAJĄCE. Numer złamany na dwa wiersze —
+     „508 069" na końcu jednego, „007" na początku drugiego — jest trudny do
+     odczytania i praktycznie niemożliwy do skopiowania jednym gestem.
+     Wykrył to walidator kodu: 177 wystąpień w całym serwisie, bo numer stoi
+     na każdej podstronie w pasku, w stopce i w pasku akcji.
+
+     Zwykła spacja zostaje tylko w wersji dla programu wybierającego numer,
+     czyli w `telefonHref` — tam liczy się sam ciąg cyfr. */
+  if (!firma.telefon) return "numer podamy wkrótce";
+  return firma.telefon.replace(/ /g, " ");
 }
 
 export function emailTekst() {
