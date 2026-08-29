@@ -55,3 +55,8 @@ supabase/.temp/
 # a `narzedzia/fonty-ogranicz.mjs` opisuje, jak z nich zejść do zestawu
 # używanego przez serwis.
 web/fonty-zrodlowe/
+
+# Wzorce do porównywania wyglądu — setki obrazów podmienianych przy każdej
+# zmianie stylu. Sensowne lokalnie, przed wysłaniem zmian; w repozytorium
+# byłyby wyłącznie balastem. Odtwarza je `npm run test:wyglad -- --zapisz`.
+web/wzorce-wygladu/
