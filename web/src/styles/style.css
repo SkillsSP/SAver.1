@@ -3041,6 +3041,32 @@ button {
     color-scheme: dark;
   }
 
+  /* ZDJĘCIA TREŚCIOWE PRZYGASZONE.
+
+     W trybie ciemnym zdjęcie w pełnej jasności na prawie czarnym tle razi —
+     oko przyzwyczajone do ciemności dostaje jasny prostokąt i musi się
+     przestawiać przy każdym przewinięciu. Przygaszenie o niecałą piątą
+     wyrównuje je z otoczeniem, nie odbierając kolorów: to są twarze dzieci
+     i barwa jest tu treścią, a nie ozdobą, więc nie zmniejszamy nasycenia.
+
+     Najechanie i fokus przywracają pełną jasność — kto chce się zdjęciu
+     przyjrzeć, dostaje je bez filtra. Przejście jest krótkie i wyłącza się
+     przy ograniczonym ruchu, razem z resztą animacji.
+
+     Nakładek na zdjęciach nagłówkowych to nie dotyczy: te są przyciemniane
+     osobno, warstwą grafitu i koloru marki. */
+  .kafel__kadr,
+  .zdjecie--w-karcie {
+    filter: brightness(0.82);
+    transition: filter 0.18s ease;
+  }
+  .kafel:hover .kafel__kadr,
+  .kafel:focus-within .kafel__kadr,
+  .zdjecie--w-karcie:hover,
+  a:focus-visible .zdjecie--w-karcie {
+    filter: brightness(1);
+  }
+
   /* PLAKIETKA WYRÓŻNIAJĄCA. Kobalt pełni w tym arkuszu dwie role naraz: jest
      kolorem odnośników i tłem tej plakietki. W trybie ciemnym te role się
      rozchodzą — odnośnik musi się rozjaśnić, żeby był czytelny na ciemnym tle,
