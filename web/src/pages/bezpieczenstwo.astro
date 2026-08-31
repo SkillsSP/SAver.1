@@ -369,15 +369,16 @@ const zasadyDlaDziecka = [
             {dokumenty.map((d) => (
               <li>
                 <span class="etykieta">{d}</span>
-                <span class="wartosc">plik w przygotowaniu</span>
+                <span class="wartosc">wydajemy przy zapisach</span>
               </li>
             ))}
           </ul>
           <DoUzupelnienia czego="Pliki do pobrania">
             Po przeglądzie prawnym wgrajcie trzy pliki PDF do{" "}
             <code>web/public/dokumenty/</code> i podmieńcie w tej sekcji
-            zastępniki na odnośniki. Do czasu wgrania lepiej pokazywać „plik
-            w przygotowaniu" niż odnośnik prowadzący donikąd.
+            zastępniki na odnośniki. Do czasu wgrania stoi tam „wydajemy przy
+            zapisach" — zdanie prawdziwe i po Waszej stronie, a nie informacja
+            o tym, czego jeszcze nie ma.
           </DoUzupelnienia>
         </div>
       </div>
@@ -385,10 +386,14 @@ const zasadyDlaDziecka = [
   </section>
 
   {/* UBEZPIECZENIE. Rodzice o to pytają, a mało która placówka pisze o tym
-       na stronie. Dopóki polisy nie ma, zdanie stoi w czasie przyszłym —
-       przestawienie `ubezpieczenie.wykupione` w site.js zamienia je na fakt.
-       Skrót w drugą stronę byłby zwykłą nieprawdą w miejscu, w którym rodzic
-       pyta o bezpieczeństwo dziecka. */}
+       na stronie. Dopóki polisy nie ma, zdanie stoi w czasie przyszłym:
+       „wykupimy przed pierwszymi zajęciami — to warunek uruchomienia naboru".
+       Przestawienie `ubezpieczenie.wykupione` w site.js zamienia je na fakt.
+
+       Zdania o tym, czego NIE MA, tu nie ma i mieć nie powinno — ale skrót
+       w drugą stronę byłby zwykłą nieprawdą w miejscu, w którym rodzic pyta
+       o bezpieczeństwo dziecka. Zobowiązanie w czasie przyszłym mówi to samo,
+       nie ogłaszając braku i nie kłamiąc. */}
   <section class="sekcja">
     <div class="szerokosc">
       <div class="siatka--wiodaca">
@@ -413,10 +418,8 @@ const zasadyDlaDziecka = [
                 deklaracja na przyszłość.
               </p>
               <p class="tekst-drugi">
-                Dopóki umowa z ubezpieczycielem nie jest zawarta, nie napiszemy
-                tutaj, że centrum jest ubezpieczone. Kiedy będzie, w tym
-                miejscu pojawi się zakres ochrony, a dokument pokażemy do
-                wglądu przed podpisaniem umowy z Państwem.
+                Zakres ochrony pokazujemy do wglądu przed podpisaniem umowy
+                z Państwem.
               </p>
             </>
           )}

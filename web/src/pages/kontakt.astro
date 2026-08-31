@@ -41,7 +41,7 @@ const tematy = [
     id: "oferta",
     etykieta: "Pytanie o zajęcia, termin albo cenę",
     podpowiedz:
-      "Odpowiadamy konkretnie — jeśli czegoś jeszcze nie wiemy, mówimy wprost, kiedy będzie wiadomo.",
+      "Odpowiadamy konkretnie i tego samego dnia.",
     przyklad: "np. Córka ma 9 lat, szukamy zajęć w środy po 16:00.",
   },
   {
@@ -148,9 +148,8 @@ const daneFirmy = [
           telefonie i adresie e-mail, czyli tam, gdzie jej szuka. */}
       <p class="gdzie-jestesmy" id="dojazd">
         <strong>Gdzie jesteśmy:</strong> zajęcia prowadzimy stacjonarnie
-        w {firma.miastoWMiejscowniku}. Adres, godziny otwarcia biura i dojazd
-        podamy razem z uruchomieniem zapisów, gdy umowa na lokal będzie
-        podpisana.
+        w {firma.miastoWMiejscowniku}. Dokładny adres i dojazd przekazujemy
+        przy zapisach — a jeśli chcecie wiedzieć wcześniej, zadzwońcie.
       </p>
     </div>
   </section>
@@ -368,11 +367,11 @@ const daneFirmy = [
           stronie bezpieczeństwa, więc oko już go zna. */}
       <article class="karta dane-firmy">
         <ul class="lista-rozdzielona">
-          {/* Pokazujemy wyłącznie pozycje, które mamy. Trzy wiersze z napisem
-              „do uzupełnienia" pod rząd wyglądały jak niedokończona strona,
-              a nie jak dane firmy — a to jest miejsce, w którym rodzic sprawdza,
-              czy ma do czynienia z zarejestrowanym podmiotem. Zdanie pod listą
-              mówi, kiedy reszta się pojawi; to jest informacja, a tamto nie było. */}
+          {/* Pokazujemy wyłącznie pozycje, które mamy — bez wiersza „do
+              uzupełnienia" i bez zdania pod listą zapowiadającego resztę.
+              To jest miejsce, w którym rodzic sprawdza, czy ma do czynienia
+              z zarejestrowanym podmiotem: widzi tu dane, które są, i nic
+              o tych, których jeszcze nie ma. */}
           {daneFirmy.filter((d) => d.wartosc).map((d) => (
             <li>
               <span class="etykieta">{d.etykieta}</span>
@@ -380,11 +379,6 @@ const daneFirmy = [
             </li>
           ))}
         </ul>
-        {daneFirmy.some((d) => !d.wartosc) && (
-          <p class="dane-firmy__czekaja">
-            Pozostałe dane rejestrowe uzupełnimy przed uruchomieniem zapisów.
-          </p>
-        )}
       </article>
 
       <div style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">

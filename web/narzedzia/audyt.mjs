@@ -203,6 +203,36 @@ const wzorceZakazane = {
    granica wyrazu, a nie zwykłe zawieranie: fragment „rdzeni" siedzi w środku
    słowa „potwierdzenie" i bez granicy zgłaszałby trzy strony, na których nic
    złego nie ma. Dlatego ta lista chodzi po wyrażeniach regularnych. */
+/* ===========================================================================
+   ZDANIA O TYM, CZEGO NIE MAMY
+
+   Decyzja z 29 sierpnia 2026: strona nie ogłasza braków. Nie chodzi o ukrywanie
+   — chodzi o to, po czyjej stronie stoi zdanie. „Plik w przygotowaniu" opisuje
+   nasz stan; „wydajemy przy zapisach" opisuje to samo jako nasze zobowiązanie.
+   Rodzic czyta pierwsze jako niedokończoną stronę, a drugie jako firmę, która
+   wie, co robi.
+
+   Przed poprawką takich zdań było czternaście, w tym trzy pod rząd na stronie
+   o bezpieczeństwie — czyli dokładnie tam, gdzie ostrożny rodzic czyta uważnie.
+
+   GRANICA. Usuwamy zdania o braku, NIE zamieniamy ich w nieprawdę. Polisa,
+   której nie ma, nie może zostać ogłoszona jako wykupiona — zdanie o niej stoi
+   w czasie przyszłym i tak ma zostać. Ta lista pilnuje sformułowań opisujących
+   brak, a nie prawdomówności; tej drugiej pilnuje `ubezpieczenie.wykupione`.
+   =========================================================================== */
+const wzorceBrakow = [
+  [/plik w przygotowaniu/i, "opis braku zamiast zobowiązania"],
+  [/w przygotowaniu/i, "opis braku zamiast zobowiązania"],
+  [/jeszcze nie (wiemy|mamy|ma)/i, "zdanie o tym, czego nie mamy"],
+  [/nie mamy jeszcze/i, "zdanie o tym, czego nie mamy"],
+  [/(podamy|uzupełnimy) (je )?(przed|z) uruchomieniem/i, "zapowiedź braku"],
+  [/adres podamy/i, "zapowiedź braku"],
+  [/grafik (powstaje|podamy)/i, "zapowiedź braku"],
+  [/dane rejestrowe uzupełnimy/i, "zapowiedź braku"],
+  [/pierwsze teksty powstają/i, "zapowiedź braku"],
+  [/nie napiszemy tutaj/i, "zdanie o tym, czego nie mamy"],
+];
+
 const wzorceZakazaneRegex = [
   [/(^|[^a-ząćęłńóśźż])[Rr]dze(ń|nia|niowi|niem|niu|nie)(?![a-ząćęłńóśźż])/,
    "termin wycofany, ma być „zajęcia podstawowe”"],
@@ -213,6 +243,10 @@ for (const s of realne) {
     if (tekst.includes(wzor)) blad("treść", `${s.adres} — „${wzor}" (${powod})`);
   }
   for (const [wzor, powod] of wzorceZakazaneRegex) {
+    const trafienie = tekst.match(wzor);
+    if (trafienie) blad("treść", `${s.adres} — „${trafienie[0].trim()}" (${powod})`);
+  }
+  for (const [wzor, powod] of wzorceBrakow) {
     const trafienie = tekst.match(wzor);
     if (trafienie) blad("treść", `${s.adres} — „${trafienie[0].trim()}" (${powod})`);
   }

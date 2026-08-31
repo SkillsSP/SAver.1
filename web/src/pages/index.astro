@@ -56,7 +56,7 @@ const pytania = [
   },
   {
     pytanie: "Kiedy ruszają zajęcia?",
-    odpowiedz: `Start we ${rokSzkolny.startOdmiana}, w roku szkolnym ${rokSzkolny.etykieta}. Rozliczenie obejmuje dziesięć rat miesięcznych, od września do czerwca. Dni i godziny podamy przed uruchomieniem zapisów.`,
+    odpowiedz: `Start we ${rokSzkolny.startOdmiana}, w roku szkolnym ${rokSzkolny.etykieta}. Rozliczenie obejmuje dziesięć rat miesięcznych, od września do czerwca. Zajęcia odbywają się popołudniami, po lekcjach.`,
   },
   {
     pytanie: "Jak wygląda płatność i czy mogę zrezygnować w trakcie roku?",
@@ -441,10 +441,13 @@ const trzyKroki = [
               <span class="wartosc">
                 {firma.ulica
                   ? `${firma.ulica}, ${firma.miasto}`
-                  /* NIE PISAĆ „adres w uzupełnieniu". Puste pole czyta się jak
-                     niedokończona strona; termin czyta się jak plan. Rodzic
-                     dostaje tu informację, KIEDY pozna adres, a nie że go nie ma. */
-                  : `${firma.miasto} — adres podamy z uruchomieniem zapisów`}
+                  /* Do czasu podpisania umowy na lokal stoi tu samo miasto.
+                     Wcześniej dopisywaliśmy „adres podamy z uruchomieniem
+                     zapisów" — zdanie prawdziwe, ale mówiące o tym, czego nie
+                     ma, w miejscu, gdzie rodzic szuka konkretu. Samo „Szczecin,
+                     zajęcia stacjonarne" jest faktem, a resztę mówimy przez
+                     telefon. */
+                  : `${firma.miasto}, zajęcia stacjonarne`}
               </span>
             </li>
             <li>
@@ -453,7 +456,7 @@ const trzyKroki = [
                 {pokazTerminarz ? (
                   <>Popołudniami — <a href={url("/terminarz")}>zobacz terminarz</a></>
                 ) : (
-                  "Popołudniami — dokładny grafik podamy z uruchomieniem zapisów"
+                  "Popołudniami, po lekcjach"
                 )}
               </span>
             </li>
@@ -538,8 +541,7 @@ const trzyKroki = [
           </div>
           <p class="tekst-drobny">
             Nie ma tu odpowiedzi na Wasze pytanie? Zadzwońcie albo napiszcie —
-            a jeśli czegoś jeszcze nie wiemy, powiemy wprost, kiedy będzie
-            wiadomo.
+            odpowiadamy konkretnie i tego samego dnia.
           </p>
         </div>
       </div>
