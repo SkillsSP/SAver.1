@@ -133,7 +133,63 @@ for (const [etykieta, wartosc, oczekiwane] of stanyZgody) {
 
 await przegladarka.close();
 
-console.log(`\n  Sprawdzono ${STRONY.length} stron × 2 stany zgody.`);
+/* ===========================================================================
+   POCZTA: SPF I DMARC
+
+   Zabezpieczenia strony pilnowałem od początku, a wpisów DNS chroniących
+   NADAWCĘ nie sprawdzał nikt. Wyszło przy okazji: pod nazwą `_dmarc` stały
+   DWA rekordy naraz. Norma RFC 7489 mówi wprost, że przy więcej niż jednym
+   rekordzie odbiorca traktuje domenę tak, jakby nie miała żadnego — czyli
+   dwa rekordy chroniły mniej niż jeden, a wyglądały jak nadmiar staranności.
+
+   Podszycie się pod adres centrum nie jest problemem teoretycznym: wiadomość
+   „od Skills Academy" z prośbą o przelew trafia do rodzica, który nam ufa.
+
+   Pytamy przez wbudowany moduł `node:dns`, a nie przez `nslookup` — ten na
+   Windowsie potrafi nie pokazać długiego wpisu TXT i o mało nie zgłosiłem
+   kiedyś brakującego SPF, którego po prostu nie widziałem w konsoli.
+
+   Pierwsza wersja pytała serwer DNS-over-HTTPS przez `fetch`. Działała, ale
+   zostawiała otwarte gniazda, przez co `process.exit(1)` kończył się awarią
+   biblioteki obsługującej zdarzenia i kodem wyjścia 127 zamiast 1. Narzędzie
+   zgłaszające błąd kodem „polecenia nie znaleziono" jest gorsze niż brak
+   narzędzia, bo każdy skrypt sprawdzający wynik zrozumie to opacznie.
+   =========================================================================== */
+import { promises as dns } from "node:dns";
+
+const DOMENA = "skilful.pl";
+
+async function txt(nazwa) {
+  try {
+    /* `resolveTxt` zwraca każdy rekord jako tablicę kawałków — długie wpisy
+       DNS dzieli na odcinki po 255 znaków. Sklejamy je z powrotem, żeby
+       policzyć REKORDY, a nie kawałki. */
+    const rekordy = await dns.resolveTxt(nazwa);
+    return rekordy.map((czesci) => czesci.join(""));
+  } catch {
+    return [];
+  }
+}
+
+{
+  const spf = (await txt(DOMENA)).filter((w) => w.startsWith("v=spf1"));
+  if (spf.length === 0)
+    blad(`poczta — brak rekordu SPF, każdy może nadać jako @${DOMENA}`);
+  else if (spf.length > 1)
+    blad(`poczta — ${spf.length} rekordy SPF; przy więcej niż jednym SPF nie działa`);
+
+  const dmarc = (await txt(`_dmarc.${DOMENA}`)).filter((w) => w.startsWith("v=DMARC1"));
+  if (dmarc.length === 0) {
+    blad("poczta — brak rekordu DMARC, nikt nie broni przed podszyciem się");
+  } else if (dmarc.length > 1) {
+    blad(`poczta — ${dmarc.length} rekordy DMARC; przy więcej niż jednym domena jest` +
+      " traktowana jak bez polityki (RFC 7489)");
+  } else if (/p=none/.test(dmarc[0])) {
+    blad("poczta — DMARC stoi na `p=none`, czyli obserwuje i niczego nie blokuje");
+  }
+}
+
+console.log(`\n  Sprawdzono ${STRONY.length} stron × 2 stany zgody oraz wpisy poczty.`);
 console.log(`\n  BŁĘDY: ${bledy.length}`);
 for (const b of bledy) console.log(`   ✗ ${b}`);
 console.log("");
