@@ -329,12 +329,12 @@ export const zespol = [
   {
     imie: "Patryk Moltu",
     rola: "prowadzący",
-    /* Zajęcia jeden na jeden potwierdzone. Do doprecyzowania zostaje, przy
-       których ścieżkach grupowych Patryk uczy — pozostałe wiersze mówią to
-       wprost (zajęcia podstawowe, egzamin ósmoklasisty, matura) i przy nim
-       też powinny. Dopisanie tego na wyczucie byłoby zmyśleniem w miejscu,
-       w którym rodzic wybiera prowadzącego dla swojego dziecka. */
-    przedmioty: "angielski, matematyka i historia rozszerzona, zajęcia 1:1",
+    /* Historia stoi poza nawiasem, tak samo jak przy Kamilu: nawias opisuje
+       ścieżki, na których uczy się angielskiego i matematyki, a historia
+       istnieje wyłącznie na maturze i tylko jako rozszerzona. Wciągnięcie jej
+       do nawiasu obiecywałoby historię na zajęciach podstawowych. */
+    przedmioty:
+      "angielski i matematyka (zajęcia podstawowe, egzamin ósmoklasisty, matura), historia rozszerzona, zajęcia 1:1",
     kwalifikacje: null,
   },
 ];
@@ -355,6 +355,12 @@ export function zespolLiczebnik() {
 
 /* Obsada przedmiotów, wprost z tablicy powyżej: angielski cztery osoby,
    matematyka trzy, historia dwie.
+
+   Liczy się jednak obsada NA ŚCIEŻCE, nie sam przedmiot. Po dojściu Patryka
+   Moltu każda ścieżka maturalna ma dwie osoby: angielski Karolina i Patryk,
+   matematyka Karolina i Patryk, historia Kamil i Patryk. Wcześniej maturalną
+   matematykę prowadziła jedna osoba, mimo że „matematykę" prowadziły dwie —
+   dlatego zliczanie po przedmiotach potrafi uśpić czujność.
 
    Wcześniej stało tu ostrzeżenie, że historię prowadzi jedna osoba i przy
    chorobie nie ma zastępstwa — przy przedmiocie sprzedawanym pod konkretny
