@@ -224,13 +224,25 @@ const wzorceBrakow = [
   [/plik w przygotowaniu/i, "opis braku zamiast zobowiązania"],
   [/w przygotowaniu/i, "opis braku zamiast zobowiązania"],
   [/jeszcze nie (wiemy|mamy|ma)/i, "zdanie o tym, czego nie mamy"],
-  [/nie mamy jeszcze/i, "zdanie o tym, czego nie mamy"],
+  [/(^|[^a-ząćęłńóśźż])nie mamy jeszcze/i, "zdanie o tym, czego nie mamy"],
   [/(podamy|uzupełnimy) (je )?(przed|z) uruchomieniem/i, "zapowiedź braku"],
   [/adres podamy/i, "zapowiedź braku"],
   [/grafik (powstaje|podamy)/i, "zapowiedź braku"],
   [/dane rejestrowe uzupełnimy/i, "zapowiedź braku"],
   [/pierwsze teksty powstają/i, "zapowiedź braku"],
-  [/nie napiszemy tutaj/i, "zdanie o tym, czego nie mamy"],
+  [/(^|[^a-ząćęłńóśźż])nie napiszemy tutaj/i, "zdanie o tym, czego nie mamy"],
+  /* Zakres oferty też ma być mówiony od tego, co robimy. „Rozszerzonej
+     matematyki nie prowadzimy" stało na stronie matury, mimo że poziom był tam
+     podany trzy razy pozytywnie — pierwsza wersja tej listy go nie złapała, bo
+     szukała zapowiedzi braków, a nie granic oferty.
+
+     GRANICA WYRAZU jest tu konieczna, a jej brak kosztował mnie fałszywy alarm
+     na „O nas": wzorzec „nie prowadzimy" trafił w środek zdania „czy zajęcia
+     faktycznie prowadzimy tak, jak opisujemy" — bo „faktycznie" kończy się
+     na „nie". Ten sam błąd opisuje komentarz przy wzorcach wycofanych terminów
+     kilka linijek niżej; napisałem go i po tygodniu powtórzyłem. */
+  [/(^|[^a-ząćęłńóśźż])nie (prowadzimy|oferujemy|uczymy|przygotowujemy)/i,
+   "granica oferty mówiona od strony braku"],
 ];
 
 const wzorceZakazaneRegex = [

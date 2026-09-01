@@ -107,10 +107,15 @@ export function url(sciezka) {
    PASEK MENU — pięć pozycji. Rozwinięcie mają tylko Program i Exams.
    Cennik stoi przed „O nas”, bo rodzic sprawdza cenę wcześniej niż zespół.
    -------------------------------------------------------------------------- */
+/* Nazwy pozycji brzmią „zajęcia podstawowe" i „zajęcia indywidualne", a nie
+   same przymiotniki. „Podstawowe" w menu nie mówi, czego dotyczy — dopiero
+   rzeczownik robi z tego nazwę oferty. Przy „podstawowych" dochodzi jeszcze
+   słownik marki: to jest obowiązujący termin, więc menu ma go używać tak samo
+   jak reszta serwisu. */
 export const menuProgram = [
   {
     href: "/podstawowe",
-    nazwa: "Podstawowe",
+    nazwa: "Zajęcia podstawowe",
     opis: "Useful Skills i Life Skills — baza każdego karnetu.",
   },
   {
@@ -120,8 +125,10 @@ export const menuProgram = [
   },
   {
     href: "/indywidualne",
-    nazwa: "Indywidualne",
-    opis: "Zajęcia 1:1 — rozwój, egzamin ósmoklasisty, matura.",
+    nazwa: "Zajęcia indywidualne",
+    /* Opis zaczynał się od „Zajęcia 1:1", co po zmianie nazwy dawało dwa razy
+       „zajęcia" pod rząd. Treść ta sama, bez powtórzenia. */
+    opis: "Jeden na jeden — rozwój, egzamin ósmoklasisty, matura.",
   },
 ];
 
