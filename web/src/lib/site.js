@@ -329,12 +329,12 @@ export const zespol = [
   {
     imie: "Patryk Moltu",
     rola: "prowadzący",
-    /* Zakres programów do doprecyzowania. Pozostałe wiersze mówią, przy których
-       ścieżkach dana osoba uczy (zajęcia podstawowe, egzamin, matura, 1:1);
-       tutaj wpisane są same przedmioty, bo tylko tyle zostało ustalone.
-       Dopisanie „egzamin ósmoklasisty" na wyczucie byłoby zmyśleniem
-       w miejscu, w którym rodzic wybiera prowadzącego dla swojego dziecka. */
-    przedmioty: "angielski, matematyka i historia",
+    /* Zajęcia jeden na jeden potwierdzone. Do doprecyzowania zostaje, przy
+       których ścieżkach grupowych Patryk uczy — pozostałe wiersze mówią to
+       wprost (zajęcia podstawowe, egzamin ósmoklasisty, matura) i przy nim
+       też powinny. Dopisanie tego na wyczucie byłoby zmyśleniem w miejscu,
+       w którym rodzic wybiera prowadzącego dla swojego dziecka. */
+    przedmioty: "angielski, matematyka i historia, zajęcia 1:1",
     kwalifikacje: null,
   },
 ];

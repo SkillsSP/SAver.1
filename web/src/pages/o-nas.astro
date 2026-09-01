@@ -41,13 +41,15 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
         <span class="nadtytul">Zespół</span>
         <h2 class="tytul-1">Kto prowadzi zajęcia</h2>
         {/* Liczba osób wyliczana z tablicy, nie wpisana ręcznie — patrz
-            `zespolLiczebnik` w site.js. Zdanie o zajęciach jeden na jeden
-            zniknęło razem z czwartą osobą: dopóki jej zakres nie jest
-            ustalony, „każda prowadzi też zajęcia 1:1" byłoby twierdzeniem
-            o kimś, kogo nie zapytaliśmy. */}
+            `zespolLiczebnik` w site.js.
+
+            Zdanie o zajęciach jeden na jeden wróciło po potwierdzeniu, że
+            czwarta osoba też je prowadzi. Przez chwilę go tu nie było i tak
+            miało być: twierdzenie „każda" musi obejmować każdą, a nie tylko
+            te, o które zdążyliśmy zapytać. */}
         <p class="wiodacy">
-          {zespolLiczebnik()}. Każda uczy angielskiego. Poniżej widać, kto
-          odpowiada za co.
+          {zespolLiczebnik()}. Każda uczy angielskiego, każda prowadzi też
+          zajęcia jeden na jeden. Poniżej widać, kto odpowiada za co.
         </p>
       </div>
 
