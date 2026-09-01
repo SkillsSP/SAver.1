@@ -334,7 +334,7 @@ export const zespol = [
        wprost (zajęcia podstawowe, egzamin ósmoklasisty, matura) i przy nim
        też powinny. Dopisanie tego na wyczucie byłoby zmyśleniem w miejscu,
        w którym rodzic wybiera prowadzącego dla swojego dziecka. */
-    przedmioty: "angielski, matematyka i historia, zajęcia 1:1",
+    przedmioty: "angielski, matematyka i historia rozszerzona, zajęcia 1:1",
     kwalifikacje: null,
   },
 ];
