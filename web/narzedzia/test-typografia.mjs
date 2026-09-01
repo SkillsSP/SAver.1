@@ -16,7 +16,10 @@
      · znak mnożenia — „2 × 45 min", nie „2x45",
      · spacja nierozdzielająca przed jednostką — „200 zł" nie ma prawa złamać
        się między liczbą a walutą na końcu wiersza,
-     · podwójne spacje i spacja przed przecinkiem — ślady po przeklejaniu.
+     · podwójne spacje i spacja przed przecinkiem — ślady po przeklejaniu,
+     · SKLEJENIA na granicy znacznika — odnośnik albo wartość z danych
+       przyklejona do poprzedniego zdania. Sprawdzane w drzewie dokumentu,
+       nie po znakach; opis przy funkcji `sklejenia` niżej.
 
    PODZIAŁ NA BŁĘDY I UWAGI jest celowy. Prosty cudzysłów albo spacja przed
    przecinkiem to jednoznaczna pomyłka. Brak spacji nierozdzielającej przed
@@ -42,6 +45,90 @@ const STRONY = [
 ];
 
 const NBSP = " ";
+
+/* ===========================================================================
+   SKLEJENIA — SPRAWDZANE W DRZEWIE DOKUMENTU, NIE PO ZNAKACH
+
+   Odnośnik albo wartość wstawiana z danych potrafi przykleić się do poprzedniego
+   zdania: „na tej samej ścieżce.Poznajcie zespół", „Kamil Dumała iPatryk Moltu".
+   Bierze się to stąd, że w pliku źródłowym znacznik stoi w nowym wierszu, a
+   składnia Astro usuwa odstęp zawierający złamanie wiersza między tekstem
+   a elementem. W kodzie wygląda to więc bez zarzutu i widać dopiero na stronie.
+
+   PIERWSZE PODEJŚCIE SZUKAŁO PO ZNAKACH i było złe z dwóch stron naraz.
+   Zgłaszało kropkę wewnątrz adresu „kontakt@skilful.pl" jako brak odstępu po
+   zdaniu — cztery fałszywe alarmy na siedem trafień. Jednocześnie nie widziało
+   sklejeń dwóch małych liter, bo rozpoznawało tylko styk małej z wielką.
+
+   Teraz pytamy dokument wprost: czy dwa sąsiadujące fragmenty tekstu, między
+   którymi przebiega granica znacznika, stykają się bez odstępu — i czy stoją
+   w tym samym bloku. Ten drugi warunek jest konieczny: koniec akapitu i początek
+   następnego też stykają się bez spacji, ale dzieli je złamanie wiersza, więc
+   sklejeniem nie są. O tym, co jest blokiem, rozstrzyga wyliczony styl, a nie
+   nazwa znacznika — `display` bywa zmieniony w arkuszu.
+   =========================================================================== */
+async function sklejenia(strona) {
+  return strona.evaluate(() => {
+    const korzen = document.querySelector("main") || document.body;
+    const POMIJANE = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "TEMPLATE"]);
+
+    const wezly = [];
+    const chodzik = document.createTreeWalker(korzen, NodeFilter.SHOW_TEXT, {
+      acceptNode(n) {
+        if (POMIJANE.has(n.parentElement?.tagName)) return NodeFilter.FILTER_REJECT;
+        if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        if (!n.parentElement?.offsetParent && n.parentElement?.tagName !== "BODY") {
+          /* Element ukryty — rodzic nie ma pozycji w układzie. */
+          const s = getComputedStyle(n.parentElement);
+          if (s.display === "none" || s.visibility === "hidden") return NodeFilter.FILTER_REJECT;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    });
+    while (chodzik.nextNode()) wezly.push(chodzik.currentNode);
+
+    const blok = (n) => {
+      let el = n.parentElement;
+      while (el && el !== korzen) {
+        const d = getComputedStyle(el).display;
+        if (!d.startsWith("inline") && d !== "contents") return el;
+        el = el.parentElement;
+      }
+      return korzen;
+    };
+
+    const znalezione = [];
+    for (let i = 1; i < wezly.length; i++) {
+      const przed = wezly[i - 1].nodeValue;
+      const po = wezly[i].nodeValue;
+      /* Odstęp po którejkolwiek stronie styku załatwia sprawę. */
+      if (/\s$/.test(przed) || /^\s/.test(po)) continue;
+      if (blok(wezly[i - 1]) !== blok(wezly[i])) continue;
+
+      /* Złamanie wiersza rozdziela wzrokowo bez spacji i robi to celowo —
+         „Angielski dla życia,<br />nie tylko dla szkoły" jest poprawne.
+         `<wbr>` też: wskazuje miejsce, w którym wolno przełamać długi wyraz,
+         a nie odstęp. Bez tego wyjątku narzędzie zgłaszało nagłówek strony
+         głównej jako błąd. */
+      const zakres = document.createRange();
+      zakres.setStart(wezly[i - 1], wezly[i - 1].nodeValue.length);
+      zakres.setEnd(wezly[i], 0);
+      if (zakres.cloneContents().querySelector("br, wbr, hr")) continue;
+
+      const koniec = przed.trimEnd().slice(-1);
+      const poczatek = po.trimStart().slice(0, 1);
+      /* Znak przestankowy doklejony do wyrazu jest poprawny — „…zespół</a>."
+         ma się skleić. Sklejeniem jest dopiero litera lub cyfra po literze,
+         cyfrze albo po znaku kończącym zdanie. */
+      if (!/[\p{L}\p{N}]/u.test(poczatek)) continue;
+      if (!/[\p{L}\p{N}.!?,;:]/u.test(koniec)) continue;
+
+      znalezione.push((przed.trimEnd().slice(-32) + "▸" + po.trimStart().slice(0, 28))
+        .replace(/\s+/g, " "));
+    }
+    return znalezione;
+  });
+}
 
 const REGULY = [
   {
@@ -104,6 +191,7 @@ await strona.addInitScript(() => {
 
 const znaleziska = new Map();
 let znakow = 0;
+let wczytanych = 0;
 
 const kontekstFragmentu = (tekst, indeks, dlugosc) => {
   const od = Math.max(0, indeks - 30);
@@ -115,12 +203,21 @@ const kontekstFragmentu = (tekst, indeks, dlugosc) => {
 for (const adres of STRONY) {
   const odp = await strona.goto(ADRES + adres, { waitUntil: "domcontentloaded" }).catch(() => null);
   if (!odp || !odp.ok()) continue;
+  wczytanych++;
 
   const tekst = await strona.evaluate(() => {
     const g = document.querySelector("main");
     return g ? g.innerText : "";
   });
   znakow += tekst.length;
+
+  for (const styk of await sklejenia(strona)) {
+    const nazwa = "sklejone wyrazy — brak odstępu na granicy znacznika";
+    const wpis = znaleziska.get(nazwa) ?? { waga: "błąd", ile: 0, przyklady: [] };
+    wpis.ile++;
+    if (wpis.przyklady.length < 10) wpis.przyklady.push(`${adres}: …${styk}…`);
+    znaleziska.set(nazwa, wpis);
+  }
 
   for (const regula of REGULY) {
     for (const trafienie of tekst.matchAll(regula.wzor)) {
@@ -130,7 +227,7 @@ for (const adres of STRONY) {
       const wpis = znaleziska.get(regula.nazwa) ??
         { waga: regula.waga, ile: 0, przyklady: [] };
       wpis.ile++;
-      if (wpis.przyklady.length < 3) {
+      if (wpis.przyklady.length < 10) {
         wpis.przyklady.push(`${adres}: ${kontekstFragmentu(tekst, trafienie.index, trafienie[0].length)}`);
       }
       znaleziska.set(regula.nazwa, wpis);
@@ -144,7 +241,23 @@ const lista = [...znaleziska.entries()].sort((a, b) => b[1].ile - a[1].ile);
 const bledy = lista.filter(([, w]) => w.waga === "błąd");
 const uwagi = lista.filter(([, w]) => w.waga === "uwaga");
 
-console.log(`\n  Sprawdzono ${znakow} znaków na ${STRONY.length} podstronach.\n`);
+/* Ile stron NAPRAWDĘ się wczytało. Bez tego pełna porażka wyglądała jak czysty
+   wynik: przy niedziałającym serwerze skrypt zgłaszał „0 znaków", a zaraz pod
+   spodem „BŁĘDY: 0". Raz mnie to zmyliło — drugi raz nie ma prawa. */
+if (wczytanych === 0) {
+  console.log(`
+  ŻADNA strona się nie wczytała pod adresem ${ADRES}.`);
+  console.log("  To nie jest wynik bez błędów — serwer nie odpowiada albo adres jest zły.\n");
+  process.exit(2);
+}
+if (wczytanych < STRONY.length) {
+  console.log(`
+  UWAGA: wczytało się ${wczytanych} z ${STRONY.length} podstron.`);
+}
+
+console.log(`
+  Sprawdzono ${znakow} znaków na ${wczytanych} podstronach.
+`);
 
 const wypisz = (tytul, pozycje) => {
   const razem = pozycje.reduce((s, [, w]) => s + w.ile, 0);
