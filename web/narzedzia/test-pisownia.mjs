@@ -49,6 +49,7 @@ const ZNANE = new Set([
   "tpr", "pbl", "metaanaliza", "metaanalizy", "metaanaliz",
   /* imiona i nazwiska zespołu */
   "karolina", "kamil", "natalia", "dumała", "marczewska",
+  "patryk", "moltu",
   /* miasto i przymiotnik od niego */
   "szczecin", "szczecinie",
   /* Poprawna polszczyzna, której ten słownik nie zna. Sprawdzone po

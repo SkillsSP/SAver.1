@@ -2,7 +2,7 @@
 import Baza from "../layouts/Baza.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
-import { url, firma, wielkoscGrupyTekst, zespol } from "../lib/site.js";
+import { url, firma, wielkoscGrupyTekst, zespol, zespolLiczebnik } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 ---
 
@@ -40,9 +40,14 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
       <div class="naglowek-sekcji">
         <span class="nadtytul">Zespół</span>
         <h2 class="tytul-1">Kto prowadzi zajęcia</h2>
+        {/* Liczba osób wyliczana z tablicy, nie wpisana ręcznie — patrz
+            `zespolLiczebnik` w site.js. Zdanie o zajęciach jeden na jeden
+            zniknęło razem z czwartą osobą: dopóki jej zakres nie jest
+            ustalony, „każda prowadzi też zajęcia 1:1" byłoby twierdzeniem
+            o kimś, kogo nie zapytaliśmy. */}
         <p class="wiodacy">
-          Trzy osoby. Każda uczy angielskiego, każda prowadzi też zajęcia
-          jeden na jeden. Poniżej widać, kto odpowiada za co.
+          {zespolLiczebnik()}. Każda uczy angielskiego. Poniżej widać, kto
+          odpowiada za co.
         </p>
       </div>
 
@@ -56,8 +61,8 @@ import FotoNaglowka from "../components/FotoNaglowka.astro";
             <p class="osoba__przedmioty">{o.przedmioty}</p>
             {/* Wiersz z kwalifikacjami pojawia się dopiero, gdy są wpisane.
                 Wcześniej stało tu „Wykształcenie i doświadczenie — do
-                uzupełnienia" przy każdej z trzech osób, czyli rodzic dostawał
-                trzy razy pod rząd informację o tym, czego nie wiemy, w miejscu,
+                uzupełnienia" przy każdej osobie, czyli rodzic dostawał tę
+                informację tyle razy pod rząd, ile jest nazwisk — w miejscu,
                 w którym szuka powodu do zaufania.
 
                 Przypomnienie o uzupełnieniu nie znika — stoi w nocie

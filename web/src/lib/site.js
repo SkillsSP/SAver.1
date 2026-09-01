@@ -290,10 +290,11 @@ export const ochronaMaloletnich = {
 /* --------------------------------------------------------------------------
    ZESPÓŁ
 
-   Trzy osoby to zła liczba dla siatki `auto-fit`: przy każdym minimum kolumny
-   istnieje szerokość, na której wychodzi 2+1 i trzecia osoba zostaje sama pod
-   spodem. Dlatego zespół renderujemy jako wiersze w jednej karcie, nie jako
-   trzy kafle.
+   Zespół renderujemy jako wiersze w jednej karcie, nie jako kafle w siatce
+   `auto-fit`. Powodem była nieparzysta liczba osób: przy trzech kaflach zawsze
+   istniała szerokość, na której wychodziło 2+1 i trzecia osoba zostawała sama
+   pod spodem. Wiersze są odporne na liczbę osób, więc przy czwartej i każdej
+   następnej nie trzeba tu nic ruszać.
 
    Pole `kwalifikacje` jest puste świadomie i jest to jedyny brak na podstronie
    „O nas" — a zarazem jej najważniejsze zdanie. W edukacji premium nazwisko bez
@@ -325,12 +326,40 @@ export const zespol = [
       "angielski (zajęcia podstawowe, egzamin ósmoklasisty), fakultety Music i Art Skills, zajęcia 1:1",
     kwalifikacje: null,
   },
+  {
+    imie: "Patryk Moltu",
+    rola: "prowadzący",
+    /* Zakres programów do doprecyzowania. Pozostałe wiersze mówią, przy których
+       ścieżkach dana osoba uczy (zajęcia podstawowe, egzamin, matura, 1:1);
+       tutaj wpisane są same przedmioty, bo tylko tyle zostało ustalone.
+       Dopisanie „egzamin ósmoklasisty" na wyczucie byłoby zmyśleniem
+       w miejscu, w którym rodzic wybiera prowadzącego dla swojego dziecka. */
+    przedmioty: "angielski, matematyka i historia",
+    kwalifikacje: null,
+  },
 ];
 
-/* Ryzyko obsadowe warte odnotowania w kodzie, bo wynika z tabeli powyżej:
-   historię prowadzi jedna osoba, więc przy chorobie nie ma zastępstwa — a to
-   przedmiot sprzedawany pod konkretny termin egzaminu. Matematykę prowadzą
-   dwie osoby, angielski trzy. */
+/* Liczba osób zapisana słownie, wyliczana z tablicy powyżej.
+
+   Na podstronie „O nas" stało wpisane na sztywno „Trzy osoby." — zdanie
+   prawdziwe do chwili, w której zespół urósł. Takie liczby w treści starzeją
+   się po cichu: nikt ich nie zauważa, bo nic się nie psuje, a strona zaczyna
+   mówić nieprawdę o czymś, co rodzic może policzyć wzrokiem. */
+export function zespolLiczebnik() {
+  const slownie = [
+    "Nikt", "Jedna osoba", "Dwie osoby", "Trzy osoby", "Cztery osoby",
+    "Pięć osób", "Sześć osób", "Siedem osób", "Osiem osób", "Dziewięć osób",
+  ];
+  return slownie[zespol.length] ?? `${zespol.length} osób`;
+}
+
+/* Obsada przedmiotów, wprost z tablicy powyżej: angielski cztery osoby,
+   matematyka trzy, historia dwie.
+
+   Wcześniej stało tu ostrzeżenie, że historię prowadzi jedna osoba i przy
+   chorobie nie ma zastępstwa — przy przedmiocie sprzedawanym pod konkretny
+   termin egzaminu było to realne ryzyko. Dojście Patryka Moltu je zamyka:
+   historii uczą teraz dwie osoby. */
 
 /* --------------------------------------------------------------------------
    TERMINARZ ZAJĘĆ
