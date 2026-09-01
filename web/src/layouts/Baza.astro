@@ -60,7 +60,12 @@ const znacznik = {
   url: new URL(url("/"), Astro.site).href,
   logo: new URL(url("/logo/skills-academy-logo.svg"), Astro.site).href,
   areaServed: firma.miasto,
-  ...(firma.telefon ? { telephone: firma.telefon } : {}),
+  /* Dane strukturalne chcą numeru w postaci międzynarodowej — wyszukiwarka
+     dopasowuje go do wizytówki, a „508 069 007" bez kierunkowego jest dla niej
+     numerem nieokreślonego kraju. */
+  ...(firma.telefonZapis || firma.telefon
+    ? { telephone: firma.telefonZapis ?? firma.telefon }
+    : {}),
   ...(firma.email ? { email: firma.email } : {}),
   address: {
     "@type": "PostalAddress",

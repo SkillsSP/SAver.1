@@ -78,8 +78,12 @@ export function telefonTekst() {
 
      Zwykła spacja zostaje tylko w wersji dla programu wybierającego numer,
      czyli w `telefonHref` — tam liczy się sam ciąg cyfr. */
-  if (!firma.telefon) return "numer podamy wkrótce";
-  return firma.telefon.replace(/ /g, " ");
+  /* Pokazujemy wersję z numerem kierunkowym. Rodzic widzi wtedy ten sam zapis,
+     który wychodzi z wizytówki Google i z wizytówki papierowej, a numer daje
+     się skopiować i wybrać z zagranicy bez poprawiania. */
+  const numer = firma.telefonZapis ?? firma.telefon;
+  if (!numer) return "numer podamy wkrótce";
+  return numer.replace(/ /g, " ");
 }
 
 export function emailTekst() {

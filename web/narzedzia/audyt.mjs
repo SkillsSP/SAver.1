@@ -262,7 +262,10 @@ for (const s of realne) {
     const trafienie = tekst.match(wzor);
     if (trafienie) blad("treść", `${s.adres} — „${trafienie[0].trim()}" (${powod})`);
   }
-  if (tekst.includes("508 069 007")) kontakt.telefon++;
+  /* Numer sprawdzamy RAZEM z kierunkowym. Bez „+48" nie da się go wybrać
+     z zagranicy ani dopasować do wizytówki Google, a jako sam ciąg cyfr
+     wyglądał poprawnie przez cały czas, kiedy kierunkowego brakowało. */
+  if (tekst.includes("+48 508 069 007")) kontakt.telefon++;
   if (tekst.includes("kontakt@skilful.pl")) kontakt.email++;
   /* Klamry, które nie zostały rozwinięte. Wpisanie \{zmienna.pole\} do zwykłego
      łańcucha znaków zamiast do szablonu daje kod widoczny gołym okiem
