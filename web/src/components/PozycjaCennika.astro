@@ -1,0 +1,49 @@
+---
+/* ==========================================================================
+   JEDEN WIERSZ CENNIKA
+
+   Powstał przy rozbiciu cennika na trzy grupy. Wcześniej ten sam układ wiersza
+   był napisany dwa razy — raz dla karnetów, raz dla pozycji spoza karnetu —
+   i różnił się między nimi w drobiazgach: wersja dla karnetów sklejała opis
+   jako `${wariant} · ${opis}` bez sprawdzenia, czy wariant w ogóle jest, więc
+   pozycja bez niego wypisałaby rodzicowi „undefined ·". Przy trzech grupach
+   ten sam kod stałby w trzech miejscach i rozjechałby się jeszcze bardziej.
+
+   POLA:
+     nazwa        — obowiązkowa,
+     opis         — obowiązkowy,
+     wariant      — czas trwania albo częstotliwość; doklejany przed opisem,
+     kwota        — obowiązkowa; może być słowem („bezpłatne"),
+     okres        — „/ mies." albo „/ spotkanie"; pomijany, gdy go nie ma,
+     osobno       — cena tych samych zajęć branych osobno, pokazywana przekreśleniem,
+     wyroznione   — kwota w kolorze marki; dla pozycji bezpłatnych.
+   ========================================================================== */
+interface Props {
+  nazwa: string;
+  opis: string;
+  wariant?: string;
+  kwota: string;
+  okres?: string;
+  osobno?: string;
+  wyroznione?: boolean;
+}
+
+const { nazwa, opis, wariant, kwota, okres, osobno, wyroznione } = Astro.props;
+---
+
+<div class="prog">
+  <span class="prog__nazwa">{nazwa}</span>
+  <span class="prog__opis">{wariant ? `${wariant} · ${opis}` : opis}</span>
+  <span
+    class="prog__kwota"
+    style={wyroznione ? "color: var(--kobalt-600);" : undefined}
+  >
+    {kwota}
+    {okres && <small> {okres}</small>}
+  </span>
+  {osobno && (
+    <span class="prog__odniesienie">
+      Te same zajęcia brane osobno: <s>{osobno}</s>
+    </span>
+  )}
+</div>

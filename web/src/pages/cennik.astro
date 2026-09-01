@@ -1,5 +1,6 @@
 ---
 import Baza from "../layouts/Baza.astro";
+import PozycjaCennika from "../components/PozycjaCennika.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import ZapisCta from "../components/ZapisCta.astro";
 import { url, wielkoscGrupyTekst, firma,
@@ -60,15 +61,18 @@ const progi = [
   },
 ];
 
-/* Pozycje rozliczane inaczej niż progi miesięczne. */
-const pozaKarnetem = [
-  {
-    nazwa: "Exams",
-    opis: "Przygotowanie do egzaminu ósmoklasisty albo matury. Osobna oferta, poza zajęciami podstawowymi.",
-    kwota: cenyOd.exams,
-    okres: "/ mies.",
-    wariant: "2 × 45 minut albo 1 × 90 minut tygodniowo",
-  },
+/* ROZBICIE NA TRZY GRUPY.
+
+   Do tej pory wszystko, co nie było karnetem, stało w jednej sekcji o nagłówku
+   „Exams, zajęcia 1:1 i minigrupy" — czyli w nagłówku, który sam przyznawał,
+   że jest wyliczanką, a nie kategorią. Leżały tam obok siebie trzy różne
+   sposoby rozliczenia: miesięczny (Exams), za spotkanie (zajęcia 1:1)
+   i ustalany indywidualnie (minigrupa). Rodzic musiał to rozdzielić w głowie.
+
+   Teraz rozdziela to strona. */
+
+/* Zajęcia jeden na jeden — rozliczane za spotkanie, bez zobowiązania na rok. */
+const indywidualne = [
   {
     nazwa: "Zajęcia indywidualne · 45 minut",
     opis: "Jeden prowadzący, jedno dziecko.",
@@ -82,23 +86,43 @@ const pozaKarnetem = [
     okres: "/ spotkanie",
   },
   {
-    nazwa: "Zajęcia indywidualne · 80 minut",
-    opis: "Praca na pełnych arkuszach egzaminacyjnych.",
+    /* Spotkanie trwa 90 minut, nie 80. Stało tu wcześniej „80 minut", czyli
+       sam czas nauki bez przerwy — a rodzic planujący odbiór dziecka liczy
+       czas od wejścia do wyjścia. Przerwa jest teraz nazwana wprost, bo przy
+       spotkaniu półtoragodzinnym to jest informacja, nie drobiazg. */
+    nazwa: "Zajęcia indywidualne · 90 minut",
+    opis:
+      "Dwa bloki po 40 minut z dziesięciominutową przerwą. Praca na pełnych arkuszach egzaminacyjnych.",
     kwota: "180 zł",
     okres: "/ spotkanie",
+  },
+];
+
+/* Ścieżki rozliczane poza karnetem i poza cennikiem za spotkanie. */
+const osobneSciezki = [
+  {
+    nazwa: "Exams",
+    opis: "Przygotowanie do egzaminu ósmoklasisty albo matury. Osobna oferta, poza zajęciami podstawowymi.",
+    kwota: cenyOd.exams,
+    okres: "/ mies.",
+    wariant: "2 × 45 minut albo 1 × 90 minut tygodniowo",
   },
   {
     nazwa: "Minigrupa 2–4 osoby",
     opis: "Na życzenie uczestników — na przykład dwoje rodzeństwa albo troje znajomych z klasy.",
     kwota: "cena indywidualna",
   },
-  {
-    nazwa: "Zajęcia próbne",
-    opis: "Jedno pełne spotkanie w grupie, na normalnych zasadach. Bez zobowiązań.",
-    kwota: "bezpłatne",
-    wyroznione: true,
-  },
 ];
+
+/* Zajęcia próbne stoją przy karnetach, a nie w worku „poza karnetem".
+   To jedno pełne spotkanie W GRUPIE, więc należą do oferty grupowej — i są
+   pierwszym krokiem do niej, nie osobną ścieżką. */
+const zajeciaProbne = {
+  nazwa: "Zajęcia próbne",
+  opis: "Jedno pełne spotkanie w grupie, na normalnych zasadach. Bez zobowiązań.",
+  kwota: "bezpłatne",
+  wyroznione: true,
+};
 
 const pytania = [
   {
@@ -212,22 +236,8 @@ const znacznikOferty = {
       </div>
 
       <div class="progi">
-        {progi.map((p) => (
-          <div class="prog">
-            <span class="prog__nazwa">{p.nazwa}</span>
-            <span class="prog__opis">
-              {p.wariant} · {p.opis}
-            </span>
-            <span class="prog__kwota">
-              {p.kwota} <small>{p.okres}</small>
-            </span>
-            {p.osobno && (
-              <span class="prog__odniesienie">
-                Te same zajęcia brane osobno: <s>{p.osobno}</s>
-              </span>
-            )}
-          </div>
-        ))}
+        {progi.map((pozycja) => <PozycjaCennika {...pozycja} />)}
+        <PozycjaCennika {...zajeciaProbne} />
       </div>
 
       <p class="tekst-maly tekst-drugi" style="margin-top: var(--space-3); max-width: var(--szerokosc-tekstu);">
@@ -238,34 +248,45 @@ const znacznikOferty = {
     </div>
   </section>
 
-  {/* POZA PROGAMI — inny sposób rozliczenia */}
+  {/* ZAJĘCIA INDYWIDUALNE — rozliczane za spotkanie, nie miesięcznie */}
   <section class="sekcja sekcja--karta sekcja--wlos">
     <div class="szerokosc">
       <div class="naglowek-sekcji">
-        <span class="nadtytul">Poza karnetem grupowym</span>
-        <h2 class="tytul-1">Exams, zajęcia 1:1 i minigrupy</h2>
+        <span class="nadtytul">Jeden na jeden</span>
+        <h2 class="tytul-1">Zajęcia indywidualne</h2>
         <p class="wiodacy">
-          Exams stoi poza zajęciami podstawowymi i rozliczamy je osobno.
-          Zajęcia indywidualne płacicie za spotkanie, bez zobowiązania na rok.
+          Płacicie za spotkanie, bez zobowiązania na rok. Cena zależy wyłącznie
+          od długości spotkania — nie od tego, czego dotyczy.
         </p>
       </div>
 
       <div class="progi">
-        {pozaKarnetem.map((p) => (
-          <div class="prog">
-            <span class="prog__nazwa">{p.nazwa}</span>
-            <span class="prog__opis">
-              {p.wariant ? `${p.wariant} · ${p.opis}` : p.opis}
-            </span>
-            <span
-              class="prog__kwota"
-              style={p.wyroznione ? "color: var(--kobalt-600);" : undefined}
-            >
-              {p.kwota}
-              {p.okres && <small> {p.okres}</small>}
-            </span>
-          </div>
-        ))}
+        {indywidualne.map((pozycja) => <PozycjaCennika {...pozycja} />)}
+      </div>
+    </div>
+  </section>
+
+  {/* OSOBNE ŚCIEŻKI — inny sposób rozliczenia niż dwa powyższe.
+
+      TŁO SEKCJI. Trzecia grupa musiała dostać własne tło, bo sąsiaduje
+      z sekcją „karta" z góry i ze zniżkami z dołu — przy powtórzeniu
+      któregokolwiek z nich dwie sąsiednie sekcje zlałyby się w jedną.
+      `sekcja--tint` różni się od obu na tyle, że wykrywacz rytmu sekcji
+      w audycie dostępności to przepuszcza. */}
+  <section class="sekcja sekcja--tint">
+    <div class="szerokosc">
+      <div class="naglowek-sekcji">
+        <span class="nadtytul">Osobne ścieżki</span>
+        <h2 class="tytul-1">Exams i minigrupy</h2>
+        <p class="wiodacy">
+          Exams stoi poza zajęciami podstawowymi i rozliczamy je osobno.
+          Minigrupę wyceniamy pod konkretny skład — zależy od liczby dzieci
+          i zakresu.
+        </p>
+      </div>
+
+      <div class="progi">
+        {osobneSciezki.map((pozycja) => <PozycjaCennika {...pozycja} />)}
       </div>
     </div>
   </section>
