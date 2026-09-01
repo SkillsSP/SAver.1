@@ -579,7 +579,15 @@ export const analityka = {
    przeglądarka potraktuje go jako ścieżkę wewnątrz serwisu.
    -------------------------------------------------------------------------- */
 export const spolecznosciowe = [
-  { klucz: "facebook", nazwa: "Facebook", adres: null },
+  /* Postać „/people/Nazwa/numer/" jest docelowa, a nie ozdobna: Facebook sam
+     przekierowuje „profile.php?id=61593634238249" właśnie tutaj, odpowiadając
+     kodem 301. Wpisanie krótszej wersji kosztowałoby każdego odwiedzającego
+     jeden przeskok więcej. */
+  {
+    klucz: "facebook",
+    nazwa: "Facebook",
+    adres: "https://www.facebook.com/people/Skills-Academy/61593634238249/",
+  },
   { klucz: "instagram", nazwa: "Instagram", adres: null },
   { klucz: "youtube", nazwa: "YouTube", adres: null },
   { klucz: "tiktok", nazwa: "TikTok", adres: null },
