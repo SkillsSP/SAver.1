@@ -156,6 +156,21 @@ const znacznik = {
         nie da się nadać im jednorazowego identyfikatora. Adres analityki bierze
         się z jednego miejsca w site.js, więc po zmianie dostawcy polityka
         zmienia się razem z nim i nie trzeba pamiętać o dwóch plikach. */}
+    {/* JEDYNY NAGŁÓWEK BEZPIECZEŃSTWA, KTÓRY DA SIĘ USTAWIĆ BEZ WŁASNEGO SERWERA.
+
+        Strona stoi na GitHub Pages, a ten nie pozwala dokładać nagłówków
+        odpowiedzi. Z listy typowych zabezpieczeń przez znacznik `meta` da się
+        podać wyłącznie politykę bezpieczeństwa treści (niżej) i tę regułę.
+        `Strict-Transport-Security`, `X-Content-Type-Options` i
+        `Permissions-Policy` działają WYŁĄCZNIE jako nagłówki — dopisanie ich
+        tutaj nic by nie dało, a wyglądałoby na zabezpieczenie. Nie udajemy.
+
+        Reguła mówi przeglądarce, żeby przy wyjściu na obcy serwer podawała samą
+        nazwę naszej domeny, a nie pełny adres podstrony. Bez niej Google, Meta
+        i Microsoft dowiadują się, KTÓRĄ podstronę rodzic akurat czytał —
+        na przykład stronę o standardach ochrony małoletnich. */}
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
     <meta
       http-equiv="Content-Security-Policy"
       content={[
