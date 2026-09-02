@@ -14,6 +14,7 @@ import {
   terminarz,
   grupaMin,
   grupaMax,
+  startTekst,
   liczebnikOsob,
   uczacych,
 } from "../lib/site.js";
@@ -57,10 +58,8 @@ const pytania = [
       "Są bezpłatne i nie zobowiązują do niczego. Dziecko bierze udział na normalnych zasadach, w docelowej grupie, a Państwo patrzą z boku. Po zajęciach rozmawiamy o tym, co widzieliśmy. Nie prosimy o decyzję tego samego dnia.",
   },
   {
-    pytanie: rokSzkolny.ruszyl ? "Można dołączyć w trakcie roku?" : "Kiedy ruszają zajęcia?",
-    odpowiedz: rokSzkolny.ruszyl
-      ? `Tak. Zajęcia ruszyły we ${rokSzkolny.startOdmiana} i trwają przez cały rok szkolny ${rokSzkolny.etykieta}, ale grupy przyjmują nowe osoby także w trakcie — po rozmowie i zajęciach próbnych. Rozliczenie obejmuje raty miesięczne do czerwca; za miesiące sprzed dołączenia nie płacicie. Zajęcia odbywają się popołudniami, po lekcjach.`
-      : `Start we ${rokSzkolny.startOdmiana}, w roku szkolnym ${rokSzkolny.etykieta}. Rozliczenie obejmuje dziesięć rat miesięcznych, od września do czerwca. Zajęcia odbywają się popołudniami, po lekcjach.`,
+    pytanie: "Kiedy ruszają zajęcia?",
+    odpowiedz: `Grupa rusza, gdy zapisze się ${liczebnikOsob(grupaMin)} — dlatego zamiast sztywnej daty podajemy warunek. Zapisy na rok szkolny ${rokSzkolny.etykieta} trwają, a zajęcia odbywają się popołudniami, po lekcjach. Przy zapisie mówimy wprost, ilu osób brakuje do uruchomienia konkretnej grupy.`,
   },
   {
     pytanie: "Jak wygląda płatność i czy mogę zrezygnować w trakcie roku?",
@@ -179,9 +178,7 @@ const trzyKroki = [
           <li class="hero__fakt">Grupy {wielkoscGrupyTekst} osób</li>
           <li class="hero__fakt">Zajęcia podstawowe w całości po angielsku</li>
           <li class="hero__fakt">
-            {rokSzkolny.ruszyl
-              ? `Trwa rok szkolny ${rokSzkolny.etykieta}`
-              : `Start: ${rokSzkolny.start}`}
+            {startTekst()}
           </li>
         </ul>
       </div>
@@ -474,11 +471,9 @@ const trzyKroki = [
               <span class="wartosc">{wielkoscGrupyTekst} osób</span>
             </li>
             <li>
-              <span class="etykieta">{rokSzkolny.ruszyl ? "Rok szkolny" : "Start"}</span>
+              <span class="etykieta">Start</span>
               <span class="wartosc">
-                {rokSzkolny.ruszyl
-                  ? `${rokSzkolny.etykieta} — zajęcia trwają, można dołączyć`
-                  : `${rokSzkolny.start} — rok szkolny ${rokSzkolny.etykieta}`}
+                {startTekst()} — rok szkolny {rokSzkolny.etykieta}
               </span>
             </li>
             <li>

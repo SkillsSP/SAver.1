@@ -638,5 +638,33 @@ export const grupaMax = 8;
 /** Gotowy zapis „5–8", żeby myślnik był wszędzie ten sam (półpauza, nie łącznik). */
 export const wielkoscGrupyTekst = `${grupaMin}–${grupaMax}`;
 
+/* Liczebniki w dopełniaczu — „przy pięciu zapisanych". Odmiany nie da się
+   wyliczyć, a wpisanie słowa na sztywno rozjechałoby się przy zmianie
+   `grupaMin`; to już trzeci raz, kiedy liczba wpisana ręcznie w zdanie
+   zdezaktualizowała się po cichu. */
+const LICZEBNIK_DOPELNIACZ = [
+  "zera", "jednej", "dwóch", "trzech", "czterech",
+  "pięciu", "sześciu", "siedmiu", "ośmiu", "dziewięciu",
+];
+
+/* --------------------------------------------------------------------------
+   KIEDY RUSZAJĄ ZAJĘCIA — WARUNEK ZAMIAST DATY
+
+   Do 2 września 2026 strona mówiła „Start: wrzesień 2026". Data ma tę wadę,
+   że mija. Rodzic, który odpowiadał na wrześniową reklamę, czytał, że zajęcia
+   zaczynają się w tym miesiącu — choć przed nimi była jeszcze rejestracja
+   działalności, polisa i zebranie grupy.
+
+   Warunek nie mija. Grupa i tak rusza dopiero przy `grupaMin` zapisanych
+   osobach — to jest prawdziwe dziś, w październiku i w listopadzie, nie wymaga
+   poprawiania przy każdym poślizgu, a rodzicowi mówi rzecz konkretniejszą niż
+   miesiąc: od czego zależy termin i że to jego zapis domyka grupę.
+   -------------------------------------------------------------------------- */
+export function startTekst() {
+  if (rokSzkolny.ruszyl) return `Trwa rok szkolny ${rokSzkolny.etykieta}`;
+  const ile = LICZEBNIK_DOPELNIACZ[grupaMin] ?? String(grupaMin);
+  return `Grupy ruszają przy ${ile} zapisanych`;
+}
+
 /** Zachowane dla miejsc, które mówią wyłącznie o górnej granicy. */
 export const wielkoscGrupy = grupaMax;

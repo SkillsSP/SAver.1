@@ -6,7 +6,7 @@ import FotoNaglowka from "../../components/FotoNaglowka.astro";
 import Okruszki from "../../components/Okruszki.astro";
 import ZapisCta from "../../components/ZapisCta.astro";
 import { url, cenyOd,
-  rokSzkolny,
+  rokSzkolny, startTekst,
 } from "../../lib/site.js";
 ---
 
@@ -39,9 +39,7 @@ import { url, cenyOd,
           {/* Rok szkolny bierzemy z danych, żeby nie stało tu „termin
               w uzupełnieniu" — brak informacji zamieniony na tę, którą mamy. */}
           <li>
-            {rokSzkolny.ruszyl
-              ? `Rok szkolny ${rokSzkolny.etykieta} — przygotowania trwają`
-              : `Start przygotowań — ${rokSzkolny.start}`}
+            {startTekst()} — rok szkolny {rokSzkolny.etykieta}
           </li>
         </ul>
         <div class="przyciski" style="margin-top: var(--space-2);">
