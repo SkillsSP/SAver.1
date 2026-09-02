@@ -148,7 +148,7 @@ const pytania = [
   {
     pytanie: "Jak wygląda płatność?",
     odpowiedz:
-      "Przelewem na konto centrum, raz w miesiącu, przez dziesięć miesięcy od września do czerwca. Fakturę wystawiamy na życzenie, także na firmę.",
+      "Przelewem na konto centrum, raz w miesiącu, do czerwca włącznie. Liczba rat zależy od tego, w którym miesiącu dziecko dołączy — przy starcie we wrześniu jest ich dziesięć, w październiku dziewięć. Fakturę wystawiamy na życzenie, także na firmę.",
   },
 ];
 /* Dane strukturalne oferty. Wyszukiwarka pokazuje przy takim kursie cenę
@@ -196,7 +196,7 @@ const znacznikOferty = {
 <Baza
   aktywna="cennik"
   tytul="Cennik 2026/2027"
-  opis="Cena zależy od liczby programów: od 200 zł miesięcznie. Grupy 5–8 osób, dziesięć rat od września do czerwca, pierwsze zajęcia bezpłatne. Szczecin."
+  opis="Cena zależy od liczby programów: od 200 zł miesięcznie. Grupy 5–8 osób, rata miesięczna do czerwca, pierwsze zajęcia bezpłatne. Szczecin."
   pytania={pytania}
   okruszki={[{ nazwa: "Cennik" }]}
 >
@@ -333,12 +333,19 @@ const znacznikOferty = {
       <div class="siatka--wiodaca">
         <div class="stos stos--ciasny">
           <span class="nadtytul">Płatność</span>
-          <h2 class="tytul-1">Dziesięć rat, stała kwota</h2>
+          <h2 class="tytul-1">Rata miesięczna, stała kwota</h2>
         </div>
         <div class="stos">
+          {/* Bez liczby rat. Stało tu „dziesięć równych rat od września do
+              czerwca" — prawdziwe tylko przy starcie wrześniowym. Grupa rusza
+              przy pięciu zapisanych, więc miesiąc pierwszych zajęć nie jest
+              znany z góry: kto dołącza w październiku, płaci dziewięć rat.
+              Reguła zamiast liczby jest prawdziwa w każdym wariancie, a rodzic
+              wylicza z niej swoją kwotę w jednym kroku. */}
           <p class="wiodacy">
-            Kurs obejmuje cały rok szkolny i opłacacie go w dziesięciu równych
-            ratach od września do czerwca.
+            Płacicie za każdy miesiąc uczestnictwa, do czerwca włącznie. Przy
+            dołączeniu we wrześniu wychodzi dziesięć rat, w październiku
+            dziewięć — za miesiące sprzed dołączenia nie płacicie.
           </p>
           <ul class="lista-znaczona">
             <li>
@@ -354,8 +361,8 @@ const znacznikOferty = {
           </h3>
           <p class="tekst-drugi tekst-maly">
             Z ważnego powodu można zrezygnować przed końcem roku szkolnego.
-            Miesiąc, w którym zgłosicie rezygnację, jest wtedy ostatnim płatnym
-            z dziesięciu — pozostałych rat nie naliczamy.
+            Miesiąc, w którym zgłosicie rezygnację, jest wtedy ostatnim
+            płatnym — pozostałych rat nie naliczamy.
           </p>
           <p class="tekst-drugi tekst-maly">
             Za ważny powód uznajemy między innymi dłuższą chorobę,

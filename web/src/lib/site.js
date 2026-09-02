@@ -508,8 +508,14 @@ export const rokSzkolny = {
      odmiana nie daje się wyliczyć z mianownika, więc stoi tu wprost —
      inaczej w tekście lądowałoby „start we wrzesień 2026". */
   startOdmiana: "wrześniu 2026",
-  /* Kurs obejmuje dziesięć rat od września do czerwca — patrz cennik. */
-  pierwszaRata: "wrzesień",
+  /* Rata za każdy miesiąc uczestnictwa, do czerwca włącznie. Przy starcie we
+     wrześniu wychodzi dziesięć rat, przy dołączeniu w październiku dziewięć.
+
+     Strona nie podaje już liczby rat jako stałej. Podawała — „dziesięć rat od
+     września do czerwca" — i było to prawdziwe wyłącznie przy starcie
+     wrześniowym. Odkąd start opisuje warunek zebrania grupy, a nie miesiąc,
+     ta liczba stała się obietnicą zależną od czegoś, czego nie znamy z góry.
+     Zamiast liczby stoi teraz reguła, z której rodzic sam ją wyliczy. */
   ostatniaRata: "czerwiec",
 };
 
