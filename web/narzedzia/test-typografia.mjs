@@ -69,19 +69,39 @@ const NBSP = " ";
    =========================================================================== */
 async function sklejenia(strona) {
   return strona.evaluate(() => {
-    const korzen = document.querySelector("main") || document.body;
+    /* CAŁE BODY, NIE SAMO MAIN. Sprawdzanie samej treści głównej przepuściło
+       sklejenie w banerze zgody — „Szczegóły w<a>polityce prywatności</a>"
+       wyszło na stronie jako „Szczegóły wpolityce prywatności". Baner, nagłówek,
+       stopka i pasek akcji stoją poza `main`, a rodzic czyta je tak samo.
+       Zobaczyłem to dopiero na zrzucie ekranu, czyli okiem, a nie pomiarem —
+       zakres sprawdzenia był węższy niż zakres problemu. */
+    const korzen = document.body;
     const POMIJANE = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "TEMPLATE"]);
 
     const wezly = [];
     const chodzik = document.createTreeWalker(korzen, NodeFilter.SHOW_TEXT, {
       acceptNode(n) {
-        if (POMIJANE.has(n.parentElement?.tagName)) return NodeFilter.FILTER_REJECT;
+        const rodzic = n.parentElement;
+        if (!rodzic) return NodeFilter.FILTER_REJECT;
+        if (POMIJANE.has(rodzic.tagName)) return NodeFilter.FILTER_REJECT;
         if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-        if (!n.parentElement?.offsetParent && n.parentElement?.tagName !== "BODY") {
-          /* Element ukryty — rodzic nie ma pozycji w układzie. */
-          const s = getComputedStyle(n.parentElement);
-          if (s.display === "none" || s.visibility === "hidden") return NodeFilter.FILTER_REJECT;
-        }
+
+        /* WIDOCZNOŚĆ LICZONA PO CAŁYM DRZEWIE, NIE PO SAMYM RODZICU.
+
+           Poprzednia wersja sprawdzała `display` bezpośredniego rodzica i przez
+           to zgłaszała dwadzieścia fałszywych alarmów z paska akcji: przy
+           szerokości biurkowej cały pasek ma `display: none`, ale odnośniki
+           w środku mają własne `inline-flex`, więc test uznawał je za widoczne.
+
+           `offsetParent` też tu nie wystarcza — pasek akcji ma `position:
+           fixed`, a takie elementy mają puste `offsetParent` nawet wtedy, gdy
+           są doskonale widoczne. `checkVisibility` odpowiada na to pytanie
+           wprost, biorąc pod uwagę wszystkich przodków. */
+        const widoczny = typeof rodzic.checkVisibility === "function"
+          ? rodzic.checkVisibility({ checkVisibilityCSS: true })
+          : rodzic.getClientRects().length > 0;
+        if (!widoczny) return NodeFilter.FILTER_REJECT;
+
         return NodeFilter.FILTER_ACCEPT;
       },
     });
@@ -91,6 +111,18 @@ async function sklejenia(strona) {
       let el = n.parentElement;
       while (el && el !== korzen) {
         const d = getComputedStyle(el).display;
+        const rodzic = el.parentElement;
+        const dRodzica = rodzic ? getComputedStyle(rodzic).display : "";
+        /* DZIECKO KONTENERA ELASTYCZNEGO ALBO SIATKI jest osobnym pudełkiem,
+           choćby samo miało `display: inline-flex`. Przeglądarka je „blokuje",
+           więc sąsiadujące elementy nie sklejają się wzrokowo.
+
+           Bez tego warunku narzędzie zgłaszało dwadzieścia fałszywych alarmów:
+           „Zadzwoń teraz▸Wolę zapisać się online" z paska akcji na telefonie,
+           gdzie oba odnośniki stoją obok siebie w kontenerze elastycznym
+           i są od siebie wyraźnie oddzielone. Patrzyłem na `display` samego
+           elementu, a decyduje o tym również rodzic. */
+        if (/^(flex|grid|inline-flex|inline-grid)$/.test(dRodzica)) return el;
         if (!d.startsWith("inline") && d !== "contents") return el;
         el = el.parentElement;
       }
@@ -185,9 +217,15 @@ const REGULY = [
 const przegladarka = await chromium.launch();
 const kontekst = await przegladarka.newContext({ viewport: { width: 1280, height: 900 } });
 const strona = await kontekst.newPage();
-await strona.addInitScript(() => {
-  try { localStorage.setItem("sa-cookie-consent", "necessary"); } catch (e) {}
-});
+/* ZGODY CELOWO NIE USTAWIAMY. Pozostałe narzędzia zapisują ją w pamięci
+   przeglądarki, żeby baner nie zasłaniał strony — tutaj jest odwrotnie: baner
+   ma być widoczny, bo jest tekstem, który rodzic czyta jako pierwszy.
+
+   Kosztowało mnie to fałszywe poczucie bezpieczeństwa. Po rozszerzeniu
+   wykrywacza sklejeń na całe body sprawdziłem go, przywracając na chwilę błąd
+   w banerze — i test go NIE zgłosił, bo baner był schowany zgodą ustawioną
+   przez ten właśnie skrypt. Sprawdzenie nie obejmowało elementu, który miało
+   sprawdzać. */
 
 const znaleziska = new Map();
 let znakow = 0;
