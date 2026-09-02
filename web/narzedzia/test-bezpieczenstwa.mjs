@@ -201,7 +201,26 @@ async function txt(nazwa) {
 
      MX Plan podpisuje pocztę przez CNAME wskazujący na klucz u OVH, nie przez
      własny wpis TXT. Sprawdzamy więc obie rzeczy: czy CNAME istnieje i czy na
-     jego końcu leży prawdziwy klucz. */
+     jego końcu leży prawdziwy klucz.
+
+     CZEGO TEN SKRYPT NIE SPRAWDZA — i nie da się tego sprawdzić bez dostępu do
+     skrzynki. Obecność klucza w DNS to jedna połowa; drugą jest to, czy serwer
+     faktycznie podpisuje nim wychodzącą pocztę. Te dwie rzeczy potrafią się
+     rozjechać i raz wziąłem jedną za drugą.
+
+     Sprawdzone ręcznie 2 września 2026, na wiadomości wysłanej przez formularz,
+     nagłówkiem `Authentication-Results` od mx.mail.ovh.net:
+
+         dkim=pass  (2048-bit rsa key sha256)  s=ovhmo-selector-1, a=rsa-sha256
+         dmarc=pass policy.published-domain-policy=quarantine
+         spf=pass   smtp.mailfrom=kontakt@skilful.pl
+
+     Wcześniejsza wiadomość, sprzed uzupełnienia wpisów, miała w tym samym polu
+     `published-domain-policy=none` i `dkim=invalid (public key: not available)`.
+     Ta sama skrzynka i ten sam serwer sprawdzający, więc różnica leżała w DNS.
+
+     Gdyby kiedyś trzeba było to powtórzyć: wyślijcie zgłoszenie przez formularz
+     i otwórzcie oryginał wiadomości, która przyjdzie. */
   const SELEKTORY = ["ovhmo-selector-1", "ovhmo-selector-2"];
   for (const selektor of SELEKTORY) {
     const nazwa = `${selektor}._domainkey.${DOMENA}`;
