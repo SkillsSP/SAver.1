@@ -658,6 +658,38 @@ export const analityka = {
       "https://www.google-analytics.com",
     ],
   },
+
+  /* ------------------------------------------------------------------
+     META PIXEL — pomiar skuteczności reklam na Facebooku.
+
+     Wchodzi przez tę samą bramkę co Google: ładuje się dopiero po zgodzie
+     na kategorię „marketing" i nie wcześniej.
+
+     CZEGO ŚWIADOMIE NIE MA. Oryginalny kod od Meta zawiera znacznik
+     `<noscript>` z obrazkiem śledzącym pod adresem facebook.com/tr. Ten
+     obrazek odpala się przy WYŁĄCZONYM JavaScripcie, czyli dokładnie tam,
+     gdzie nie da się zapytać o zgodę ani jej sprawdzić. Pominięty celowo:
+     wersja dla odwiedzających bez skryptów nie może być wersją bez zgody.
+
+     RÓŻNICA WOBEC GOOGLE, o której trzeba wiedzieć. Google skonfigurowaliśmy
+     na sam pomiar, z odmową personalizacji reklam. Piksel Meta domyślnie
+     buduje grupy odbiorców do remarketingu — to jest jego natura, nie
+     ustawienie. Jeśli remarketing ma nie działać, wyłącza się go po stronie
+     panelu Meta, a nie tutaj. Polityka prywatności została do tego dopasowana.
+     ------------------------------------------------------------------ */
+  meta: {
+    pixel: "1375754250809885",
+    skrypt: "https://connect.facebook.net/en_US/fbevents.js",
+    skrypty: ["https://connect.facebook.net"],
+    polaczenia: ["https://connect.facebook.net", "https://www.facebook.com"],
+    /* `connect.facebook.net` musi być także wśród obrazów, nie tylko skryptów.
+       Piksel wysyła stamtąd własne raporty błędów zwykłym obrazkiem i przy
+       polityce wypisanej z samego adresu skryptu ta droga była zablokowana —
+       test bezpieczeństwa zgłosił to jako „polityka zablokowała zasób".
+       To ta sama pułapka co przy Umami: skrypt ładuje się z jednego adresu,
+       a wysyła dane na inny. */
+    obrazy: ["https://www.facebook.com", "https://connect.facebook.net"],
+  },
 };
 
 /* --------------------------------------------------------------------------

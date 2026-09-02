@@ -13,6 +13,10 @@ const konfiguracja = {
     konwersje: google.konwersje ?? {},
     skrypt: google.skrypt ?? "https://www.googletagmanager.com/gtag/js",
   },
+  meta: {
+    pixel: (analityka.meta ?? {}).pixel ?? null,
+    skrypt: (analityka.meta ?? {}).skrypt ?? "https://connect.facebook.net/en_US/fbevents.js",
+  },
 };
 ---
 
@@ -52,8 +56,8 @@ const konfiguracja = {
     <p class="zgoda-cookies__tresc">
       Statystyki pomagają nam sprawdzić, których treści rodzice faktycznie
       szukają. Reklama pozwala policzyć, które ogłoszenie przyprowadziło do nas
-      dziecko. Nie tworzymy list odbiorców i nie śledzimy Was na innych
-      stronach. Szczegóły w{" "}
+      dziecko — a Facebookowi pokazać nasze reklamy osobom, które już tu były.
+      Szczegóły w{" "}
       <a href={url("/polityka-prywatnosci")}>polityce prywatności</a>.
     </p>
 
@@ -72,8 +76,8 @@ const konfiguracja = {
         <input type="checkbox" data-zgoda-marketing />
         <span>
           <strong>Marketing</strong>
-          Sprawdzenie, która reklama przyprowadziła zgłoszenie. Bez list
-          odbiorców i bez reklam podążających za Wami.
+          Pomiar skuteczności reklam Google i Facebooka. Facebook może na tej
+          podstawie pokazywać Wam nasze reklamy także na innych stronach.
         </span>
       </label>
     </fieldset>
@@ -109,6 +113,9 @@ const konfiguracja = {
     var zaladowaneGoogle = false;
     var g = konfiguracja.google;
     var googleWlaczone = Boolean(g.ga4 || g.ads);
+    var m = konfiguracja.meta;
+    var metaWlaczone = Boolean(m && m.pixel);
+    var zaladowaneMeta = false;
 
     /* ---- Tryb zgody Google, wersja druga ---------------------------------
        Ustawiamy domyślne odmowy ZANIM cokolwiek się załaduje. Bez tego kroku
@@ -151,6 +158,31 @@ const konfiguracja = {
       gtag("js", new Date());
       if (g.ga4) gtag("config", g.ga4, { anonymize_ip: true });
       if (g.ads) gtag("config", g.ads);
+    }
+
+    /* Piksel Meta. Ładowany wyłącznie po zgodzie na kategorię „marketing".
+
+       Znacznik `<noscript>` z obrazkiem spod facebook.com/tr, który Meta
+       dokłada do swojego kodu, jest tu pominięty ŚWIADOMIE: odpalałby się przy
+       wyłączonym JavaScripcie, czyli tam, gdzie nie da się ani zapytać o zgodę,
+       ani jej sprawdzić. Wersja dla odwiedzających bez skryptów nie może być
+       wersją bez zgody. */
+    function zaladujMete() {
+      if (zaladowaneMeta || !metaWlaczone) return;
+      zaladowaneMeta = true;
+      if (!window.fbq) {
+        var n = (window.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        });
+        if (!window._fbq) window._fbq = n;
+        n.push = n; n.loaded = true; n.version = "2.0"; n.queue = [];
+        var t = document.createElement("script");
+        t.async = true;
+        t.src = m.skrypt;
+        document.head.appendChild(t);
+      }
+      window.fbq("init", m.pixel);
+      window.fbq("track", "PageView");
     }
 
     /* ---- Odczyt i zapis decyzji ------------------------------------------ */
@@ -203,6 +235,11 @@ const konfiguracja = {
         /* Konwersja Google Ads to osobna zgoda i osobne zdarzenie. Bez etykiety
            z panelu Ads nie ma czego wysłać — kampania policzyłaby wtedy samo
            wejście, a nie telefon. */
+        /* Meta ma własne nazwy zdarzeń standardowych: zgłoszenie to „Lead",
+           telefon to „Contact". Bez nich kampania liczy same wejścia. */
+        if (window.saConsent && window.saConsent.marketing && window.fbq) {
+          window.fbq("track", nazwa === "telefon_klik" ? "Contact" : "Lead");
+        }
         if (window.saConsent && window.saConsent.marketing && window.gtag) {
           var etykieta = (g.konwersje || {})[nazwa === "telefon_klik" ? "telefon" : "formularz"];
           if (etykieta) window.gtag("event", "conversion", { send_to: etykieta });
@@ -211,6 +248,7 @@ const konfiguracja = {
 
       if (z.statystyka) zaladujUmami();
       if ((z.statystyka && g.ga4) || (z.marketing && g.ads)) zaladujGoogle();
+      if (z.marketing) zaladujMete();
 
       window.dispatchEvent(new CustomEvent("sa-consent", { detail: window.saConsent }));
     }

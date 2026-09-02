@@ -82,18 +82,25 @@ const kanoniczny = new URL(sciezkaKanoniczna, Astro.site).href;
    Umami, gdzie skrypt ładował się z jednego adresu, a dane odsyłał na drugi. */
 const google = analityka.google ?? {};
 const googleWlaczone = Boolean(google.ga4 || google.ads);
+const meta = analityka.meta ?? {};
+const metaWlaczone = Boolean(meta.pixel);
 
 const zrodlaSkryptow = [
   new URL(analityka.statystyka.src).origin,
   ...(googleWlaczone ? google.skrypty ?? [] : []),
+  ...(metaWlaczone ? meta.skrypty ?? [] : []),
 ];
 const zrodlaPolaczen = [
   new URL(analityka.statystyka.src).origin,
   ...(analityka.statystyka.polaczenia ?? []),
   new URL(firma.formularzEndpoint).origin,
   ...(googleWlaczone ? google.polaczenia ?? [] : []),
+  ...(metaWlaczone ? meta.polaczenia ?? [] : []),
 ];
-const zrodlaObrazow = googleWlaczone ? google.obrazy ?? [] : [];
+const zrodlaObrazow = [
+  ...(googleWlaczone ? google.obrazy ?? [] : []),
+  ...(metaWlaczone ? meta.obrazy ?? [] : []),
+];
 
 const znacznik = {
   "@context": "https://schema.org",

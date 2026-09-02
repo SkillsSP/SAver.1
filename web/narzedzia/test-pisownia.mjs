@@ -75,6 +75,8 @@ const ZNANE = new Set([
   /* Nazwy ciasteczek Google i przeglądarek, wymienione w opisie cookies. */
   "gcl", "edge", "chrome", "safari", "firefoksie", "github", "supabase",
   "pages", "consent",
+  /* Z opisu piksela Meta: nazwa ciasteczka i siedziba spółki. */
+  "fbp", "ireland", "platforms", "meta",
 ]);
 
 const przegladarka = await chromium.launch();
