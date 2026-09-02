@@ -1,5 +1,6 @@
 ---
 import Baza from "../layouts/Baza.astro";
+import Spolecznosciowe from "../components/Spolecznosciowe.astro";
 import DoUzupelnienia from "../components/DoUzupelnienia.astro";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 import {
@@ -133,6 +134,20 @@ const daneFirmy = [
             Wybieracie temat, my kierujemy sprawę do właściwej osoby.
           </span>
         </a>
+      </div>
+
+      {/* PROFIL SPOŁECZNOŚCIOWY POD DROGAMI KONTAKTU, a nie jako czwarta karta.
+
+          Siatka wyżej ma trzy kolumny i czwarta karta rozbiłaby ją na 3+1 —
+          ten sam problem sierotki, który stoi opisany przy progach cennika
+          i przy zespole. Poza tym profil nie jest równorzędną drogą kontaktu:
+          rodzic, który chce się umówić, ma zadzwonić albo wypełnić formularz.
+          Facebook jest dla tych, którzy chcą najpierw popatrzeć.
+
+          Komponent nie wypisuje niczego, dopóki żaden profil nie ma adresu,
+          więc ta sekcja zniknie sama, gdyby adresy kiedyś zniknęły. */}
+      <div style="margin-top: var(--space-4);">
+        <Spolecznosciowe tytul="Jesteśmy też tutaj" />
       </div>
 
       {/* GDZIE JESTEŚMY — tuż pod drogami kontaktu, a nie na końcu strony.

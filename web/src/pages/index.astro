@@ -19,6 +19,7 @@ import {
   uczacych,
 } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
+import Spolecznosciowe from "../components/Spolecznosciowe.astro";
 
 const tel = telefonHref();
 const pokazTerminarz = terminarz.pokazuj && terminarz.dni.length > 0;
@@ -580,6 +581,17 @@ const trzyKroki = [
                 albo zadzwońcie: <a href={tel}>{telefonTekst()}</a>
               </span>
             )}
+          </div>
+
+          {/* PROFIL POD PRZYCISKIEM, nie nad nim i nie w nagłówku strony.
+
+              Odnośnik do Facebooka wyprowadza rodzica poza serwis, więc na
+              górze strony konkurowałby z zapisem na zajęcia próbne. Tutaj stoi
+              po całej treści i po głównym wezwaniu: kto zamierzał się umówić,
+              już to zrobił, a kto jeszcze się waha, dostaje sposób, żeby nas
+              obserwować zamiast wyjść bez śladu. */}
+          <div style="margin-top: var(--space-3);">
+            <Spolecznosciowe tytul="Zaglądajcie też tutaj" />
           </div>
         </div>
       </div>
