@@ -5,7 +5,7 @@ import DoUzupelnienia from "../../components/DoUzupelnienia.astro";
 import FotoNaglowka from "../../components/FotoNaglowka.astro";
 import Okruszki from "../../components/Okruszki.astro";
 import ZapisCta from "../../components/ZapisCta.astro";
-import { url, cenyOd} from "../../lib/site.js";
+import { url, cenyOd, nowoscHistoria} from "../../lib/site.js";
 
 const schemat = [
   {
@@ -67,7 +67,7 @@ const schemat = [
             Matematyka <span class="plakietka unikat">Poza angielskim</span>
           </a>
           <a class="przycisk przycisk--duch" href="#historia">
-            Historia <span class="plakietka unikat">Nowość</span>
+            Historia {nowoscHistoria && <span class="plakietka unikat">{nowoscHistoria}</span>}
           </a>
         </div>
       </div>
@@ -170,7 +170,7 @@ const schemat = [
         <div class="stos stos--ciasny">
           <span class="nadtytul nadtytul--slate">Przedmiot</span>
           <h2 class="tytul-1 tytul--medrzec">
-            Historia <span class="plakietka unikat">Nowość</span>
+            Historia {nowoscHistoria && <span class="plakietka unikat">{nowoscHistoria}</span>}
           </h2>
           <p class="plakietka plakietka--slate" style="justify-self: start;">
             Wyłącznie poziom rozszerzony

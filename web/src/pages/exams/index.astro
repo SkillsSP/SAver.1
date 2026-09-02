@@ -4,7 +4,7 @@ import KotwicaCeny from "../../components/KotwicaCeny.astro";
 import OdeslanieDoGrup from "../../components/OdeslanieDoGrup.astro";
 import ZapisCta from "../../components/ZapisCta.astro";
 import FotoNaglowka from "../../components/FotoNaglowka.astro";
-import { url, cenyOd} from "../../lib/site.js";
+import { url, cenyOd, nowoscHistoria} from "../../lib/site.js";
 
 /* Ten sam schemat pracy dla każdego przedmiotu i poziomu — dlatego opisujemy
    go raz, na stronie zbiorczej, a strony egzaminacyjne do niego wracają. */
@@ -87,7 +87,7 @@ const schemat = [
           <ul class="lista-znaczona">
             <li>Angielski — podstawowy i rozszerzony</li>
             <li>Matematyka — podstawowy <span class="plakietka unikat">Poza angielskim</span></li>
-            <li>Historia — rozszerzona <span class="plakietka unikat">Nowość</span></li>
+            <li>Historia — rozszerzona {nowoscHistoria && <span class="plakietka unikat">{nowoscHistoria}</span>}</li>
           </ul>
           <span class="wiek__strzalka" style="color: var(--slate-600);">Zobacz szczegóły →</span>
         </a>

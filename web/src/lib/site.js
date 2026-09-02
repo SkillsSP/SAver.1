@@ -158,6 +158,19 @@ export const menuProgram = [
   },
 ];
 
+/* --------------------------------------------------------------------------
+   PLAKIETKA „NOWOŚĆ" PRZY HISTORII
+
+   Stała, a nie napis wpisany w trzy szablony. Powód jest ten sam co przy
+   liczbie osób w zespole i przy liczbie rat: napis wpisany ręcznie starzeje
+   się w milczeniu. „Nowość" przestaje być prawdą po pierwszym roku, a nic
+   się od tego nie psuje — więc nikt tego nie zauważy.
+
+   Po zakończeniu roku szkolnego, w którym historia weszła do oferty:
+   ustawcie `null`, a plakietka zniknie ze wszystkich czterech miejsc naraz.
+   -------------------------------------------------------------------------- */
+export const nowoscHistoria = "Nowość";
+
 export const menuExams = [
   {
     etykieta: "Egzamin ósmoklasisty",
@@ -189,7 +202,7 @@ export const menuExams = [
            zdawany wyłącznie na rozszerzeniu. */
         dopisek: "rozszerzony",
         unikat: true,
-        etykietaUnikatu: "Nowość",
+        etykietaUnikatu: nowoscHistoria,
       },
     ],
   },
