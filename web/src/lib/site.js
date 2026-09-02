@@ -660,6 +660,48 @@ export const analityka = {
   },
 
   /* ------------------------------------------------------------------
+     MICROSOFT CLARITY — mapy kliknięć i nagrania sesji.
+
+     NALEŻY DO KATEGORII „STATYSTYKA", nie „marketing": nie służy reklamie,
+     tylko zobaczeniu, gdzie rodzic się gubi na stronie. Ładuje się po zgodzie
+     na tę kategorię i nie wcześniej.
+
+     ALE TO NIE JEST DRUGIE UMAMI. Umami liczy odsłony i nie zapisuje niczego
+     na urządzeniu. Clarity NAGRYWA SESJĘ — ruch myszy, kliknięcia, przewijanie
+     — i zapisuje własne ciasteczka. To jest różnica jakościowa, nie ilościowa,
+     i dlatego opis kategorii w banerze musiał się zmienić razem z tym wpisem.
+
+     MASKOWANIE POLA FORMULARZA jest wymuszone atrybutem `data-clarity-mask`
+     na obu formularzach, niezależnie od ustawień w panelu Clarity. Przy
+     stronie, gdzie rodzic wpisuje imię i wiek dziecka, nie polegamy na
+     domyślnym ustawieniu u dostawcy — nagranie nie może zawierać tych danych
+     nawet przez pomyłkę w konfiguracji.
+     ------------------------------------------------------------------ */
+  clarity: {
+    id: "yc7j5dep7s",
+    skrypt: "https://www.clarity.ms/tag/",
+    /* `scripts.clarity.ms` obok `www` — znacznik ładuje się z jednego
+       adresu, a właściwy skrypt nagrywający z drugiego. Polityka wypisana
+       z samego adresu znacznika blokowała go po cichu: Clarity startowało
+       i nic nie zapisywało. Ta sama pułapka co przy Umami i przy pikselu
+       Meta — trzeci raz ten sam wzorzec, więc odnotowuję go tutaj. */
+    skrypty: ["https://www.clarity.ms", "https://scripts.clarity.ms"],
+    polaczenia: ["https://www.clarity.ms", "https://*.clarity.ms", "https://c.bing.com"],
+    /* Clarity wysyła też zwykły obrazek pomiarowy pod c.clarity.ms.
+
+       `c.bing.com` jest tu świadomie, choć próbowałem bez niego. Clarity
+       ustawia ciasteczko `MUID` — identyfikator Microsoftu rozpoznający
+       urządzenie w ich usługach — i robi to Z DOMENY clarity.ms, więc
+       zablokowanie Binga w polityce bezpieczeństwa nie zapobiega niczemu,
+       a zostawia narzędzie w stanie połowicznym. Zmierzone, nie założone.
+
+       Wniosek warto zapamiętać: Clarity bez identyfikatora Microsoftu nie
+       istnieje. Kto go nie chce, nie może używać Clarity — i to jest decyzja
+       właścicielska, a nie ustawienie. */
+    obrazy: ["https://*.clarity.ms", "https://c.bing.com"],
+  },
+
+  /* ------------------------------------------------------------------
      META PIXEL — pomiar skuteczności reklam na Facebooku.
 
      Wchodzi przez tę samą bramkę co Google: ładuje się dopiero po zgodzie

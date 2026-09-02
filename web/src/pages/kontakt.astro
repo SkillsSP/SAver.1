@@ -187,10 +187,17 @@ const daneFirmy = [
             </p>
           </div>
 
+          {/* `data-clarity-mask` wymusza zamaskowanie CAŁEGO formularza
+              w nagraniach sesji Microsoft Clarity — niezależnie od ustawień
+              w ich panelu. Clarity domyślnie maskuje pola tekstowe, ale przy
+              stronie, na której rodzic wpisuje imię i wiek dziecka, nie
+              polegamy na ustawieniu u dostawcy: nagranie nie może zawierać
+              tych danych nawet przez pomyłkę w konfiguracji. */}
           <form
             class="formularz"
             method="post"
             action={endpoint ?? undefined}
+            data-clarity-mask="true"
             data-telefon={tel ?? ""}
             data-telefon-tekst={tel ? telefonTekst() : ""}
           >

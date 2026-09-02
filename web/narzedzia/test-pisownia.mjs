@@ -77,6 +77,8 @@ const ZNANE = new Set([
   "pages", "consent",
   /* Z opisu piksela Meta: nazwa ciasteczka i siedziba spółki. */
   "fbp", "ireland", "platforms", "meta",
+  /* Nazwy ciasteczek Microsoft Clarity. */
+  "clck", "clsk", "muid", "clarity", "microsoft",
 ]);
 
 const przegladarka = await chromium.launch();

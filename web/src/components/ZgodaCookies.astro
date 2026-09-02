@@ -13,6 +13,10 @@ const konfiguracja = {
     konwersje: google.konwersje ?? {},
     skrypt: google.skrypt ?? "https://www.googletagmanager.com/gtag/js",
   },
+  clarity: {
+    id: (analityka.clarity ?? {}).id ?? null,
+    skrypt: (analityka.clarity ?? {}).skrypt ?? "https://www.clarity.ms/tag/",
+  },
   meta: {
     pixel: (analityka.meta ?? {}).pixel ?? null,
     skrypt: (analityka.meta ?? {}).skrypt ?? "https://connect.facebook.net/en_US/fbevents.js",
@@ -68,7 +72,10 @@ const konfiguracja = {
         <input type="checkbox" data-zgoda-statystyka checked />
         <span>
           <strong>Statystyka</strong>
-          Ile osób odwiedza stronę i których podstron szukają. Bez profilowania.
+          Ile osób odwiedza stronę, których podstron szukają i gdzie się na
+          niej gubią. Nagrywamy ruch po stronie — bez tego, co wpisujecie
+          w formularzu. Microsoft zapisuje przy tym własny identyfikator
+          urządzenia.
         </span>
       </label>
 
@@ -113,6 +120,9 @@ const konfiguracja = {
     var zaladowaneGoogle = false;
     var g = konfiguracja.google;
     var googleWlaczone = Boolean(g.ga4 || g.ads);
+    var c = konfiguracja.clarity;
+    var clarityWlaczone = Boolean(c && c.id);
+    var zaladowaneClarity = false;
     var m = konfiguracja.meta;
     var metaWlaczone = Boolean(m && m.pixel);
     var zaladowaneMeta = false;
@@ -158,6 +168,24 @@ const konfiguracja = {
       gtag("js", new Date());
       if (g.ga4) gtag("config", g.ga4, { anonymize_ip: true });
       if (g.ads) gtag("config", g.ads);
+    }
+
+    /* Microsoft Clarity — mapy kliknięć i nagrania sesji. Kategoria
+       „statystyka", bo nie służy reklamie, tylko zobaczeniu, gdzie rodzic się
+       gubi. Po załadowaniu wołamy `clarity("consent")`, żeby po stronie
+       Microsoftu też był ślad, że zgoda padła — sam fakt uruchomienia skryptu
+       im tego nie mówi. */
+    function zaladujClarity() {
+      if (zaladowaneClarity || !clarityWlaczone) return;
+      zaladowaneClarity = true;
+      window.clarity = window.clarity || function () {
+        (window.clarity.q = window.clarity.q || []).push(arguments);
+      };
+      var t = document.createElement("script");
+      t.async = true;
+      t.src = c.skrypt + c.id;
+      document.head.appendChild(t);
+      window.clarity("consent");
     }
 
     /* Piksel Meta. Ładowany wyłącznie po zgodzie na kategorię „marketing".
@@ -246,7 +274,7 @@ const konfiguracja = {
         }
       };
 
-      if (z.statystyka) zaladujUmami();
+      if (z.statystyka) { zaladujUmami(); zaladujClarity(); }
       if ((z.statystyka && g.ga4) || (z.marketing && g.ads)) zaladujGoogle();
       if (z.marketing) zaladujMete();
 

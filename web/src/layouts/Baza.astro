@@ -84,11 +84,14 @@ const google = analityka.google ?? {};
 const googleWlaczone = Boolean(google.ga4 || google.ads);
 const meta = analityka.meta ?? {};
 const metaWlaczone = Boolean(meta.pixel);
+const clarity = analityka.clarity ?? {};
+const clarityWlaczone = Boolean(clarity.id);
 
 const zrodlaSkryptow = [
   new URL(analityka.statystyka.src).origin,
   ...(googleWlaczone ? google.skrypty ?? [] : []),
   ...(metaWlaczone ? meta.skrypty ?? [] : []),
+  ...(clarityWlaczone ? clarity.skrypty ?? [] : []),
 ];
 const zrodlaPolaczen = [
   new URL(analityka.statystyka.src).origin,
@@ -96,10 +99,12 @@ const zrodlaPolaczen = [
   new URL(firma.formularzEndpoint).origin,
   ...(googleWlaczone ? google.polaczenia ?? [] : []),
   ...(metaWlaczone ? meta.polaczenia ?? [] : []),
+  ...(clarityWlaczone ? clarity.polaczenia ?? [] : []),
 ];
 const zrodlaObrazow = [
   ...(googleWlaczone ? google.obrazy ?? [] : []),
   ...(metaWlaczone ? meta.obrazy ?? [] : []),
+  ...(clarityWlaczone ? clarity.obrazy ?? [] : []),
 ];
 
 const znacznik = {
