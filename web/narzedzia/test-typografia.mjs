@@ -197,9 +197,13 @@ const REGULY = [
   },
   {
     waga: "uwaga",
-    /* Zakres liczb łączy półpauza bez spacji: 7–9, a nie 7-9. */
+    /* Zakres liczb łączy półpauza bez spacji: 7–9, a nie 7-9.
+
+       Kod pocztowy jest wyjątkiem i pisze się go łącznikiem — „00-193
+       Warszawa". Bez tego zastrzeżenia narzędzie zgłaszało adres Urzędu
+       Ochrony Danych Osobowych, dopisany do obu dokumentów prawnych. */
     nazwa: "zakres liczb przez łącznik zamiast półpauzy –",
-    wzor: /\d-\d/g,
+    wzor: /(?<!\d)(?!\d{2}-\d{3}(?!\d))\d+-\d+/g,
   },
   {
     waga: "uwaga",

@@ -63,6 +63,15 @@ const ZNANE = new Set([
   "ustrukturyzowana", "ustrukturyzowane", "ustrukturyzowany",
   "społeczno", "zdawalności", "zdawalność",
   "minigrupa", "minigrupy", "minigrupę", "minigrup", "minigrupach",
+  /* Doszły z dokumentami prawnymi i z przygotowania pod Google Ads.
+     „współadministratorami" — termin z art. 26 rozporządzenia, poprawna
+        polszczyzna, której słownik ogólny nie zna,
+     „remarketingu" — przyjęty termin marketingowy,
+     „analytics", „ads", „privacy", „framework" — człony nazw własnych:
+        Google Analytics, Google Ads, Data Privacy Framework. */
+  "współadministratorami", "współadministrator", "współadministratorzy",
+  "remarketing", "remarketingu",
+  "analytics", "ads", "privacy", "framework",
 ]);
 
 const przegladarka = await chromium.launch();
