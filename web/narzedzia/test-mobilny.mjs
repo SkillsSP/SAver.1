@@ -238,8 +238,32 @@ for (const szer of SZEROKOSCI) {
             `${Math.round(r.width)}×${Math.round(r.height)}px ${el.tagName} „${el.textContent.trim().slice(0, 24)}"`);
         }
       }
+      /* PRZYBLIŻANIE NA iOS DOTYCZY WYŁĄCZNIE PÓL, W KTÓRYCH SIĘ PISZE.
+         Safari powiększa stronę, gdy dotknięte pole ma czcionkę mniejszą niż
+         16 px — ale robi to przy wejściu kursora do pola tekstowego. Pole
+         wyboru i przełącznik nie dostają klawiatury i nie wywołują tego
+         zachowania.
+
+         Bez tego rozróżnienia narzędzie zgłosiło 114 błędów naraz, po dodaniu
+         dwóch pól wyboru do banera zgody: ich czcionka dziedziczy 12,5 px
+         z drobnego opisu obok. Sprawdziłem w przeglądarce — same pola mają
+         24 × 24 px, czyli minimalny cel dotykowy z WCAG 2.2. Zgłoszenie było
+         fałszywe co do zasady, a nie co do pomiaru.
+
+         Drugi błąd był poważniejszy: ta pętla w ogóle nie sprawdzała, czy
+         element jest widoczny. Baner zgody jest w tym teście schowany
+         (zgoda ustawiona z góry, żeby nie zasłaniał treści), a mimo to jego
+         pola były mierzone. Pętla wyżej, licząca cele dotykowe, robi to
+         poprawnie od początku — ta była pisana osobno i o tym zapomniała. */
+      const PISALNE = new Set(["text", "email", "tel", "url", "search",
+        "password", "number", "date", "datetime-local", "month", "week", "time"]);
       for (const el of document.querySelectorAll("input:not([type=hidden]),select,textarea")) {
-        const px = parseFloat(getComputedStyle(el).fontSize);
+        const cs = getComputedStyle(el);
+        if (cs.display === "none" || cs.visibility === "hidden") continue;
+        if (!el.getClientRects().length) continue;
+        const tekstowe = el.tagName !== "INPUT" || PISALNE.has(el.type);
+        if (!tekstowe) continue;
+        const px = parseFloat(cs.fontSize);
         if (px < 16) znalezione.pola.push(`${el.name || el.type} ${px}px`);
       }
       znalezione.policzone = policzone;
