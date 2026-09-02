@@ -44,9 +44,23 @@ const pelnyTytul =
     ? zNazwaIMiastem
     : `${tytul} · ${firma.nazwa}`;
 
-/* Adres kanoniczny tej strony — bez ukośnika na końcu, żeby wyszukiwarka nie
+/* Adres kanoniczny tej strony — Z UKOŚNIKIEM na końcu, bo taką postać serwer
+   faktycznie oddaje i taka stoi w mapie serwisu.
+
+   Wcześniej ukośnik był tu obcinany, „żeby wyszukiwarka nie widziała dwóch
+   adresów". Zamiar był słuszny, kierunek odwrotny: „skilful.pl/program"
+   odpowiada przekierowaniem 301 na „skilful.pl/program/", więc każda podstrona
+   wskazywała jako kanoniczny ten adres, który przekierowuje, a mapa serwisu
+   podawała ten drugi. Wyszukiwarka dostawała dwa sprzeczne sygnały i musiała
+   rozstrzygać sama.
+
+   Poniższy komentarz historyczny zostawiam, bo tłumaczy, po co ten wiersz
+   w ogóle istnieje: 
    widziała dwóch adresów tej samej treści. */
-const kanoniczny = new URL(Astro.url.pathname.replace(/\/$/, "") || "/", Astro.site).href;
+const sciezkaKanoniczna = Astro.url.pathname.endsWith("/")
+  ? Astro.url.pathname
+  : Astro.url.pathname + "/";
+const kanoniczny = new URL(sciezkaKanoniczna, Astro.site).href;
 
 /* Znacznik dla wyszukiwarki. Budujemy go wyłącznie z danych, które są już
    uzupełnione — pusty adres albo telefon „do uzupełnienia" w danych

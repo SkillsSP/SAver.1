@@ -53,7 +53,20 @@ const liczbaRyzyk = sekcje.filter((s) => s.ryzyko).length;
   ostrzeżenie o zapisie podwyższonego ryzyka. Obie notatki trzeba usunąć razem
   z komponentem po przeglądzie prawnym.
 */}
-<Baza aktywna="" tytul={tytul} opis={opis}>
+{/* Dokumenty formalne nie mają konkurować w wynikach ze stronami oferty,
+    i to jest właściwy sposób, żeby ich tam nie było.
+
+    Wcześniej blokował je `Disallow` w robots.txt — a to zakazuje POBIERANIA
+    strony, nie jej pokazywania. Google potrafi wtedy zaindeksować sam adres,
+    bo widzi do niego odnośniki z cennika i z formularzy, i wyświetlić go bez
+    opisu, z adnotacją o braku informacji. Co gorsza, blokada pobierania
+    uniemożliwia zobaczenie `noindex`, więc oba mechanizmy naraz działają
+    przeciwko sobie.
+
+    `noindex, follow` mówi wprost: nie pokazuj tej strony w wynikach, ale idź
+    dalej po odnośnikach. Tak samo zrobione są ukryte podstrony terminarza
+    i poradnika. */}
+<Baza aktywna="" tytul={tytul} opis={opis} bezIndeksowania>
   {/* Rejestr cichy — zdjęcie ledwo się przebija, bo to dokumenty, nie
       oferta. Ten sam kadr na trzech stronach formalnych jest zamierzony:
       wspólny obraz wiąże je w jedną grupę. */}

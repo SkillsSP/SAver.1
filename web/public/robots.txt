@@ -1,9 +1,14 @@
 User-agent: *
 Allow: /
 
-# Dokumenty formalne nie powinny konkurować w wynikach ze stronami oferty.
-Disallow: /polityka-prywatnosci
-Disallow: /regulamin
-Disallow: /klauzula-rodo
+# Dokumenty formalne (regulamin, polityka prywatności, klauzula RODO) nie mają
+# konkurować w wynikach ze stronami oferty — ale trzyma je poza nimi znacznik
+# `noindex` na samych podstronach, a NIE wpis w tym pliku.
+#
+# Stał tu wcześniej `Disallow` na te trzy adresy i był to błąd: `Disallow`
+# zakazuje POBRANIA strony, a nie pokazania jej w wynikach. Google potrafi
+# zaindeksować sam adres, bo widzi do niego odnośniki z cennika i z formularzy.
+# Blokada pobierania dodatkowo uniemożliwia zobaczenie `noindex`, więc oba
+# mechanizmy naraz znoszą się nawzajem.
 
 Sitemap: https://skilful.pl/sitemap.xml
