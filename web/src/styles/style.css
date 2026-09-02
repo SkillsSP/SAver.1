@@ -830,6 +830,22 @@ button {
   flex-shrink: 0;
   color: inherit;
 }
+/* POLE DOTYKU MARKI W NAGŁÓWKU. Sam znak ma 38 px wysokości, a zalecany cel
+   dotknięcia to 44 px — test mobilny zgłaszał to jako uwagę na każdej
+   podstronie i przy każdej szerokości.
+
+   Powiększenie jest tu DARMOWE WIZUALNIE: pasek nagłówka ma 72 px, więc nad
+   znakiem i pod nim zostaje 34 px pustej przestrzeni. Sześć pikseli wypełnienia
+   rozkłada się symetrycznie i nie rusza ani wysokości paska, ani wielkości
+   znaku — sprawdzone porównaniem zrzutów wszystkich podstron przed zmianą
+   i po niej.
+
+   Dotyczy wyłącznie wersji będącej odnośnikiem: w stopce marka nie jest
+   klikalna, więc nie ma tam czego powiększać. */
+a.marka {
+  padding-block: 3px;
+}
+
 .marka img {
   display: block;
 }
