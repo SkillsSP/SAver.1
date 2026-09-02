@@ -187,6 +187,39 @@ async function txt(nazwa) {
   } else if (/p=none/.test(dmarc[0])) {
     blad("poczta — DMARC stoi na `p=none`, czyli obserwuje i niczego nie blokuje");
   }
+
+  /* DKIM. Nazwy selektorów są wpisane wprost i tak ma zostać — nie da się ich
+     zgadnąć, a zgadywanie już raz wyprowadziło mnie w pole. Szukałem klucza pod
+     159 nazwami, w tym „ovhmo" i „ovhmail", i orzekłem, że w strefie go nie ma.
+     Prawdziwa nazwa to „ovhmo-selector-1", z numerowanym przyrostkiem. Klucz
+     był tam przez cały czas; nietrafienie w nazwę wziąłem za nieobecność wpisu.
+
+     Nazwy pochodzą z API OVH: GET /email/domain/{domena}/dkim zwraca pole
+     `selectors[].selectorName` razem z gotowym rekordem CNAME. Panel klienta
+     tych rekordów nie pokazuje w edytowalnej liście strefy, bo zarządza nimi
+     automatycznie — dlatego filtrowanie strefy po „domainkey" też nic nie dało.
+
+     MX Plan podpisuje pocztę przez CNAME wskazujący na klucz u OVH, nie przez
+     własny wpis TXT. Sprawdzamy więc obie rzeczy: czy CNAME istnieje i czy na
+     jego końcu leży prawdziwy klucz. */
+  const SELEKTORY = ["ovhmo-selector-1", "ovhmo-selector-2"];
+  for (const selektor of SELEKTORY) {
+    const nazwa = `${selektor}._domainkey.${DOMENA}`;
+    let cel = null;
+    try {
+      cel = (await dns.resolveCname(nazwa))[0] ?? null;
+    } catch { /* brak CNAME — sprawdzimy jeszcze sam klucz */ }
+
+    const klucz = (await txt(nazwa)).find((w) => w.startsWith("v=DKIM1"));
+    if (!klucz) {
+      blad(`poczta — brak klucza DKIM pod selektorem ${selektor}` +
+        (cel ? ` (CNAME prowadzi do ${cel}, ale nic tam nie ma)` : " (nie ma też CNAME)"));
+    } else if (!/p=[A-Za-z0-9+/=]{100,}/.test(klucz)) {
+      /* Pusty parametr `p=` to klucz unieważniony — rekord istnieje, podpisy
+         przestają się weryfikować, a z zewnątrz wygląda to na komplet. */
+      blad(`poczta — klucz DKIM pod ${selektor} jest pusty albo obcięty`);
+    }
+  }
 }
 
 console.log(`\n  Sprawdzono ${STRONY.length} stron × 2 stany zgody oraz wpisy poczty.`);
