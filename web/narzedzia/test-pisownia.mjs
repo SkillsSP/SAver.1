@@ -72,6 +72,9 @@ const ZNANE = new Set([
   "współadministratorami", "współadministrator", "współadministratorzy",
   "remarketing", "remarketingu",
   "analytics", "ads", "privacy", "framework",
+  /* Nazwy ciasteczek Google i przeglądarek, wymienione w opisie cookies. */
+  "gcl", "edge", "chrome", "safari", "firefoksie", "github", "supabase",
+  "pages", "consent",
 ]);
 
 const przegladarka = await chromium.launch();
@@ -84,10 +87,12 @@ await strona.addInitScript(() => {
 const sprawdzacz = nspell(slownik);
 const podejrzane = new Map();
 let slowRazem = 0;
+let wczytanych = 0;
 
 for (const adres of STRONY) {
   const odp = await strona.goto(ADRES + adres, { waitUntil: "domcontentloaded" }).catch(() => null);
   if (!odp || !odp.ok()) continue;
+  wczytanych++;
 
   const tekst = await strona.evaluate(() => {
     const glowna = document.querySelector("main");
@@ -117,7 +122,17 @@ await przegladarka.close();
 
 const lista = [...podejrzane.entries()].sort((a, b) => b[1].ile - a[1].ile);
 
-console.log(`\n  Sprawdzono ${slowRazem} wyrazów na ${STRONY.length} podstronach.`);
+/* Ile stron NAPRAWDĘ się wczytało. Bez tego pełna porażka wyglądała jak czysty
+   wynik: przy niedziałającym serwerze skrypt pisał „0 wyrazów", a zaraz pod
+   spodem „0 różnych wyrazów do sprawdzenia". Ten sam brak poprawiłem wcześniej
+   w teście typografii i nie sprawdziłem wtedy, czy nie siedzi też tutaj. */
+if (wczytanych === 0) {
+  console.log(`
+  ŻADNA strona się nie wczytała pod adresem ${ADRES}.`);
+  console.log("  To nie jest wynik bez zastrzeżeń — serwer nie odpowiada albo adres jest zły.");
+  process.exit(2);
+}
+console.log(`\n  Sprawdzono ${slowRazem} wyrazów na ${wczytanych} podstronach.`);
 console.log(`\n  DO SPRAWDZENIA: ${lista.length} różnych wyrazów`);
 for (const [wyraz, w] of lista) {
   const podpowiedzi = sprawdzacz.suggest(wyraz).slice(0, 3);

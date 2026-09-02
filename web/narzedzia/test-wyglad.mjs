@@ -161,6 +161,15 @@ if (zapisanych) {
   }
 }
 
+/* Ta sama pułapka co w teście pisowni: przy niedziałającym serwerze skrypt
+   porównywał zero widoków i meldował „RÓŻNICE: 0", czyli pełną porażkę
+   nie do odróżnienia od czystego wyniku. */
+if (porownanych === 0 && zapisanych === 0) {
+  console.log(`
+  ŻADNA strona się nie wczytała pod adresem ${ADRES}.`);
+  console.log("  To nie jest wynik bez różnic — serwer nie odpowiada albo adres jest zły.");
+  process.exit(2);
+}
 console.log(`\n  Porównano ${porownanych} widoków` +
   ` (${STRONY.length} stron × ${WIDOKI.length} szerokości × 2 tryby).`);
 console.log(`\n  RÓŻNICE: ${zmiany.length}`);
