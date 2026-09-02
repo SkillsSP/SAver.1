@@ -1,5 +1,5 @@
 ---
-import { url, telefonHref } from "../lib/site.js";
+import { url, telefonHref, telefonTekst } from "../lib/site.js";
 
 interface Props {
   /** Na stronach maturalnych decyzję podejmuje uczeń, często pełnoletni. */
@@ -12,21 +12,53 @@ const zapisTekst = senior ? "Zapisz się na konsultację" : "Wolę zapisać się
 ---
 
 {/*
-  Pasek akcji widoczny wyłącznie na telefonie. Połączenie ma pierwszeństwo,
-  bo rodzic sprawdza stronę pobieżnie i chce szybkiej odpowiedzi; zapis
-  zostaje pod spodem, mniejszy — jest wyborem, nie równorzędną opcją.
-  Dopóki numer telefonu nie jest uzupełniony, pasek pokazuje sam zapis
-  zamiast martwego odnośnika `tel:`.
+  PASEK AKCJI — TERAZ NA OBU SZEROKOŚCIACH, ale z odwróconą hierarchią.
+
+  NA TELEFONIE prowadzi połączenie: rodzic sprawdza stronę pobieżnie, często
+  w ruchu, i chce szybkiej odpowiedzi. Zapis stoi pod spodem, mniejszy — jest
+  wyborem, nie równorzędną opcją.
+
+  NA KOMPUTERZE prowadzi formularz, a numer schodzi do mniejszej czcionki.
+  Ktoś, kto siedzi przy biurku, wypełni cztery pola szybciej, niż sięgnie po
+  telefon. Ta różnica została ustalona wcześniej dla wezwań w treści strony
+  i pasek ma ją powtarzać, a nie łamać.
+
+  Stąd dwa napisy w każdym odnośniku: „Zadzwoń teraz" na telefonie i „albo
+  zadzwońcie: numer" na komputerze. Ukryty wariant znika z drzewa dostępności
+  razem z `display: none`, więc czytnik ekranu czyta dokładnie jeden.
+
+  Dopóki numer telefonu nie jest uzupełniony, pasek pokazuje sam zapis zamiast
+  martwego odnośnika `tel:`.
 */}
-<div class="pasek-akcji">
+{/* `aside` z nazwą, a nie `div`. Dopóki pasek zawierał same odnośniki,
+    czytnik ekranu traktował je jako część nawigacji. Zdanie dopisane dla
+    komputera jest treścią i musi należeć do nazwanego obszaru — inaczej
+    zostaje poza wszystkimi punktami orientacyjnymi i osoba korzystająca
+    z czytnika nie ma jak do niego trafić. Ten sam przypadek co przy pasku
+    użytkowym w nagłówku. */}
+<aside class="pasek-akcji" aria-label="Szybki kontakt">
+  {/* Zdanie widoczne wyłącznie na komputerze. Na telefonie nie ma na nie
+      miejsca, a pasek ma tam działać, nie tłumaczyć. */}
+  <span class="pasek-akcji__zdanie">
+    Zajęcia próbne są bezpłatne i do niczego nie zobowiązują.
+  </span>
+
   {tel ? (
     <>
-      <a class="przycisk przycisk--akcja przycisk--pelny" href={tel}>Zadzwoń teraz</a>
-      <a class="pasek-akcji__drugi" href={url("/zapisy")}>{zapisTekst}</a>
+      <a class="przycisk przycisk--akcja przycisk--pelny pasek-akcji__telefon" href={tel}>
+        <span class="pasek-akcji__na-telefonie">Zadzwoń teraz</span>
+        <span class="pasek-akcji__na-pc">Zadzwońcie: {telefonTekst()}</span>
+      </a>
+      <a class="pasek-akcji__drugi" href={url("/zapisy")}>
+        <span class="pasek-akcji__na-telefonie">{zapisTekst}</span>
+        <span class="pasek-akcji__na-pc">
+          {senior ? "Zapisz się na konsultację" : "Umów zajęcia próbne"}
+        </span>
+      </a>
     </>
   ) : (
     <a class="przycisk przycisk--akcja przycisk--pelny" href={url("/zapisy")}>
       {senior ? "Zapisz się na konsultację" : "Umów zajęcia próbne"}
     </a>
   )}
-</div>
+</aside>

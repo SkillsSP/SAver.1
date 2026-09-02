@@ -1115,13 +1115,99 @@ a.marka {
   text-underline-offset: 0.15em;
 }
 
+/* Warianty napisów: jeden na telefonie, drugi na komputerze. Ukryty znika
+   z drzewa dostępności, więc czytnik ekranu czyta dokładnie jeden. */
+.pasek-akcji__na-pc,
+.pasek-akcji__zdanie {
+  display: none;
+}
+
 @media (min-width: 62rem) {
+  /* PASEK NA KOMPUTERZE. Ten sam element, odwrócona hierarchia: prowadzi
+     formularz, numer schodzi do mniejszej czcionki. Ustalone wcześniej dla
+     wezwań w treści i pasek ma to powtarzać, a nie łamać. */
   .pasek-akcji {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2);
+    /* Wąsko celowo: pasek ma towarzyszyć treści, a nie zabierać jej ekran.
+       Wysokość wyznacza sam przycisk (cel dotknięcia), a nie wypełnienie. */
+    padding: 0.5rem var(--space-3);
+  }
+
+  /* Bez tego pasek rozjeżdża się na całą szerokość ekranu: odnośnik telefonu
+     nosi klasę „pełny", która na telefonie ma rozciągać przycisk na całą
+     szerokość, a tutaj rozpychała trzy elementy w trzy rogi. Na komputerze
+     wszystkie trzy mają zajmować tyle, ile potrzebują, i stać razem. */
+  .pasek-akcji > * {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none;
+  }
+
+  .pasek-akcji__na-telefonie {
     display: none;
+  }
+  .pasek-akcji__na-pc {
+    display: inline;
+  }
+
+  .pasek-akcji__zdanie {
+    display: inline;
+    font-size: 0.875rem;
+    color: var(--tekst-drugi);
+  }
+
+  /* Numer przestaje być przyciskiem i staje się zdaniem obok. */
+  .pasek-akcji .pasek-akcji__telefon {
+    background: none;
+    /* Obramowanie zostaje przezroczyste, a nie zerowe. Przy wymuszonych
+       kolorach systemu — trybie wysokiego kontrastu w Windows — przeglądarka
+       maluje granice, a element bez granicy przestaje wyglądać na przycisk.
+       Zerowanie obramowania kosztowało 19 błędów w audycie dostępności,
+       po jednym na podstronę. */
+    border: 1px solid transparent;
+    padding: 0;
+    min-height: 0;
+    font-size: 0.875rem;
+    font-weight: var(--waga-polgruba);
+    color: var(--kobalt-600);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+  .pasek-akcji .pasek-akcji__telefon:hover {
+    color: var(--kobalt-700);
+  }
+
+  /* Zapis przestaje być odnośnikiem pomocniczym i staje się wezwaniem. */
+  .pasek-akcji .pasek-akcji__drugi {
+    order: 1;
+    background: var(--koral-500);
+    color: var(--grafit-900);
+    border-radius: var(--radius-pill);
+    padding: 0 var(--space-3);
+    min-height: var(--cel-dotyku);
+    display: inline-flex;
+    align-items: center;
+    font-weight: var(--waga-polgruba);
+    text-decoration: none;
+  }
+  .pasek-akcji .pasek-akcji__drugi:hover {
+    background: var(--koral-600, var(--koral-500));
+    color: var(--grafit-900);
   }
 }
 
-/* miejsce, żeby pasek nie zasłaniał końca strony */
+/* Miejsce, żeby pasek nie zasłaniał końca strony — teraz także na komputerze,
+   bo pasek przestał być wyłącznie mobilny. Bez tego stopka chowa się pod nim
+   i ostatni wiersz jest nieczytelny. */
+@media (min-width: 62rem) {
+  body {
+    padding-bottom: 4.5rem;
+  }
+}
+
 @media (max-width: 61.99rem) {
   body {
     padding-bottom: 6.5rem;
