@@ -57,8 +57,10 @@ const pytania = [
       "Są bezpłatne i nie zobowiązują do niczego. Dziecko bierze udział na normalnych zasadach, w docelowej grupie, a Państwo patrzą z boku. Po zajęciach rozmawiamy o tym, co widzieliśmy. Nie prosimy o decyzję tego samego dnia.",
   },
   {
-    pytanie: "Kiedy ruszają zajęcia?",
-    odpowiedz: `Start we ${rokSzkolny.startOdmiana}, w roku szkolnym ${rokSzkolny.etykieta}. Rozliczenie obejmuje dziesięć rat miesięcznych, od września do czerwca. Zajęcia odbywają się popołudniami, po lekcjach.`,
+    pytanie: rokSzkolny.ruszyl ? "Można dołączyć w trakcie roku?" : "Kiedy ruszają zajęcia?",
+    odpowiedz: rokSzkolny.ruszyl
+      ? `Tak. Zajęcia ruszyły we ${rokSzkolny.startOdmiana} i trwają przez cały rok szkolny ${rokSzkolny.etykieta}, ale grupy przyjmują nowe osoby także w trakcie — po rozmowie i zajęciach próbnych. Rozliczenie obejmuje raty miesięczne do czerwca; za miesiące sprzed dołączenia nie płacicie. Zajęcia odbywają się popołudniami, po lekcjach.`
+      : `Start we ${rokSzkolny.startOdmiana}, w roku szkolnym ${rokSzkolny.etykieta}. Rozliczenie obejmuje dziesięć rat miesięcznych, od września do czerwca. Zajęcia odbywają się popołudniami, po lekcjach.`,
   },
   {
     pytanie: "Jak wygląda płatność i czy mogę zrezygnować w trakcie roku?",
@@ -69,7 +71,7 @@ const pytania = [
     pytanie: "Czy placówka jest ubezpieczona?",
     odpowiedz: ubezpieczenie.wykupione
       ? `Tak. Mamy wykupioną polisę — ${ubezpieczenie.zakres} — obejmującą zajęcia prowadzone w centrum. Zakres ochrony przedstawiamy na życzenie.`
-      : `Polisę — ${ubezpieczenie.zakres} — wykupimy przed pierwszymi zajęciami. To warunek uruchomienia naboru, nie deklaracja na przyszłość; zakres ochrony pokażemy do wglądu przed podpisaniem umowy.`,
+      : `Polisę — ${ubezpieczenie.zakres} — zawrzemy na cały rok szkolny. Zakres ochrony pokażemy do wglądu, gdy tylko dokument będzie wystawiony.`,
   },
   {
     pytanie: "Kto prowadzi zajęcia i czy sprawdzacie te osoby?",
@@ -176,7 +178,11 @@ const trzyKroki = [
           <li class="hero__fakt">{firma.miasto}, zajęcia stacjonarne</li>
           <li class="hero__fakt">Grupy {wielkoscGrupyTekst} osób</li>
           <li class="hero__fakt">Zajęcia podstawowe w całości po angielsku</li>
-          <li class="hero__fakt">Start: {rokSzkolny.start}</li>
+          <li class="hero__fakt">
+            {rokSzkolny.ruszyl
+              ? `Trwa rok szkolny ${rokSzkolny.etykieta}`
+              : `Start: ${rokSzkolny.start}`}
+          </li>
         </ul>
       </div>
     </div>
@@ -243,7 +249,7 @@ const trzyKroki = [
         ))}
       </div>
       <p class="nota-ilustracyjna">
-        Zdjęcia ilustracyjne — po starcie zastępujemy je materiałem z własnych
+        Zdjęcia ilustracyjne — zastępujemy je stopniowo materiałem z własnych
         zajęć.
       </p>
     </div>
@@ -468,21 +474,25 @@ const trzyKroki = [
               <span class="wartosc">{wielkoscGrupyTekst} osób</span>
             </li>
             <li>
-              <span class="etykieta">Start</span>
+              <span class="etykieta">{rokSzkolny.ruszyl ? "Rok szkolny" : "Start"}</span>
               <span class="wartosc">
-                {rokSzkolny.start} — rok szkolny {rokSzkolny.etykieta}
+                {rokSzkolny.ruszyl
+                  ? `${rokSzkolny.etykieta} — zajęcia trwają, można dołączyć`
+                  : `${rokSzkolny.start} — rok szkolny ${rokSzkolny.etykieta}`}
               </span>
             </li>
-            <li>
-              <span class="etykieta">Ubezpieczenie</span>
-              {/* Czas przyszły, dopóki polisy nie ma. Zdanie zmieni się samo
-                  po przestawieniu `ubezpieczenie.wykupione` w site.js. */}
-              <span class="wartosc">
-                {ubezpieczenie.wykupione
-                  ? "Wykupione — odpowiedzialność cywilna placówki"
-                  : "Odpowiedzialność cywilna placówki — przed pierwszymi zajęciami"}
-              </span>
-            </li>
+            {/* Wiersz o ubezpieczeniu pojawia się dopiero, gdy polisa istnieje.
+                Wcześniej stało tu „odpowiedzialność cywilna placówki — przed
+                pierwszymi zajęciami": termin, który minął. Skrót w takiej tabeli
+                musi być faktem, a nie obietnicą — pełne, uczciwe wyjaśnienie
+                stanu polisy stoi na stronie bezpieczeństwa, gdzie rodzic szuka
+                akurat tego. */}
+            {ubezpieczenie.wykupione && (
+              <li>
+                <span class="etykieta">Ubezpieczenie</span>
+                <span class="wartosc">Wykupione — {ubezpieczenie.zakres}</span>
+              </li>
+            )}
           </ul>
 
           <DoUzupelnienia czego="Adres, godziny i data zamknięcia naboru">

@@ -38,7 +38,11 @@ import { url, cenyOd,
           <li>Klasy 7–8</li>
           {/* Rok szkolny bierzemy z danych, żeby nie stało tu „termin
               w uzupełnieniu" — brak informacji zamieniony na tę, którą mamy. */}
-          <li>Start przygotowań — {rokSzkolny.start}</li>
+          <li>
+            {rokSzkolny.ruszyl
+              ? `Rok szkolny ${rokSzkolny.etykieta} — przygotowania trwają`
+              : `Start przygotowań — ${rokSzkolny.start}`}
+          </li>
         </ul>
         <div class="przyciski" style="margin-top: var(--space-2);">
           <a class="przycisk przycisk--duch" href="#angielski">Angielski</a>

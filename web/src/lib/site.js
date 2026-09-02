@@ -491,6 +491,14 @@ export const cenyOd = {
 export const rokSzkolny = {
   etykieta: "2026/2027",
   start: "wrzesień 2026",
+  /* CZY ROK JUŻ SIĘ ZACZĄŁ. Cały serwis był napisany pod start, który miał
+     dopiero nastąpić — a nastąpił 1 września 2026. Zdania w rodzaju „Start:
+     wrzesień 2026" albo „Kiedy ruszają zajęcia" czytały się wtedy jak zapowiedź
+     czegoś, co już trwa. Ten przełącznik przestawia je wszystkie naraz.
+
+     Przy następnym roku: podnieście `etykieta` i `start`, ustawcie `ruszyl`
+     z powrotem na false, a strona wróci do trybu zapowiedzi. */
+  ruszyl: true,
   /* Forma miejscownika do zdań typu „start we wrześniu 2026". Polska
      odmiana nie daje się wyliczyć z mianownika, więc stoi tu wprost —
      inaczej w tekście lądowałoby „start we wrzesień 2026". */
@@ -504,9 +512,14 @@ export const rokSzkolny = {
    UBEZPIECZENIE ODPOWIEDZIALNOŚCI CYWILNEJ
 
    Rodzice w tej branży o to pytają, a mało która placówka pisze to na stronie.
-   Dopóki `wykupione` jest `false`, strona mówi o tym w czasie przyszłym, jako
-   o zobowiązaniu przed pierwszymi zajęciami — bo tak jest naprawdę. Po zawarciu
-   polisy przestawcie na `true`, a zdanie samo zmieni się na fakt dokonany.
+   Dopóki `wykupione` jest `false`, strona mówi o tym w czasie przyszłym. Po
+   zawarciu polisy przestawcie na `true`, a zdanie samo zmieni się na fakt.
+
+   ZDANIE O TERMINIE ZOSTAŁO USUNIĘTE 2 września 2026. Stało tam „wykupimy przed
+   pierwszymi zajęciami — to warunek uruchomienia naboru". Pierwsze zajęcia się
+   odbyły, a polisy nie ma, więc zdanie przestało być zobowiązaniem i stało się
+   nieprawdą o samych sobie. Zostaje samo zobowiązanie, bez terminu, którego
+   nie dotrzymano.
 
    Nie ma tu miejsca na skrót: napisanie „placówka jest ubezpieczona", zanim
    polisa istnieje, byłoby zwykłą nieprawdą w miejscu, w którym rodzic pyta
