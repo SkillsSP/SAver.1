@@ -1,13 +1,14 @@
 ---
 import StronaPrawna from "../components/StronaPrawna.astro";
+import { firma } from "../lib/site.js";
 
 const sekcje = [
   {
     tytul: "Administrator danych",
     tresc:
-      "Administratorem danych osobowych rodzica i dziecka jest podmiot prowadzący centrum Skills Academy w Szczecinie.",
+      `${firma.administratorRzeczownik} danych osobowych rodzica i dziecka ${firma.administratorCzasownik} ${firma.administratorDanych}, założycielki centrum ${firma.nazwa} w ${firma.miastoWMiejscowniku}. Kontakt we wszystkich sprawach dotyczących danych: ${firma.email}, ${firma.telefonZapis}.`,
     doUstalenia:
-      "Pełna nazwa, adres, NIP, e-mail i telefon. Jeśli powołano inspektora ochrony danych — jego dane kontaktowe.",
+      "Po rejestracji działalności: pełna nazwa firmy, adres siedziby i NIP zamiast nazwisk. Jeśli powołacie inspektora ochrony danych — jego dane kontaktowe. Przy dwóch współadministratorach art. 26 rozporządzenia wymaga uzgodnienia między nimi i udostępnienia jego zasadniczej treści — to jest do potwierdzenia z prawnikiem, nie do napisania na stronie.",
   },
   {
     tytul: "Cele przetwarzania",

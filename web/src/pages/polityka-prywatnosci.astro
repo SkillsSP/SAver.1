@@ -1,13 +1,14 @@
 ---
 import StronaPrawna from "../components/StronaPrawna.astro";
+import { firma } from "../lib/site.js";
 
 const sekcje = [
   {
     tytul: "1. Kto jest administratorem danych",
     tresc:
-      "Administratorem danych zbieranych w tym serwisie jest podmiot prowadzący centrum Skills Academy w Szczecinie.",
+      `${firma.administratorRzeczownik} danych zbieranych w tym serwisie ${firma.administratorCzasownik} ${firma.administratorDanych}, założycielki centrum ${firma.nazwa} w ${firma.miastoWMiejscowniku}. Kontakt: ${firma.email}, ${firma.telefonZapis}.`,
     doUstalenia:
-      "Pełna nazwa podmiotu, forma prawna, adres siedziby, NIP, REGON, adres e-mail i telefon kontaktowy. Jeśli powołaliście inspektora ochrony danych — jego dane kontaktowe.",
+      "Po rejestracji działalności: pełna nazwa podmiotu, forma prawna, adres siedziby, NIP i REGON zamiast nazwisk. Jeśli powołacie inspektora ochrony danych — jego dane kontaktowe.",
   },
   {
     tytul: "2. Jakie dane zbieramy",

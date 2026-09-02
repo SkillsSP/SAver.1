@@ -33,7 +33,29 @@ export const firma = {
   /* Nazwa administratora danych osobowych. Musi brzmieć identycznie tutaj,
      w regulaminie, w polityce prywatności i w klauzuli RODO — rozjazd między
      tymi czterema miejscami jest pierwszą rzeczą, którą wychwytuje kontrola. */
-  administratorDanych: null,
+  /* WSPÓŁADMINISTRATORZY. Dwie osoby wspólnie decydujące o celach i sposobach
+     przetwarzania — takie jest brzmienie art. 26 rozporządzenia, i takie są
+     fakty: obie założycielki mają dostęp do skrzynki i obie decydują o tym,
+     co dzieje się ze zgłoszeniem.
+
+     Do 2 września 2026 pole było puste, a klauzula RODO mówiła, że
+     administratorem jest „podmiot prowadzący centrum Skills Academy" — zdanie,
+     które nie wskazuje nikogo. „Skills Academy" jest nazwą handlową, a nie
+     podmiotem: nie ma pod nią wpisu w rejestrze, bo działalność nie jest
+     jeszcze założona. Rodzic chcący skorzystać ze swoich praw nie miał się do
+     kogo zwrócić.
+
+     Administratorem może być OSOBA FIZYCZNA i to jest wyjście, które nie
+     wymaga rejestracji — w przeciwieństwie do NIP-u i REGON-u, które muszą
+     poczekać na nabór na dofinansowanie.
+
+     Po rejestracji działalności: wpiszcie tu pełną nazwę firmy, a zdania na
+     trzech podstronach pójdą za nią same. */
+  administratorDanych: "Karolina Dumała i Natalia Marczewska",
+  /* Rzeczownik do zdań prawnych: liczba mnoga przy dwóch osobach, pojedyncza
+     po przejściu na jeden podmiot. */
+  administratorRzeczownik: "Współadministratorami",
+  administratorCzasownik: "są",
   godzinyBiura: null,
   mapaOsadzenie: null,
   /* Kanał zgłoszeń dotyczących bezpieczeństwa dziecka — patrz `ochronaMaloletnich`
