@@ -71,7 +71,7 @@ const pytania = [
     pytanie: "Czy placówka jest ubezpieczona?",
     odpowiedz: ubezpieczenie.wykupione
       ? `Tak. Mamy wykupioną polisę — ${ubezpieczenie.zakres} — obejmującą zajęcia prowadzone w centrum. Zakres ochrony przedstawiamy na życzenie.`
-      : `Polisę — ${ubezpieczenie.zakres} — zawrzemy na cały rok szkolny. Zakres ochrony pokażemy do wglądu, gdy tylko dokument będzie wystawiony.`,
+      : `Polisę — ${ubezpieczenie.zakres} — wykupimy przed pierwszymi zajęciami. To warunek ich rozpoczęcia, nie deklaracja na przyszłość; zakres ochrony pokażemy do wglądu przed podpisaniem umowy.`,
   },
   {
     pytanie: "Kto prowadzi zajęcia i czy sprawdzacie te osoby?",
@@ -481,18 +481,16 @@ const trzyKroki = [
                   : `${rokSzkolny.start} — rok szkolny ${rokSzkolny.etykieta}`}
               </span>
             </li>
-            {/* Wiersz o ubezpieczeniu pojawia się dopiero, gdy polisa istnieje.
-                Wcześniej stało tu „odpowiedzialność cywilna placówki — przed
-                pierwszymi zajęciami": termin, który minął. Skrót w takiej tabeli
-                musi być faktem, a nie obietnicą — pełne, uczciwe wyjaśnienie
-                stanu polisy stoi na stronie bezpieczeństwa, gdzie rodzic szuka
-                akurat tego. */}
-            {ubezpieczenie.wykupione && (
-              <li>
-                <span class="etykieta">Ubezpieczenie</span>
-                <span class="wartosc">Wykupione — {ubezpieczenie.zakres}</span>
-              </li>
-            )}
+            <li>
+              <span class="etykieta">Ubezpieczenie</span>
+              {/* Czas przyszły, dopóki polisy nie ma. Zdanie zmieni się samo
+                  po przestawieniu `ubezpieczenie.wykupione` w site.js. */}
+              <span class="wartosc">
+                {ubezpieczenie.wykupione
+                  ? `Wykupione — ${ubezpieczenie.zakres}`
+                  : "Odpowiedzialność cywilna placówki — przed pierwszymi zajęciami"}
+              </span>
+            </li>
           </ul>
 
           <DoUzupelnienia czego="Adres, godziny i data zamknięcia naboru">

@@ -496,9 +496,14 @@ export const rokSzkolny = {
      wrzesień 2026" albo „Kiedy ruszają zajęcia" czytały się wtedy jak zapowiedź
      czegoś, co już trwa. Ten przełącznik przestawia je wszystkie naraz.
 
-     Przy następnym roku: podnieście `etykieta` i `start`, ustawcie `ruszyl`
-     z powrotem na false, a strona wróci do trybu zapowiedzi. */
-  ruszyl: true,
+     UWAGA NA ZNACZENIE: `ruszyl` mówi o PIERWSZYCH ZAJĘCIACH, a nie o tym, że
+     firma działa. Nabór, wysyłka broszur i reklamy mogą trwać tygodniami, zanim
+     odbędzie się pierwsze spotkanie — grupa rusza dopiero przy pięciu zapisanych
+     osobach. Przestawiłem to raz na `true`, biorąc „zaczęłyśmy" za start zajęć,
+     i strona przez kilkanaście minut twierdziła, że zajęcia się odbywają.
+
+     Przestawiać na `true` dopiero po pierwszym przeprowadzonym spotkaniu. */
+  ruszyl: false,
   /* Forma miejscownika do zdań typu „start we wrześniu 2026". Polska
      odmiana nie daje się wyliczyć z mianownika, więc stoi tu wprost —
      inaczej w tekście lądowałoby „start we wrzesień 2026". */
@@ -515,11 +520,9 @@ export const rokSzkolny = {
    Dopóki `wykupione` jest `false`, strona mówi o tym w czasie przyszłym. Po
    zawarciu polisy przestawcie na `true`, a zdanie samo zmieni się na fakt.
 
-   ZDANIE O TERMINIE ZOSTAŁO USUNIĘTE 2 września 2026. Stało tam „wykupimy przed
-   pierwszymi zajęciami — to warunek uruchomienia naboru". Pierwsze zajęcia się
-   odbyły, a polisy nie ma, więc zdanie przestało być zobowiązaniem i stało się
-   nieprawdą o samych sobie. Zostaje samo zobowiązanie, bez terminu, którego
-   nie dotrzymano.
+   Termin „przed pierwszymi zajęciami" jest tu na miejscu i ma zostać: pierwsze
+   zajęcia jeszcze się nie odbyły, więc to nadal jest zobowiązanie, a nie
+   zaległość. Usunąłem go raz przez pomyłkę, sądząc, że zajęcia już ruszyły.
 
    Nie ma tu miejsca na skrót: napisanie „placówka jest ubezpieczona", zanim
    polisa istnieje, byłoby zwykłą nieprawdą w miejscu, w którym rodzic pyta
