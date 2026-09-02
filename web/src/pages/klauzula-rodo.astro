@@ -1,6 +1,6 @@
 ---
 import StronaPrawna from "../components/StronaPrawna.astro";
-import { firma } from "../lib/site.js";
+import { firma, dokumentyPrawne } from "../lib/site.js";
 
 const sekcje = [
   {
@@ -48,9 +48,19 @@ const sekcje = [
   {
     tytul: "Prawa osób, których dane dotyczą",
     tresc:
-      "Przysługuje Wam prawo dostępu do danych, sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia danych oraz sprzeciwu. Zgodę można wycofać w każdej chwili, bez wpływu na zgodność z prawem przetwarzania dokonanego przed jej wycofaniem.",
+      "Przysługuje Wam prawo dostępu do danych, sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia danych oraz sprzeciwu. Zgodę można wycofać w każdej chwili, bez wpływu na zgodność z prawem przetwarzania dokonanego przed jej wycofaniem. Przysługuje Wam także prawo wniesienia skargi do organu nadzorczego — Prezesa Urzędu Ochrony Danych Osobowych, ul. Stawki 2, 00-193 Warszawa.",
     doUstalenia:
       "Adres, na który kierować wnioski, i termin odpowiedzi. Dopisać prawo skargi do Prezesa Urzędu Ochrony Danych Osobowych.",
+  },
+  {
+    /* Artykuł 13 ustęp 2 litera f wymaga tej informacji NIEZALEŻNIE od tego,
+       czy administrator profiluje. Brak sekcji czytało się jak przemilczenie,
+       a odpowiedź jest tu akurat najprostsza z możliwych. */
+    tytul: "Zautomatyzowane decyzje i profilowanie",
+    tresc:
+      "Nie podejmujemy wobec Was ani wobec dziecka decyzji w sposób zautomatyzowany i nie profilujemy. O przydziale do grupy decyduje rozmowa i zajęcia próbne, a nie algorytm. Narzędzia statystyczne i reklamowe opisane w polityce prywatności nie budują profilu ani listy odbiorców.",
+    doUstalenia:
+      "Gdyby kiedyś doszedł remarketing albo automatyczne dobieranie grup, ta sekcja musi się zmienić razem z konfiguracją w site.js i z polityką prywatności — nie jedna z nich.",
   },
   {
     tytul: "Dobrowolność podania danych",

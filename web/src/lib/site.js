@@ -690,6 +690,19 @@ export const spolecznosciowe = [
   { klucz: "tiktok", nazwa: "TikTok", adres: null },
 ];
 
+/* --------------------------------------------------------------------------
+   DATA OSTATNIEJ ZMIANY DOKUMENTÓW PRAWNYCH
+
+   Rodzic ma prawo wiedzieć, czy czyta wersję aktualną, czy sprzed dwóch lat.
+   Data nie wylicza się z daty budowania strony i jest to celowe: serwis
+   przebudowuje się przy każdej zmianie treści oferty, a wtedy dokument
+   prawny wyglądałby na świeżo zmieniony, choć nikt go nie ruszał.
+
+   Wpisujcie ją ręcznie i tylko wtedy, gdy zmieni się treść regulaminu,
+   polityki prywatności albo klauzuli RODO.
+   -------------------------------------------------------------------------- */
+export const dokumentyPrawne = { aktualizacja: "2 września 2026" };
+
 /** Instytucje, na których opiera się program — pasek dowodu. */
 export const zrodla = ["OECD", "UNESCO", "UNICEF", "WHO", "EEF"];
 

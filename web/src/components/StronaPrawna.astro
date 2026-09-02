@@ -1,4 +1,5 @@
 ---
+import { dokumentyPrawne } from "../lib/site.js";
 import Baza from "../layouts/Baza.astro";
 import { url } from "../lib/site.js";
 import FotoNaglowka from "./FotoNaglowka.astro";
@@ -136,6 +137,16 @@ const liczbaRyzyk = sekcje.filter((s) => s.ryzyko).length;
         <a class="link-w-zdaniu" href={url("/kontakt")}>formularz kontaktowy</a>.
         Zasady bezpieczeństwa dziecka opisujemy osobno w{" "}
         <a class="link-w-zdaniu" href={url("/bezpieczenstwo")}>Standardach Ochrony Małoletnich</a>.
+      </p>
+
+      {/* DATA OSTATNIEJ ZMIANY. Rodzic ma prawo wiedzieć, czy czyta wersję
+          aktualną, czy sprzed dwóch lat — a dokument prawny bez daty nie
+          pozwala tego stwierdzić. Data nie bierze się z chwili budowania
+          strony i jest to celowe: serwis przebudowuje się przy każdej zmianie
+          oferty, więc dokument wyglądałby na świeżo zmieniony, choć nikt go
+          nie ruszał. Wpisujemy ją ręcznie w site.js. */}
+      <p class="tekst-drobny" style="margin-top: var(--space-2);">
+        Ostatnia zmiana dokumentu: {dokumentyPrawne.aktualizacja}.
       </p>
     </div>
   </section>

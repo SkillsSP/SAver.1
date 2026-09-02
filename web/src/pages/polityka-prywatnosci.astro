@@ -1,6 +1,6 @@
 ---
 import StronaPrawna from "../components/StronaPrawna.astro";
-import { firma } from "../lib/site.js";
+import { firma, dokumentyPrawne } from "../lib/site.js";
 
 const sekcje = [
   {
@@ -20,7 +20,7 @@ const sekcje = [
   {
     tytul: "3. W jakim celu i na jakiej podstawie",
     tresc:
-      "Dane z formularza służą wyłącznie kontaktowi w sprawie zajęć próbnych i zapisu dziecka.",
+      "Dane z formularza służą wyłącznie kontaktowi w sprawie zajęć próbnych i zapisu dziecka. Podstawą jest Wasza zgoda wyrażona przy wysłaniu formularza, a po zapisaniu dziecka — wykonanie umowy o świadczenie zajęć oraz obowiązki wynikające z przepisów podatkowych.",
     doUstalenia:
       "Do potwierdzenia przez prawnika: podstawy prawne dla każdego celu — zgoda, wykonanie umowy, obowiązek prawny, prawnie uzasadniony interes.",
   },
@@ -41,7 +41,7 @@ const sekcje = [
   {
     tytul: "6. Wasze prawa",
     tresc:
-      "Macie prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz sprzeciwu. Zgodę można wycofać w każdej chwili, bez wpływu na zgodność z prawem wcześniejszego przetwarzania.",
+      "Macie prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz sprzeciwu. Zgodę można wycofać w każdej chwili, bez wpływu na zgodność z prawem wcześniejszego przetwarzania. Jeśli uznacie, że przetwarzamy dane niezgodnie z prawem, macie prawo wnieść skargę do Prezesa Urzędu Ochrony Danych Osobowych, ul. Stawki 2, 00-193 Warszawa.",
     doUstalenia:
       "Sposób realizacji wniosków i termin odpowiedzi. Dodać informację o prawie skargi do Prezesa Urzędu Ochrony Danych Osobowych.",
   },
@@ -53,7 +53,12 @@ const sekcje = [
       "Do potwierdzenia z prawnikiem przed uruchomieniem kampanii: podstawa przekazania danych do Umami poza Europejski Obszar Gospodarczy (wpisać słowo w słowo) oraz to, czy opis narzędzi Google wystarcza przy Waszym zakresie kampanii. Jeśli statystyki mają zostać w Unii, alternatywą dla Umami jest Plausible albo własny serwer — kod obsługuje oba warianty. Gdyby kiedyś doszedł remarketing, trzeba zmienić trzy miejsca naraz: ten akapit, konfigurację w site.js i baner — nie jedno z nich.",
   },
   {
-    tytul: "8. Dane dzieci",
+    tytul: "8. Zautomatyzowane decyzje i profilowanie",
+    tresc:
+      "Nie podejmujemy decyzji w sposób zautomatyzowany i nie profilujemy odwiedzających. Statystyki pokazują liczby zbiorcze, a narzędzia reklamowe liczą wyłącznie skuteczność naszych ogłoszeń — nie budują profilu ani listy odbiorców. Sygnał zgody na personalizację reklam jest odmawiany zawsze.",
+  },
+  {
+    tytul: "9. Dane dzieci",
     tresc:
       "Dane dziecka podaje rodzic lub opiekun prawny. Dziecko nie zapisuje się samodzielnie.",
     doUstalenia:
