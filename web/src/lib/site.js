@@ -356,12 +356,25 @@ export const zespol = [
    prawdziwe do chwili, w której zespół urósł. Takie liczby w treści starzeją
    się po cichu: nikt ich nie zauważa, bo nic się nie psuje, a strona zaczyna
    mówić nieprawdę o czymś, co rodzic może policzyć wzrokiem. */
-export function zespolLiczebnik() {
+export function liczebnikOsob(ile) {
   const slownie = [
-    "Nikt", "Jedna osoba", "Dwie osoby", "Trzy osoby", "Cztery osoby",
-    "Pięć osób", "Sześć osób", "Siedem osób", "Osiem osób", "Dziewięć osób",
+    "nikt", "jedna osoba", "dwie osoby", "trzy osoby", "cztery osoby",
+    "pięć osób", "sześć osób", "siedem osób", "osiem osób", "dziewięć osób",
   ];
-  return slownie[zespol.length] ?? `${zespol.length} osób`;
+  return slownie[ile] ?? `${ile} osób`;
+}
+
+export function zespolLiczebnik() {
+  const t = liczebnikOsob(zespol.length);
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+
+/** Ile osób uczy danego przedmiotu — liczone z tablicy zespołu, nie wpisane
+    ręcznie w treści. Zdanie „Matematykę prowadzi jedna z założycielek" stało
+    na stronie głównej jeszcze wtedy, gdy matematyki uczyły już trzy osoby;
+    liczba wpisana w akapit starzeje się po cichu, bo nic się od niej nie psuje. */
+export function uczacych(przedmiot) {
+  return zespol.filter((o) => new RegExp(przedmiot, "i").test(o.przedmioty)).length;
 }
 
 /* Obsada przedmiotów, wprost z tablicy powyżej: angielski cztery osoby,

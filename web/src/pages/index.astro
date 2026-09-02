@@ -14,6 +14,8 @@ import {
   terminarz,
   grupaMin,
   grupaMax,
+  liczebnikOsob,
+  uczacych,
 } from "../lib/site.js";
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 
@@ -67,7 +69,7 @@ const pytania = [
     pytanie: "Czy placówka jest ubezpieczona?",
     odpowiedz: ubezpieczenie.wykupione
       ? `Tak. Mamy wykupioną polisę — ${ubezpieczenie.zakres} — obejmującą zajęcia prowadzone w centrum. Zakres ochrony przedstawiamy na życzenie.`
-      : `Polisę — ${ubezpieczenie.zakres} — wykupimy przed pierwszymi zajęciami i napiszemy to tutaj wprost, razem z zakresem ochrony. Dopóki tego nie zrobimy, nie twierdzimy, że placówka jest już ubezpieczona.`,
+      : `Polisę — ${ubezpieczenie.zakres} — wykupimy przed pierwszymi zajęciami. To warunek uruchomienia naboru, nie deklaracja na przyszłość; zakres ochrony pokażemy do wglądu przed podpisaniem umowy.`,
   },
   {
     pytanie: "Kto prowadzi zajęcia i czy sprawdzacie te osoby?",
@@ -410,7 +412,8 @@ const trzyKroki = [
             o nas i broni się samo. */}
         Angielski i matematykę prowadzi u nas ten sam zespół, w tym samym
         budynku i w jednym grafiku — zamiast dwóch miejsc i dwóch dojazdów
-        w tygodniu. Matematykę prowadzi jedna z założycielek centrum.
+        w tygodniu. Matematyki uczą {liczebnikOsob(uczacych("matematyk"))}, w tym
+        jedna z założycielek centrum.
       </p>
 
       <div style="margin-top: var(--space-4); max-width: var(--szerokosc-tekstu);">
@@ -505,9 +508,14 @@ const trzyKroki = [
           </article>
           <article class="karta">
             <h3 class="tytul-4">Exams i zajęcia indywidualne</h3>
+            {/* Stało tu „Bez karnetu, rozliczenie za pojedyncze spotkanie" —
+                zdanie obejmujące obie pozycje, a prawdziwe tylko dla jednej.
+                Exams rozliczamy miesięcznie, 350 zł, dokładnie tak jak mówi
+                cennik. Rodzic, który liczył koszt jednego spotkania, dostałby
+                zupełnie inną kwotę niż ta, którą zobaczy przy zapisie. */}
             <p class="tekst-maly tekst-drugi">
-              Bez karnetu, rozliczenie za pojedyncze spotkanie. Można wziąć sam
-              egzamin, bez zajęć podstawowych.
+              Exams rozliczamy miesięcznie, zajęcia indywidualne za pojedyncze
+              spotkanie. Jedno i drugie można wziąć bez zajęć podstawowych.
             </p>
           </article>
           <a class="przycisk przycisk--obrys" href={url("/cennik")}>
@@ -541,7 +549,7 @@ const trzyKroki = [
           </div>
           <p class="tekst-drobny">
             Nie ma tu odpowiedzi na Wasze pytanie? Zadzwońcie albo napiszcie —
-            odpowiadamy konkretnie i tego samego dnia.
+            odpowiadamy w ciągu jednego dnia roboczego.
           </p>
         </div>
       </div>
