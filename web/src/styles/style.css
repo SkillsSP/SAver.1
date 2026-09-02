@@ -1722,6 +1722,47 @@ button {
   text-underline-offset: 0.15em;
 }
 
+/* DWIE KATEGORIE ZGODY. Baner miał wcześniej jeden przełącznik „wszystko albo
+   nic"; statystyka i marketing to dwa różne cele i rodzic ma prawo rozdzielić
+   je decyzją. Pole wyboru wraz z opisem stanowi jeden cel dotykowy, bo cały
+   wiersz jest etykietą. */
+.zgoda-cookies__wybory {
+  border: 0;
+  padding: 0;
+  margin: var(--space-2) 0;
+  display: grid;
+  gap: var(--space-1);
+}
+.zgoda-cookies__wybor {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.625rem;
+  align-items: start;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--linia);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.78125rem;
+  line-height: 1.5;
+  color: var(--tekst-drugi);
+}
+.zgoda-cookies__wybor:hover,
+.zgoda-cookies__wybor:focus-within {
+  border-color: var(--kobalt-600);
+}
+.zgoda-cookies__wybor input {
+  /* Pole ma spełniać minimalny cel dotykowy z WCAG 2.2 (24 px), nie mniej. */
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  margin: 0;
+  accent-color: var(--kobalt-600);
+}
+.zgoda-cookies__wybor strong {
+  display: block;
+  color: var(--tekst-glowny);
+  font-weight: 700;
+}
+
 .zgoda-cookies__przyciski {
   display: flex;
   flex-wrap: wrap;

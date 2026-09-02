@@ -2,53 +2,96 @@
 import { url, analityka } from "../lib/site.js";
 
 /* Konfiguracja wchodzi do skryptu przez `define:vars`, więc w kodzie strony
-   ląduje wyłącznie adres tego dostawcy, którego faktycznie używamy. Google
-   traktujemy osobno: ciasteczka i transfer poza Unię wykluczają uruchamianie
-   bez zgody, więc wymuszamy to tutaj, a nie zostawiamy do ustawienia ręcznego. */
+   ląduje wyłącznie to, czego faktycznie używamy. Identyfikatory Google mogą
+   być puste — wtedy skrypt Google nie wchodzi na stronę w ogóle. */
+const google = analityka.google ?? {};
 const konfiguracja = {
-  ...analityka,
-  bezCiasteczek: analityka.nazwa === "ga4" ? false : analityka.bezCiasteczek,
+  statystyka: analityka.statystyka,
+  google: {
+    ga4: google.ga4 ?? null,
+    ads: google.ads ?? null,
+    konwersje: google.konwersje ?? {},
+    skrypt: google.skrypt ?? "https://www.googletagmanager.com/gtag/js",
+  },
 };
 ---
 
 {/*
-  BANER ZGODY I BRAMKA ANALITYKI
+  BANER ZGODY, TRYB ZGODY GOOGLE I BRAMKA ANALITYKI
 
-  Odtworzone z makiet „Zgoda cookies" i „Analityka — wdrożenie". Zasada jest
-  jedna i nienegocjowalna: żaden skrypt analityczny nie ładuje się przed
-  zgodą. Konfiguracja siedzi w jednym miejscu (obiekt `analityka` w site.js),
-  a dopóki `provider` jest `null`, bramka nie robi nic — baner działa, wybór
-  jest zapamiętywany, ale nie ma czego uruchamiać.
+  Zasada jest jedna i nienegocjowalna: żaden skrypt analityczny ani reklamowy
+  nie ładuje się przed zgodą.
 
-  Przycisk „Akceptuję wszystkie" jest kobaltowy, nie koralowy. Koral zostaje
-  zarezerwowany dla głównego wezwania na stronie — baner zgody nie ma z nim
-  konkurować o wzrok.
+  DWIE KATEGORIE, NIE JEDNA. Statystyka i marketing to dwa różne cele i rodzic
+  może chcieć zgodzić się na jeden, a odmówić drugiego. Wcześniej baner miał
+  jeden przełącznik „wszystko albo nic" — kto chciał dać nam statystyki, ale
+  nie chciał reklamy, odmawiał obu rzeczy naraz.
+
+  PERSONALIZACJA REKLAM JEST ODMAWIANA ZAWSZE. `ad_personalization` zostaje
+  `denied` niezależnie od tego, co rodzic kliknie, bo świadomie nie prowadzimy
+  remarketingu — Google ma policzyć telefon i zgłoszenie, a nie budować listę
+  dzieci do ścigania reklamą po innych stronach. To nie jest ustawienie do
+  przestawienia w locie: zmiana wymaga ruszenia trzech miejsc naraz — tutaj,
+  w site.js i w polityce prywatności.
+
+  ZGODNOŚĆ WSTECZ. Wcześniejsze wersje zapisywały pod tym samym kluczem zwykły
+  napis „necessary" albo „all". Odczytujemy oba, bo w przeglądarkach rodziców,
+  którzy już byli na stronie, siedzi stara wartość — potraktowanie jej jako
+  braku decyzji oznaczałoby pytanie ich drugi raz o to samo.
 */}
 <div
   class="zgoda-cookies"
   data-zgoda
   role="dialog"
   aria-modal="false"
-  aria-label="Zgoda na pliki cookies"
+  aria-labelledby="zgoda-tytul"
   hidden
 >
   <div class="zgoda-cookies__panel">
-    <h2 class="zgoda-cookies__tytul">Pliki cookies</h2>
+    <h2 class="zgoda-cookies__tytul" id="zgoda-tytul">Pliki cookies</h2>
     <p class="zgoda-cookies__tresc">
-      Statystyki odwiedzin pomagają nam sprawdzić, których treści rodzice
-      faktycznie szukają. Narzędzie, którego używamy, nie zapisuje niczego na
-      Waszym urządzeniu i nie śledzi Was na innych stronach — prawo nie wymaga
-      tu zgody, ale wolimy zapytać. Jeśli odmówicie, licznik się nie uruchomi.
-      Szczegóły w <a href={url("/polityka-prywatnosci")}>polityce prywatności</a>.
+      Statystyki pomagają nam sprawdzić, których treści rodzice faktycznie
+      szukają. Reklama pozwala policzyć, które ogłoszenie przyprowadziło do nas
+      dziecko. Nie tworzymy list odbiorców i nie śledzimy Was na innych
+      stronach. Szczegóły w
+      <a href={url("/polityka-prywatnosci")}>polityce prywatności</a>.
     </p>
+
+    <fieldset class="zgoda-cookies__wybory">
+      <legend class="wizualnie-ukryte">Na co się zgadzacie</legend>
+
+      <label class="zgoda-cookies__wybor">
+        <input type="checkbox" data-zgoda-statystyka checked />
+        <span>
+          <strong>Statystyka</strong>
+          Ile osób odwiedza stronę i których podstron szukają. Bez profilowania.
+        </span>
+      </label>
+
+      <label class="zgoda-cookies__wybor">
+        <input type="checkbox" data-zgoda-marketing />
+        <span>
+          <strong>Marketing</strong>
+          Sprawdzenie, która reklama przyprowadziła zgłoszenie. Bez list
+          odbiorców i bez reklam podążających za Wami.
+        </span>
+      </label>
+    </fieldset>
+
     <div class="zgoda-cookies__przyciski">
       <button type="button" class="przycisk przycisk--marka" data-zgoda-wszystkie>
         Akceptuję wszystkie
       </button>
+      <button type="button" class="przycisk przycisk--obrys" data-zgoda-wybrane>
+        Zapisz wybór
+      </button>
+      {/* Odmowa musi być tak samo widoczna jak zgoda — inaczej wybór jest
+          pozorny, a zgoda zebrana w ten sposób nie jest zgodą. */}
       <button type="button" class="przycisk przycisk--obrys" data-zgoda-niezbedne>
         Tylko niezbędne
       </button>
     </div>
+
     <p class="zgoda-cookies__nota">
       Zgodę możecie w każdej chwili zmienić — odnośnik „Zgody cookies”
       w stopce.
@@ -59,135 +102,173 @@ const konfiguracja = {
 <script is:inline define:vars={{ konfiguracja }}>
   (function () {
     var KLUCZ = "sa-cookie-consent";
-
     var baner = document.querySelector("[data-zgoda]");
     if (!baner) return;
-    var zaladowane = false;
 
-    /* Ładuje skrypt analityki. Przy narzędziu bez ciasteczek wywoływane od
-       razu, przy Google — dopiero po zgodzie. Adres i atrybuty pochodzą
-       z konfiguracji, więc ta funkcja nie zna żadnego dostawcy z nazwy. */
-    function zaladujAnalitykę() {
-      if (zaladowane || !konfiguracja.nazwa) return;
-      zaladowane = true;
+    var zaladowaneUmami = false;
+    var zaladowaneGoogle = false;
+    var g = konfiguracja.google;
+    var googleWlaczone = Boolean(g.ga4 || g.ads);
 
+    /* ---- Tryb zgody Google, wersja druga ---------------------------------
+       Ustawiamy domyślne odmowy ZANIM cokolwiek się załaduje. Bez tego kroku
+       Google w Europie ogranicza dane z kampanii, nawet gdy rodzic później
+       wyrazi zgodę: liczy się to, w jakim stanie tag zastał stronę.
+
+       `wait_for_update` daje pół sekundy na decyzję z pamięci przeglądarki,
+       żeby powracający rodzic nie był liczony jako odmowa. */
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    window.gtag = window.gtag || gtag;
+    gtag("consent", "default", {
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      analytics_storage: "denied",
+      wait_for_update: 500,
+    });
+
+    function zaladujUmami() {
+      var u = konfiguracja.statystyka;
+      if (zaladowaneUmami || !u || !u.src) return;
+      zaladowaneUmami = true;
       var s = document.createElement("script");
       s.defer = true;
-      s.src = konfiguracja.src;
-      var a = konfiguracja.atrybuty || {};
+      s.src = u.src;
+      var a = u.atrybuty || {};
       for (var k in a) if (Object.prototype.hasOwnProperty.call(a, k)) s.setAttribute(k, a[k]);
-
-      /* Google wymaga własnego rozruchu przed wczytaniem skryptu. Ten kawałek
-         trafia do strony wyłącznie wtedy, gdy Google jest wybrane. */
-      if (konfiguracja.nazwa === "ga4") {
-        s.async = true;
-        window.dataLayer = window.dataLayer || [];
-        window.gtag = function () { window.dataLayer.push(arguments); };
-        window.gtag("js", new Date());
-        window.gtag("config", konfiguracja.ga4Id, { anonymize_ip: true });
-      }
-
       document.head.appendChild(s);
     }
 
-    /* Czy analityka wolno działać. Narzędzie bez ciasteczek — tak, zawsze;
-       narzędzie z ciasteczkami — dopiero po zgodzie „akceptuję wszystkie". */
-    function analitykaDozwolona(poziom) {
-      if (!konfiguracja.nazwa) return false;
-      /* Gdy pytamy — decyduje odpowiedź, niezależnie od tego, czy narzędzie
-         używa ciasteczek. Skoro przycisk istnieje, musi działać. */
-      if (konfiguracja.pytamyMimoBrakuObowiazku || !konfiguracja.bezCiasteczek) {
-        return poziom === "all";
-      }
-      return true;
+    function zaladujGoogle() {
+      if (zaladowaneGoogle || !googleWlaczone) return;
+      zaladowaneGoogle = true;
+      var id = g.ga4 || g.ads;
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = g.skrypt + "?id=" + encodeURIComponent(id);
+      document.head.appendChild(s);
+      gtag("js", new Date());
+      if (g.ga4) gtag("config", g.ga4, { anonymize_ip: true });
+      if (g.ads) gtag("config", g.ads);
     }
 
-    /* Jedyny punkt, z którego wolno uruchamiać analitykę. */
-    function oglos(poziom) {
-      var wolno = analitykaDozwolona(poziom);
-      window.saConsent = { level: poziom, analytics: wolno };
-      /* Jeden punkt zgłaszania celów, żeby reszta strony mogła wołać saTrack
-         bez sprawdzania warunków. */
-      window.saTrack = function (nazwa, dane) {
-        if (!window.saConsent || !window.saConsent.analytics) return;
-        if (window.umami && window.umami.track) window.umami.track(nazwa, dane);
-        else if (window.plausible) window.plausible(nazwa, { props: dane });
-        else if (window.gtag) window.gtag("event", nazwa, dane || {});
-      };
-      if (wolno) zaladujAnalitykę();
-      window.dispatchEvent(
-        new CustomEvent("sa-consent", { detail: window.saConsent })
-      );
-    }
-
-    function pokaz() {
-      baner.hidden = false;
-    }
-    function schowaj() {
-      baner.hidden = true;
-    }
-
-    function zdecyduj(poziom) {
+    /* ---- Odczyt i zapis decyzji ------------------------------------------ */
+    function odczytaj() {
+      var surowe = null;
+      try { surowe = localStorage.getItem(KLUCZ); } catch (e) { return null; }
+      if (!surowe) return null;
+      /* Stary zapis: zwykły napis zamiast obiektu. */
+      if (surowe === "all") return { statystyka: true, marketing: true };
+      if (surowe === "necessary") return { statystyka: false, marketing: false };
       try {
-        localStorage.setItem(KLUCZ, poziom);
+        var o = JSON.parse(surowe);
+        if (o && typeof o === "object")
+          return { statystyka: Boolean(o.statystyka), marketing: Boolean(o.marketing) };
       } catch (e) {}
-      oglos(poziom);
+      return null;
+    }
+
+    function zapisz(z) {
+      try {
+        localStorage.setItem(KLUCZ, JSON.stringify({
+          statystyka: z.statystyka, marketing: z.marketing, v: 2,
+        }));
+      } catch (e) {}
+    }
+
+    /* ---- Jedyny punkt, z którego wolno cokolwiek uruchomić --------------- */
+    function oglos(z) {
+      window.saConsent = {
+        statystyka: z.statystyka,
+        marketing: z.marketing,
+        /* Zachowane dla kodu, który pytał o `analytics`. */
+        analytics: z.statystyka,
+      };
+
+      gtag("consent", "update", {
+        analytics_storage: z.statystyka ? "granted" : "denied",
+        ad_storage: z.marketing ? "granted" : "denied",
+        ad_user_data: z.marketing ? "granted" : "denied",
+        /* Zawsze odmowa — patrz komentarz na górze pliku. */
+        ad_personalization: "denied",
+      });
+
+      window.saTrack = function (nazwa, dane) {
+        if (window.saConsent && window.saConsent.statystyka) {
+          if (window.umami && window.umami.track) window.umami.track(nazwa, dane);
+          else if (window.plausible) window.plausible(nazwa, { props: dane });
+          if (g.ga4 && window.gtag) window.gtag("event", nazwa, dane || {});
+        }
+        /* Konwersja Google Ads to osobna zgoda i osobne zdarzenie. Bez etykiety
+           z panelu Ads nie ma czego wysłać — kampania policzyłaby wtedy samo
+           wejście, a nie telefon. */
+        if (window.saConsent && window.saConsent.marketing && window.gtag) {
+          var etykieta = (g.konwersje || {})[nazwa === "telefon_klik" ? "telefon" : "formularz"];
+          if (etykieta) window.gtag("event", "conversion", { send_to: etykieta });
+        }
+      };
+
+      if (z.statystyka) zaladujUmami();
+      if ((z.statystyka && g.ga4) || (z.marketing && g.ads)) zaladujGoogle();
+
+      window.dispatchEvent(new CustomEvent("sa-consent", { detail: window.saConsent }));
+    }
+
+    function pokaz() { baner.hidden = false; }
+    function schowaj() { baner.hidden = true; }
+
+    var polaStat = baner.querySelector("[data-zgoda-statystyka]");
+    var polaMark = baner.querySelector("[data-zgoda-marketing]");
+
+    function zdecyduj(z) {
+      zapisz(z);
+      oglos(z);
       schowaj();
     }
 
-    var zapisane = null;
-    try {
-      zapisane = localStorage.getItem(KLUCZ);
-    } catch (e) {}
+    var decyzja = odczytaj();
+    if (decyzja) {
+      oglos(decyzja);
+      if (polaStat) polaStat.checked = decyzja.statystyka;
+      if (polaMark) polaMark.checked = decyzja.marketing;
+    } else {
+      /* Brak decyzji znaczy brak zgody — do czasu kliknięcia nic nie chodzi. */
+      oglos({ statystyka: false, marketing: false });
+      pokaz();
+    }
 
-    /* Baner pokazujemy tylko wtedy, gdy jest o co pytać. Przy narzędziu bez
-       ciasteczek strona nie zapisuje na urządzeniu niczego poza tym, co jest
-       niezbędne do jej działania — pytanie o zgodę byłoby wtedy pytaniem
-       pozornym, a baner, który nie zmienia niczego niezależnie od odpowiedzi,
-       uczy ludzi klikać bez czytania. Informacja o analityce stoi w polityce
-       prywatności, bo obowiązek informacyjny zostaje. */
-    var jestOCoPytac =
-      konfiguracja.nazwa &&
-      (konfiguracja.pytamyMimoBrakuObowiazku || !konfiguracja.bezCiasteczek);
-
-    if (zapisane) oglos(zapisane);
-    else if (jestOCoPytac) pokaz();
-    else oglos("necessary");
-
-    baner
-      .querySelector("[data-zgoda-wszystkie]")
-      .addEventListener("click", function () {
-        zdecyduj("all");
+    baner.querySelector("[data-zgoda-wszystkie]").addEventListener("click", function () {
+      if (polaStat) polaStat.checked = true;
+      if (polaMark) polaMark.checked = true;
+      zdecyduj({ statystyka: true, marketing: true });
+    });
+    baner.querySelector("[data-zgoda-wybrane]").addEventListener("click", function () {
+      zdecyduj({
+        statystyka: Boolean(polaStat && polaStat.checked),
+        marketing: Boolean(polaMark && polaMark.checked),
       });
-    baner
-      .querySelector("[data-zgoda-niezbedne]")
-      .addEventListener("click", function () {
-        zdecyduj("necessary");
-      });
+    });
+    baner.querySelector("[data-zgoda-niezbedne]").addEventListener("click", function () {
+      if (polaStat) polaStat.checked = false;
+      if (polaMark) polaMark.checked = false;
+      zdecyduj({ statystyka: false, marketing: false });
+    });
 
     /* Odnośnik „Zgody cookies" w stopce otwiera baner ponownie. */
     window.addEventListener("sa-consent-reopen", pokaz);
 
-    /* Dwa cele, które faktycznie mierzą skuteczność strony. Zdarzenia
-       wysyłają się z każdej podstrony, z informacją, skąd je wywołano. */
+    /* Dwa cele, które faktycznie mierzą skuteczność strony i kampanii. */
     function zglos(nazwa) {
       if (typeof window.saTrack === "function")
         window.saTrack(nazwa, { skad: location.pathname });
     }
-    document.addEventListener(
-      "click",
-      function (e) {
-        var tel = e.target.closest && e.target.closest('a[href^="tel:"]');
-        if (tel) zglos("telefon_klik");
-      },
-      true
-    );
-    document.addEventListener(
-      "submit",
-      function () {
-        zglos("zapis_formularz");
-      },
-      true
-    );
+    document.addEventListener("click", function (e) {
+      var tel = e.target.closest && e.target.closest('a[href^="tel:"]');
+      if (tel) zglos("telefon_klik");
+    }, true);
+    document.addEventListener("submit", function () {
+      zglos("zapis_formularz");
+    }, true);
   })();
 </script>

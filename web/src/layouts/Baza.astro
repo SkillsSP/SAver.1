@@ -66,6 +66,35 @@ const kanoniczny = new URL(sciezkaKanoniczna, Astro.site).href;
    uzupełnione — pusty adres albo telefon „do uzupełnienia" w danych
    strukturalnych szkodzi bardziej niż ich brak, bo Google porównuje je
    z wizytówką. Kolejne pola dopisują się same, gdy wypełnicie src/lib/site.js. */
+/* ŹRÓDŁA DLA POLITYKI BEZPIECZEŃSTWA TREŚCI.
+
+   Wypisujemy je z konfiguracji analityki, a nie z pamięci — po zmianie
+   dostawcy albo po dopisaniu identyfikatorów Google polityka zmienia się
+   razem z nimi i nie trzeba pamiętać o dwóch plikach.
+
+   ADRESY GOOGLE DOPISUJEMY TYLKO WTEDY, GDY IDENTYFIKATORY SĄ WPISANE.
+   Dopóki ich nie ma, polityka zostaje tak wąska jak dotąd: pozwolenie dla
+   serwerów, z których nic się nie ładuje, jest luką bez żadnego pożytku.
+
+   Uwaga na `img-src`: pomiar konwersji Google Ads chodzi także obrazkami,
+   nie tylko zapytaniami sieciowymi. Polityka wypisana z samych połączeń
+   blokowałaby część konwersji po cichu — dokładnie tak, jak kiedyś przy
+   Umami, gdzie skrypt ładował się z jednego adresu, a dane odsyłał na drugi. */
+const google = analityka.google ?? {};
+const googleWlaczone = Boolean(google.ga4 || google.ads);
+
+const zrodlaSkryptow = [
+  new URL(analityka.statystyka.src).origin,
+  ...(googleWlaczone ? google.skrypty ?? [] : []),
+];
+const zrodlaPolaczen = [
+  new URL(analityka.statystyka.src).origin,
+  ...(analityka.statystyka.polaczenia ?? []),
+  new URL(firma.formularzEndpoint).origin,
+  ...(googleWlaczone ? google.polaczenia ?? [] : []),
+];
+const zrodlaObrazow = googleWlaczone ? google.obrazy ?? [] : [];
+
 const znacznik = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
@@ -119,14 +148,10 @@ const znacznik = {
       http-equiv="Content-Security-Policy"
       content={[
         "default-src 'self'",
-        `script-src 'self' 'unsafe-inline' ${new URL(analityka.src).origin}`,
-        `connect-src 'self' ${[
-          new URL(analityka.src).origin,
-          ...(analityka.polaczenia ?? []),
-          new URL(firma.formularzEndpoint).origin,
-        ].join(" ")}`,
+        `script-src 'self' 'unsafe-inline' ${zrodlaSkryptow.join(" ")}`,
+        `connect-src 'self' ${zrodlaPolaczen.join(" ")}`,
         "style-src 'self' 'unsafe-inline'",
-        "img-src 'self' data:",
+        `img-src 'self' data: ${zrodlaObrazow.join(" ")}`,
         "font-src 'self'",
         /* Strona nie ma osadzanych ramek ani wtyczek — zamykamy oba na głucho. */
         "frame-src 'none'",

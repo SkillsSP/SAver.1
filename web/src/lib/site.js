@@ -594,34 +594,70 @@ export const ubezpieczenie = {
    na zewnątrz.
    -------------------------------------------------------------------------- */
 export const analityka = {
-  nazwa: "umami",
-  bezCiasteczek: true,
+  /* ------------------------------------------------------------------
+     STATYSTYKA — Umami, bez ciasteczek.
 
-  /* Pytamy o zgodę, mimo że przy narzędziu bez ciasteczek nie musimy.
+     Zostaje obok Google świadomie. Umami liczy WSZYSTKICH odwiedzających,
+     także tych, którzy odmówią zgody; Google pokaże tylko część ruchu.
+     Bez Umami nie byłoby z czym porównać liczb z Google i nie dałoby się
+     powiedzieć, ilu rodziców naprawdę wchodzi na stronę.
+     ------------------------------------------------------------------ */
+  statystyka: {
+    nazwa: "umami",
+    src: "https://cloud.umami.is/script.js",
+    /* Adresy, pod które wczytany skrypt SAM wysyła odczyty. To nie to samo co
+       `src` i właśnie na tym się kiedyś przejechałem: Umami ładuje się
+       z cloud.umami.is, a dane odsyła na gateway.umami.is. Polityka
+       bezpieczeństwa wypisana tylko z `src` blokowała każdy odczyt po cichu. */
+    polaczenia: ["https://gateway.umami.is"],
+    atrybuty: { "data-website-id": "6b54cbf7-f3d7-47ee-801f-004df9f45085" },
+  },
 
-     Decyzja właścicielska. Warunek jest jeden i trzeba go trzymać: skoro
-     pytamy, odpowiedź musi coś zmieniać. „Tylko niezbędne" naprawdę wyłącza
-     licznik — inaczej baner byłby teatrem, a przycisk, który nic nie robi,
-     jest gorszy od braku pytania.
+  /* ------------------------------------------------------------------
+     MARKETING — Google Analytics 4 i pomiar konwersji Google Ads.
 
-     Ustawienie na `false` chowa baner: przy narzędziu bez ciasteczek strona
-     nic wtedy nie zapisuje na urządzeniu, a obowiązek informacyjny wypełnia
-     sekcja 7 polityki prywatności. */
-  pytamyMimoBrakuObowiazku: true,
-  src: "https://cloud.umami.is/script.js",
+     BEZ REMARKETINGU. To była decyzja właścicielska i ma odbicie w kodzie:
+     zgoda `ad_personalization` zostaje odmówiona ZAWSZE, niezależnie od tego,
+     co rodzic kliknie w banerze. Google mierzy więc telefony i zgłoszenia,
+     ale nie buduje list odbiorców do ścigania reklamą po innych stronach.
+     Gdyby to się kiedyś zmieniło, trzeba zmienić trzy rzeczy naraz: tutaj,
+     w banerze i w polityce prywatności — nie jedną z nich.
 
-  /* Adresy, pod które wczytany skrypt SAM wysyła odczyty. To nie to samo co
-     `src` i właśnie na tym się przejechałem: Umami ładuje się z cloud.umami.is,
-     a dane odsyła na gateway.umami.is. Polityka bezpieczeństwa treści
-     wypisana tylko z `src` blokowała każdy odczyt, i to po cichu — strona
-     wyglądała normalnie, a statystyki po prostu nie przychodziły.
+     DOPÓKI IDENTYFIKATORY SĄ PUSTE, NIC SIĘ NIE ŁADUJE. Cały mechanizm jest
+     gotowy i uśpiony: baner pyta o obie kategorie, tryb zgody wysyła sygnały,
+     a skrypt Google nie wchodzi na stronę, bo nie ma czego uruchomić.
+     Wpisanie identyfikatorów niżej włącza wszystko.
+     ------------------------------------------------------------------ */
+  google: {
+    /* Identyfikator pomiaru GA4 — postać „G-XXXXXXXXXX". */
+    ga4: null,
+    /* Identyfikator konwersji Google Ads — postać „AW-XXXXXXXXX". */
+    ads: null,
+    /* Etykiety konwersji z panelu Google Ads — postać „AW-XXXXXXXXX/AbCdEf".
+       Bez nich Ads policzy wejścia, ale nie policzy telefonu ani zgłoszenia,
+       czyli tego, za co naprawdę płacicie w kampanii. */
+    konwersje: { telefon: null, formularz: null },
 
-     Po zmianie dostawcy trzeba tu zajrzeć. Sprawdzenie zajmuje chwilę:
-     otwórzcie stronę z narzędziami deweloperskimi, zakładka Sieć, i zobaczcie,
-     pod jaki adres leci zapytanie po wyrażeniu zgody. */
-  polaczenia: ["https://gateway.umami.is"],
-
-  atrybuty: { "data-website-id": "6b54cbf7-f3d7-47ee-801f-004df9f45085" },
+    skrypt: "https://www.googletagmanager.com/gtag/js",
+    /* Adresy, pod które skrypty Google wysyłają dane. Rozpisane osobno dla
+       połączeń i dla obrazów, bo pomiar konwersji Ads używa obu dróg. */
+    polaczenia: [
+      "https://www.googletagmanager.com",
+      "https://www.google-analytics.com",
+      "https://analytics.google.com",
+      "https://stats.g.doubleclick.net",
+      "https://www.googleadservices.com",
+      "https://googleads.g.doubleclick.net",
+      "https://www.google.com",
+    ],
+    skrypty: ["https://www.googletagmanager.com", "https://www.googleadservices.com"],
+    obrazy: [
+      "https://www.google.com",
+      "https://www.google.pl",
+      "https://googleads.g.doubleclick.net",
+      "https://www.google-analytics.com",
+    ],
+  },
 };
 
 /* --------------------------------------------------------------------------
