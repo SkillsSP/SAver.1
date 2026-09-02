@@ -302,11 +302,12 @@ const daneFirmy = [
 
             <noscript>
               <p class="komunikat-formularza">
-                Wysyłka formularza wymaga włączonego JavaScriptu.
+                Formularz zadziała także bez JavaScriptu — po wysłaniu
+                zobaczycie potwierdzenie na osobnej stronie.
                 {tel ? (
-                  <> Bez niego prosimy o telefon: <a href={tel}>{telefonTekst()}</a>.</>
+                  <> Wolicie od razu porozmawiać? <a href={tel}>{telefonTekst()}</a>.</>
                 ) : (
-                  <> Bez niego prosimy o kontakt telefoniczny.</>
+                  <> Wolicie od razu porozmawiać? Zadzwońcie do nas.</>
                 )}
               </p>
             </noscript>

@@ -80,6 +80,44 @@ function oczysc(wartosc: unknown, limit = LIMIT_DLUGOSCI): string {
   return wartosc.replace(/[\r\n]+/g, " ").trim().slice(0, limit);
 }
 
+/* ===========================================================================
+   ODPOWIEDŹ DLA PRZEGLĄDARKI BEZ JAVASCRIPTU
+
+   Formularz ma atrybut `action`, więc wysyła się także wtedy, gdy skrypty są
+   wyłączone — i zawsze się wysyłał. Problem w tym, CO rodzic wtedy widział:
+   białą stronę z napisem `{"ok":true}`, bez potwierdzenia, bez nazwy centrum
+   i bez drogi powrotnej. Strona twierdziła przy tym, że bez JavaScriptu
+   wysyłka nie zadziała — oba zdania nie mogły być prawdziwe naraz.
+
+   Rozpoznajemy takie zgłoszenie po nagłówku `accept`: przeglądarka wysyłająca
+   formularz prosi o `text/html`, a `fetch` ze strony o `application/json`.
+   Przy pierwszym odsyłamy na stronę z podziękowaniem, przy błędzie —
+   zrozumiałą stronę z numerem telefonu.
+
+   Kogo to dotyczy: przeglądarek z blokadą skryptów, trybów prywatnych
+   i komputerów w firmach, gdzie skrypty wyłącza polityka. Grupa mała, ale
+   realna — i to jedyna grupa, dla której formularz był jedyną drogą, bo
+   właśnie im strona kazała dzwonić.
+   =========================================================================== */
+function chceHtml(request: Request): boolean {
+  return (request.headers.get("accept") ?? "").includes("text/html");
+}
+
+function stronaBledu(status: number, wiadomosc: string): Response {
+  const html = `<!doctype html><html lang="pl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zgłoszenie nie wyszło · Skills Academy</title>
+<style>body{font-family:system-ui,sans-serif;max-width:34rem;margin:12vh auto;padding:0 1.5rem;
+line-height:1.6;color:#1a2230}a{color:#1e5fcc}h1{font-size:1.5rem}</style></head><body>
+<h1>Zgłoszenie nie wyszło</h1><p>${wiadomosc}</p>
+<p>Prosimy o telefon: <a href="tel:+48508069007">+48 508 069 007</a>.</p>
+<p><a href="https://skilful.pl/zapisy/">Wróć do formularza</a></p></body></html>`;
+  return new Response(html, {
+    status,
+    headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" },
+  });
+}
+
 function odpowiedz(
   status: number,
   tresc: unknown,
@@ -376,7 +414,26 @@ const NAZWY_SPRAW: Record<string, string> = {
   ochrona: "Zgłoszenie ze standardów ochrony małoletnich",
 };
 
+/* Jedno miejsce, w którym rozstrzygamy, czy odpowiedź ma być dla skryptu, czy
+   dla przeglądarki bez skryptów. Owinięcie całej obsługi zamiast poprawiania
+   kilkunastu miejsc z osobna: każda ścieżka — sukces, limit, braki w polach,
+   brak hasła do skrzynki — dostaje właściwą postać bez dodatkowego warunku
+   w swoim wnętrzu, więc nie da się o żadnej zapomnieć przy następnej zmianie. */
 Deno.serve(async (request: Request) => {
+  const odp = await obsluz(request);
+  if (!chceHtml(request)) return odp;
+  if (odp.status >= 200 && odp.status < 300) {
+    return Response.redirect("https://skilful.pl/dziekujemy/", 303);
+  }
+  let wiadomosc = "Spróbujcie ponownie za chwilę.";
+  try {
+    const t = await odp.clone().json();
+    if (t && typeof t.blad === "string") wiadomosc = t.blad;
+  } catch { /* odpowiedź bez treści JSON — zostaje zdanie ogólne */ }
+  return stronaBledu(odp.status, wiadomosc);
+});
+
+async function obsluz(request: Request): Promise<Response> {
   const cors = naglowkiCors(request.headers.get("origin"));
 
   if (request.method === "OPTIONS") {
@@ -574,4 +631,4 @@ Deno.serve(async (request: Request) => {
   }
 
   return odpowiedz(200, { ok: true }, cors);
-});
+}

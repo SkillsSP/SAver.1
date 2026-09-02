@@ -38,7 +38,13 @@ export default defineConfig({
          musi się z tamtymi przełącznikami zgadzać, bo adres w mapie serwisu
          przy stronie proszącej o pominięcie jest sygnałem sprzecznym. */
       filter: (strona) => {
-        const wykluczone = ["polityka-prywatnosci", "regulamin", "klauzula-rodo"];
+        const wykluczone = [
+          "polityka-prywatnosci", "regulamin", "klauzula-rodo",
+          /* Koniec ścieżki technicznej dla przeglądarek bez JavaScriptu,
+             a nie część oferty. Rodzic trafia tu wyłącznie po wysłaniu
+             formularza, więc w wynikach wyszukiwania nie ma czego szukać. */
+          "dziekujemy",
+        ];
         if (!terminarz.pokazuj || terminarz.dni.length === 0) wykluczone.push("terminarz");
         if (poradnik.length === 0) wykluczone.push("poradnik");
         return !wykluczone.some((s) => strona.includes(`/${s}`));

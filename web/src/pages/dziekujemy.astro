@@ -1,0 +1,57 @@
+---
+import Baza from "../layouts/Baza.astro";
+import { url, telefonHref, telefonTekst } from "../lib/site.js";
+
+const tel = telefonHref();
+---
+
+{/*
+  STRONA DLA PRZEGLĄDAREK BEZ JAVASCRIPTU.
+
+  Formularz ma atrybut `action`, więc wysyła się także wtedy, gdy skrypty są
+  wyłączone — i zawsze się wysyłał. Rodzic widział jednak białą stronę
+  z napisem `{"ok":true}`: bez potwierdzenia, bez nazwy centrum i bez drogi
+  powrotnej. Funkcja przyjmująca zgłoszenia odsyła teraz tutaj.
+
+  Ze skryptami nikt tej strony nie zobaczy — potwierdzenie pojawia się wtedy
+  pod formularzem, bez przeładowania. Dlatego strona jest wyłączona
+  z indeksowania i nie ma jej w nawigacji ani w mapie serwisu: nie jest
+  częścią oferty, tylko końcem jednej ścieżki technicznej.
+*/}
+<Baza
+  aktywna=""
+  tytul="Zgłoszenie dotarło"
+  opis="Zgłoszenie na bezpłatne zajęcia próbne dotarło do Skills Academy w Szczecinie. Oddzwonimy, żeby ustalić termin."
+  bezIndeksowania
+>
+  <section class="sekcja">
+    <div class="szerokosc">
+      <div class="siatka--wiodaca">
+        <div class="stos stos--ciasny">
+          <span class="nadtytul">Zapisy</span>
+          <h1 class="tytul-1">Zgłoszenie dotarło</h1>
+        </div>
+        <div class="stos">
+          <p class="wiodacy">
+            Dziękujemy. Oddzwonimy, żeby ustalić termin zajęć próbnych —
+            zwykle w ciągu jednego dnia roboczego.
+          </p>
+          <p class="tekst-drugi">
+            Jeśli wolicie nie czekać, zadzwońcie do nas sami. Odbieramy między
+            zajęciami, a gdy nie odbierzemy, oddzwaniamy tego samego dnia.
+          </p>
+          <div class="przyciski">
+            {tel && (
+              <a class="przycisk przycisk--akcja" href={tel}>
+                Zadzwoń: {telefonTekst()}
+              </a>
+            )}
+            <a class="przycisk przycisk--obrys" href={url("/")}>
+              Wróć na stronę główną
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Baza>
