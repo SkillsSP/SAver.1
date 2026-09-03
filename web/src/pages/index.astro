@@ -17,9 +17,23 @@ import {
   startTekst,
   liczebnikOsob,
   uczacych,
+  adresTekst,
 } from "../lib/site.js";
+
 import FotoNaglowka from "../components/FotoNaglowka.astro";
 import Spolecznosciowe from "../components/Spolecznosciowe.astro";
+
+/* LISTA BRAKÓW LICZONA Z DANYCH, NIE PISANA RĘCZNIE.
+   Nota redakcyjna niżej wymieniała adres jako brak jeszcze wtedy, gdy adres
+   już stał w tabelce obok — bo była zwykłym zdaniem, które trzeba pamiętać
+   o poprawieniu. Teraz czyta z tych samych pól co tabelka: wpisanie danej
+   w site.js zdejmuje ją z listy braków samo, a gdy lista się opróżni, cała
+   nota znika. */
+const brakiKonkretow = [
+  !firma.ulica && { co: "adres lokalu", pole: "firma.ulica" },
+  !firma.kodPocztowy && { co: "kod pocztowy", pole: "firma.kodPocztowy" },
+  !terminarz.pokazuj && { co: "grafik", pole: "terminarz.dni" },
+].filter(Boolean);
 
 const tel = telefonHref();
 const pokazTerminarz = terminarz.pokazuj && terminarz.dni.length > 0;
@@ -30,9 +44,9 @@ const pokazTerminarz = terminarz.pokazuj && terminarz.dni.length > 0;
    Dobór jest tu ważniejszy niż liczba. Odpowiadamy wyłącznie na to, co wiemy
    na pewno dziś — wielkość grupy, język zajęć, wiek, przebieg zajęć próbnych,
    sposób rozliczenia, ubezpieczenie, weryfikacja prowadzących. Świadomie NIE
-   ma tu pytań o adres, godziny i liczbę wolnych miejsc: odpowiedź, która za
-   miesiąc przestanie być prawdziwa, kosztuje więcej niż jej brak, a te dane
-   wciąż czekają na umowę na lokal.
+   ma tu pytań o godziny i liczbę wolnych miejsc: odpowiedź, która za miesiąc
+   przestanie być prawdziwa, kosztuje więcej niż jej brak. Adres stoi wyżej,
+   w tabelce „Zanim zapytacie", i nie potrzebuje osobnego pytania.
 
    Te same pytania trafiają do danych strukturalnych (FAQPage) przez warstwę
    `Baza`, więc mogą pokazać się w wyniku wyszukiwania rozwinięte. Dlatego
@@ -447,7 +461,11 @@ const trzyKroki = [
               <span class="etykieta">Gdzie</span>
               <span class="wartosc">
                 {firma.ulica
-                  ? `${firma.ulica}, ${firma.miasto}`
+                  /* Pełny zapis razem z kodem pocztowym, ten sam co w stopce
+                     i w danych strukturalnych — Google łączy wizytówkę ze
+                     stroną po zgodności zapisu, więc dwa warianty adresu na
+                     jednej stronie działają przeciwko sobie. */
+                  ? adresTekst()
                   /* Do czasu podpisania umowy na lokal stoi tu samo miasto.
                      Wcześniej dopisywaliśmy „adres podamy z uruchomieniem
                      zapisów" — zdanie prawdziwe, ale mówiące o tym, czego nie
@@ -489,27 +507,21 @@ const trzyKroki = [
             </li>
           </ul>
 
-          {/* Nota redakcyjna wymieniała adres jako brak jeszcze wtedy, gdy
-              adres już stał w tabelce wyżej. Lista braków czyta teraz z tych
-              samych danych co tabelka, więc nie da się jej rozjechać. */}
-          <DoUzupelnienia
-            czego={firma.ulica
-              ? "Kod pocztowy, godziny i data zamknięcia naboru"
-              : "Adres, godziny i data zamknięcia naboru"}
-          >
-            Termin startu i {firma.ulica ? "adres" : "miasto"} już tu stoją.
-            Zostają rzeczy, które zamieniają „kiedyś się zapiszemy"
-            w „napiszmy dziś": {firma.ulica
-              ? <>kod pocztowy lokalu (<code>firma.kodPocztowy</code>)</>
-              : <>adres lokalu (<code>firma.ulica</code>)</>}, grafik
-            (<code>terminarz.dni</code> wraz z przełącznikiem
-            <code>terminarz.pokazuj</code>) oraz data zamknięcia naboru.
-            Wszystkie w <code>src/lib/site.js</code>.
-            <br /><br />
-            Po zawarciu polisy przestawcie <code>ubezpieczenie.wykupione</code>
-            na <code>true</code> — zdanie wyżej i odpowiedź w pytaniach zmienią
-            się z zobowiązania na fakt same.
-          </DoUzupelnienia>
+          {brakiKonkretow.length > 0 && (
+            <DoUzupelnienia czego={`Do wpisania: ${brakiKonkretow.map((b) => b.co).join(", ")}`}>
+              Termin startu i adres już tu stoją. Zostaje to, co zamienia
+              „kiedyś się zapiszemy" w „napiszmy dziś":
+              {brakiKonkretow.map((b, nr) => (
+                <>{nr === 0 ? " " : ", "}{b.co} (<code>{b.pole}</code>)</>
+              ))}
+              {" "}oraz data zamknięcia naboru. Wszystko
+              w <code>src/lib/site.js</code>.
+              <br /><br />
+              Po zawarciu polisy przestawcie <code>ubezpieczenie.wykupione</code>
+              na <code>true</code> — zdanie wyżej i odpowiedź w pytaniach zmienią
+              się z zobowiązania na fakt same.
+            </DoUzupelnienia>
+          )}
         </div>
 
         <div class="stos">
