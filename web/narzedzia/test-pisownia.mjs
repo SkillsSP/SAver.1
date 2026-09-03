@@ -52,6 +52,8 @@ const ZNANE = new Set([
   "patryk", "moltu",
   /* miasto i przymiotnik od niego */
   "szczecin", "szczecinie",
+  /* nazwa ulicy lokalu */
+  "żółkiewskiego",
   /* Poprawna polszczyzna, której ten słownik nie zna. Sprawdzone po
      pierwszym przebiegu: na 5627 wyrazów zgłosił dokładnie te sześć i ani
      jedno nie było literówką.

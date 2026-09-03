@@ -9,6 +9,7 @@ import {
   telefonHref,
   telefonTekst,
   emailTekst,
+  adresTekst,
   ochronaMaloletnich,
 } from "../lib/site.js";
 
@@ -24,12 +25,12 @@ import {
    Czwarta ścieżka jest wymagana ustawowo i nie może kończyć się formularzem
    zapisowym ani prowadzić przez osoby prowadzące zajęcia.
 
-   LOKAL. Do podpisania umowy wszystko, co dotyczy adresu, jest ZDJĘTE ze
-   strony, a nie wstawione jako pusty nawias. Pusty nawias w miejscu adresu
-   wygląda jak błąd wdrożenia; brak sekcji nie wygląda na nic. Ukryte są:
-   karta „przyjdźcie do biura”, sekcja z adresem, godzinami, dojazdem
-   i parkingiem, mapa oraz godziny w nagłówku. Miasto i tryb zajęć zostają —
-   to nie jest informacja o lokalu.
+   LOKAL. Adres jest i stoi w zdaniu „gdzie jesteśmy”, przy telefonie
+   i adresie e-mail, czyli tam, gdzie rodzic go szuka. NADAL ZDJĘTE zostają
+   rzeczy, których nie mamy: karta „przyjdźcie do biura” z godzinami otwarcia,
+   opis dojazdu i parkingu, mapa oraz godziny w nagłówku. Wracają razem
+   z danymi, a nie razem z adresem — pusty nawias w miejscu godzin wygląda jak
+   błąd wdrożenia, a brak sekcji nie wygląda na nic.
    ========================================================================== */
 
 const tel = telefonHref();
@@ -103,8 +104,10 @@ const daneFirmy = [
     </div>
   </section>
 
-  {/* TRZY DROGI KONTAKTU. Czwarta — „przyjdźcie do biura” — wraca razem
-      z adresem, po podpisaniu umowy na lokal. */}
+  {/* TRZY DROGI KONTAKTU. Czwarta — „przyjdźcie do biura” — czeka nie na
+      adres, tylko na godziny, w których pod tym adresem ktoś jest. Karta
+      zapraszająca do biura bez godzin otwarcia wysyła rodzica pod zamknięte
+      drzwi. */}
   <section class="sekcja">
     <div class="szerokosc">
       <div class="siatka siatka--troje">
@@ -161,10 +164,24 @@ const daneFirmy = [
           Rodzic, który sprawdza, czy centrum jest po jego stronie miasta,
           zadaje to pytanie ZANIM cokolwiek napisze. Odpowiedź stoi teraz przy
           telefonie i adresie e-mail, czyli tam, gdzie jej szuka. */}
+      {/* Zdanie ma dwie wersje, bo od adresu zależy, co jest tu prawdą.
+          Bez adresu obiecywaliśmy podać go przez telefon; z adresem ta sama
+          obietnica brzmiałaby jak wykręt przy wypisanej ulicy. Przełącza się
+          samo po wpisaniu `firma.ulica` w site.js. */}
       <p class="gdzie-jestesmy" id="dojazd">
-        <strong>Gdzie jesteśmy:</strong> zajęcia prowadzimy stacjonarnie
-        w {firma.miastoWMiejscowniku}. Dokładny adres i dojazd podajemy przez
-        telefon — zadzwońcie, powiemy od razu.
+        <strong>Gdzie jesteśmy:</strong>{" "}
+        {firma.ulica ? (
+          <>
+            {adresTekst()} — zajęcia prowadzimy stacjonarnie. O dojazd
+            i najbliższy parking zapytajcie przez telefon, powiemy od razu.
+          </>
+        ) : (
+          <>
+            zajęcia prowadzimy stacjonarnie w {firma.miastoWMiejscowniku}.
+            Dokładny adres i dojazd podajemy przez telefon — zadzwońcie,
+            powiemy od razu.
+          </>
+        )}
       </p>
     </div>
   </section>

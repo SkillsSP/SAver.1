@@ -23,7 +23,17 @@ export const firma = {
   miastoWMiejscowniku: "Szczecinie",
   /* Zapis nazwy, adresu i telefonu musi brzmieć znak w znak tak samo jak w
      wizytówce Google — rozjazd osłabia widoczność w wynikach lokalnych. */
-  ulica: null,
+  /* LOKAL. Adres wchodzi w cztery miejsca naraz: stopkę, kartę „Zanim
+     zapytacie" na stronie głównej, zdanie „gdzie jesteśmy" na kontakcie oraz
+     dane strukturalne dla Google. Wszystkie cztery czytają stąd, więc
+     przeprowadzka to jedna linijka — ale też: wpisanie tu adresu, którego nie
+     ma w umowie, publikuje go w czterech miejscach naraz. */
+  ulica: "ul. Żółkiewskiego 17",
+  /* Kod pocztowy ŚWIADOMIE pusty. Dla numeru 17 bazy adresowe wskazują
+     70-346, ale nie udało się tego potwierdzić u źródła, a kod pocztowy musi
+     brzmieć znak w znak tak samo jak w wizytówce Google — niezgodny kod
+     szkodzi bardziej niż jego brak. Wpiszcie ten z umowy najmu; stopka
+     i dane strukturalne dołożą go same. */
   kodPocztowy: null,
   telefon: "508 069 007",
   telefonZapis: "+48 508 069 007",
