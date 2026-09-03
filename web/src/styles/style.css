@@ -1986,6 +1986,18 @@ a.marka {
   line-height: 1.55;
   margin-top: var(--space-1);
 }
+.stopka__godziny p {
+  margin: 0;
+}
+/* Etykieta „Centrum" / „Telefon" wyróżniona na tle godzin — dwa wiersze
+   w jednym kolorze zlewają się w jeden akapit, a to są dwa różne zegary
+   i muszą dać się rozdzielić rzutem oka. Token `--slate-600` przełącza się
+   razem z motywem, więc w ciemnym wariancie etykieta jest jaśniejsza od
+   godzin, a nie ciemniejsza — kontrast zmierzony w obu: 7,4 i 10,3. */
+.stopka__godziny strong {
+  color: var(--slate-600);
+  font-weight: var(--waga-polgruba);
+}
 
 .stopka h2 {
   font-size: 0.71875rem;
@@ -3016,8 +3028,37 @@ a.marka {
   }
 }
 
-/* Zdanie o lokalizacji pod drogami kontaktu. Nie karta, bo to jedno zdanie —
-   karta wokół jednego zdania wygląda jak pusty kontener. */
+/* Adres i godziny pod drogami kontaktu. Nie karta, bo to kilka wierszy —
+   karta wokół nich wygląda jak drugi formularz. Kreska z boku wystarczy,
+   żeby blok czytał się jako całość. */
+.gdzie-jestesmy p {
+  margin: 0;
+}
+/* DWA ZEGARY OBOK SIEBIE, a nie jeden pod drugim. Rodzic ma zobaczyć różnicę
+   między „centrum czynne” a „telefon” w jednym rzucie oka — ustawione
+   pionowo czytają się jak ciąg dalszy tej samej listy. Na wąskim ekranie
+   wracają do pionu, bo dwie kolumny po 21 znaków rozjeżdżają się na sylaby. */
+.godziny {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: var(--space-1) var(--space-3);
+  margin: var(--space-2) 0 0;
+}
+.godziny dt {
+  font-weight: var(--waga-polgruba);
+  color: var(--tekst-glowny);
+}
+.godziny dd {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+/* Każdy zakres w osobnym wierszu. Sklejone przecinkiem wyglądałyby jak jedno
+   zdanie, a to są trzy różne dni tygodnia z trzema różnymi godzinami. */
+.godziny dd span {
+  display: block;
+}
+
 .gdzie-jestesmy {
   margin: var(--space-3) 0 0;
   max-width: var(--szerokosc-tekstu);

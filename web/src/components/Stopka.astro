@@ -8,6 +8,8 @@ import {
   telefonTekst,
   emailTekst,
   adresTekst,
+  godziny,
+  godzinyLinia,
   terminarz,
   poradnik,
 } from "../lib/site.js";
@@ -44,13 +46,18 @@ const pokazPoradnik = poradnik.length > 0;
           )}
         </address>
         <Spolecznosciowe />
-        {/* Wiersz z godzinami pojawia się DOPIERO wtedy, gdy godziny są znane.
-            Wcześniej stało tu „Biuro czynne — godziny w uzupełnieniu", czyli
-            zdanie, które nie niesie żadnej informacji poza tą, że strona jest
-            niedokończona. Brak wiersza jest lepszy niż wiersz o braku. */}
-        {firma.godzinyBiura && (
-          <p class="stopka__godziny">Biuro czynne {firma.godzinyBiura}</p>
-        )}
+        {/* DWA ZEGARY, NIE JEDEN. Centrum jest czynne dłużej, niż odbieramy
+            telefon, i to jest różnica, przez którą rodzic dzwoni w próżnię:
+            we wtorek o 20:00 w lokalu trwają zajęcia, a przy numerze nie ma
+            nikogo. Jeden wiersz „godziny otwarcia" ukryłby to.
+
+            Skróty dni („pon.–czw.") są tu, a nie na kontakcie: stopka na
+            telefonie ma jedną wąską kolumnę i pełne nazwy łamały się na trzy
+            wiersze. */}
+        <div class="stopka__godziny">
+          <p><strong>Centrum:</strong> {godzinyLinia(godziny.lokal, { skrocone: true })}</p>
+          <p><strong>Telefon:</strong> {godzinyLinia(godziny.administracja, { skrocone: true })}</p>
+        </div>
       </div>
 
       <div>

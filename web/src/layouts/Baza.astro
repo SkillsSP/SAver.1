@@ -5,7 +5,13 @@ import Stopka from "../components/Stopka.astro";
 import PasekAkcji from "../components/PasekAkcji.astro";
 import ZgodaCookies from "../components/ZgodaCookies.astro";
 import NaGore from "../components/NaGore.astro";
-import { firma, url, analityka } from "../lib/site.js";
+import {
+  firma,
+  url,
+  analityka,
+  godziny,
+  godzinyDlaWyszukiwarki,
+} from "../lib/site.js";
 import "../styles/style.css";
 
 interface Props {
@@ -129,6 +135,15 @@ const znacznik = {
     ...(firma.ulica ? { streetAddress: firma.ulica } : {}),
     ...(firma.kodPocztowy ? { postalCode: firma.kodPocztowy } : {}),
   },
+  /* GODZINY OTWARCIA LOKALU, nie godziny telefonu. Wyszukiwarka pokazuje je
+     w wyniku lokalnym jako „otwarte / zamknięte teraz", więc muszą opisywać
+     drzwi, a nie słuchawkę.
+
+     Wpisy oznaczone `warunkowe` — dziś niedziela — funkcja pomija świadomie.
+     Google nie ma sposobu na pokazanie „po ustaleniu": wypisałby zwykłe
+     godziny, a rodzic pod zamkniętymi drzwiami w niedzielę nie będzie pamiętał
+     żadnego zastrzeżenia ze strony. */
+  openingHoursSpecification: godzinyDlaWyszukiwarki(godziny.lokal),
 };
 ---
 

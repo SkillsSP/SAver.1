@@ -18,6 +18,8 @@ import {
   liczebnikOsob,
   uczacych,
   adresTekst,
+  godziny,
+  godzinyLinia,
 } from "../lib/site.js";
 
 import FotoNaglowka from "../components/FotoNaglowka.astro";
@@ -43,10 +45,14 @@ const pokazTerminarz = terminarz.pokazuj && terminarz.dni.length > 0;
 
    Dobór jest tu ważniejszy niż liczba. Odpowiadamy wyłącznie na to, co wiemy
    na pewno dziś — wielkość grupy, język zajęć, wiek, przebieg zajęć próbnych,
-   sposób rozliczenia, ubezpieczenie, weryfikacja prowadzących. Świadomie NIE
-   ma tu pytań o godziny i liczbę wolnych miejsc: odpowiedź, która za miesiąc
-   przestanie być prawdziwa, kosztuje więcej niż jej brak. Adres stoi wyżej,
-   w tabelce „Zanim zapytacie", i nie potrzebuje osobnego pytania.
+   sposób rozliczenia, ubezpieczenie, weryfikacja prowadzących, godziny.
+   Świadomie NIE ma tu pytania o liczbę wolnych miejsc: odpowiedź, która za
+   miesiąc przestanie być prawdziwa, kosztuje więcej niż jej brak. Adres stoi
+   wyżej, w tabelce „Zanim zapytacie", i nie potrzebuje osobnego pytania.
+
+   Odpowiedź o godziny składa się z danych, a nie z przepisanego tekstu —
+   zmiana w `godziny` w site.js przechodzi do niej i do znacznika FAQPage
+   naraz.
 
    Te same pytania trafiają do danych strukturalnych (FAQPage) przez warstwę
    `Baza`, więc mogą pokazać się w wyniku wyszukiwania rozwinięte. Dlatego
@@ -80,6 +86,10 @@ const pytania = [
     pytanie: "Jak wygląda płatność i czy mogę zrezygnować w trakcie roku?",
     odpowiedz:
       "Przelewem, raz w miesiącu, do czerwca włącznie — płacicie za miesiące uczestnictwa, więc przy dołączeniu w październiku rat jest dziewięć, a nie dziesięć. Rezygnacja z ważnego powodu jest możliwa w każdej chwili: miesiąc zgłoszenia jest wtedy ostatnim płatnym, pozostałych rat nie naliczamy. Nie pobieramy wpisowego.",
+  },
+  {
+    pytanie: "W jakich godzinach jesteście czynni?",
+    odpowiedz: `Centrum: ${godzinyLinia(godziny.lokal)}. Telefon i wiadomości obsługujemy krócej — ${godzinyLinia(godziny.administracja)} — więc jeśli dzwonicie wieczorem, zostawcie wiadomość albo napiszcie; oddzwonimy następnego dnia roboczego. Zajęcia odbywają się popołudniami, po lekcjach.`,
   },
   {
     pytanie: "Czy placówka jest ubezpieczona?",

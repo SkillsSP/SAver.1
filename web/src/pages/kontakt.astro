@@ -10,6 +10,8 @@ import {
   telefonTekst,
   emailTekst,
   adresTekst,
+  godziny,
+  godzinyTekst,
   ochronaMaloletnich,
 } from "../lib/site.js";
 
@@ -25,12 +27,16 @@ import {
    Czwarta ścieżka jest wymagana ustawowo i nie może kończyć się formularzem
    zapisowym ani prowadzić przez osoby prowadzące zajęcia.
 
-   LOKAL. Adres jest i stoi w zdaniu „gdzie jesteśmy”, przy telefonie
-   i adresie e-mail, czyli tam, gdzie rodzic go szuka. NADAL ZDJĘTE zostają
-   rzeczy, których nie mamy: karta „przyjdźcie do biura” z godzinami otwarcia,
-   opis dojazdu i parkingu, mapa oraz godziny w nagłówku. Wracają razem
-   z danymi, a nie razem z adresem — pusty nawias w miejscu godzin wygląda jak
-   błąd wdrożenia, a brak sekcji nie wygląda na nic.
+   LOKAL. Adres i godziny stoją w bloku „gdzie jesteśmy”, przy telefonie
+   i adresie e-mail, czyli tam, gdzie rodzic ich szuka. Godziny są DWA
+   ZESTAWY, nie jeden: centrum jest czynne do 21:00, a telefon do 18:00.
+   Zlanie ich w jedną linijkę „godziny otwarcia” oznaczałoby, że rodzic dzwoni
+   o 20:00 i trafia w ciszę albo przyjeżdża o 12:00 w poniedziałek pod
+   zamknięte drzwi.
+
+   NADAL ZDJĘTE zostają rzeczy, których nie mamy: opis dojazdu i parkingu oraz
+   mapa. Wracają razem z danymi — pusty nawias w ich miejscu wygląda jak błąd
+   wdrożenia, a brak sekcji nie wygląda na nic.
    ========================================================================== */
 
 const tel = telefonHref();
@@ -104,10 +110,11 @@ const daneFirmy = [
     </div>
   </section>
 
-  {/* TRZY DROGI KONTAKTU. Czwarta — „przyjdźcie do biura” — czeka nie na
-      adres, tylko na godziny, w których pod tym adresem ktoś jest. Karta
-      zapraszająca do biura bez godzin otwarcia wysyła rodzica pod zamknięte
-      drzwi. */}
+  {/* TRZY DROGI KONTAKTU, nie cztery. „Przyjdźcie do biura” ma już i adres,
+      i godziny, ale czwarta karta rozbiłaby siatkę trzykolumnową na 3+1 — ten
+      sam problem sierotki, który stoi opisany przy progach cennika. Adres
+      z godzinami dostaje własny blok pod spodem, gdzie mieści się jedno i
+      drugie bez skracania. */}
   <section class="sekcja">
     <div class="szerokosc">
       <div class="siatka siatka--troje">
@@ -116,9 +123,15 @@ const daneFirmy = [
           <span class="droga-kontaktu__wartosc droga-kontaktu__wartosc--telefon">
             {telefonTekst()}
           </span>
+          {/* Zdanie mówiło „jeśli nie odbieramy, jesteśmy na zajęciach" —
+              prawdziwe, ale sugerujące, że numer jest czynny zawsze. Rodzic
+              dzwoniący we wtorek o 20:00 słyszał sygnał do skutku i wyciągał
+              wniosek, że nikogo tam nie ma. Godziny stoją teraz wprost, na
+              karcie, którą klika się, żeby zadzwonić. */}
           <span class="droga-kontaktu__opis">
-            Najszybsza droga. Jeśli nie odbieramy, jesteśmy na zajęciach —
-            oddzwonimy tego samego dnia.
+            Odbieramy {godzinyTekst(godziny.administracja[0])}. Poza tymi
+            godzinami zostawcie wiadomość albo napiszcie — oddzwonimy
+            następnego dnia roboczego.
           </span>
         </a>
 
@@ -168,21 +181,32 @@ const daneFirmy = [
           Bez adresu obiecywaliśmy podać go przez telefon; z adresem ta sama
           obietnica brzmiałaby jak wykręt przy wypisanej ulicy. Przełącza się
           samo po wpisaniu `firma.ulica` w site.js. */}
-      <p class="gdzie-jestesmy" id="dojazd">
-        <strong>Gdzie jesteśmy:</strong>{" "}
-        {firma.ulica ? (
-          <>
-            {adresTekst()} — zajęcia prowadzimy stacjonarnie. O dojazd
-            i najbliższy parking zapytajcie przez telefon, powiemy od razu.
-          </>
-        ) : (
-          <>
-            zajęcia prowadzimy stacjonarnie w {firma.miastoWMiejscowniku}.
-            Dokładny adres i dojazd podajemy przez telefon — zadzwońcie,
-            powiemy od razu.
-          </>
-        )}
-      </p>
+      <div class="gdzie-jestesmy" id="dojazd">
+        <p>
+          <strong>Gdzie jesteśmy:</strong> {adresTekst()} — zajęcia prowadzimy
+          stacjonarnie. O dojazd i najbliższy parking zapytajcie przez telefon,
+          powiemy od razu.
+        </p>
+        {/* DWA ZEGARY WYPISANE OSOBNO. Centrum jest czynne do 21:00, a telefon
+            do 18:00 — złożenie tego w jedne „godziny otwarcia" oznaczałoby, że
+            rodzic dzwoni o 20:00 i trafia w ciszę, albo przyjeżdża o 12:00
+            w poniedziałek pod zamknięte drzwi. Obie pomyłki kosztują to samo:
+            rodzica, który już chciał. */}
+        <dl class="godziny">
+          <div>
+            <dt>Centrum czynne</dt>
+            <dd>
+              {godziny.lokal.map((w) => <span>{godzinyTekst(w)}</span>)}
+            </dd>
+          </div>
+          <div>
+            <dt>Telefon i wiadomości</dt>
+            <dd>
+              {godziny.administracja.map((w) => <span>{godzinyTekst(w)}</span>)}
+            </dd>
+          </div>
+        </dl>
+      </div>
     </div>
   </section>
 

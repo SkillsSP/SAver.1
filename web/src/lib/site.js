@@ -63,7 +63,6 @@ export const firma = {
      po przejściu na jeden podmiot. */
   administratorRzeczownik: "Współadministratorami",
   administratorCzasownik: "są",
-  godzinyBiura: null,
   mapaOsadzenie: null,
   /* Kanał zgłoszeń dotyczących bezpieczeństwa dziecka — patrz `ochronaMaloletnich`
      niżej. Ustawa wymaga wskazania konkretnej osoby, nie adresu ogólnego,
@@ -464,6 +463,93 @@ export const terminarz = {
   pokazuj: false,
   dni: [],
 };
+
+/* --------------------------------------------------------------------------
+   GODZINY — DWA RÓŻNE ZEGARY, KTÓRYCH NIE WOLNO ZLAĆ W JEDEN
+
+   Centrum jest czynne dłużej, niż administracja odbiera telefon. Rodzic
+   dzwoniący we wtorek o 20:00 trafia pod numer, przy którym nikogo nie ma,
+   choć w lokalu trwają zajęcia. Gdyby strona podawała jedne „godziny
+   otwarcia", ten telefon zostałby odebrany jako cisza — a nieodebrany
+   telefon od rodzica gotowego zapisać dziecko kosztuje więcej niż cokolwiek
+   innego na tej stronie.
+
+   Dlatego są dwa osobne zestawy i obydwa są nazwane wprost.
+
+   NIEDZIELA JEST WARUNKOWA. Wpis oznaczony `warunkowe` renderuje się inaczej
+   („po ustaleniu") i NIE trafia do danych strukturalnych. Google pokazałby go
+   jako zwykłe godziny otwarcia, a rodzic, który przyjedzie pod zamknięte
+   drzwi w niedzielę, nie będzie pamiętał, że gdzieś stało słowo
+   „opcjonalnie".
+   -------------------------------------------------------------------------- */
+export const godziny = {
+  /* Kiedy odbieramy telefon i odpowiadamy na wiadomości. */
+  administracja: [
+    { dni: ["poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota"],
+      od: "12:00", do: "18:00" },
+  ],
+  /* Kiedy centrum jest otwarte i trwają zajęcia. */
+  lokal: [
+    { dni: ["poniedziałek", "wtorek", "środa", "czwartek"], od: "16:00", do: "21:00" },
+    { dni: ["piątek", "sobota"], od: "12:00", do: "21:00" },
+    { dni: ["niedziela"], od: "12:00", do: "18:00", warunkowe: true },
+  ],
+};
+
+/** Pełny tydzień. Osobno od `dniTygodnia`, bo tamta lista opisuje dni zajęć
+    w terminarzu i dodanie do niej niedzieli dołożyłoby pustą kolumnę tabeli. */
+const tydzienPelny = [
+  "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela",
+];
+
+/** Skróty do wąskich miejsc — stopka na telefonie nie mieści „poniedziałek". */
+const skrotyDni = {
+  poniedziałek: "pon.", wtorek: "wt.", środa: "śr.", czwartek: "czw.",
+  piątek: "pt.", sobota: "sob.", niedziela: "niedz.",
+};
+
+/* Dni idące po sobie zwijamy w zakres („pon.–czw."), a rozrzucone wypisujemy
+   po przecinku. Półpauza, nie łącznik: to zakres, a nie wyraz złożony. */
+function dniTekst(dni, skrocone) {
+  const nazwa = (d) => (skrocone ? skrotyDni[d] ?? d : d);
+  const numery = dni.map((d) => tydzienPelny.indexOf(d)).sort((a, b) => a - b);
+  const ciagle = numery.every((n, i) => i === 0 || n === numery[i - 1] + 1);
+  if (dni.length === 1) return nazwa(tydzienPelny[numery[0]]);
+  if (ciagle) return `${nazwa(tydzienPelny[numery[0]])}–${nazwa(tydzienPelny[numery.at(-1)])}`;
+  return numery.map((n) => nazwa(tydzienPelny[n])).join(", ");
+}
+
+/** Jeden wpis godzin jako tekst, np. „poniedziałek–czwartek 16:00–21:00”.
+    Twarda spacja przed godzinami trzyma je w jednym wierszu z dniami. */
+export function godzinyTekst(wpis, { skrocone = false } = {}) {
+  const zakres = `${wpis.od}–${wpis.do}`;
+  return `${dniTekst(wpis.dni, skrocone)} ${zakres}` +
+    (wpis.warunkowe ? " (po ustaleniu)" : "");
+}
+
+/** Cały zestaw w jednym wierszu — do stopki i do zdań w treści. */
+export function godzinyLinia(wpisy, opcje) {
+  return wpisy.map((w) => godzinyTekst(w, opcje)).join(" · ");
+}
+
+/* Dane strukturalne chcą angielskich nazw dni i godzin w formacie 24-godzinnym.
+   Wpisy warunkowe pomijamy świadomie — patrz komentarz wyżej. */
+const dniPoAngielsku = {
+  poniedziałek: "Monday", wtorek: "Tuesday", środa: "Wednesday",
+  czwartek: "Thursday", piątek: "Friday", sobota: "Saturday",
+  niedziela: "Sunday",
+};
+
+export function godzinyDlaWyszukiwarki(wpisy) {
+  return wpisy
+    .filter((w) => !w.warunkowe)
+    .map((w) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: w.dni.map((d) => dniPoAngielsku[d]),
+      opens: w.od,
+      closes: w.do,
+    }));
+}
 
 /** Kolejność dni w tygodniu — do sortowania i nagłówków tabeli. */
 export const dniTygodnia = [
